@@ -1,6 +1,6 @@
 from django.db import models
 from django.db.models.deletion import CASCADE
-from django.db.models.fields.related import OneToOneField
+from django.conf import settings
 
 # Create your models here.
 
@@ -8,48 +8,83 @@ class Category(models.Model):
     name = models.CharField(max_length=10)
     marker_path = models.CharField(max_length=50)
     like_count = models.IntegerField()
+    like_user = models.ManyToManyField(
+        settings.AUTH_USER_MODEL,
+        related_name="likeCategory",
+        blank=True
+    )
 
 
-class MainArea(models.Model):
-    name = models.CharField(max_length=10)
+class Menu(models.Model):
+    name = models.CharField(max_length=20)
+    price = models.models.IntegerField()
 
 
-class SubArea(models.Model):
-    name = models.CharField(max_length=10)
-    main_area = models.ForeignKey(MainArea, on_delete=models.CASCADE)
-
-
-class DetailArea(models.Model):
-    name = models.CharField(max_length=10)
-    sub_area = models.ForeignKey(SubArea, on_delete=models.CASCADE)
+class Ingredients(models.Model):
+    name = models.ManyToManyField(Menu, )
 
 
 class AccountShopkeeper(models.Model):
     name = models.CharField(max_length=20)
-    email = models.EmailField(max_length=128)
+    phone_number = models.TextField()
 
 
 class Coupon(models.Model):
-    name = models.CharField(max_length=30)
     content = models.TextField()
-    shop = OneToOneField(Shop,)
+    expire_date = models.DateTimeField()
 
 
 class Shop(models.Model):
+    shopkeeper = models.ForeignKey(AccountShopkeeper, on_delete=models.CASCADE, null=True)
+    coupon = models.ForeignKey(Coupon, on_delete=models.CASCADE, null=True)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True)
+    menu = models.ForeignKey(Menu, on_delete=models.CASCADE, null=True)
     name = models.CharField(max_length=20, null=False)
-    category = models.ForeignKey(Category, on_delete=CASCADE, null=True)
-    coupon = models.TextField()
+    shop_description = models.TextField()
     phone_number = models.CharField(max_length=15)
-    description = models.TextField()
     open_time = models.TimeField()
     img_url = models.TextField()
+    like_user = models.ManyToManyField(
+        settings.AUTH_USER_MODEL,
+        related_name="likeShop",
+        blank=True
+    )
     like_count = models.IntegerField()
-    menu_list = models.TextField() #
     shop_info_url = models.TextField()
     star_score = models.IntegerField()
-    is_subscribe = models.BooleanField()
+    is_subscribe = models.BooleanField(default=False)
     subscribe_time = models.DateField() #
-    main_area = models.ForeignKey(MainArea, on_delete=models.CASCADE, null=True)
-    sub_area = models.ForeignKey(SubArea, on_delete=models.CASCADE, null=True)
-    detail_area = models.ForeignKey(DetailArea, on_delete=models.CASCADE, null=True)
-    shopkeeper = models.OneToOneField(AccountShopkeeper, on_delete=models.CASCADE, null=True)
+    area = models.CharField(max_length=20)
+
+
+class Review(models.Model):
+    shop = models.ForeignKey(Shop, on_delete=models.CASCADE, null=True)
+    guest = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        related_name="guestReview",
+        blank=True
+    )
+    score_taste = models.IntegerField()
+    score_service = models.IntegerField()
+    score_cleanliness = models.IntegerField()
+    score_vibe = models.IntegerField()
+    score_price = models.IntegerField()
+    content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+
+class Area(models.Model):
+    name = models.CharField(max_length=20)
+    shop = models.ForeignKey(Shop, on_delete=models.SET_NULL, null=True)
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        related_name="userArea",
+        blank=True
+    )
+
+
+class SearchedArea(models.Model):
+    area = models.ForeignKey(Area, on_delete=models.CASCADE, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
