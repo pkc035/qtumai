@@ -56,10 +56,14 @@ class Shop(models.Model):
     subscribe_time = models.DateField() #
     area = models.CharField(max_length=20)
 
+    def __str__(self):
+        return self.name
+    
+
 
 class Review(models.Model):
     shop = models.ForeignKey(Shop, on_delete=models.CASCADE, null=True)
-    guest = models.ForeignKey(
+    writer = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         related_name="guestReview",
         blank=True
