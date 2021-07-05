@@ -21,7 +21,7 @@ class Menu(models.Model):
 
 
 class Ingredients(models.Model):
-    name = models.ManyToManyField(Menu, )
+    name = models.ManyToManyField(Menu, related_name="ingredients", blank=True)
 
 
 class AccountShopkeeper(models.Model):
@@ -74,21 +74,5 @@ class Review(models.Model):
     score_vibe = models.IntegerField()
     score_price = models.IntegerField()
     content = models.TextField()
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-
-class Area(models.Model):
-    name = models.CharField(max_length=20)
-    shop = models.ForeignKey(Shop, on_delete=models.SET_NULL, null=True)
-    user = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        related_name="userArea",
-        blank=True
-    )
-
-
-class SearchedArea(models.Model):
-    area = models.ForeignKey(Area, on_delete=models.CASCADE, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
