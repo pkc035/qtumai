@@ -17,7 +17,7 @@ class Category(models.Model):
 
 class Menu(models.Model):
     name = models.CharField(max_length=20)
-    price = models.models.IntegerField()
+    price = models.IntegerField()
 
 
 class Ingredients(models.Model):
@@ -66,6 +66,7 @@ class Review(models.Model):
     writer = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         related_name="guestReview",
+        on_delete=models.CASCADE,
         blank=True
     )
     score_taste = models.IntegerField()
