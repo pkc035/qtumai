@@ -233,4 +233,6 @@ db.sqlite3
 .idea/
 
 __pycache__/
+
+migrations/
 # End of https://www.toptal.com/developers/gitignore/api/django,python,venv
