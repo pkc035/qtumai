@@ -6,7 +6,7 @@ from shops.models import Shop, Category
 # Create your models here.
 
 class AccountGuest(AbstractUser):
-    phone_number = models.CharField(max_length=20)
+    phone_number = models.CharField(max_length=20, null=True)
     nickname = models.CharField(max_length=20, null=False)
     kakao_number = models.CharField(max_length=20)
     gender = models.CharField(max_length=2, null=False)
@@ -36,7 +36,11 @@ class AccountGuest(AbstractUser):
 
 
 class SearchedContent(models.Model):
-    content_word = models.ManyToManyField(AccountGuest, related_name="searchedContent", blank=True)
+    content_word = models.ManyToManyField(
+        AccountGuest, 
+        related_name="searchedContent", 
+        blank=True
+    )
     created_at = models.DateTimeField(auto_now_add=True)
 
 
@@ -45,26 +49,27 @@ class Preference(models.Model):
         AccountGuest,
         related_name="userPreference",
         on_delete=models.CASCADE,
-        null=True)
+        null=True
+    )
     score = models.IntegerField()
     created_at = models.DateTimeField(auto_now_add=True)
 
 
 class FunData(models.Model):
     content_name = models.ForeignKey(
-            AccountGuest,
-            related_name="userFunData",
-            on_delete=models.CASCADE,
-            null=True
-        )
+        AccountGuest,
+        related_name="userFunData",
+        on_delete=models.CASCADE,
+        null=True
+    )
     created_at = models.DateTimeField(auto_now_add=True)
 
 
 class VisitedStore(models.Model):
     store_name = models.ForeignKey(
-            AccountGuest,
-            related_name="userVisitedStore",
-            on_delete=models.CASCADE,
-            null=True
-        )
+        AccountGuest,
+        related_name="userVisitedStore",
+        on_delete=models.CASCADE,
+        null=True
+    )
     created_at = models.DateTimeField(auto_now_add=True)

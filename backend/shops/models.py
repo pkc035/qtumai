@@ -9,13 +9,21 @@ class Category(models.Model):
     marker_path = models.CharField(max_length=100)
     like_count = models.IntegerField()
 
+
 class Menu(models.Model):
     menu_name = models.CharField(max_length=20)
     price = models.IntegerField()
 
 
-class Ingredients(models.Model):
-    ingredient_name = models.ManyToManyField(Menu, related_name="ingredients", blank=True)
+class Ingredient(models.Model):
+    ingredient_name = models.ManyToManyField(
+        Menu, 
+        related_name="ingredients", 
+        blank=True
+    )
+
+    def get_menus(self):
+        return "\n".join([i.menu_name for i in self.ingredient_name.all()])
 
 
 class AccountShopkeeper(models.Model):
@@ -36,7 +44,7 @@ class Shop(models.Model):
     name = models.CharField(max_length=20, null=False)
     shop_description = models.TextField()
     phone_number = models.CharField(max_length=15)
-    open_time = models.TimeField()
+    open_time = models.TextField()
     img_url = models.TextField()
     like_count = models.IntegerField()
     shop_info_url = models.TextField()
@@ -52,7 +60,7 @@ class Shop(models.Model):
 
 class Review(models.Model):
     shop = models.ForeignKey(Shop, on_delete=models.CASCADE, null=True)
-    writer = models.ForeignKey(
+    guest = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         related_name="guestReview",
         on_delete=models.CASCADE,
