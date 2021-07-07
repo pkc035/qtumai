@@ -1,8 +1,7 @@
-from backend.shops.models import Category
 from django.db import models
 from django.conf import settings
-from shops.models import Shop
 from django.contrib.auth.models import AbstractUser
+from shops.models import Shop, Category
 
 # Create your models here.
 
@@ -37,21 +36,35 @@ class AccountGuest(AbstractUser):
 
 
 class SearchedContent(models.Model):
-    content_word = models.ManyToManyField(AccountGuest, related_name="searchedArea", blank=True)
+    content_word = models.ManyToManyField(AccountGuest, related_name="searchedContent", blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
 
 class Preference(models.Model):
-    preference_name = models.ForeignKey(AccountGuest, related_name="userPreference", null=True)
+    preference_name = models.ForeignKey(
+        AccountGuest,
+        related_name="userPreference",
+        on_delete=models.CASCADE,
+        null=True)
     score = models.IntegerField()
     created_at = models.DateTimeField(auto_now_add=True)
 
 
 class FunData(models.Model):
-    content_name = models.CharField(max_length=10)
+    content_name = models.ForeignKey(
+            AccountGuest,
+            related_name="userFunData",
+            on_delete=models.CASCADE,
+            null=True
+        )
     created_at = models.DateTimeField(auto_now_add=True)
 
 
 class VisitedStore(models.Model):
-    store_name = models.CharField(max_length=20)
+    store_name = models.ForeignKey(
+            AccountGuest,
+            related_name="userVisitedStore",
+            on_delete=models.CASCADE,
+            null=True
+        )
     created_at = models.DateTimeField(auto_now_add=True)
