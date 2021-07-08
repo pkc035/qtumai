@@ -7,15 +7,7 @@ from django.conf import settings
 class Category(models.Model):
     category_name = models.CharField(max_length=10)
     marker_path = models.CharField(max_length=100)
-    like_count = models.IntegerField()
-
-class Menu(models.Model):
-    menu_name = models.CharField(max_length=20)
-    price = models.IntegerField()
-
-
-class Ingredients(models.Model):
-    ingredient_name = models.ManyToManyField(Menu, related_name="ingredients", blank=True)
+    like_count = models.PositiveIntegerField(default=0)
 
 
 class AccountShopkeeper(models.Model):
@@ -28,43 +20,70 @@ class Coupon(models.Model):
     expire_date = models.DateTimeField()
 
 
+class ShopArea(models.Model):
+    area_name = models.CharField(max_length=10)
+
+
 class Shop(models.Model):
     shopkeeper = models.ForeignKey(AccountShopkeeper, on_delete=models.CASCADE, null=True)
     coupon = models.ForeignKey(Coupon, on_delete=models.CASCADE, null=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True)
-    menu = models.ForeignKey(Menu, on_delete=models.CASCADE, null=True)
-    name = models.CharField(max_length=20, null=False)
+    area = models.ForeignKey(ShopArea, on_delete=models.CASCADE, null=True) # 지역 구분용(그룹)
+    shop_name = models.CharField(max_length=20)
+    shop_address = models.CharField(max_length=50)
     shop_description = models.TextField()
     phone_number = models.CharField(max_length=15)
-    open_time = models.TimeField()
+    open_time = models.TextField()
     img_url = models.TextField()
     like_count = models.IntegerField()
     shop_info_url = models.TextField()
-    star_score = models.IntegerField()
+    star_score = models.IntegerField() # 추후 고객 평점 데이터
     kakao_score = models.IntegerField(default=0)
     kakao_review_count = models.IntegerField(default=0)
     is_subscribe = models.BooleanField(default=False)
     subscribe_time = models.DateField()
-    area = models.CharField(max_length=20)
+    is_new_opend = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.name
-    
+        return self.shop_name
 
+
+class Menu(models.Model):
+    shop = models.ForeignKey(Shop, on_delete=models.CASCADE, null=True)
+    menu_name = models.CharField(max_length=20)
+    price = models.PositiveIntegerField(blank=True)
+
+
+class Ingredient(models.Model):
+    menu = models.ManyToManyField(
+        Menu, 
+        related_name="ingredients", 
+        blank=True
+    )
+    ingredient_name = models.CharField(max_length=20)
+
+    # def get_menus(self):
+    #     return "\n".join([i.menu_name for i in self.ingredient_name.all()])
+    
 
 class Review(models.Model):
     shop = models.ForeignKey(Shop, on_delete=models.CASCADE, null=True)
-    writer = models.ForeignKey(
+    guest = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         related_name="guestReview",
         on_delete=models.CASCADE,
         blank=True
     )
-    score_taste = models.IntegerField()
-    score_service = models.IntegerField()
-    score_cleanliness = models.IntegerField()
-    score_vibe = models.IntegerField()
-    score_price = models.IntegerField()
+    score_taste = models.PositiveIntegerField(default=0)
+    score_service = models.PositiveIntegerField(default=0)
+    score_cleanliness = models.PositiveIntegerField(default=0)
+    score_vibe = models.PositiveIntegerField(default=0)
+    score_price = models.PositiveIntegerField(default=0)
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+
+class ThemeKeyword(models.Model):
+    shop = models.ForeignKey(Shop, on_delete=CASCADE, null=True)
+    theme_keyword = models.CharField(max_length=10)
