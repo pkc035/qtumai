@@ -105,6 +105,13 @@ export default App = () => {
                     flex: 3,
                 }}
             >
+                <FlatList
+                    data={carouselItems}
+                    renderItem={renderItem}
+                    style={{
+                        position: 'absolute',
+                    }}
+                ></FlatList>
                 <Carousel
                     layout={'default'}
                     ref={(ref) => (carousel = ref)}
@@ -117,9 +124,9 @@ export default App = () => {
                     // autoplay={true}
                     itemHeight={1}
                     sliderHeight={500}
-                ></Carousel>
+                />
+                {pagination}
             </SafeAreaView>
-            <View style={{ flex: 2 }}></View>
         </View>
     );
 };
