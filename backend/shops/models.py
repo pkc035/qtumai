@@ -38,6 +38,8 @@ class Shop(models.Model):
     like_count = models.PositiveIntegerField(default=0)
     shop_info_url = models.TextField() 
     star_score = models.FloatField() # 네이버 평점
+    latitude = models.TextField() # 위도
+    longitude = models.TextField() # 경도
     is_subscribe = models.BooleanField(default=False)
     subscribe_time = models.DateField()
     is_new_opend = models.BooleanField(default=False)

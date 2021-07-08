@@ -15,7 +15,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from . import views
+from rest_framework.routers import DefaultRouter
+
+router = DefaultRouter(trailing_slash=True)
+router.register(r"accounts", views.UserViewSet, basename="accounts")
 
 urlpatterns = [
-    
-]
+    # views.py에서 정의한(def) 함수 연결 가능 (path)
+    # path('send_sms/', views.send_sms),
+] + router.urls
