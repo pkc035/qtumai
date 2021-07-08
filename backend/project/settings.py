@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'notice',
     'shops',
     'rest_framework',
+    'drf_yasg',
     'corsheaders'
 ]
 
