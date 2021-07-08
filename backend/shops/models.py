@@ -41,6 +41,8 @@ class Shop(models.Model):
     like_count = models.IntegerField()
     shop_info_url = models.TextField()
     star_score = models.IntegerField()
+    kakao_score = models.IntegerField()
+    kakao_review_count = models.IntegerField()
     is_subscribe = models.BooleanField(default=False)
     subscribe_time = models.DateField()
     area = models.CharField(max_length=20)
