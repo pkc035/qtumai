@@ -35,9 +35,11 @@ class Shop(models.Model):
     phone_number = models.CharField(max_length=15)
     open_time = models.TextField()
     img_url = models.TextField()
-    like_count = models.PositiveIntegerField(default=0)
-    shop_info_url = models.TextField() 
-    star_score = models.FloatField() # 네이버 평점
+    like_count = models.IntegerField()
+    shop_info_url = models.TextField()
+    star_score = models.IntegerField() # 추후 고객 평점 데이터
+    kakao_score = models.IntegerField(default=0)
+    kakao_review_count = models.IntegerField(default=0)
     is_subscribe = models.BooleanField(default=False)
     subscribe_time = models.DateField()
     is_new_opend = models.BooleanField(default=False)
