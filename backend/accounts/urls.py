@@ -17,12 +17,14 @@ from django.contrib import admin
 from django.urls import path
 from . import views
 from rest_framework.routers import DefaultRouter
-
+from .views import KakaoLogInView, GoogleLoginView
 router = DefaultRouter(trailing_slash=True)
 router.register(r"accounts", views.UserViewSet, basename="accounts")
 
 urlpatterns = [
     # views.py에서 정의한(def) 함수 연결 가능 (path)
     # path('send_sms/', views.send_sms),
+    path('kakaologin/',KakaoLogInView.as_view()),
+    path('GoogleLoginView/',GoogleLoginView.as_view()),
     path('dislike-shop', views.dislikeshop)
 ] + router.urls
