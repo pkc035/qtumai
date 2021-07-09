@@ -15,7 +15,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from .views import KakaoLogIn
 
 urlpatterns = [
-    
+    path('kakaologin/',KakaoLogIn.as_view()),
+    path('GoogleLoginView/',KakaoLogIn.as_view()),
 ]
