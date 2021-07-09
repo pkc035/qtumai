@@ -31,23 +31,22 @@ class Shop(models.Model):
     area = models.ForeignKey(ShopArea, on_delete=models.CASCADE, null=True) # 지역 구분용(그룹)
     shop_name = models.CharField(max_length=20)
     shop_address = models.CharField(max_length=50)
-    shop_description = models.TextField()
+    shop_description = models.TextField(null=True)
     phone_number = models.CharField(max_length=15)
     open_time = models.TextField()
-    img_url = models.TextField()
     like_count = models.PositiveIntegerField(default=0)
     shop_info_url = models.TextField() 
-    star_score = models.FloatField() # 네이버 평점
-    like_count = models.IntegerField()
-    shop_info_url = models.TextField()
     star_score = models.IntegerField() # 추후 고객 평점 데이터
     kakao_score = models.IntegerField(default=0)
+    kakao_score_count = models.IntegerField(default=0)
     kakao_review_count = models.IntegerField(default=0)
+    price_range = models.CharField(max_length=15)
     latitude = models.TextField() # 위도
     longitude = models.TextField() # 경도
     is_subscribe = models.BooleanField(default=False)
     subscribe_time = models.DateField()
     is_new_opend = models.BooleanField(default=False)
+    business_reg_img = models.TextField()
 
     def __str__(self):
         return self.shop_name
@@ -57,6 +56,7 @@ class Menu(models.Model):
     shop = models.ForeignKey(Shop, on_delete=models.CASCADE, null=True)
     menu_name = models.CharField(max_length=20)
     price = models.PositiveIntegerField(blank=True)
+    is_representative = models.BooleanField() # 대표메뉴 여부
 
 
 class Ingredient(models.Model):
@@ -92,3 +92,8 @@ class Review(models.Model):
 class ThemeKeyword(models.Model):
     shop = models.ForeignKey(Shop, on_delete=CASCADE, null=True)
     theme_keyword = models.CharField(max_length=10)
+
+
+class ShopImage(models.Model):
+    shop = models.ForeignKey(Shop, on_delete=CASCADE, null=True)
+    img_url = models.TextField()
