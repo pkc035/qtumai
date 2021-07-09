@@ -26,4 +26,5 @@ urlpatterns = [
     # path('send_sms/', views.send_sms),
     path('kakaologin/',KakaoLogInView.as_view()),
     path('GoogleLoginView/',GoogleLoginView.as_view()),
+    path('dislike-shop', views.dislikeshop)
 ] + router.urls

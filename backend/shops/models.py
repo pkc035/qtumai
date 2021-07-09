@@ -47,6 +47,7 @@ class Shop(models.Model):
     subscribe_time = models.DateField()
     is_new_opend = models.BooleanField(default=False)
     business_reg_img = models.TextField(blank=True)
+    agreed_marketing_receive = models.BooleanField(default=False)
 
     def __str__(self):
         return self.shop_name
@@ -65,7 +66,7 @@ class Ingredient(models.Model):
         related_name="ingredients", 
         blank=True
     )
-    ingredient_name = models.CharField(max_length=20)
+    ingredient_name = models.CharField(max_length=20, blank=True)
 
     # def get_menus(self):
     #     return "\n".join([i.menu_name for i in self.ingredient_name.all()])
@@ -90,10 +91,10 @@ class Review(models.Model):
 
 
 class ThemeKeyword(models.Model):
-    shop = models.ForeignKey(Shop, on_delete=CASCADE, null=True)
+    shop = models.ForeignKey(Shop, on_delete=models.CASCADE, null=True)
     theme_keyword = models.CharField(max_length=10, blank=True)
 
 
 class ShopImage(models.Model):
-    shop = models.ForeignKey(Shop, on_delete=CASCADE, null=True)
+    shop = models.ForeignKey(Shop, on_delete=models.CASCADE, null=True)
     img_url = models.TextField(blank=True)
