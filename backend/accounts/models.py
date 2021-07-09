@@ -8,11 +8,11 @@ from shops.models import Shop, Category
 
 class AccountGuest(AbstractUser):
     phone_number = models.CharField(max_length=20, null=True)
-    nickname = models.CharField(max_length=20, null=False) # 네이버 로그인 시 받아올 수 있으면 바로 입력
-    kakao_number = models.CharField(max_length=20)
-    gender = models.CharField(max_length=2, null=False)
+    nickname = models.CharField(max_length=20) # 네이버 로그인 시 받아올 수 있으면 바로 입력
+    kakao_number = models.CharField(max_length=20, blank=True)
+    gender = models.CharField(max_length=2)
     birthday = models.DateField(auto_now=False, auto_now_add=False, null=True)
-    living_area = models.CharField(max_length=10)
+    living_area = models.CharField(max_length=10, blank=True)
     like_shop = models.ManyToManyField(
         Shop,
         related_name="likeShop",
@@ -55,7 +55,7 @@ class SearchedContent(models.Model):
         related_name="searchedContent", 
         blank=True
     )
-    content_word = models.CharField(max_length=20)
+    content_word = models.CharField(max_length=20, blank=True)
     searched_count = models.PositiveIntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True) # 검색할 때마다 시간을 저장해두는게 좋을까??
@@ -80,6 +80,6 @@ class FunData(models.Model):
         on_delete=models.CASCADE,
         null=True
     )
-    content_name = models.CharField(max_length=20)
+    content_name = models.CharField(max_length=20, blank=True)
     score = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
