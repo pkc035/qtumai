@@ -1,3 +1,4 @@
+from backend.shops.models import Category
 from django.db import models
 
 # Create your models here.
@@ -14,3 +15,21 @@ class Notice(models.Model):
     def __str__(self):
         return self.title
     
+
+class BuisnessForm(models.Model):
+    shop_name = models.CharField(max_length=30, blank=True)
+    category = models.ForeignKey(
+        Category,
+        on_delete=models.CASCADE,
+        null=True
+    )
+    business_img = models.TextField(blank=True) # 사업자등록증
+    address = models.TextField(blank=True)
+    phone_number = models.CharField(max_length=20, blank=True)
+    open_time = models.TextField(blank=True)
+    representitive_menu = models.CharField(max_length=20, blank=True)
+
+
+class BusinessShopImage(models.Model):
+    shop = models.ForeignKey(BuisnessForm, on_delete=models.CASCADE, null=True)
+    img_url = models.TextField(blank=True)
