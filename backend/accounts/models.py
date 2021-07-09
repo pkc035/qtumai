@@ -1,16 +1,15 @@
 from django.db import models
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser
-from django.db.models.fields import TextField
 from shops.models import Shop, Category
 
 # Create your models here.
 
 class AccountGuest(AbstractUser):
-    phone_number = models.CharField(max_length=20, null=True)
-    nickname = models.CharField(max_length=20) # 네이버 로그인 시 받아올 수 있으면 바로 입력
+    phone_number = models.CharField(max_length=20, blank=True)
+    nickname = models.CharField(max_length=20, blank=True) # 네이버 로그인 시 받아올 수 있으면 바로 입력
     kakao_number = models.CharField(max_length=20, blank=True)
-    gender = models.CharField(max_length=2)
+    gender = models.CharField(max_length=2, blank=True)
     birthday = models.DateField(auto_now=False, auto_now_add=False, null=True)
     living_area = models.CharField(max_length=10, blank=True)
     like_shop = models.ManyToManyField(
@@ -68,7 +67,7 @@ class Preference(models.Model):
         on_delete=models.CASCADE,
         null=True
     )
-    preference_name = models.CharField(max_length=20)
+    preference_name = models.CharField(max_length=20, blank=True)
     score = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
 
