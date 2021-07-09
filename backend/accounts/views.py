@@ -4,6 +4,7 @@ from django.contrib.auth import get_user_model
 from rest_framework import viewsets
 from .serializers import AccountGuestSerializer, UserSerializer
 from .models import AccountGuest
+from shops import models
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
@@ -28,7 +29,18 @@ def signup(request):
         serializer = UserSerializer(user)
         return Response(serializer.data)
 
-
+@api_view(['POST'])
+def dislikeshop(request):
+    data = request.data
+    user = get_object_or_404(get_user_model(),pk=request.user)
+    shop = get_object_or_404(models.Shop,pk=data['shop_id'])
+    
+    if shop not in user.dislike_shop.all():
+        user.dislike_shop.add(shop)
+        return Response({'message':'dislike shop added'})
+    else :
+        user.dislike_shop.remove(shop)
+        return Response({'message':'dislike shop deleted'})
 
 
 '''
