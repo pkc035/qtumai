@@ -53,16 +53,24 @@ class KakaoLogInView(View):
 
 class GoogleLoginView(View):
     def get(self,request):
+        ALGORITHM  = 'HS256'
         access_token    = request.headers.get("Authorization")
         url      = 'https://oauth2.googleapis.com/tokeninfo?id_token='
         response = requests.get(url+access_token)
         user     = response.json()
-        if AccountGuest.objects.filter(google_number = user['sub']).exists(): 
-            guest           = AccountGuest.objects.get(google_number=user['sub']) 
-            encoded_jwt         = jwt.encode({'guest_id': guest.id},SECRET_KEY, ALGORITHM='HS256')
-            return JsonResponse({ 
-                'access_token'  : encoded_jwt.decode('UTF-8')}, status=200)     
+        # print(user.get('sub',None))
+        # print(user.get('email',None))
+        google_number=user.get('sub',None)
+        email=user.get('email',None)
 
+        AccountGuest.objects.create(kakao_number=google_number,email=email)
+        if AccountGuest.objects.filter(kakao_number = user['sub']).exists(): 
+            guest           = AccountGuest.objects.get(kakao_number=user['sub']) 
+            print(type(guest),guest)
+            encoded_jwt     = jwt.encode({'guest_id': guest.id},SECRET_KEY, ALGORITHM)
+            return JsonResponse({'acess_token' :encoded_jwt },status=200)     
+            # return JsonResponse({'acess_token' : jwt.encode({'guest_id':guest.id}, SECRET_KEY, ALGORITHM)},status=200)   
+            # JsonResponse({'access_token':encoded_jwt.encode('UTF-8')}, status=200) 
         else: 
             return JsonResponse({"message":"USER_DOES_NOT_EXIST"},status=400)
           
