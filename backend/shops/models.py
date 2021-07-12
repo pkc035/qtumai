@@ -47,9 +47,9 @@ class Shop(models.Model):
     kakao_score = models.IntegerField(default=0)
     kakao_score_count = models.IntegerField(default=0)
     kakao_review_count = models.IntegerField(default=0)
-    price_range = models.CharField(max_length=15, blank=True) # 1만원 이하 / 1 ~ 2만원 / 2 ~ 3만원 / ...
-    latitude = models.TextField(blank=True) # 위도
-    longitude = models.TextField(blank=True) # 경도
+    price_range = models.CharField(max_length=15, blank=True)
+    latitude = models.FloatField(null=True) # 위도
+    longitude = models.FloatField(null=True) # 경도
     is_subscribe = models.BooleanField(default=False)
     subscribe_time = models.DateField()
     is_new_opend = models.BooleanField(default=False)
