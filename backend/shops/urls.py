@@ -1,11 +1,9 @@
-from django.urls      import path
-from django.conf.urls import url
 from rest_framework.routers import DefaultRouter
-from shops import views
 
-router = DefaultRouter(trailing_slash=False)
-router.register(r"shop/(?P<id>.+)",views.ShopDetailViewSet,basename="shop")
+from .views import ShopListViewSet, ShopDetailViewSet
 
-urlpatterns = [
+router = DefaultRouter(trailing_slash=True)
+router.register(r"list", ShopListViewSet, basename="list")
+router.register(r"detail/(?P<id>.+)", ShopDetailViewSet,basename="detail")
 
-]+ router.urls
+urlpatterns = router.urls
