@@ -10,6 +10,11 @@ class LivingArea(models.Model):
     people_count = models.IntegerField()
 
 
+class AccountJob(models.Model):
+    job = models.CharField(max_length=20)
+
+
+
 class AccountGuest(AbstractUser):
     phone_number = models.CharField(max_length=20, blank=True)
     nickname = models.CharField(max_length=20, blank=True) # 네이버 로그인 시 받아올 수 있으면 바로 입력
@@ -50,6 +55,7 @@ class AccountGuest(AbstractUser):
     my_shop = models.ForeignKey(Shop, on_delete=models.CASCADE, related_name="accountMyShop", null=True)
     shopkeeper_tel = models.CharField(max_length=20, blank=True)
     searched_person = models.ManyToManyField('self', symmetrical=False) # 같이갈 사람 추가할 때 필요
+    job = models.ForeignKey(AccountJob, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         return self.nickname
@@ -57,7 +63,7 @@ class AccountGuest(AbstractUser):
 
 # 방문 시간도 함께 체크하기 위해 through 사용 (ManyToMany에서 컬럼 추가하는 방법)
 class VisitedShop(models.Model):
-    account_guest = models.ForeignKey(AccountGuest, on_delete=models.CASCADE)
+    account_guest = models.ForeignKey(AccountGuest, on_delete=models.CASCADE, null=True)
     shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
     visited_time = models.DateTimeField(auto_now_add=True)
 
@@ -93,11 +99,10 @@ class SearchedStore(models.Model):
 
 
 class Preference(models.Model):
-    account_guest = models.ForeignKey(
+    account_guest = models.ManyToManyField(
         AccountGuest,
         related_name="userPreference",
-        on_delete=models.CASCADE,
-        null=True
+        blank=True
     )
     preference_name = models.CharField(max_length=20, blank=True)
     score = models.IntegerField(default=0)
@@ -105,12 +110,29 @@ class Preference(models.Model):
 
 
 class FunData(models.Model):
-    account_guest = models.ForeignKey(
+    account_guest = models.ManyToManyField(
         AccountGuest,
         related_name="userFunData",
+        blank=True
+    )
+    content_name = models.CharField(max_length=20, blank=True)
+    score = models.SmallIntegerField(default=0) # 싫어요: 0, 좋아요: 1, Super Like: 2
+    created_at = models.DateTimeField(auto_now_add=True)
+
+
+# 유저 체류데이터 수집 테이블
+class ClickData(models.Model):
+    account_guest = models.ForeignKey(
+        AccountGuest,
+        related_name="userClickData",
         on_delete=models.CASCADE,
         null=True
     )
-    content_name = models.CharField(max_length=20, blank=True)
-    score = models.IntegerField(default=0)
-    created_at = models.DateTimeField(auto_now_add=True)
+    clicked_shop = models.ForeignKey(
+        Shop,
+        related_name="userClickShop",
+        on_delete=models.CASCADE,
+        null=True
+    )
+    clicked_time = models.TimeField(auto_now_add=True)
+    stayed_time = models.TimeField()
