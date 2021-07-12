@@ -5,8 +5,8 @@ from django.conf import settings
 # Create your models here.
 
 class Category(models.Model):
-    category_name = models.CharField(max_length=10, blank=True)
-    marker_path = models.CharField(max_length=100, blank=True)
+    category_name = models.CharField(max_length=30, blank=True)
+    marker_path = models.CharField(max_length=200, blank=True)
     like_count = models.PositiveIntegerField(default=0)
 
 
@@ -53,10 +53,20 @@ class Shop(models.Model):
     is_subscribe = models.BooleanField(default=False)
     subscribe_time = models.DateField()
     is_new_opend = models.BooleanField(default=False)
-    business_reg_img = models.TextField(blank=True)
+    business_reg_img = models.TextField(blank=True) # 사업자등록증 이미지
 
     def __str__(self):
         return self.shop_name
+
+
+# 현재시간 기준으로 가게가 열었는지/닫혔는지 표시하기 위해 사용
+class OpenTime(models.Model):
+    shop = models.ForeignKey(Shop, on_delete=models.CASCADE, null=True)
+    what_day = models.CharField(max_length=10, blank=True) # 요일
+    open_time = models.TimeField(null=True)
+    close_time = models.TimeField(null=True)
+    break_time_begin = models.TimeField(null=True)
+    break_time_end = models.TimeField(null=True)
 
 
 class Menu(models.Model):
@@ -73,9 +83,6 @@ class Ingredient(models.Model):
         blank=True
     )
     ingredient_name = models.CharField(max_length=20, blank=True)
-
-    # def get_menus(self):
-    #     return "\n".join([i.menu_name for i in self.ingredient_name.all()])
     
 
 class Review(models.Model):
