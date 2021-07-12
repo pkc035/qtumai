@@ -48,8 +48,8 @@ class Shop(models.Model):
     kakao_score_count = models.IntegerField(default=0)
     kakao_review_count = models.IntegerField(default=0)
     price_range = models.CharField(max_length=15, blank=True)
-    latitude = models.TextField(blank=True) # 위도
-    longitude = models.TextField(blank=True) # 경도
+    latitude = models.FloatField(null=True) # 위도
+    longitude = models.FloatField(null=True) # 경도
     is_subscribe = models.BooleanField(default=False)
     subscribe_time = models.DateField()
     is_new_opend = models.BooleanField(default=False)
