@@ -86,8 +86,11 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'django_schema',
         'USER': 'qtumai',
+        # 'USER': 'root',
         'PASSWORD': 'Qtumai123!',
-        'HOST': '192.168.0.63', 
+        # 'PASSWORD': 'qtumai2021)(*&',
+        'HOST': '192.168.0.63',
+        # 'HOST': 'localhost',
         'PORT': 3306,
     }
 }
