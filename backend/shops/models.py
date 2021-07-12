@@ -17,7 +17,9 @@ class AccountShopkeeper(models.Model):
 
 class Coupon(models.Model):
     coupon_content = models.TextField(blank=True)
+    begin_date = models.DateTimeField()
     expire_date = models.DateTimeField()
+    coupon_count = models.IntegerField()
 
 
 class ShopArea(models.Model):
@@ -36,7 +38,12 @@ class Shop(models.Model):
     open_time = models.TextField(blank=True)
     like_count = models.PositiveIntegerField(default=0)
     shop_info_url = models.TextField(blank=True) 
-    star_score = models.IntegerField() # 추후 고객 평점 데이터
+    score_taste = models.FloatField(default=0)
+    score_service = models.FloatField(default=0)
+    score_cleanliness = models.FloatField(default=0)
+    score_vibe = models.FloatField(default=0)
+    score_price = models.FloatField(default=0)
+    review_count = models.IntegerField() # 리뷰 개수
     kakao_score = models.IntegerField(default=0)
     kakao_score_count = models.IntegerField(default=0)
     kakao_review_count = models.IntegerField(default=0)
@@ -47,7 +54,6 @@ class Shop(models.Model):
     subscribe_time = models.DateField()
     is_new_opend = models.BooleanField(default=False)
     business_reg_img = models.TextField(blank=True)
-    agreed_marketing_receive = models.BooleanField(default=False)
 
     def __str__(self):
         return self.shop_name

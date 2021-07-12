@@ -1,16 +1,23 @@
 import requests, jwt
-from django.http import response
-from django.shortcuts import get_object_or_404, render
+
+from django.http         import JsonResponse
+from django.views        import View
+from django.db           import transaction
+from django.http         import response
+from django.shortcuts    import get_object_or_404, render
 from django.contrib.auth import get_user_model
-from rest_framework import viewsets
-from .serializers import AccountGuestSerializer, UserSerializer
-from .models import AccountGuest
-from shops import models
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
-from django.http      import JsonResponse
-from django.views     import View
+
+from .serializers     import AccountGuestSerializer, UserSerializer
+from .models          import AccountGuest
+from shops            import models
 from project.settings import SECRET_KEY
+
+from rest_framework            import viewsets
+from rest_framework.decorators import api_view
+from rest_framework.response   import Response
+
+
+
 # Create your views here.
 
 
@@ -84,9 +91,27 @@ def dislikeshop(request):
     if shop not in user.dislike_shop.all():
         user.dislike_shop.add(shop)
         return Response({'message':'dislike shop added'})
-    else :
+    else:
         user.dislike_shop.remove(shop)
         return Response({'message':'dislike shop deleted'})
+
+@transaction.atomic
+@api_view(['POST'])
+def likeshop(request):
+    data = request.data
+    user = get_object_or_404(get_user_model(),pk=request.user)
+    shop = get_object_or_404(models.Shop,pk=data['shop_id'])
+    
+    if shop not in user.like_shop.all():
+        user.like_shop.add(shop)
+        shop.like_count += 1
+        shop.save()
+        return Response({'message':'like shop added'})
+    else:
+        user.like_shop.remove(shop)
+        shop.like_count -= 1
+        shop.save()
+        return Response({'message':'like shop deleted'})
 
 
 '''
