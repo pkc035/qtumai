@@ -4,14 +4,22 @@ from django.contrib.auth.models import AbstractUser
 from shops.models import Shop, Category
 
 # Create your models here.
+# 같은 동네에 사는 사람들 묶어주기 위한 테이블(등록된 동네가 없으면 항목 새로 추가 + Account에 연결, 있으면 있는 항목(pk)에 Account 연결)
+class LivingArea(models.Model):
+    living_area = models.TextField()
+    people_count = models.IntegerField()
+
 
 class AccountGuest(AbstractUser):
     phone_number = models.CharField(max_length=20, blank=True)
     nickname = models.CharField(max_length=20, blank=True) # 네이버 로그인 시 받아올 수 있으면 바로 입력
-    kakao_number = models.CharField(max_length=20, blank=True)
+    kakao_number = models.CharField(max_length=50, blank=True)
+    google_number = models.EmailField(max_length=50, blank=True)
+    google_mail = models.EmailField(max_length=128, blank=True) # 안들어올수도 있음
+    naver_number = models.CharField(max_length=50, blank=True)
     gender = models.CharField(max_length=2, blank=True)
     birthday = models.DateField(auto_now=False, auto_now_add=False, null=True)
-    living_area = models.CharField(max_length=10, blank=True)
+    living_area = models.ForeignKey(LivingArea, on_delete=models.CASCADE, null=True)
     like_shop = models.ManyToManyField(
         Shop,
         related_name="likeShop",
@@ -35,7 +43,13 @@ class AccountGuest(AbstractUser):
     )
     is_subscribe = models.BooleanField(null=True, default=False)
     subscribe_time = models.DateTimeField(auto_created=False, null=True)
-    review_like_count = models.PositiveIntegerField(default=0)
+    written_review_count = models.PositiveIntegerField(default=0) # 리뷰 개수로 배지 부여하기 위함
+    review_like_count = models.PositiveIntegerField(default=0) # 내가 쓴 리뷰에 대한 좋아요 개수
+    fun_data_count = models.PositiveIntegerField(default=0)
+    agreed_marketing_receive = models.BooleanField(default=False) # 마케팅 정보제공 동의여부
+    my_shop = models.ForeignKey(Shop, on_delete=models.CASCADE, related_name="accountMyShop", null=True)
+    shopkeeper_tel = models.CharField(max_length=20, blank=True)
+    searched_person = models.ManyToManyField('self', symmetrical=False) # 같이갈 사람 추가할 때 필요
 
     def __str__(self):
         return self.nickname
@@ -48,16 +62,34 @@ class VisitedShop(models.Model):
     visited_time = models.DateTimeField(auto_now_add=True)
 
 
-class SearchedContent(models.Model):
+class SearchedLocation(models.Model):
     account_guest = models.ManyToManyField(
         AccountGuest, # 역참조 할 수 있도록 manytomany 사용
-        related_name="searchedContent", 
+        related_name="searchedLocation", 
         blank=True
     )
     content_word = models.CharField(max_length=20, blank=True)
     searched_count = models.PositiveIntegerField(default=0)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True) # 검색할 때마다 시간을 저장해두는게 좋을까??
+
+
+class SearchedMenu(models.Model):
+    account_guest = models.ManyToManyField(
+        AccountGuest, # 역참조 할 수 있도록 manytomany 사용
+        related_name="searchedMenu", 
+        blank=True
+    )
+    content_word = models.CharField(max_length=20, blank=True)
+    searched_count = models.PositiveIntegerField(default=0)
+
+
+class SearchedStore(models.Model):
+    account_guest = models.ManyToManyField(
+        AccountGuest, # 역참조 할 수 있도록 manytomany 사용
+        related_name="searchedStore", 
+        blank=True
+    )
+    content_word = models.CharField(max_length=20, blank=True)
+    searched_count = models.PositiveIntegerField(default=0)
 
 
 class Preference(models.Model):
