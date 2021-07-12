@@ -1,4 +1,4 @@
-from backend.shops.models import Category
+from shops.models import Category
 from django.db import models
 
 # Create your models here.
