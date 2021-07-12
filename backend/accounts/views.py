@@ -1,8 +1,11 @@
+from django.contrib.auth.models import User
+from shops import serializers
 import requests, jwt
 from django.http import response
 from django.shortcuts import get_object_or_404, render
 from django.contrib.auth import get_user_model
 from rest_framework import viewsets
+import shops
 from .serializers import AccountGuestSerializer, UserSerializer
 from .models import AccountGuest
 from shops import models
@@ -80,6 +83,51 @@ def dislikeshop(request):
         user.dislike_shop.remove(shop)
         return Response({'message':'dislike shop deleted'})
 
+@api_view(['GET','POST'])
+def review_create(request):
+    if request.method == 'GET':
+        reviews = models.Review.objects.all()
+        serializer = serializers.ReviewSerializer(reviews, many=True)
+
+        return Response(serializer.data)
+
+    else:
+        serializer = serializers.ReviewSerializer(data = request.data)
+        shop = models.Shop.objects.get(id=request.data['shop_id'])
+        user = User.objects.get(id=request.user)
+        shop.review_count += 1
+        user.review_count += 1
+        shop.save()
+        user.save()
+        models.Review.objects.create(**serializer.data)
+
+        if serializer.is_valid(raise_exception=True):
+            serializer.save()
+
+        return Response({'message':'Reivew Created'})
+
+@api_view(['PUT','DELETE'])
+def review_command(request,review_id):
+    review = get_object_or_404(models.Review, pk=review_id)
+    shop = models.Shop.objects.get(id=review.shop_id)
+    
+    if request.method == 'PUT':    
+        serializer = serializers.ReviewSerializer(data=request.data, instance=review)
+
+        if serializer.is_valid(raise_exception=True):
+            serializer.save()
+
+        return Response({'message':'Review Updated'})
+        
+    else:
+        user = User.objects.get(id=request.user)
+        shop.review_count -= 1
+        user.review_count -= 1
+        shop.save()
+        user.save()
+        review.delete()
+
+        return Response({'message':'Review Deleted'})
 
 '''
 # Python
