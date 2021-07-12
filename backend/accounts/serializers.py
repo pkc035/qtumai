@@ -1,29 +1,40 @@
+from django.db.models.fields import EmailField
 from shops.models import Shop
 from rest_framework import serializers
+from .models import AccountGuest
 from django.contrib.auth import authenticate, get_user_model
 from . import models
 
 class UserSerializer(serializers.ModelSerializer):
-    password = serializers.CharField(write_only=True)
+    
     class Meta:
         model = get_user_model()
-        fields =['email', 'password', 'username' ,]
+        fields =[
+            'username',
+            'gender',
+            'birthday',
+            'living_area_id',
+            'phone_number',
+            'google_number',
+            'kakao_number'
+        ]
     def create(self, validated_data):
         user = get_user_model().objects.create(
-            username=validated_data['username'],
-            email=validated_data['email'],
-            age = validated_data['age'] if 'age' in validated_data else None,
-            gender = validated_data['gender'] if 'gender' in validated_data else None,
+            username       = validated_data['username'],
+            google_number  = validated_data['google_number'],
+            google_email   = validated_data['google_email'],
+            kakao_number   = validated_data['kakao_number'],
+            phone_number   = validated_data['phone_number'],
+            living_area_id = validated_data['living_area_id'],
+            birthday       = validated_data['birthday'],
+            gender         = validated_data['gender']
         )
-        user.set_password(validated_data['password'])
         user.save()
         return user
 
     def validate(self, data):
         non_alpha = set([s for s in "!@#$%^&*()|-=_+\[]{};':\",./?><"])
         error = dict({'username' : [], 'email' : [],'password': []})
-        if not 8 <= len(data['password']) < 16:   # password length error: 2
-            error['password'].append('비밀번호를 8 ~ 16자로 작성해주세요!')
         if data['password'].isdigit():  # password is only numbers: 3
             error['password'].append('비밀번호를 다른 문자와 조합해주세요!')
         if get_user_model().objects.filter(email= data['email']): # same username in db : 4

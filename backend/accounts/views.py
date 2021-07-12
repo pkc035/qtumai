@@ -41,46 +41,33 @@ def signup(request):
 
 class KakaoLogInView(View):
     def get(self, request):
+            ALGORITHM       = 'HS256'
             access_token    = request.headers.get('Authorization')
             profile_request = requests.get(
-                "https://kapi.kakao.com/v2/user/me", headers={"Authorization":f"Bearer {access_token}"},
+                "https://kapi.kakao.com/v2/user/me", headers = {"Authorization":f"Bearer {access_token}"},
             )
-            profile_json  = profile_request.json()
-            kakao_number  = profile_json["id"]
-
+            profile_json = profile_request.json()
+            kakao_number = profile_json["id"]
             if AccountGuest.objects.filter(kakao_number=kakao_number).exists():
-                guest = AccountGuest.objects.get(kakao_number=kakao_number)
-                token = jwt.encode({"guest_id":guest.id}, SECRET_KEY, ALGORITHM='HS256')
-                return JsonResponse({"token": token},status=200)
-
+                guest       = AccountGuest.objects.get(kakao_number=kakao_number)
+                encoded_jwt = jwt.encode({'guest_id': guest.id},SECRET_KEY, ALGORITHM)
+                return JsonResponse({"token": encoded_jwt},status=200)
             else:
-                result={'kakao_number':kakao_number}
-                return JsonResponse(result,status=400)
-
-
+                return JsonResponse({"message":"USER_DOES_NOT_EXIST"},status=400)
 class GoogleLoginView(View):
     def get(self,request):
-        ALGORITHM  = 'HS256'
-        access_token    = request.headers.get("Authorization")
-        url      = 'https://oauth2.googleapis.com/tokeninfo?id_token='
-        response = requests.get(url+access_token)
-        user     = response.json()
-        # print(user.get('sub',None))
-        # print(user.get('email',None))
-        google_number=user.get('sub',None)
-        email=user.get('email',None)
-
-        AccountGuest.objects.create(kakao_number=google_number,email=email)
-        if AccountGuest.objects.filter(kakao_number = user['sub']).exists(): 
-            guest           = AccountGuest.objects.get(kakao_number=user['sub']) 
-            print(type(guest),guest)
-            encoded_jwt     = jwt.encode({'guest_id': guest.id},SECRET_KEY, ALGORITHM)
+        ALGORITHM     = 'HS256'
+        access_token  = request.headers.get("Authorization")
+        url           = 'https://oauth2.googleapis.com/tokeninfo?id_token='
+        response      = requests.get(url+access_token)
+        user          = response.json()
+        google_number = user['sub']
+        if AccountGuest.objects.filter(google_number=google_number).exists(): 
+            guest       = AccountGuest.objects.get(google_number=google_number) 
+            encoded_jwt = jwt.encode({'guest_id': guest.id},SECRET_KEY, ALGORITHM)
             return JsonResponse({'acess_token' :encoded_jwt },status=200)     
-            # return JsonResponse({'acess_token' : jwt.encode({'guest_id':guest.id}, SECRET_KEY, ALGORITHM)},status=200)   
-            # JsonResponse({'access_token':encoded_jwt.encode('UTF-8')}, status=200) 
         else: 
             return JsonResponse({"message":"USER_DOES_NOT_EXIST"},status=400)
-          
           
 @api_view(['POST'])
 def dislikeshop(request):
