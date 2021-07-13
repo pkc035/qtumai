@@ -8,7 +8,7 @@ from django.http         import response
 from django.shortcuts    import get_object_or_404, render
 from django.contrib.auth import get_user_model
 
-from .serializers     import AccountGuestSerializer, UserSerializer
+from .serializers     import AccountGuestSerializer
 from .models          import AccountGuest
 from shops            import models
 from project.settings import SECRET_KEY
@@ -28,17 +28,21 @@ class UserViewSet(viewsets.ModelViewSet):
         queryset = AccountGuest.objects.all()
         return queryset
 
-
-@api_view(['POST'])
-def signup(request):
-    error = UserSerializer.validate(get_user_model(), data=request.data)
-    if error['password'] or error['username'] or error['email']:
-        return Response(error, status=400)
-    serializer = UserSerializer(data=request.data)
-    if serializer.is_valid(raise_exception=True):
-        user = UserSerializer.create(get_user_model(), request.data)
-        serializer = UserSerializer(user)
-        return Response(serializer.data)
+class NaverLogInView(View):
+    def get(self, request):
+            ALGORITHM       = 'HS256'
+            access_token    = request.headers.get('Authorization')
+            profile_request = requests.get(
+                "https://openapi.naver.com/v1/nid/me", headers = {"Authorization":f"Bearer {access_token}"},
+            )
+            profile_json = profile_request.json()
+            naver_number = profile_json["id"]
+            if AccountGuest.objects.filter(naver_number=naver_number).exists():
+                guest       = AccountGuest.objects.get(naver_number=naver_number)
+                encoded_jwt = jwt.encode({'guest_id': guest.id},SECRET_KEY, ALGORITHM)
+                return JsonResponse({"token": encoded_jwt},status=200)
+            else:
+                return JsonResponse({"message":"USER_DOES_NOT_EXIST"},status=400)
 
 class KakaoLogInView(View):
     def get(self, request):
@@ -55,6 +59,7 @@ class KakaoLogInView(View):
                 return JsonResponse({"token": encoded_jwt},status=200)
             else:
                 return JsonResponse({"message":"USER_DOES_NOT_EXIST"},status=400)
+
 class GoogleLoginView(View):
     def get(self,request):
         ALGORITHM     = 'HS256'
