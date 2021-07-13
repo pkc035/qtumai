@@ -21,7 +21,7 @@ class AccountGuest(AbstractUser):
     kakao_number = models.CharField(max_length=50, blank=True)
     google_number = models.EmailField(max_length=50, blank=True)
     google_mail = models.EmailField(max_length=128, blank=True) # 안들어올수도 있음
-    naver_number = models.CharField(max_length=50, blank=True)
+    naver_id = models.CharField(max_length=50, blank=True)
     gender = models.CharField(max_length=2, blank=True)
     birthday = models.DateField(auto_now=False, auto_now_add=False, null=True)
     living_area = models.ForeignKey(LivingArea, on_delete=models.CASCADE, null=True)

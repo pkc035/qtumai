@@ -1,0 +1,164 @@
+[
+    {
+        "model": "shops.category",
+        "pk": 1,
+        "fields": {
+            "category_name": "한식",
+            "marker_path": "",
+            "like_count": 0
+        }
+    },
+    {
+        "model": "shops.shop",
+        "pk": 1,
+        "fields": {
+            "shopkeeper": null,
+            "coupon": null,
+            "category": null,
+            "area": null,
+            "shop_name": "가게명",
+            "shop_address": "가게 주소",
+            "shop_description": "가게 설명",
+            "phone_number": "",
+            "like_count": 0,
+            "shop_info_url": "",
+            "score_taste": 0,
+            "score_service": 0,
+            "score_cleanliness": 0,
+            "score_vibe": 0,
+            "score_price": 0,
+            "review_count": 0,
+            "kakao_score": 4.3,
+            "kakao_score_count": 22,
+            "kakao_review_count": 33,
+            "price_range": "",
+            "latitude": null,
+            "longitude": null,
+            "is_subscribe": false,
+            "subscribe_time": null,
+            "is_new_opend": false,
+            "business_reg_img": ""
+        }
+    },
+    {
+        "model": "shops.category",
+        "pk": 2,
+        "fields": {
+            "category_name": "포차",
+            "marker_path": "",
+            "like_count": 0
+        }
+    },
+    {
+        "model": "shops.shop",
+        "pk": 2,
+        "fields": {
+            "shopkeeper": null,
+            "coupon": null,
+            "category": null,
+            "area": null,
+            "shop_name": "가게명2",
+            "shop_address": "가게 주소2",
+            "shop_description": "가게 설명2",
+            "phone_number": "",
+            "like_count": 0,
+            "shop_info_url": "",
+            "score_taste": 0,
+            "score_service": 0,
+            "score_cleanliness": 0,
+            "score_vibe": 0,
+            "score_price": 0,
+            "review_count": 0,
+            "kakao_score": 4.3,
+            "kakao_score_count": 22,
+            "kakao_review_count": 33,
+            "price_range": "",
+            "latitude": null,
+            "longitude": null,
+            "is_subscribe": false,
+            "subscribe_time": null,
+            "is_new_opend": false,
+            "business_reg_img": ""
+        }
+    },
+    {
+        "model": "shops.menu",
+        "pk": 1,
+        "fields": {
+            "shop": 1,
+            "menu_name": "불고기",
+            "price": null,
+            "is_representative": true
+        }
+    },
+    {
+        "model": "shops.menu",
+        "pk": 2,
+        "fields": {
+            "shop": 2,
+            "menu_name": "냉면",
+            "price": null,
+            "is_representative": false
+        }
+    },
+    {
+        "model": "shops.themekeyword",
+        "pk": 1,
+        "fields": {
+            "shop": 1,
+            "theme_keyword": "Text"
+        }
+    },
+    {
+        "model": "shops.themekeyword",
+        "pk": 2,
+        "fields": {
+            "shop": 1,
+            "theme_keyword": "Text2"
+        }
+    },
+    {
+        "model": "shops.opentime",
+        "pk": 1,
+        "fields": {
+            "open_time": "월요일 10시 ~ 20시 화요일 12시 ~ 22시"
+        }
+    },
+    {
+        "model": "shops.opentime",
+        "pk": 2,
+        "fields": {
+            "open_time": "평일 10시 ~ 20시 주말 11시 ~ 22시"
+        }
+    },
+    {
+        "model": "shops.datalab",
+        "pk": 1,
+        "fields": {
+            "shop": 1,
+            "age_10s": 10.5,
+            "age_20s": 12.1,
+            "age_30s": 12.3,
+            "age_40s": 15.3,
+            "age_50s": 10.1,
+            "age_60s": 10.1,
+            "male": 50.3,
+            "female": 49.7
+        }
+    },
+    {
+        "model": "shops.datalab",
+        "pk": 2,
+        "fields": {
+            "shop": 2,
+            "age_10s": 20.5,
+            "age_20s": 32.1,
+            "age_30s": 42.3,
+            "age_40s": 15.3,
+            "age_50s": 50.1,
+            "age_60s": 30.1,
+            "male": 50.3,
+            "female": 49.7
+        }
+    }
+]

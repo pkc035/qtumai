@@ -28,8 +28,12 @@ class BuisnessForm(models.Model):
     phone_number = models.CharField(max_length=20, blank=True)
     open_time = models.TextField(blank=True)
     representitive_menu = models.CharField(max_length=20, blank=True)
+    img_url_1 = models.TextField(blank=True)
+    img_url_2 = models.TextField(blank=True)
+    img_url_3 = models.TextField(blank=True)
 
 
-class BusinessShopImage(models.Model):
-    shop = models.ForeignKey(BuisnessForm, on_delete=models.CASCADE, null=True)
-    img_url = models.TextField(blank=True)
+class ProposeGoodShop(models.Model):
+    shop_name = models.CharField(max_length=20, blank=True)
+    address = models.CharField(max_length=50, blank=True)
+    description = models.TextField(blank=True)
