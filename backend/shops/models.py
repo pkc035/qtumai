@@ -35,7 +35,7 @@ class Shop(models.Model):
     shop_address = models.CharField(max_length=50, blank=True)
     shop_description = models.TextField(blank=True)
     phone_number = models.CharField(max_length=15, blank=True)
-    open_time = models.TextField(blank=True)
+    # open_time = models.TextField(blank=True)
     like_count = models.PositiveIntegerField(default=0)
     shop_info_url = models.TextField(blank=True) 
     score_taste = models.FloatField(default=0)
@@ -44,14 +44,14 @@ class Shop(models.Model):
     score_vibe = models.FloatField(default=0)
     score_price = models.FloatField(default=0)
     review_count = models.IntegerField() # 리뷰 개수
-    kakao_score = models.IntegerField(default=0)
+    kakao_score = models.FloatField(default=0)
     kakao_score_count = models.IntegerField(default=0)
     kakao_review_count = models.IntegerField(default=0)
     price_range = models.CharField(max_length=15, blank=True)
     latitude = models.FloatField(null=True) # 위도
     longitude = models.FloatField(null=True) # 경도
     is_subscribe = models.BooleanField(default=False)
-    subscribe_time = models.DateField()
+    subscribe_time = models.DateField(blank=True, null=True)
     is_new_opend = models.BooleanField(default=False)
     business_reg_img = models.TextField(blank=True) # 사업자등록증 이미지
 
@@ -62,17 +62,20 @@ class Shop(models.Model):
 # 현재시간 기준으로 가게가 열었는지/닫혔는지 표시하기 위해 사용
 class OpenTime(models.Model):
     shop = models.ForeignKey(Shop, on_delete=models.CASCADE, null=True)
-    what_day = models.CharField(max_length=10, blank=True) # 요일
+    open_time = models.TextField(blank=True)
+    '''
+    what_day = models.CharField(max_length=10, blank=True) # 요일 ('평일', '주말'로도 저장 가능)
     open_time = models.TimeField(null=True)
     close_time = models.TimeField(null=True)
     break_time_begin = models.TimeField(null=True)
     break_time_end = models.TimeField(null=True)
+    '''
 
 
 class Menu(models.Model):
     shop = models.ForeignKey(Shop, on_delete=models.CASCADE, null=True)
     menu_name = models.CharField(max_length=20, blank=True)
-    price = models.PositiveIntegerField(blank=True)
+    price = models.PositiveIntegerField(null=True)
     is_representative = models.BooleanField(default=False) # 대표메뉴 여부
 
 
@@ -106,9 +109,30 @@ class Review(models.Model):
 
 class ThemeKeyword(models.Model):
     shop = models.ForeignKey(Shop, on_delete=models.CASCADE, null=True)
-    theme_keyword = models.CharField(max_length=10, blank=True)
+    theme_keyword = models.TextField(blank=True)
 
 
 class ShopImage(models.Model):
     shop = models.ForeignKey(Shop, on_delete=models.CASCADE, null=True)
     img_url = models.TextField(blank=True)
+
+
+class DataLab(models.Model):
+    shop = models.ForeignKey(Shop, on_delete=models.CASCADE, null=True)
+    age_10s = models.FloatField(default=0)
+    age_20s = models.FloatField(default=0)
+    age_30s = models.FloatField(default=0)
+    age_40s = models.FloatField(default=0)
+    age_50s = models.FloatField(default=0)
+    age_60s = models.FloatField(default=0)
+    male = models.FloatField(default=0)
+    female = models.FloatField(default=0)
+
+
+class ReportShop(models.Model):
+    shop = models.ForeignKey(Shop, on_delete=models.CASCADE, related_name="reportShop", null=True)
+    is_closed = models.BooleanField(default=False)
+    time_different = models.BooleanField(default=False)
+    address_different = models.BooleanField(default=False)
+    no_coupon = models.BooleanField(default=False)
+    others = models.TextField(blank=True)    
