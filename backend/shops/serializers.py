@@ -1,6 +1,8 @@
-from django.contrib.auth import get_user_model
+from django.contrib.auth  import get_user_model
 
-from .models import Review, Shop
+from .models              import Review, Shop
+from accounts.serializers import AccountGuestSerializer
+from accounts.models      import AccountGuest
 
 from rest_framework import serializers
 
@@ -14,7 +16,9 @@ class ReviewSerializer(serializers.ModelSerializer):
     class Meta:
         model = Review
         fields = '__all__'
+        
 
     def get_username(self,obj):
         user = get_user_model().objects.get(id=obj.user_id)
+
         return user.username

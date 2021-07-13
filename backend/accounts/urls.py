@@ -14,10 +14,13 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
-from . import views
-from rest_framework.routers import DefaultRouter
+from django.urls    import path
+
+from .      import views
 from .views import KakaoLogInView, GoogleLoginView
+
+from rest_framework.routers import DefaultRouter
+
 router = DefaultRouter(trailing_slash=True)
 router.register(r"accounts", views.UserViewSet, basename="accounts")
 
@@ -28,6 +31,5 @@ urlpatterns = [
     path('GoogleLoginView/',GoogleLoginView.as_view()),
     path('dislike-shop', views.dislikeshop),
     path('like-shop', views.likeshop),
-    path('review', views.review_create),
-    path('review/<int:shop_id>', views.review_command)
+    
 ] + router.urls

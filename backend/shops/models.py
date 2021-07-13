@@ -92,6 +92,7 @@ class Review(models.Model):
     score_vibe = models.PositiveIntegerField(default=0)
     score_price = models.PositiveIntegerField(default=0)
     content = models.TextField(blank=True)
+    img_path = models.TextField(null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

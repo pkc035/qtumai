@@ -1,5 +1,4 @@
 from django.contrib.auth.models import User
-from shops import serializers
 import requests, jwt
 
 from django.http         import JsonResponse
@@ -89,51 +88,7 @@ def dislikeshop(request):
         user.dislike_shop.remove(shop)
         return Response({'message':'dislike shop deleted'})
 
-@api_view(['GET','POST'])
-def review_create(request):
-    if request.method == 'GET':
-        reviews = models.Review.objects.all()
-        serializer = serializers.ReviewSerializer(reviews, many=True)
 
-        return Response(serializer.data)
-
-    else:
-        serializer = serializers.ReviewSerializer(data = request.data)
-        shop = models.Shop.objects.get(id=request.data['shop_id'])
-        user = User.objects.get(id=request.user)
-        shop.review_count += 1
-        user.review_count += 1
-        shop.save()
-        user.save()
-        models.Review.objects.create(**serializer.data)
-
-        if serializer.is_valid(raise_exception=True):
-            serializer.save()
-
-        return Response({'message':'Reivew Created'})
-
-@api_view(['PUT','DELETE'])
-def review_command(request,review_id):
-    review = get_object_or_404(models.Review, pk=review_id)
-    shop = models.Shop.objects.get(id=review.shop_id)
-    
-    if request.method == 'PUT':    
-        serializer = serializers.ReviewSerializer(data=request.data, instance=review)
-
-        if serializer.is_valid(raise_exception=True):
-            serializer.save()
-
-        return Response({'message':'Review Updated'})
-        
-    else:
-        user = User.objects.get(id=request.user)
-        shop.review_count -= 1
-        user.review_count -= 1
-        shop.save()
-        user.save()
-        review.delete()
-
-        return Response({'message':'Review Deleted'})
 @transaction.atomic
 @api_view(['POST'])
 def likeshop(request):
@@ -151,7 +106,6 @@ def likeshop(request):
         shop.like_count -= 1
         shop.save()
         return Response({'message':'like shop deleted'})
-
 
 '''
 # Python
