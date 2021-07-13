@@ -1,5 +1,7 @@
 from shops.models import Category
-from django.db import models
+
+from django.db   import models
+from django.conf import settings
 
 # Create your models here.
 
@@ -16,12 +18,19 @@ class Notice(models.Model):
         return self.title
     
 
-class BuisnessForm(models.Model):
+class BusinessForm(models.Model):
     shop_name = models.CharField(max_length=30, blank=True)
     category = models.ForeignKey(
         Category,
         on_delete=models.CASCADE,
         null=True
+    )
+    guest = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        related_name="guestBusiness",
+        on_delete=models.CASCADE,
+        blank=True,
+        default=None
     )
     business_img = models.TextField(blank=True) # 사업자등록증
     address = models.TextField(blank=True)
