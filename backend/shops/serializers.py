@@ -1,6 +1,6 @@
 from django.contrib.auth  import get_user_model
 
-from .models              import Review, Shop
+from .models              import ReportShop, Review, Shop
 from accounts.serializers import AccountGuestSerializer
 from accounts.models      import AccountGuest
 
@@ -36,3 +36,8 @@ class ReviewSerializer(serializers.ModelSerializer):
         user = get_user_model().objects.get(id=obj.user_id)
 
         return user.username
+
+class ReportShopSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ReportShop
+        fields = '__all__'

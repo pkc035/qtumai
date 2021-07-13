@@ -1,8 +1,8 @@
 from random import sample
 
 from accounts.models import AccountGuest
-from .models         import Shop, Category, Review
-from .serializers    import ShopListSerializer, ShopDetailSerializer, ReviewSerializer
+from .models         import ReportShop, Shop, Category, Review
+from .serializers    import ReportShopSerializer, ShopListSerializer, ShopDetailSerializer, ReviewSerializer
 
 from rest_framework.viewsets   import ModelViewSet
 from rest_framework.response   import Response
@@ -100,5 +100,23 @@ def review_command(request,review_id):
 
         return Response({'message':'Review Deleted'})
 
+@api_view(['GET','POST'])
+def report_shop(request):
+    if request.method == 'GET':
+        serializer = ReportShopSerializer(ReportShop.objects.all(), many=True)
 
+        return Response(serializer.data)
+
+    else:
+        shop = Shop.objects.get(id=request.data['shop_id'])
+        user = AccountGuest.objects.get(id=request.user)
+        serializer = ReportShopSerializer(data=request.data)
+        
+        if not user.guestReport.filter(shop=shop, guest=user):
+            if serializer.is_valid(raise_exception=True):
+                serializer.save(shop=shop, guest=user)
+        
+                return Response({'message':'Report Shop Created'})
+                
+        return Response({'message':'Report Shop Existed'})
 
