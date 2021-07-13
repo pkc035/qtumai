@@ -7,17 +7,16 @@ from shops.models import Shop, Category
 # 같은 동네에 사는 사람들 묶어주기 위한 테이블(등록된 동네가 없으면 항목 새로 추가 + Account에 연결, 있으면 있는 항목(pk)에 Account 연결)
 class LivingArea(models.Model):
     living_area = models.TextField()
-    people_count = models.IntegerField()
+    people_count = models.IntegerField(default=0)
 
 
 class AccountJob(models.Model):
     job = models.CharField(max_length=20)
 
 
-
 class AccountGuest(AbstractUser):
     phone_number = models.CharField(max_length=20, blank=True)
-    nickname = models.CharField(max_length=20, blank=True) # 네이버 로그인 시 받아올 수 있으면 바로 입력
+    # nickname = models.CharField(max_length=20, blank=True) # 네이버 로그인 시 받아올 수 있으면 바로 입력
     kakao_number = models.CharField(max_length=50, blank=True)
     google_number = models.EmailField(max_length=50, blank=True)
     google_mail = models.EmailField(max_length=128, blank=True) # 안들어올수도 있음
@@ -25,11 +24,6 @@ class AccountGuest(AbstractUser):
     gender = models.CharField(max_length=2, blank=True)
     birthday = models.DateField(auto_now=False, auto_now_add=False, null=True)
     living_area = models.ForeignKey(LivingArea, on_delete=models.CASCADE, null=True)
-    like_shop = models.ManyToManyField(
-        Shop,
-        related_name="likeShop",
-        blank=True
-    )
     dislike_shop = models.ManyToManyField(
         Shop,
         related_name="dislikeShop",
@@ -58,7 +52,7 @@ class AccountGuest(AbstractUser):
     job = models.ForeignKey(AccountJob, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
-        return self.nickname
+        return self.username
 
 
 # 방문 시간도 함께 체크하기 위해 through 사용 (ManyToMany에서 컬럼 추가하는 방법)
@@ -107,6 +101,9 @@ class Preference(models.Model):
     preference_name = models.CharField(max_length=20, blank=True)
     score = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
+    ''''''
+    # taste, service, cleanliness, vibe, price
+
 
 
 class FunData(models.Model):
@@ -135,4 +132,21 @@ class ClickData(models.Model):
         null=True
     )
     clicked_time = models.TimeField(auto_now_add=True)
-    stayed_time = models.TimeField()
+    stayed_time = models.TimeField() # 페이지 이동했을 때 체크
+
+
+class MyLikeList(models.Model):
+    account_guest = models.ForeignKey(AccountGuest, on_delete=models.CASCADE, null=True)
+    list_name = models.CharField(max_length=20)
+
+
+class MyLikeListShop(models.Model):
+    my_like_list = models.ManyToManyField(
+        MyLikeList, 
+        related_name="myLikeListShop", 
+        blank=True
+    )
+    shop_name = models.ForeignKey(Shop, on_delete=models.CASCADE, null=True)
+
+    def __str__(self):
+        return self.my_like_list
