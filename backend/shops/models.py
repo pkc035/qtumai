@@ -17,9 +17,9 @@ class AccountShopkeeper(models.Model):
 
 class Coupon(models.Model):
     coupon_content = models.TextField(blank=True)
-    begin_date = models.DateTimeField()
-    expire_date = models.DateTimeField()
-    coupon_count = models.IntegerField()
+    begin_date = models.DateTimeField(null=True)
+    expire_date = models.DateTimeField(null=True)
+    coupon_count = models.IntegerField(default=0)
 
 
 class ShopArea(models.Model):
@@ -86,7 +86,7 @@ class Ingredient(models.Model):
         blank=True
     )
     ingredient_name = models.CharField(max_length=20, blank=True)
-    
+
 
 class Review(models.Model):
     shop = models.ForeignKey(Shop, on_delete=models.CASCADE, null=True)
@@ -105,6 +105,11 @@ class Review(models.Model):
     img_path = models.TextField(null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+
+class ReviewImage(models.Model):
+    shop = models.ForeignKey(Review, on_delete=models.CASCADE, null=True)
+    img_url = models.TextField(blank=True)
 
 
 class ThemeKeyword(models.Model):

@@ -1,4 +1,5 @@
-from shops.models import Category
+from accounts.models import AccountGuest
+from shops.models import Category, Shop
 from django.db import models
 
 # Create your models here.
@@ -34,6 +35,18 @@ class BuisnessForm(models.Model):
 
 
 class ProposeGoodShop(models.Model):
-    shop_name = models.CharField(max_length=20, blank=True)
+    shop_name = models.ForeignKey(Shop, on_delete=models.CASCADE, null=True)
     address = models.CharField(max_length=50, blank=True)
     description = models.TextField(blank=True)
+
+
+# 고객센터 - 이메일 문의 내용 테이블
+class EmailQuestion(models.Model):
+    username = models.ForeignKey(AccountGuest, on_delete=models.CASCADE, null=True)
+    email = models.EmailField(max_length=75, blank=True)
+    kind = models.CharField(max_length=10, blank=True)
+    title = models.CharField(max_length=30, blank=True)
+    content = models.TextField(blank=True)
+    img_url_1 = models.TextField(blank=True)
+    img_url_2 = models.TextField(blank=True)
+    img_url_3 = models.TextField(blank=True)
