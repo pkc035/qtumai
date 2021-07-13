@@ -27,8 +27,8 @@ router.register(r"accounts", views.UserViewSet, basename="accounts")
 urlpatterns = [
     # views.py에서 정의한(def) 함수 연결 가능 (path)
     # path('send_sms/', views.send_sms),
-    path('kakaologin/',KakaoLogInView.as_view()),
-    path('GoogleLoginView/',GoogleLoginView.as_view()),
+    path('kakao-login/',KakaoLogInView.as_view()),
+    path('google-login/',GoogleLoginView.as_view()),
     path('dislike-shop', views.dislikeshop),
     path('like-shop', views.likeshop),
     
