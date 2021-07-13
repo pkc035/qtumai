@@ -27,6 +27,37 @@ class UserViewSet(viewsets.ModelViewSet):
         queryset = AccountGuest.objects.all()
         return queryset
 
+
+
+@api_view(['POST','GET'])
+def signup(request):
+
+    if request.method =='POST':
+        error = AccountGuestSerializer.validate(get_user_model(), data=request.data)
+        if error['username']:
+            return Response(error, status=400)
+        serializer = AccountGuestSerializer(data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            user       = AccountGuestSerializer.create(get_user_model(), request.data)
+            serializer = AccountGuestSerializer(user)
+            return Response(serializer.data)
+        
+        return JsonResponse({'message':'FAILED'},status=400)
+
+    elif request.method =='GET':
+        phone_number = request.data['phone_number']
+        if AccountGuestSerializer.objects.filter(phone_number=phone_number).exist() : 
+            return JsonResponse({"message": 'USER_ALREADY_EXIST'},status=400)
+        if not AccountGuestSerializer.objects.filter(phone_number=phone_number).exist() :
+            return JsonResponse({"message" : 'USER_DOSE_NOT_EXIST'},status=200)
+
+@api_view(['POST'])
+def creataccount(request) :
+    data = {
+        
+    }
+)
+
 class NaverLogInView(View):
     def get(self, request):
             ALGORITHM       = 'HS256'

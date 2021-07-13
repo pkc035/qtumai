@@ -27,6 +27,7 @@ urlpatterns = [
     path('naver-login/',NaverLogInView.as_view()),
     path('kakao-login/',KakaoLogInView.as_view()),
     path('google-login/',GoogleLoginView.as_view()),
+    path('signup',views.signup),
     path('dislike-shop', views.dislikeshop),
     path('like-shop', views.likeshop)
 ] + router.urls
