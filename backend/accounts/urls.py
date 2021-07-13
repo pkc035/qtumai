@@ -18,6 +18,7 @@ from django.urls import path
 from . import views
 from rest_framework.routers import DefaultRouter
 from .views import KakaoLogInView, GoogleLoginView, NaverLogInView
+
 router = DefaultRouter(trailing_slash=True)
 router.register(r"accounts", views.UserViewSet, basename="accounts")
 
@@ -28,5 +29,6 @@ urlpatterns = [
     path('kakao-login/',KakaoLogInView.as_view()),
     path('google-login/',GoogleLoginView.as_view()),
     path('dislike-shop', views.dislikeshop),
-    path('like-shop', views.likeshop)
+    path('like-shop', views.likeshop),
+    
 ] + router.urls
