@@ -131,6 +131,13 @@ class DataLab(models.Model):
 
 class ReportShop(models.Model):
     shop = models.ForeignKey(Shop, on_delete=models.CASCADE, related_name="reportShop", null=True)
+    guest = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        related_name="guestReport",
+        on_delete=models.CASCADE,
+        blank=True,
+        default=None
+    )
     is_closed = models.BooleanField(default=False)
     time_different = models.BooleanField(default=False)
     address_different = models.BooleanField(default=False)
