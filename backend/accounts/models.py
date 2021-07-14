@@ -48,8 +48,8 @@ class AccountGuest(AbstractUser):
     agreed_marketing_receive = models.BooleanField(default=False) # 마케팅 정보제공 동의여부
     my_shop = models.ForeignKey(Shop, on_delete=models.CASCADE, related_name="accountMyShop", null=True)
     shopkeeper_tel = models.CharField(max_length=20, blank=True)
-    searched_person = models.ManyToManyField('self', symmetrical=False) # 같이갈 사람 추가할 때 필요
-    my_friends = models.ManyToManyField('self', symmetrical=False) # symmetrical: 대칭관계(상대방쪽에서도 자동추가 여부)
+    searched_people = models.ManyToManyField('self', related_name="searchedPeople", symmetrical=False) # 같이갈 사람 추가할 때 필요
+    my_friends = models.ManyToManyField('self', related_name="myFriends", symmetrical=False) # symmetrical: 대칭관계(상대방쪽에서도 자동추가 여부)
     job = models.ForeignKey(AccountJob, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
