@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models.base import Model
 from django.db.models.deletion import CASCADE
 from django.conf import settings
 
@@ -20,6 +21,8 @@ class Coupon(models.Model):
     begin_date = models.DateTimeField(null=True)
     expire_date = models.DateTimeField(null=True)
     coupon_count = models.IntegerField(default=0)
+    using_time_begin = models.TimeField(null=True) # 사용가능 시간
+    using_time_end = models.TimeField(null=True)
 
 
 class ShopArea(models.Model):
@@ -102,14 +105,9 @@ class Review(models.Model):
     score_vibe = models.PositiveIntegerField(default=0)
     score_price = models.PositiveIntegerField(default=0)
     content = models.TextField(blank=True)
-    img_path = models.TextField(null=True)
+    img_path = models.TextField(null=True) # 이미지 1개만 등록
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-
-
-class ReviewImage(models.Model):
-    shop = models.ForeignKey(Review, on_delete=models.CASCADE, null=True)
-    img_url = models.TextField(blank=True)
 
 
 class ThemeKeyword(models.Model):
@@ -147,4 +145,17 @@ class ReportShop(models.Model):
     time_different = models.BooleanField(default=False)
     address_different = models.BooleanField(default=False)
     no_coupon = models.BooleanField(default=False)
-    others = models.TextField(blank=True)    
+    others = models.TextField(blank=True)
+
+
+# 댓글 신고기능(Radio Button으로 한 가지 사유만 선택 가능)
+class ReportReview(models.Model):
+    shop = models.ForeignKey(Shop, on_delete=models.CASCADE, related_name="reportShop", null=True)
+    guest = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        related_name="guestReport",
+        on_delete=models.CASCADE,
+        blank=True,
+        default=None
+    )
+    reason = models.TextField(blank=True) # 선택된 사유 내용 바로 저장
