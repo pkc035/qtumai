@@ -34,7 +34,7 @@ class Shop(models.Model):
     coupon = models.ForeignKey(Coupon, on_delete=models.CASCADE, null=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True)
     area = models.ForeignKey(ShopArea, on_delete=models.CASCADE, null=True) # 지역 구분용(그룹)
-    shop_name = models.CharField(max_length=20, blank=True)
+    shop_name = models.CharField(max_length=50, blank=True)
     shop_address = models.CharField(max_length=50, blank=True)
     shop_description = models.TextField(blank=True)
     phone_number = models.CharField(max_length=15, blank=True)
@@ -150,10 +150,10 @@ class ReportShop(models.Model):
 
 # 댓글 신고기능(Radio Button으로 한 가지 사유만 선택 가능)
 class ReportReview(models.Model):
-    shop = models.ForeignKey(Shop, on_delete=models.CASCADE, related_name="reportShop", null=True)
+    shop = models.ForeignKey(Shop, on_delete=models.CASCADE, related_name="reportReview", null=True)
     guest = models.ForeignKey(
         settings.AUTH_USER_MODEL,
-        related_name="guestReport",
+        related_name="guestReportReview",
         on_delete=models.CASCADE,
         blank=True,
         default=None
