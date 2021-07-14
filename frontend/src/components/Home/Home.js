@@ -1,132 +1,55 @@
-import * as React from 'react';
-import { useState } from 'react';
-import {
-    Text,
-    View,
-    SafeAreaView,
-    Dimensions,
-    ImageBackground,
-} from 'react-native';
+// import * as React from 'react';
+// import { StyleSheet, View, Text } from 'react-native';
+// import { NavigationContainer } from '@react-navigation/native';
+// import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+// import { WebView } from 'react-native-webview';
+// import { FloatingAction } from 'react-native-floating-action';
+// import Icon from 'react-native-vector-icons/Ionicons';
+// import styled from 'styled-components';
 
-import Carousel, { Pagination } from 'react-native-snap-carousel';
+// const actions = [
+//   {
+//     text: 'Accessibility',
+//     name: 'Where',
+//     position: 1,
+//   },
+//   {
+//     text: 'Language',
+//     name: 'Who',
+//     position: 2,
+//   },
+// ];
 
-export default App = () => {
-    const [activeIndex, setActiveIndex] = useState(0);
-    const carouselItems = [
-        {
-            title: 'Item 1',
-            text: 'Text 1',
-            backgroundImage: { uri: 'https://picsum.photos/id/11/200/300' },
-        },
-        {
-            title: 'Item 2',
-            text: 'Text 2',
-            backgroundImage: { uri: 'https://picsum.photos/id/10/200/300' },
-        },
-        {
-            title: 'Item 3',
-            text: 'Text 3',
-            backgroundImage: { uri: 'https://picsum.photos/id/12/200/300' },
-        },
-        {
-            title: 'Item 4',
-            text: 'Text 4',
-            backgroundImage: { uri: 'https://picsum.photos/id/11/200/300' },
-        },
-        {
-            title: 'Item 5',
-            text: 'Text 5',
-            backgroundImage: { uri: 'https://picsum.photos/id/11/200/300' },
-        },
-    ];
+// const Home = () => {
+//   return <WebView source={{ uri: 'http://192.168.0.70:3000/' }} />;
+// };
+// const Map = () => {
+//   return <WebView source={{ uri: 'http://192.168.0.70:3000/Map' }} />;
+// };
 
-    const _renderImage = ({ item, index }) => {
-        return (
-            <>
-                <View
-                    style={{
-                        flex: 1,
-                        position: 'absolute',
-                        top: 0,
-                        left: 0,
-                        marginTop: 60,
-                        marginLeft: 30,
-                        zIndex: 1,
-                    }}
-                >
-                    <Text>오늘의 추천</Text>
-                </View>
-                <View
-                    style={{
-                        flex: 1,
-                    }}
-                >
-                    <ImageBackground
-                        style={{ flex: 1 }}
-                        source={item.backgroundImage}
-                        resizeMode="cover"
-                    />
-                </View>
-            </>
-        );
-    };
+// const HaveNewData = (name) => {
+//   return <WebView source={{ uri: `http://www.naver.com` }} />;
+// };
 
-    const pagination = () => {
-        const { entries, activeSlide } = this.state;
-        return (
-            <Pagination
-                dotsLength={entries.length}
-                activeDotIndex={activeSlide}
-                containerStyle={{ backgroundColor: 'rgba(0, 0, 0, 0.75)' }}
-                dotStyle={{
-                    width: 10,
-                    height: 10,
-                    borderRadius: 5,
-                    marginHorizontal: 8,
-                    backgroundColor: 'rgba(255, 255, 255, 0.92)',
-                }}
-                inactiveDotStyle={
-                    {
-                        // Define styles for inactive dots here
-                    }
-                }
-                inactiveDotOpacity={0.4}
-                inactiveDotScale={0.6}
-            />
-        );
-    };
+// const Tab = createBottomTabNavigator();
 
-    const width = Dimensions.get('window').width;
+// export default function App() {
+//   return (
+//     <View style={{ flex: 1 }}>
+//       <NavigationContainer>
+//         <Tab.Navigator>
+//           <Tab.Screen name='Home' component={Home} />
+//           <Tab.Screen name='Map' component={Map} />
+//         </Tab.Navigator>
+//         <FloatingAction
+//           actions={actions}
+//           onPressItem={(name) => {
+//             HaveNewData(name);
+//           }}
+//         />
+//       </NavigationContainer>
+//     </View>
+//   );
+// }
 
-    return (
-        <View style={{ flex: 1 }}>
-            <SafeAreaView
-                style={{
-                    flex: 3,
-                }}
-            >
-                <FlatList
-                    data={carouselItems}
-                    renderItem={renderItem}
-                    style={{
-                        position: 'absolute',
-                    }}
-                ></FlatList>
-                <Carousel
-                    layout={'default'}
-                    ref={(ref) => (carousel = ref)}
-                    sliderWidth={width}
-                    itemWidth={width}
-                    data={carouselItems}
-                    renderItem={_renderImage}
-                    onSnapToItem={(index) => setActiveIndex(index)}
-                    loop={true}
-                    // autoplay={true}
-                    itemHeight={1}
-                    sliderHeight={500}
-                />
-                {pagination}
-            </SafeAreaView>
-        </View>
-    );
-};
+// const styles = StyleSheet.create({});
