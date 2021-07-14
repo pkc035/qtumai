@@ -49,6 +49,7 @@ class AccountGuest(AbstractUser):
     my_shop = models.ForeignKey(Shop, on_delete=models.CASCADE, related_name="accountMyShop", null=True)
     shopkeeper_tel = models.CharField(max_length=20, blank=True)
     searched_person = models.ManyToManyField('self', symmetrical=False) # 같이갈 사람 추가할 때 필요
+    my_friends = models.ManyToManyField('self', symmetrical=False) # symmetrical: 대칭관계(상대방쪽에서도 자동추가 여부)
     job = models.ForeignKey(AccountJob, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
@@ -93,17 +94,30 @@ class SearchedStore(models.Model):
 
 
 class Preference(models.Model):
-    account_guest = models.ManyToManyField(
+    account_guest = models.ForeignKey(
         AccountGuest,
-        related_name="userPreference",
-        blank=True
+        on_delete=models.CASCADE,
+        null=True
     )
-    preference_name = models.CharField(max_length=20, blank=True)
-    score = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
-    ''''''
     # taste, service, cleanliness, vibe, price
-
+    taste_service = models.SmallIntegerField() # 0, 1로 구분
+    taste_cleanliness = models.SmallIntegerField()
+    taste_vibe = models.SmallIntegerField()
+    taste_price = models.SmallIntegerField()
+    service_cleanliness = models.SmallIntegerField()
+    service_vibe = models.SmallIntegerField()
+    service_price = models.SmallIntegerField()
+    cleanliness_vibe = models.SmallIntegerField()
+    cleanliness_price = models.SmallIntegerField()
+    vibe_price = models.SmallIntegerField()
+    
+    # 0 ~ 1023번 그룹으로 분류
+    def group_num(self):
+        group_num = self.taste_service * 512 + self.taste_cleanliness * 256 + self.taste_vibe * 128 + self.taste_price * 64
+        + self.service_cleanliness * 32 + self.service_vibe * 16 + self.service_price * 8
+        + self.cleanliness_vibe * 4 + self.cleanliness_price * 2 + self.vibe_price
+        return group_num
 
 
 class FunData(models.Model):
