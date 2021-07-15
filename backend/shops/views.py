@@ -1,12 +1,12 @@
 from random import sample
 
 from accounts.models import AccountGuest
-from .models         import ReportShop, Shop, Category, Review
-from .serializers    import ReportShopSerializer, ShopListSerializer, ShopDetailSerializer, ReviewSerializer
+from .models         import ReportReview, ReportShop, Shop, Category, Review
+from .serializers    import ReportReviewSerializer, ReportShopSerializer, ShopListSerializer, ShopDetailSerializer, ReviewSerializer
 
 from rest_framework.viewsets   import ModelViewSet
 from rest_framework.response   import Response
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, action
 
 from django.db.models    import Q, Value
 from django.db           import transaction
@@ -120,3 +120,36 @@ def report_shop(request):
                 
         return Response({'message':'Report Shop Existed'})
 
+@api_view(['DELETE'])
+def report_shop_command(request, shop_id):
+    report = ReportShop.objects.filter(Q(shop_id=shop_id) | Q(guest_id=request.user))
+    report.delete()
+
+    return Response({'message':'Report Shop Deleted'})
+
+class ReportReviewViewSet(ModelViewSet):
+    serializer_class = ReportReviewSerializer
+    def list(self, request):
+        reports = ReportReview.objects.all()
+
+        return Response(reports)
+    
+    def create(self,request):
+        review = Review.objects.get(id=request.data['review_id'])
+        serializer = self.get_serializer(data=request.data)
+
+        if serializer.is_valid(raise_exception=True):
+            # serializer.save(reivew=review, guest_id=request.user)
+            serializer.save(review=review, guest_id=1)
+
+            return Response({'message':'Report Review Created'})
+
+        return Response({'message':'Report Review Created Fail'})
+
+@api_view(['DELETE'])
+def report_review_command(request, report_review_id):
+        report = ReportReview.objects.filter(Q(id=report_review_id) | Q(guest_id=request.user))
+        report.delete()
+
+        return Response({'message':'Report Shop Deleted'})
+    
