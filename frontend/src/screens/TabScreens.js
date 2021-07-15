@@ -11,7 +11,7 @@ export const MainNavigator = () => {
   return (
     <MainTab.Navigator
       initialRouteName='Main'
-      // tabBarOptions={{ showLabel: false }}
+    // tabBarOptions={{ showLabel: false }}
     >
       <MainTab.Screen name='Main' component={Main} />
       <MainTab.Screen name='Map' component={Map} />
@@ -25,14 +25,15 @@ export const MainNavigator = () => {
 export const Main = ({ navigation }) => {
   return (
     <MainContainer>
+
+      <WebView source={{ uri: 'http://192.168.0.76:3000/' }} />
+
       <FloatingBackground>
         <FloatingButton
           position={{ bottom: 80, right: 40 }}
           navigation={navigation}
         />
       </FloatingBackground>
-
-      <WebView source={{ uri: 'http://192.168.0.70:3000/' }} />
     </MainContainer>
   );
 };
@@ -52,7 +53,7 @@ const FloatingBackground = styled.View`
 export const Map = ({ navigation }) => {
   return (
     <Container>
-      <WebView source={{ uri: 'http://192.168.0.70:3000/Map' }} />
+      <WebView source={{ uri: 'http://192.168.0.76:3000/Map' }} />
       <Button title='Who' onPress={() => navigation.navigate('Who')} />
       <Button title='Where' onPress={() => navigation.navigate('Where')} />
     </Container>

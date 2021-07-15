@@ -1,43 +1,43 @@
-import React from "react";
-import Slider from "react-slick";
+import React, { useState, useEffect } from "react";
+// import { customFetch } from "../../utils/customFetch";
 import MainStoreList from "../../components/MainStoreList/MainStoreList";
+import Slider from "react-slick";
 import styled from "styled-components";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 export default function SimpleSlider() {
-  const MAIN_STORE_SLIDER = [
-    {
-      id: 1,
-      title: "오늘의 맛집",
-      text: "분위기 좋은 파스타 맛집",
-      url: "https://i.imgur.com/aylXNh7.png",
-    },
-    {
-      id: 2,
-      title: "오늘의 맛집",
-      text: "정말 맛있는 족발",
-      url: "https://i.imgur.com/zs1GZHb.jpg",
-    },
-    {
-      id: 3,
-      title: "오늘의 맛집",
-      text: "정말 맛있는 파스타",
-      url: "https://i.imgur.com/Nxqdwbs.jpg",
-    },
-    {
-      id: 4,
-      title: "오늘의 맛집",
-      text: "정말 맛있는 파스타",
-      url: "https://i.imgur.com/ERmRCKF.jpg",
-    },
-    {
-      id: 5,
-      title: "오늘의 맛집",
-      text: "정말 맛있는 파스타",
-      url: "https://i.imgur.com/SwiHvRG.png",
-    },
-  ];
+  const [mainContent, setMainContent] = useState([]);
+  const [personalContents, setPersonalContent] = useState([]);
+
+  useEffect(() => {
+    fetch("data/mainPageData.json", {
+      method: 'GET',
+    })
+      .then(res => res.json())
+      .then(data => {
+        const newMainContent = data.filter(({ title }) => title === '오늘의 추천');
+        const newPersonalContents = data.filter(({ title }) => title !== '오늘의 추천');
+
+        setMainContent(...newMainContent);
+        setPersonalContent(newPersonalContents);
+      });
+  }, []);
+
+  // useEffect(() => {
+  //   const getMainData = () => {
+  //     customFetch('', {
+  //       method: 'GET',
+  //     }, res => {
+  //       console.log(res);
+  //     })
+  //   }
+
+  //   fetch("../../public/data/mainPageData.json", {
+  //     method: "GET",
+  //   }).then(res => res.json())
+  //     .then(data => console.log(data));
+  // }, [])
 
   let settings = {
     dots: true,
@@ -52,13 +52,13 @@ export default function SimpleSlider() {
   return (
     <MainContainer>
       <MainSlider {...settings}>
-        {MAIN_STORE_SLIDER.map(item => {
+        {mainContent.length !== 0 && mainContent.list.map(data => {
           return (
-            <div key={item.id}>
-              <ImageContainer src={item.url}>
+            <div key={data.id}>
+              <ImageContainer src={data.shop_info_url}>
                 <ImageContext>
-                  <ImageTitle>{item.title}</ImageTitle>
-                  <ImageSubTitle>{item.text}</ImageSubTitle>
+                  <ImageTitle>{mainContent.title}</ImageTitle>
+                  <ImageSubTitle>{data.shop_name}</ImageSubTitle>
                 </ImageContext>
                 <BlackGradetion />
               </ImageContainer>
@@ -67,7 +67,7 @@ export default function SimpleSlider() {
         })}
       </MainSlider>
       <MainStoreWrap>
-        <MainStoreList />
+        <MainStoreList personalContents={personalContents} />
       </MainStoreWrap>
     </MainContainer>
   );

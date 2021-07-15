@@ -20,7 +20,13 @@ const Map = () => {
     var marker = new kakao.maps.Marker({
       position: markerPosition,
     });
+
     marker.setMap(map);
+    kakao.maps.event.addListener(map, 'drag', function () {
+      // var message = '지도를 드래그 하고 있습니다. ' +
+      //   '지도의 중심 좌표는 ' + map.getCenter().toString() + ' 입니다.';
+      // console.log(map.getCenter().toString());
+    });
   }, []);
 
   return (

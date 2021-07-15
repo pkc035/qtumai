@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import { createGlobalStyle } from 'styled-components';
 import styled from 'styled-components/native';
-import { AntDesign, Entypo } from '@expo/vector-icons';
+import { AntDesign, Entypo, FontAwesome5 } from '@expo/vector-icons';
 
 export default class FloatingButton extends React.Component {
   animation = new Animated.Value(0);
@@ -81,7 +81,7 @@ export default class FloatingButton extends React.Component {
 
         <TouchableWithoutFeedback onPress={this.toggleMenu}>
           <Animated.View style={[styles.button, styles.menu, rotation]}>
-            <AntDesign name='plus' size={24} color='#fff' />
+            <FontAwesome5 name='plus' size={24} color='#fff' />
           </Animated.View>
         </TouchableWithoutFeedback>
       </FloatingButtonContainer>
@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
     zIndex: 1000,
   },
   menu: {
-    backgroundColor: '#f02a4b',
+    backgroundColor: '#ff3300',
   },
   secondary: {
     width: 48,
