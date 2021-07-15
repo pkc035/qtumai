@@ -5,6 +5,9 @@ const GlobalStyle = createGlobalStyle`
 * {
   box-sizing: border-box;
   font-family: 'Noto Sans KR', sans-serif;
+  user-select: none;
+  -webkit-tap-highlight-color:rgba(255,255,255,0);
+  -webkit-touch-callout: none;
 }
 button {
   border: none;
