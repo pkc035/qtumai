@@ -78,6 +78,7 @@ class OpenTime(models.Model):
 class Menu(models.Model):
     shop = models.ForeignKey(Shop, on_delete=models.CASCADE, null=True)
     menu_name = models.CharField(max_length=20, blank=True)
+    img_path = models.TextField(blank=True)
     price = models.PositiveIntegerField(null=True)
     is_representative = models.BooleanField(default=False) # 대표메뉴 여부
 
@@ -88,6 +89,7 @@ class Ingredient(models.Model):
         related_name="ingredients", 
         blank=True
     )
+    img_path = models.TextField(blank=True) # 추후 사용 예정
     ingredient_name = models.CharField(max_length=20, blank=True)
 
 
