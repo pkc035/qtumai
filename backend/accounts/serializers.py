@@ -17,7 +17,8 @@ class UserSerializer(serializers.ModelSerializer):
             'phone_number',
             'google_number',
             'kakao_number',
-            'group_num'
+            'group_num',
+            'stayed_time'
         ]
     def create(self, validated_data):
         user = get_user_model().objects.create(
