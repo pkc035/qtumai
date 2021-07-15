@@ -1,6 +1,9 @@
+from datetime import datetime
+
 from django.db import models
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser
+from django.db.models.deletion import CASCADE
 from shops.models import Shop, Category
 
 # Create your models here.
@@ -8,6 +11,8 @@ from shops.models import Shop, Category
 class LivingArea(models.Model):
     living_area = models.TextField()
     people_count = models.IntegerField(default=0)
+    latitude = models.FloatField(null=True)
+    longitude = models.FloatField(null=True)
 
 
 class AccountJob(models.Model):
@@ -48,7 +53,12 @@ class AccountGuest(AbstractUser):
     agreed_marketing_receive = models.BooleanField(default=False) # 마케팅 정보제공 동의여부
     my_shop = models.ForeignKey(Shop, on_delete=models.CASCADE, related_name="accountMyShop", null=True)
     shopkeeper_tel = models.CharField(max_length=20, blank=True)
-    searched_people = models.ManyToManyField('self', related_name="searchedPeople", symmetrical=False) # 같이갈 사람 추가할 때 필요
+    searched_people = models.ManyToManyField(
+        'self',
+        related_name="searchedPeople",
+        through="SearchedPeopleThrough",
+        symmetrical=False
+    ) # 같이갈 사람 추가할 때 필요
     my_friends = models.ManyToManyField('self', related_name="myFriends", symmetrical=False) # symmetrical: 대칭관계(상대방쪽에서도 자동추가 여부)
     job = models.ForeignKey(AccountJob, on_delete=models.CASCADE, null=True)
 
@@ -70,8 +80,10 @@ class SearchedLocation(models.Model):
         blank=True
     )
     content_word = models.CharField(max_length=20, blank=True)
-    searched_count = models.PositiveIntegerField(default=0)
-
+    latitude = models.FloatField(null=True)
+    longitude = models.FloatField(null=True)
+    searched_count = models.PositiveIntegerField(default=0)    
+    searched_time = models.DateTimeField(default=datetime.now())
 
 class SearchedMenu(models.Model):
     account_guest = models.ManyToManyField(
@@ -81,6 +93,7 @@ class SearchedMenu(models.Model):
     )
     content_word = models.CharField(max_length=20, blank=True)
     searched_count = models.PositiveIntegerField(default=0)
+    searched_time = models.DateTimeField(default=datetime.now())
 
 
 class SearchedStore(models.Model):
@@ -91,7 +104,20 @@ class SearchedStore(models.Model):
     )
     content_word = models.CharField(max_length=20, blank=True)
     searched_count = models.PositiveIntegerField(default=0)
+    searched_time = models.DateTimeField(default=datetime.now())
 
+class SearchedPeopleThrough(models.Model):
+    from_accountguest = models.ForeignKey(
+        'AccountGuest',
+        related_name="searcedpeople_from",
+        on_delete=CASCADE
+    )
+    to_accountguest = models.ForeignKey(
+        'AccountGuest',
+        related_name="searcedpeople_to",
+        on_delete=CASCADE
+    )
+    searched_time = models.DateTimeField(default=datetime.now())
 
 class Preference(models.Model):
     account_guest = models.ForeignKey(
