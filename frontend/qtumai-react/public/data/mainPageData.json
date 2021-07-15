@@ -1,0 +1,270 @@
+[
+    {
+        "title": "오늘의 추천",
+        "list": [
+            {
+                "id": 19,
+                "shop_name": "파스타나라",
+                "shop_info_url": "https://i.imgur.com/aylXNh7.png",
+                "kakao_score": 31,
+                "latitude": 125.004,
+                "longitude": 241.004
+            },
+            {
+                "id": 21,
+                "shop_name": "회나라",
+                "shop_info_url": "https://i.imgur.com/zs1GZHb.jpg",
+                "kakao_score": 30,
+                "latitude": 125.008,
+                "longitude": 241.008
+            },
+            {
+                "id": 20,
+                "shop_name": "김밥나라",
+                "shop_info_url": "https://i.imgur.com/Nxqdwbs.jpg",
+                "kakao_score": 23,
+                "latitude": 125.006,
+                "longitude": 241.006
+            },
+            {
+                "id": 22,
+                "shop_name": "곱창나라",
+                "shop_info_url": "https://i.imgur.com/ERmRCKF.jpg",
+                "kakao_score": 22,
+                "latitude": 125.01,
+                "longitude": 241.01
+            },
+            {
+                "id": 18,
+                "shop_name": "라면나라",
+                "shop_info_url": "https://i.imgur.com/SwiHvRG.png",
+                "kakao_score": 9,
+                "latitude": 125.002,
+                "longitude": 241.002
+            },
+            {
+                "id": 23,
+                "shop_name": "삼겹살나라",
+                "shop_info_url": "https://i.imgur.com/aylXNh7.png",
+                "kakao_score": 54,
+                "latitude": 125.012,
+                "longitude": 241.012
+            },
+            {
+                "id": 26,
+                "shop_name": "김치찌개나라",
+                "shop_info_url": "https://i.imgur.com/Nxqdwbs.jpg",
+                "kakao_score": 34,
+                "latitude": 125.018,
+                "longitude": 241.018
+            },
+            {
+                "id": 25,
+                "shop_name": "냉면나라",
+                "shop_info_url": "https://i.imgur.com/ERmRCKF.jpg",
+                "kakao_score": 4,
+                "latitude": 125.016,
+                "longitude": 241.016
+            },
+            {
+                "id": 24,
+                "shop_name": "초밥나라",
+                "shop_info_url": "https://i.imgur.com/aylXNh7.png",
+                "kakao_score": 3,
+                "latitude": 125.014,
+                "longitude": 241.014
+            },
+            {
+                "id": 27,
+                "shop_name": "육회나라",
+                "shop_info_url": "https://i.imgur.com/Nxqdwbs.jpg",
+                "kakao_score": 1,
+                "latitude": 125.02,
+                "longitude": 241.02
+            }
+        ]
+    },
+    {
+        "title": "오늘의 일식",
+        "list": [
+            {
+                "id": 21,
+                "shop_name": "회나라",
+                "shop_info_url": "https://i.imgur.com/Nxqdwbs.jpg",
+                "kakao_score": 30,
+                "latitude": 125.008,
+                "longitude": 241.008
+            },
+            {
+                "id": 24,
+                "shop_name": "초밥나라",
+                "shop_info_url": "https://i.imgur.com/ERmRCKF.jpg",
+                "kakao_score": 3,
+                "latitude": 125.014,
+                "longitude": 241.014
+            },
+            {
+                "id": 24,
+                "shop_name": "초밥나라",
+                "shop_info_url": "https://i.imgur.com/ERmRCKF.jpg",
+                "kakao_score": 3,
+                "latitude": 125.014,
+                "longitude": 241.014
+            },
+            {
+                "id": 24,
+                "shop_name": "초밥나라",
+                "shop_info_url": "https://i.imgur.com/ERmRCKF.jpg",
+                "kakao_score": 3,
+                "latitude": 125.014,
+                "longitude": 241.014
+            },
+            {
+                "id": 24,
+                "shop_name": "초밥나라",
+                "shop_info_url": "https://i.imgur.com/ERmRCKF.jpg",
+                "kakao_score": 3,
+                "latitude": 125.014,
+                "longitude": 241.014
+            },
+            {
+                "id": 24,
+                "shop_name": "초밥나라",
+                "shop_info_url": "https://i.imgur.com/ERmRCKF.jpg",
+                "kakao_score": 3,
+                "latitude": 125.014,
+                "longitude": 241.014
+            },
+            {
+                "id": 24,
+                "shop_name": "초밥나라",
+                "shop_info_url": "https://i.imgur.com/ERmRCKF.jpg",
+                "kakao_score": 3,
+                "latitude": 125.014,
+                "longitude": 241.014
+            }
+        ]
+    },
+    {
+        "title": "오늘의 한식",
+        "list": [
+            {
+                "id": 22,
+                "shop_name": "곱창나라",
+                "shop_info_url": "url2",
+                "kakao_score": 22,
+                "latitude": 125.01,
+                "longitude": 241.01
+            },
+            {
+                "id": 26,
+                "shop_name": "김치찌개나라",
+                "shop_info_url": "url2",
+                "kakao_score": 34,
+                "latitude": 125.018,
+                "longitude": 241.018
+            },
+            {
+                "id": 25,
+                "shop_name": "냉면나라",
+                "shop_info_url": "url2",
+                "kakao_score": 4,
+                "latitude": 125.016,
+                "longitude": 241.016
+            },
+            {
+                "id": 27,
+                "shop_name": "육회나라",
+                "shop_info_url": "url2",
+                "kakao_score": 1,
+                "latitude": 125.02,
+                "longitude": 241.02
+            },
+            {
+                "id": 26,
+                "shop_name": "김치찌개나라",
+                "shop_info_url": "url2",
+                "kakao_score": 34,
+                "latitude": 125.018,
+                "longitude": 241.018
+            },
+            {
+                "id": 25,
+                "shop_name": "냉면나라",
+                "shop_info_url": "url2",
+                "kakao_score": 4,
+                "latitude": 125.016,
+                "longitude": 241.016
+            },
+            {
+                "id": 27,
+                "shop_name": "육회나라",
+                "shop_info_url": "url2",
+                "kakao_score": 1,
+                "latitude": 125.02,
+                "longitude": 241.02
+            },
+            {
+                "id": 26,
+                "shop_name": "김치찌개나라",
+                "shop_info_url": "url2",
+                "kakao_score": 34,
+                "latitude": 125.018,
+                "longitude": 241.018
+            },
+            {
+                "id": 25,
+                "shop_name": "냉면나라",
+                "shop_info_url": "url2",
+                "kakao_score": 4,
+                "latitude": 125.016,
+                "longitude": 241.016
+            },
+            {
+                "id": 27,
+                "shop_name": "육회나라",
+                "shop_info_url": "url2",
+                "kakao_score": 1,
+                "latitude": 125.02,
+                "longitude": 241.02
+            }
+        ]
+    },
+    {
+        "title": "오늘의 양식",
+        "list": [
+            {
+                "id": 19,
+                "shop_name": "파스타나라",
+                "shop_info_url": "https://i.imgur.com/zs1GZHb.jpg",
+                "kakao_score": 31,
+                "latitude": 125.004,
+                "longitude": 241.004
+            },
+            {
+                "id": 19,
+                "shop_name": "파스타나라",
+                "shop_info_url": "https://i.imgur.com/zs1GZHb.jpg",
+                "kakao_score": 31,
+                "latitude": 125.004,
+                "longitude": 241.004
+            },
+            {
+                "id": 19,
+                "shop_name": "파스타나라",
+                "shop_info_url": "https://i.imgur.com/zs1GZHb.jpg",
+                "kakao_score": 31,
+                "latitude": 125.004,
+                "longitude": 241.004
+            },
+            {
+                "id": 19,
+                "shop_name": "파스타나라",
+                "shop_info_url": "https://i.imgur.com/zs1GZHb.jpg",
+                "kakao_score": 31,
+                "latitude": 125.004,
+                "longitude": 241.004
+            }
+        ]
+    }
+]
