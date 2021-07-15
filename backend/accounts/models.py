@@ -55,6 +55,10 @@ class AccountGuest(AbstractUser):
     def __str__(self):
         return self.username
 
+    # fun_data 상위 %
+    def top_rate_fun_data(self):
+        pass
+
 
 # 방문 시간도 함께 체크하기 위해 through 사용 (ManyToMany에서 컬럼 추가하는 방법)
 class VisitedShop(models.Model):
@@ -99,7 +103,7 @@ class Preference(models.Model):
         on_delete=models.CASCADE,
         null=True
     )
-    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     # taste, service, cleanliness, vibe, price
     taste_service = models.SmallIntegerField() # 0, 1로 구분
     taste_cleanliness = models.SmallIntegerField()
@@ -146,7 +150,10 @@ class ClickData(models.Model):
         null=True
     )
     clicked_time = models.TimeField(auto_now_add=True)
-    stayed_time = models.TimeField() # 페이지 이동했을 때 체크
+    left_time = models.TimeField() # 페이지 이동했을 때 체크
+
+    def stayed_time(self):
+        return self.left_time - self.clicked_time
 
 
 class MyLikeList(models.Model):

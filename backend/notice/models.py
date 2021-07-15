@@ -16,8 +16,9 @@ class Notice(models.Model):
 
     def __str__(self):
         return self.title
-    
 
+
+# 비즈니스 신청하기 폼
 class BusinessForm(models.Model):
     shop_name = models.CharField(max_length=30, blank=True)
     category = models.ForeignKey(
@@ -58,3 +59,11 @@ class EmailQuestion(models.Model):
     img_url_1 = models.TextField(blank=True)
     img_url_2 = models.TextField(blank=True)
     img_url_3 = models.TextField(blank=True)
+
+
+# 사업 제휴 문의 폼
+class ProposeBusinessForm(models.Model):
+    shop_name = models.CharField(max_length=50, blank=True)
+    phone_number = models.CharField(max_length=20, blank=True)
+    manager_name = models.CharField(max_length=10, blank=True)
+    content = models.CharField(max_length=150, blank=True)

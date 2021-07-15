@@ -37,7 +37,7 @@ class Shop(models.Model):
     shop_name = models.CharField(max_length=50, blank=True)
     shop_address = models.CharField(max_length=50, blank=True)
     shop_description = models.TextField(blank=True)
-    phone_number = models.CharField(max_length=15, blank=True)
+    phone_number = models.CharField(max_length=20, blank=True)
     # open_time = models.TextField(blank=True)
     like_count = models.PositiveIntegerField(default=0)
     shop_info_url = models.TextField(blank=True) 
@@ -150,7 +150,7 @@ class ReportShop(models.Model):
 
 # 댓글 신고기능(Radio Button으로 한 가지 사유만 선택 가능)
 class ReportReview(models.Model):
-    shop = models.ForeignKey(Shop, on_delete=models.CASCADE, related_name="reportReview", null=True)
+    review = models.ForeignKey(Review, on_delete=models.CASCADE, null=True)
     guest = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         related_name="guestReportReview",
