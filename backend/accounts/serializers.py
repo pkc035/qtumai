@@ -27,6 +27,8 @@ class AccountGuestSerializer(serializers.ModelSerializer):
             'username',
             'gender',
             'birthday',
+            'group_num',
+            'stayed_time'
             )
         extra_kwargs = {'living_area':{'write_only':True}}
 
@@ -38,8 +40,7 @@ class AccountGuestSerializer(serializers.ModelSerializer):
             area.people_count= area.people_count + 1
             area.save()
         else:
-            area = LivingArea.objects.create(living_area=living_area, people_count=1)
-        
+            area = LivingArea.objects.create(living_area=living_area, people_count=1)      
             AccountGuest.objects.create(
             phone_number  = validated_data.get("phone_number", ""),
             kakao_number  = validated_data.get("kakao_number", ""),

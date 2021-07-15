@@ -31,5 +31,6 @@ urlpatterns = [
     path('google-login/',GoogleLoginView.as_view()),
     path('signup',views.AccountGuestAPIView.as_view()),
     path('dislike-shop', views.dislikeshop),
-    path('like-shop', views.likeshop)
+    path('like-shop', views.likeshop),
+    
 ] + router.urls

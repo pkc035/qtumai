@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 import requests, jwt
 from django.http import JsonResponse
 from django.views        import View
@@ -92,6 +93,7 @@ def dislikeshop(request):
         user.dislike_shop.remove(shop)
         return Response({'message':'dislike shop deleted'})
 
+
 @transaction.atomic
 @api_view(['POST'])
 def likeshop(request):
@@ -109,7 +111,6 @@ def likeshop(request):
         shop.like_count -= 1
         shop.save()
         return Response({'message':'like shop deleted'})
-
 
 '''
 # Python
