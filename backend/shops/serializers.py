@@ -1,24 +1,33 @@
-from django.contrib.auth  import get_user_model
+from datetime            import datetime
 
-from .models              import ReportShop, Review, Shop, ReportReview
-from accounts.serializers import AccountGuestSerializer
-from accounts.models      import AccountGuest
+from django.contrib.auth import get_user_model
+from django.db.models    import F
 
-from rest_framework import serializers
+from rest_framework      import serializers
 
-from .models import Shop
+from .models             import ReportShop, ReportReview, Review, Shop, ThemeKeyword, Coupon
+from accounts.models     import AccountGuest, SearchedLocation
+
+class CouponSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Coupon
+        fields = ['coupon_content']
+
+class ThemeKeywordSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ThemeKeyword
+        fields = ['theme_keyword']
 
 class ShopListSerializer(serializers.ModelSerializer):
-    id = serializers.IntegerField()
-    shop_name = serializers.CharField()
-    shop_info_url = serializers.CharField()
-    kakao_score = serializers.IntegerField()
-    latitude = serializers.FloatField()
-    longitude = serializers.FloatField()
-    
+    themekeyword_set =  ThemeKeywordSerializer(many=True, read_only=True)
+    coupon = CouponSerializer(many=True, read_only=True)
+
     class Meta:
         model = Shop
-        fields = ['id','shop_name','shop_info_url','kakao_score','latitude','longitude']
+        fields = [
+            'id','shop_name','shop_info_url','kakao_score',
+            'latitude','longitude', 'coupon', 'themekeyword_set'
+        ]
 
 class ShopDetailSerializer(serializers.ModelSerializer):
     class Meta:
@@ -46,3 +55,37 @@ class ReportReviewSerializer(serializers.ModelSerializer):
     class Meta:
         model = ReportReview
         fields = '__all__'
+
+class AccountSearchSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = get_user_model()
+        fields =['id', 'username']
+
+    # AccountGuest - AccountGuest 중간테이블 생성 후 변경
+    # def update_or_create(self,validated_data,account):
+    #     SearchedPeopleThrough.objects.update_or_create(
+    #     from_accountguest=account,
+    #     to_accountguest_id=validated_data['id'],
+    #     # searched_time = datetime.now(),
+    #     defaults = {
+    #         'from_accountguest': account,
+    #         'to_accountguest_id' : validated_data['id']
+    #         }
+    #     )
+
+class LocationSearchSerializer(serializers.Serializer):
+    class Meta:
+        model  = SearchedLocation
+        fields = ['content_word', 'searched_count'] 
+        # fields = ['content_word', 'latitude', 'longitude', 'searched_count', 'searched_time'] 
+
+    def update_or_create(self,validated_data,account):
+        location = SearchedLocation.objects.update_or_create(
+            content_word = validated_data['content_word'],
+            # latitude = validated_data['latitude'],
+            # longitude = validated_data['longitude'],
+            searched_time = datetime.now()
+        )
+        # location.searched_count = F('searched_count') + 1
+        location.account_guest.add(account)
+        location.save()
