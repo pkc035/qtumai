@@ -1,62 +1,35 @@
 import requests, jwt
-
-from django.http         import JsonResponse
+from django.http import JsonResponse
 from django.views        import View
-from django.db           import transaction
+from django.db           import router, transaction
 from django.http         import response
 from django.shortcuts    import get_object_or_404, render
 from django.contrib.auth import get_user_model
 
+from .models import AccountGuest
 from .serializers     import AccountGuestSerializer
-from .models          import AccountGuest
 from shops            import models
 from project.settings import SECRET_KEY
-
+from rest_framework.decorators import authentication_classes, permission_classes
+from rest_framework.views      import APIView
 from rest_framework            import viewsets
 from rest_framework.decorators import api_view
 from rest_framework.response   import Response
+from rest_framework import status
+from accounts import serializers
+from .serializers import AccountGuestSerializer
 
-
-
-# Create your views here.
-
-
-class UserViewSet(viewsets.ModelViewSet):
-    serializer_class = AccountGuestSerializer
-    def get_queryset(self):
-        queryset = AccountGuest.objects.all()
-        return queryset
-
-
-
-@api_view(['POST','GET'])
-def signup(request):
-
-    if request.method =='POST':
-        error = AccountGuestSerializer.validate(get_user_model(), data=request.data)
-        if error['username']:
-            return Response(error, status=400)
+class AccountGuestAPIView(APIView):
+    def post(self, request):
         serializer = AccountGuestSerializer(data=request.data)
-        if serializer.is_valid(raise_exception=True):
-            user       = AccountGuestSerializer.create(get_user_model(), request.data)
-            serializer = AccountGuestSerializer(user)
-            return Response(serializer.data)
-        
-        return JsonResponse({'message':'FAILED'},status=400)
 
-    elif request.method =='GET':
-        phone_number = request.data['phone_number']
-        if AccountGuestSerializer.objects.filter(phone_number=phone_number).exist() : 
-            return JsonResponse({"message": 'USER_ALREADY_EXIST'},status=400)
-        if not AccountGuestSerializer.objects.filter(phone_number=phone_number).exist() :
-            return JsonResponse({"message" : 'USER_DOSE_NOT_EXIST'},status=200)
-
-@api_view(['POST'])
-def creataccount(request) :
-    data = {
-        
-    }
-)
+        if serializer.is_valid():
+            serializer.create(
+                validated_data=request.data,
+                living_area=request.data['living_area']
+            )
+            return Response(serializer.data,status=status.HTTP_201_CREATED)
+        return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
 
 class NaverLogInView(View):
     def get(self, request):
@@ -66,7 +39,8 @@ class NaverLogInView(View):
                 "https://openapi.naver.com/v1/nid/me", headers = {"Authorization":f"Bearer {access_token}"},
             )
             profile_json = profile_request.json()
-            naver_number = profile_json["id"]
+            naver_number = profile_json["response"]["id"]
+            
             if AccountGuest.objects.filter(naver_number=naver_number).exists():
                 guest       = AccountGuest.objects.get(naver_number=naver_number)
                 encoded_jwt = jwt.encode({'guest_id': guest.id},SECRET_KEY, ALGORITHM)
