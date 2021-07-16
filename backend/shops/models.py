@@ -11,27 +11,12 @@ class Category(models.Model):
     like_count = models.PositiveIntegerField(default=0)
 
 
-class AccountShopkeeper(models.Model):
-    shopkeeper_name = models.CharField(max_length=20, blank=True)
-    phone_number = models.CharField(max_length=20, blank=True)
-    
-
-class Coupon(models.Model):
-    coupon_content = models.TextField(blank=True)
-    begin_date = models.DateTimeField(null=True)
-    expire_date = models.DateTimeField(null=True)
-    coupon_count = models.IntegerField(default=0)
-    using_time_begin = models.TimeField(null=True) # 사용가능 시간
-    using_time_end = models.TimeField(null=True)
-
-
 class ShopArea(models.Model):
-    area_name = models.CharField(max_length=10, blank=True)
-
+    area_name = models.CharField(max_length=20, blank=True)
+    latitude = models.FloatField(null=True)
+    longitude = models.FloatField(null=True)
 
 class Shop(models.Model):
-    shopkeeper = models.ForeignKey(AccountShopkeeper, on_delete=models.CASCADE, null=True)
-    coupon = models.ForeignKey(Coupon, on_delete=models.CASCADE, null=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True)
     area = models.ForeignKey(ShopArea, on_delete=models.CASCADE, null=True) # 지역 구분용(그룹)
     shop_name = models.CharField(max_length=50, blank=True)
@@ -46,10 +31,10 @@ class Shop(models.Model):
     score_cleanliness = models.FloatField(default=0)
     score_vibe = models.FloatField(default=0)
     score_price = models.FloatField(default=0)
-    review_count = models.IntegerField() # 리뷰 개수
-    kakao_score = models.FloatField(default=0)
-    kakao_score_count = models.IntegerField(default=0)
-    kakao_review_count = models.IntegerField(default=0)
+    review_count = models.IntegerField(default=0) # 리뷰 개수(오늘도)
+    naver_score = models.FloatField(default=0)
+    naver_score_count = models.IntegerField(default=0)
+    naver_review_count = models.IntegerField(default=0)
     price_range = models.CharField(max_length=15, blank=True)
     latitude = models.FloatField(null=True) # 위도
     longitude = models.FloatField(null=True) # 경도
@@ -60,6 +45,33 @@ class Shop(models.Model):
 
     def __str__(self):
         return self.shop_name
+
+
+class AccountShopkeeper(models.Model):
+    shop = models.ForeignKey(Shop, on_delete=models.CASCADE, null=True)
+    shopkeeper_name = models.CharField(max_length=20, blank=True)
+    phone_number = models.CharField(max_length=20, blank=True)
+    
+
+class Coupon(models.Model):
+    shop = models.ForeignKey(Shop, on_delete=models.CASCADE, null=True)
+    coupon_content = models.TextField(blank=True)
+    begin_date = models.DateTimeField(null=True)
+    expire_date = models.DateTimeField(null=True)
+
+
+class LikeShopAccounts(models.Model):
+    shop = models.ForeignKey(
+        Shop, 
+        on_delete=models.CASCADE, 
+        null=True
+    )
+    guest = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        null=True
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
 
 
 # 현재시간 기준으로 가게가 열었는지/닫혔는지 표시하기 위해 사용
@@ -78,7 +90,9 @@ class OpenTime(models.Model):
 class Menu(models.Model):
     shop = models.ForeignKey(Shop, on_delete=models.CASCADE, null=True)
     menu_name = models.CharField(max_length=20, blank=True)
-    img_path = models.TextField(blank=True)
+    img_path_1 = models.TextField(blank=True)
+    img_path_2 = models.TextField(blank=True)
+    img_path_3 = models.TextField(blank=True)
     price = models.PositiveIntegerField(null=True)
     is_representative = models.BooleanField(default=False) # 대표메뉴 여부
 
@@ -86,7 +100,7 @@ class Menu(models.Model):
 class Ingredient(models.Model):
     menu = models.ManyToManyField(
         Menu, 
-        related_name="ingredients", 
+        related_name="menuIngredients", 
         blank=True
     )
     img_path = models.TextField(blank=True) # 추후 사용 예정
@@ -107,14 +121,19 @@ class Review(models.Model):
     score_vibe = models.PositiveIntegerField(default=0)
     score_price = models.PositiveIntegerField(default=0)
     content = models.TextField(blank=True)
-    img_path = models.TextField(null=True) # 이미지 1개만 등록
+    img_path = models.TextField(blank=True) # 이미지 1개만 등록
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
 
+class ThemeKeywordCategory(models.Model):
+    category = models.CharField(max_length=20, blank=True) # 분위기, 인기토픽, 찾는목적
+
+
 class ThemeKeyword(models.Model):
-    shop = models.ForeignKey(Shop, on_delete=models.CASCADE, null=True)
-    theme_keyword = models.TextField(blank=True)
+    category = models.ForeignKey(ThemeKeywordCategory, on_delete=models.CASCADE, null=True)
+    theme_keyword = models.TextField(blank=True) # 친절한 / 갓김치 / 재방문
+    shop = models.ManyToManyField(Shop, related_name="shopThemeKeyword", blank=True) # 이 키워드를 사용한 가게들을 역참조할 때
 
 
 class ShopImage(models.Model):
@@ -138,7 +157,7 @@ class ReportShop(models.Model):
     shop = models.ForeignKey(Shop, on_delete=models.CASCADE, related_name="reportShop", null=True)
     guest = models.ForeignKey(
         settings.AUTH_USER_MODEL,
-        related_name="guestReport",
+        related_name="guestReportShop",
         on_delete=models.CASCADE,
         blank=True,
         default=None

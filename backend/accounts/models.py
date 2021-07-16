@@ -1,5 +1,4 @@
 from datetime import datetime
-
 from django.db import models
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser
@@ -9,14 +8,25 @@ from shops.models import Shop, Category, Menu
 # Create your models here.
 # 같은 동네에 사는 사람들 묶어주기 위한 테이블(등록된 동네가 없으면 항목 새로 추가 + Account에 연결, 있으면 있는 항목(pk)에 Account 연결)
 class LivingArea(models.Model):
-    living_area = models.TextField()
+    living_area = models.TextField(blank=True)
     people_count = models.IntegerField(default=0)
     latitude = models.FloatField(null=True)
     longitude = models.FloatField(null=True)
 
 
+# 미리 저장해두기
+class AccountJobCategory(models.Model):
+    category_name = models.CharField(max_length=20, blank=True)
+    
+
 class AccountJob(models.Model):
-    job = models.CharField(max_length=20)
+    category = models.ForeignKey(AccountJobCategory, on_delete=models.CASCADE, null=True)
+    job = models.CharField(max_length=20, blank=True)
+
+
+class Authentication(models.Model):
+    phone_number = models.CharField(max_length=20, blank=True)
+    auth_number = models.CharField(max_length=5, blank=True)
 
 
 class AccountGuest(AbstractUser):
@@ -51,7 +61,7 @@ class AccountGuest(AbstractUser):
     review_like_count = models.PositiveIntegerField(default=0) # 내가 쓴 리뷰에 대한 좋아요 개수
     fun_data_count = models.PositiveIntegerField(default=0)
     agreed_marketing_receive = models.BooleanField(default=False) # 마케팅 정보제공 동의여부
-    my_shop = models.ForeignKey(Shop, on_delete=models.CASCADE, related_name="accountMyShop", null=True)
+    my_shop = models.ForeignKey(Shop, on_delete=models.CASCADE, related_name="accountMyShop", null=True) # my_shop 있으면 사장님 / 없으면 일반 사용자
     shopkeeper_tel = models.CharField(max_length=20, blank=True)
     searched_people = models.ManyToManyField(
         'self',
@@ -59,8 +69,8 @@ class AccountGuest(AbstractUser):
         through="SearchedPeopleThrough",
         symmetrical=False
     ) # 같이갈 사람 추가할 때 필요
-    my_friends = models.ManyToManyField('self', related_name="myFriends", symmetrical=False) # symmetrical: 대칭관계(상대방쪽에서도 자동추가 여부)
-    job = models.ForeignKey(AccountJob, on_delete=models.CASCADE, null=True)
+    job = models.ForeignKey(AccountJob, on_delete=models.CASCADE, null=True, default="")
+    # my_friends = models.ManyToManyField('self', related_name="myFriends", symmetrical=False) # symmetrical: 대칭관계(상대방쪽에서도 자동추가 여부)
 
     def __str__(self):
         return self.username
@@ -88,7 +98,7 @@ class SearchedLocation(models.Model):
     latitude = models.FloatField(null=True)
     longitude = models.FloatField(null=True)
     searched_count = models.PositiveIntegerField(default=0)    
-    searched_time = models.DateTimeField(default=datetime.now())
+    searched_time = models.DateTimeField(auto_now=True)
 
 class SearchedMenu(models.Model):
     account_guest = models.ManyToManyField(
@@ -98,7 +108,7 @@ class SearchedMenu(models.Model):
     )
     content_word = models.CharField(max_length=20, blank=True)
     searched_count = models.PositiveIntegerField(default=0)
-    searched_time = models.DateTimeField(default=datetime.now())
+    searched_time = models.DateTimeField(auto_now=True)
 
 
 class SearchedStore(models.Model):
@@ -109,7 +119,7 @@ class SearchedStore(models.Model):
     )
     content_word = models.CharField(max_length=20, blank=True)
     searched_count = models.PositiveIntegerField(default=0)
-    searched_time = models.DateTimeField(default=datetime.now())
+    searched_time = models.DateTimeField(auto_now=True)
 
 class SearchedPeopleThrough(models.Model):
     from_accountguest = models.ForeignKey(
@@ -122,7 +132,7 @@ class SearchedPeopleThrough(models.Model):
         related_name="searcedpeople_to",
         on_delete=CASCADE
     )
-    searched_time = models.DateTimeField(default=datetime.now())
+    searched_time = models.DateTimeField(auto_now=True)
 
 class Preference(models.Model):
     account_guest = models.ForeignKey(
@@ -176,8 +186,9 @@ class ClickData(models.Model):
         on_delete=models.CASCADE,
         null=True
     )
+    # 보류
     clicked_time = models.TimeField() # 페이지 들어갈 때 체크
-    left_time = models.TimeField(auto_now_add=True) # 페이지 이동했을 때 체크
+    left_time = models.TimeField(auto_now=True) # 페이지 이동했을 때 체크
 
     # def stayed_time(self):
     #     return self.left_time - self.clicked_time
@@ -185,7 +196,7 @@ class ClickData(models.Model):
 
 class MyLikeList(models.Model):
     account_guest = models.ForeignKey(AccountGuest, on_delete=models.CASCADE, null=True)
-    list_name = models.CharField(max_length=20)
+    list_name = models.CharField(max_length=20, blank=True)
 
 
 class MyLikeListShop(models.Model):
