@@ -1,8 +1,8 @@
 from random import sample
 
 from accounts.models import AccountGuest
-from .models         import ReportReview, ReportShop, Shop, Category, Review
-from .serializers    import ReportReviewSerializer, ReportShopSerializer, ShopListSerializer, ShopDetailSerializer, ReviewSerializer
+from .models         import Menu, ReportReview, ReportShop, Shop, Category, Review
+from .serializers    import MenuSerializer, ReportReviewSerializer, ReportShopSerializer, ShopListSerializer, ShopDetailSerializer, ReviewSerializer
 
 from rest_framework.viewsets   import ModelViewSet
 from rest_framework.response   import Response
@@ -152,4 +152,10 @@ def report_review_command(request, report_review_id):
         report.delete()
 
         return Response({'message':'Report Shop Deleted'})
-    
+
+class MenuViewSet(ModelViewSet):
+    serializer_class = MenuSerializer
+    def get_queryset(self):
+        menu = Menu.objects.order_by('?').first()
+
+        return menu

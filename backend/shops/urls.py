@@ -1,6 +1,6 @@
 from django.urls    import path
 
-from .views import ShopListViewSet, ShopDetailViewSet, ReportReviewViewSet,review_command, review_create, report_shop, report_shop_command, report_review_command
+from .views import ShopListViewSet, ShopDetailViewSet, ReportReviewViewSet, MenuViewSet, review_command, review_create, report_shop, report_shop_command, report_review_command
 
 from rest_framework.routers import DefaultRouter
 
@@ -8,6 +8,7 @@ router = DefaultRouter(trailing_slash=True)
 router.register(r"list", ShopListViewSet, basename="list")
 router.register(r"detail/(?P<id>.+)", ShopDetailViewSet,basename="detail")
 router.register(r"review/report", ReportReviewViewSet,basename="ReportReview")
+router.register(r"menu",MenuViewSet, basename="menu")
 
 urlpatterns = [
     path('review', review_create),

@@ -86,11 +86,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'django_schema',
         'USER': 'qtumai',
-        # 'USER': 'root',
         'PASSWORD': 'Qtumai123!',
-        # 'PASSWORD': 'qtumai2021)(*&',
         'HOST': '192.168.0.63',
-        # 'HOST': 'localhost',
         'PORT': 3306,
         'OPTIONS': {
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
@@ -98,6 +95,7 @@ DATABASES = {
 
     }
 }
+
 
 AUTH_USER_MODEL = 'accounts.AccountGuest'
 APPEND_SLASH=False
