@@ -2,7 +2,7 @@ from django.db import models
 from accounts.models import AccountGuest
 from shops.models import Category, Shop
 from django.conf import settings
-from django.db import models
+from django.utils import timezone
 
 # Create your models here.
 

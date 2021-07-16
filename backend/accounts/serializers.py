@@ -27,8 +27,7 @@ class AccountGuestSerializer(serializers.ModelSerializer):
             'username',
             'gender',
             'birthday',
-            'group_num',
-            'stayed_time'
+            # 'group_num',
             )
         extra_kwargs = {'living_area':{'write_only':True}}
 

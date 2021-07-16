@@ -4,7 +4,7 @@ from django.db import models
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 from django.db.models.deletion import CASCADE
-from shops.models import Shop, Category
+from shops.models import Shop, Category, Menu
 
 # Create your models here.
 # 같은 동네에 사는 사람들 묶어주기 위한 테이블(등록된 동네가 없으면 항목 새로 추가 + Account에 연결, 있으면 있는 항목(pk)에 Account 연결)
@@ -67,6 +67,7 @@ class AccountGuest(AbstractUser):
 
     # fun_data 상위 %
     def top_rate_fun_data(self):
+        # rank = 
         pass
 
 
@@ -156,7 +157,7 @@ class FunData(models.Model):
         related_name="userFunData",
         blank=True
     )
-    content_name = models.CharField(max_length=20, blank=True)
+    menu = models.ForeignKey(Menu, on_delete=models.CASCADE, null=True)
     score = models.SmallIntegerField(default=0) # 싫어요: 0, 좋아요: 1, Super Like: 2
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -175,11 +176,11 @@ class ClickData(models.Model):
         on_delete=models.CASCADE,
         null=True
     )
-    clicked_time = models.TimeField(auto_now_add=True)
-    left_time = models.TimeField() # 페이지 이동했을 때 체크
+    clicked_time = models.TimeField() # 페이지 들어갈 때 체크
+    left_time = models.TimeField(auto_now_add=True) # 페이지 이동했을 때 체크
 
-    def stayed_time(self):
-        return self.left_time - self.clicked_time
+    # def stayed_time(self):
+    #     return self.left_time - self.clicked_time
 
 
 class MyLikeList(models.Model):
