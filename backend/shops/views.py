@@ -1,3 +1,4 @@
+from accounts import serializers
 from random   import seed, sample
 from datetime import date
 
@@ -9,7 +10,7 @@ from rest_framework.viewsets   import ModelViewSet
 from rest_framework.decorators import action, api_view
 from rest_framework.response   import Response
 
-from .models                   import Shop, Category, Review, ReportShop, Menu, ReportReview
+from .models                   import Shop, Category, Review, ReportShop, Menu, ReportReview, ShopImage
 from accounts.models           import AccountGuest
 from .serializers              import (
     AccountSearchSerializer, ShopListSerializer,ShopDetailSerializer,
@@ -82,9 +83,19 @@ class ShopListViewSet(ModelViewSet):
 
 class ShopDetailViewSet(ModelViewSet):
     serializer_class = ShopDetailSerializer
+
     def get_queryset(self):
-        queryset = Shop.objects.filter(id=self.kwargs['id'])
-        return queryset
+        shop = Shop.objects.filter(id=self.kwargs['id'])
+        shop_imgs = [shop_img.img_url for shop_img in shop[0].shopimage_set.all()]
+
+        return shop
+
+    # def retrieve(self, request):
+    #     # shops = get_object_or_404(Shop, pk=shop_id)
+    #     shops = Shop.objects.filter(id=1)
+    #     serializer = ShopDetailSerializer(shops)
+
+    #     return Response(serializer.data)
 
 @transaction.atomic
 @api_view(['GET','POST'])

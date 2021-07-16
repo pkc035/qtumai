@@ -7,6 +7,7 @@ from rest_framework.routers import DefaultRouter
 router = DefaultRouter(trailing_slash=True)
 router.register(r"list", ShopListViewSet, basename="list")
 router.register(r"detail/(?P<id>.+)", ShopDetailViewSet,basename="detail")
+# router.register(r"detail", ShopDetailViewSet,basename="detail")
 router.register(r"review/report", ReportReviewViewSet,basename="ReportReview")
 router.register(r"menu",MenuViewSet, basename="menu")
 

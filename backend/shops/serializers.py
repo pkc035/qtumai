@@ -5,7 +5,7 @@ from django.db.models    import F
 
 from rest_framework      import serializers
 
-from .models             import ReportShop, ReportReview, Review, Shop, ThemeKeyword, Coupon, Menu
+from .models             import ReportShop, ReportReview, Review, Shop, ShopImage, ThemeKeyword, Coupon, Menu
 from accounts.models     import AccountGuest, SearchedLocation
 
 class CouponSerializer(serializers.ModelSerializer):
@@ -28,19 +28,29 @@ class ShopListSerializer(serializers.ModelSerializer):
             'id','shop_name','shop_info_url','kakao_score',
             'latitude','longitude', 'coupon', 'themekeyword_set'
         ]
+class ShopImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ShopImage
+        fields = '__all__'
 
 class ShopDetailSerializer(serializers.ModelSerializer):
+    shopimage = serializers.SerializerMethodField()
+
     class Meta:
         model = Shop
         fields = '__all__'
 
+    def get_shopimage(self,obj):
+        shopimages = obj.shopimage_set.all()
+        images = [shop.img_url for shop in shopimages]
+        return images
+    
 class ReviewSerializer(serializers.ModelSerializer):
     username = serializers.SerializerMethodField()
     class Meta:
         model = Review
         fields = '__all__'
         
-
     def get_username(self,obj):
         user = get_user_model().objects.get(id=obj.user_id)
 
@@ -60,6 +70,7 @@ class MenuSerializer(serializers.ModelSerializer):
     class Meta:
         model = Menu
         fields = '__all__'
+        
 class AccountSearchSerializer(serializers.ModelSerializer):
     class Meta:
         model = get_user_model()

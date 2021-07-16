@@ -1,13 +1,8 @@
-from django.db.models import fields
-from django.db.models.fields import EmailField
-from shops.models import Shop
-from rest_framework import serializers
-from .models import AccountGuest, LivingArea
 from django.contrib.auth import authenticate, get_user_model
-from . import models
 
-from rest_framework.validators import ValidationError
-import re
+from rest_framework import serializers
+
+from .models import AccountGuest, LivingArea, MyLikeList, MyLikeListShop
 
 class LivingAreaSreialzer(serializers.ModelSerializer):
 
@@ -53,6 +48,15 @@ class AccountGuestSerializer(serializers.ModelSerializer):
         )
         return validated_data
 
+class MyLikeListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = MyLikeList
+        fields = ['id', 'list_name']
+
+class MyLikeListShopSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = MyLikeListShop
+        fields = ['id', 'shop_name']
 
     # def validate(self, data):
     #     non_alpha = set([s for s in "!@#$%^&*()|-=_+\[]{};':\",./?><"])

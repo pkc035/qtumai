@@ -1,24 +1,22 @@
-from django.contrib.auth.models import User
 import requests, jwt
-from django.http import JsonResponse
+
+from django.http         import JsonResponse
 from django.views        import View
-from django.db           import router, transaction
-from django.http         import response
-from django.shortcuts    import get_object_or_404, render
+from django.db           import transaction
+from django.shortcuts    import get_object_or_404
 from django.contrib.auth import get_user_model
 
-from .models import AccountGuest
-from .serializers     import AccountGuestSerializer
-from shops            import models
-from project.settings import SECRET_KEY
-from rest_framework.decorators import authentication_classes, permission_classes
 from rest_framework.views      import APIView
-from rest_framework            import viewsets
-from rest_framework.decorators import api_view
+from rest_framework.viewsets   import ModelViewSet
+from rest_framework.decorators import api_view, action
 from rest_framework.response   import Response
-from rest_framework import status
+from rest_framework             import status
+
+from project.settings import SECRET_KEY
+from .models          import AccountGuest, MyLikeList
+from shops.models     import Shop
+from .serializers     import AccountGuestSerializer, MyLikeListSerializer, MyLikeListShopSerializer
 from accounts import serializers
-from .serializers import AccountGuestSerializer
 
 class AccountGuestAPIView(APIView):
     def post(self, request):
@@ -84,7 +82,7 @@ class GoogleLoginView(View):
 def dislikeshop(request):
     data = request.data
     user = get_object_or_404(get_user_model(),pk=request.user)
-    shop = get_object_or_404(models.Shop,pk=data['shop_id'])
+    shop = get_object_or_404(Shop,pk=data['shop_id'])
     
     if shop not in user.dislike_shop.all():
         user.dislike_shop.add(shop)
@@ -94,12 +92,72 @@ def dislikeshop(request):
         return Response({'message':'dislike shop deleted'})
 
 
+
+class MyLikeListViewSet(ModelViewSet):
+    serializer_class = MyLikeListSerializer
+
+    def get_queryset(self, request):
+        mylikelists = MyLikeList.objects.filter(account_guest_id=request.user)
+        return mylikelists
+    
+    def create(self, request):
+        user = get_object_or_404(AccountGuest, pk=request.data['account_guest_id'])
+        serializer = self.get_serializer(data = request.data)
+        
+        if serializer.is_valid():
+            serializer.save(account_guest=user)
+
+            return Response({'message':'MylikeList Created'})    
+
+        return Response({'message':'MylikeList Created Fail'})
+    
+    @action(detail=True, methods=['PUT'])
+    def list_update(self, request, pk):
+        mylikelist = get_object_or_404(MyLikeList, pk=pk)
+        serializer = self.get_serializer(data=request.data, instance=mylikelist)
+        
+        if serializer.is_valid():
+            serializer.save()
+
+            return Response({'message':'MylikeList Updated'})    
+
+        return Response({'message':'MylikeList Updated Fail'})
+    
+    @action(detail=True, methods=['DELETE'])
+    def list_delete(self, request, pk):
+        mylikelist = get_object_or_404(MyLikeList, pk=pk)
+        mylikelist.delete()
+
+        return Response({'message':'MylikeList Deleted'}) 
+
+class MyLikeListShopViewSet(ModelViewSet):
+    serializer_class = MyLikeListShopSerializer
+
+    def create(self, request):
+        mylist = get_object_or_404(MyLikeList, pk=request.data['mylist_id'])
+        shop = get_object_or_404(Shop, pk=request.data['shop_id'])
+        
+        serializer = self.get_serializer(data = request.data)
+        
+        if serializer.is_valid():
+            serializer.save(shop_name=shop)
+            shop.myLikeListShop.add(my_like_list=mylist)
+            
+            return Response({'message':'MylikeShop Created'})    
+
+        return Response({'message':'MylikeShop Created Fail'})
+
+    # @action(detail=True, methods=['DELETE'])
+    # def list_shop_delete(self, request, pk):
+        
+
+
 @transaction.atomic
 @api_view(['POST'])
 def likeshop(request):
     data = request.data
     user = get_object_or_404(get_user_model(),pk=request.user)
-    shop = get_object_or_404(models.Shop,pk=data['shop_id'])
+    shop = get_object_or_404(Shop,pk=data['shop_id'])
     
     if shop not in user.like_shop.all():
         user.like_shop.add(shop)
