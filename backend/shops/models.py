@@ -13,7 +13,8 @@ class Category(models.Model):
 
 class ShopArea(models.Model):
     area_name = models.CharField(max_length=20, blank=True)
-
+    latitude = models.FloatField(null=True)
+    longitude = models.FloatField(null=True)
 
 class Shop(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True)
