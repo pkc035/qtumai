@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { withRouter } from "react-router-dom";
 
-function Signup(props) {
+function PhoneLogin(props) {
   const [inputValue, setInputValue] = useState("");
   const [minutes, setMinutes] = useState(3);
   const [seconds, setSeconds] = useState(0);
@@ -11,7 +11,8 @@ function Signup(props) {
   const [timerDisplay, setTimerDisplay] = useState(false);
 
   function goToNext() {
-    props.history.push("/signup/next");
+    alert("로그인 되었습니다.");
+    props.history.push("/main");
   }
 
   function goToBack() {
@@ -73,7 +74,7 @@ function Signup(props) {
           <BackButton onClick={goToBack}>
             <ArrowImage src="/images/Social/arrow.png" />
           </BackButton>
-          <Subject>회원가입</Subject>
+          <Subject>전화번호로 로그인</Subject>
         </Title>
         <InputBox>
           <span>휴대전화</span>
@@ -108,6 +109,7 @@ function Signup(props) {
     </div>
   );
 }
+
 
 const Modal = styled.div`
   display: flex;
@@ -210,4 +212,4 @@ const LoginButton = styled.button`
   }
 `;
 
-export default withRouter(Signup);
+export default withRouter(PhoneLogin);
