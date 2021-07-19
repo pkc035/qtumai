@@ -1,6 +1,6 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import { Login, Sign, Home } from '../screens';
+import { Login, Home } from '../screens';
 import { MaterialIcons } from '@expo/vector-icons';
 
 const Stack = createStackNavigator();
@@ -22,7 +22,6 @@ const StackNav = () => {
       }}
     >
       <Stack.Screen name='Login' component={Login}></Stack.Screen>
-      <Stack.Screen name='Sign' component={Sign}></Stack.Screen>
       <Stack.Screen name='Home' component={Home}></Stack.Screen>
     </Stack.Navigator>
   );
