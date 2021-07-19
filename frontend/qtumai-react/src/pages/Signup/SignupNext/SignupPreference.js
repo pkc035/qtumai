@@ -19,7 +19,7 @@ function SignupPreference(props) {
 
     if (count === 10) {
       setIsLoadingOn(true);
-      setTimeout(() => props.history.push("/"),10000);
+      setTimeout(() => window.ReactNativeWebView.postMessage('Success!'),10000);
     } else setCount(count => count + 1);
   }
 
