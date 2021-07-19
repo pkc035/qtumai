@@ -141,7 +141,8 @@ class MyLikeListShopViewSet(ModelViewSet):
         
         if serializer.is_valid():
             serializer.save(shop_name=shop)
-            shop.myLikeListShop.add(my_like_list=mylist)
+            print(dir(serializer.data))
+            # shop.myLikeListShop.add(my_like_list=mylist)
             
             return Response({'message':'MylikeShop Created'})    
 

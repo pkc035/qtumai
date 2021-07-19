@@ -34,13 +34,13 @@ class ShopImageSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class ShopDetailSerializer(serializers.ModelSerializer):
-    shopimage = serializers.SerializerMethodField()
+    shop_image_list = serializers.SerializerMethodField()
 
     class Meta:
         model = Shop
         fields = '__all__'
 
-    def get_shopimage(self,obj):
+    def get_shop_image_list(self,obj):
         shopimages = obj.shopimage_set.all()
         images = [shop.img_url for shop in shopimages]
         return images
@@ -70,7 +70,7 @@ class MenuSerializer(serializers.ModelSerializer):
     class Meta:
         model = Menu
         fields = '__all__'
-        
+
 class AccountSearchSerializer(serializers.ModelSerializer):
     class Meta:
         model = get_user_model()

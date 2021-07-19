@@ -198,14 +198,12 @@ class MyLikeList(models.Model):
     account_guest = models.ForeignKey(AccountGuest, on_delete=models.CASCADE, null=True)
     list_name = models.CharField(max_length=20, blank=True)
 
-
 class MyLikeListShop(models.Model):
-    my_like_list = models.ManyToManyField(
+    my_like_list = models.ForeignKey(
         MyLikeList, 
-        related_name="myLikeListShop", 
-        blank=True
+        on_delete=models.CASCADE,
+        null=True
     )
-    shop_name = models.ForeignKey(Shop, on_delete=models.CASCADE, null=True)
-
+    shop_name = models.ManyToManyField(Shop, related_name="myLikeListShop", blank=True)
     def __str__(self):
         return self.my_like_list
