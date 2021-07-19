@@ -1,13 +1,21 @@
 from django.urls    import path
 
-from .views import ShopListViewSet, ShopDetailViewSet, ReportReviewViewSet,review_command, review_create, report_shop, report_shop_command, report_review_command
+from .views import (
+    ShopRecommendViewSet, ShopListViewSet, ShopDetailViewSet, ShopSearchViewSet,
+    ReportReviewViewSet, AccountSearchViewSet, LocationSearchViewSet,
+    review_command, review_create, report_shop, report_shop_command, report_review_command
+)
 
 from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter(trailing_slash=True)
-router.register(r"list", ShopListViewSet, basename="list")
 router.register(r"detail/(?P<id>.+)", ShopDetailViewSet,basename="detail")
 router.register(r"review/report", ReportReviewViewSet,basename="ReportReview")
+router.register(r"list", ShopListViewSet, basename="list")
+router.register(r"recommend", ShopRecommendViewSet, basename="recommend")
+router.register(r"search/account", AccountSearchViewSet, basename="search/account")
+router.register(r"search/location", LocationSearchViewSet, basename="search/location")
+router.register(r"search/shop", ShopSearchViewSet, basename="search/shop")
 
 urlpatterns = [
     path('review', review_create),
