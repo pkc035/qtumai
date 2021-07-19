@@ -38,8 +38,8 @@ class Shop(models.Model):
     naver_score_count = models.IntegerField(default=0)
     # naver_review_count = models.IntegerField(default=0)
     price_range = models.CharField(max_length=15, blank=True)
-    latitude = models.CharField(null=True) # 위도
-    longitude = models.CharField(null=True) # 경도
+    latitude = models.CharField(max_length=30, null=True) # 위도
+    longitude = models.CharField(max_length=30, null=True) # 경도
     is_subscribe = models.BooleanField(default=False)
     subscribe_time = models.DateField(blank=True, null=True)
     is_new_opend = models.BooleanField(default=False) # 보류 (m.search.naver.com "새로 오픈했어요")
