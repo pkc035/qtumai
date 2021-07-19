@@ -8,10 +8,10 @@ from shops.models import Shop, Category, Menu
 # Create your models here.
 # 같은 동네에 사는 사람들 묶어주기 위한 테이블(등록된 동네가 없으면 항목 새로 추가 + Account에 연결, 있으면 있는 항목(pk)에 Account 연결)
 class LivingArea(models.Model):
-    living_area = models.TextField(blank=True)
+    area_name = models.TextField(blank=True)
     people_count = models.IntegerField(default=0)
-    latitude = models.FloatField(null=True)
-    longitude = models.FloatField(null=True)
+    latitude = models.CharField(max_length=20, blank=True)
+    longitude = models.CharField(max_length=20, blank=True)
 
 
 # 미리 저장해두기
@@ -32,6 +32,7 @@ class Authentication(models.Model):
 class AccountGuest(AbstractUser):
     phone_number = models.CharField(max_length=20, blank=True)
     # nickname = models.CharField(max_length=20, blank=True) # 네이버 로그인 시 받아올 수 있으면 바로 입력
+    profile_img_path = models.TextField(blank=True)
     kakao_number = models.CharField(max_length=50, blank=True)
     google_number = models.EmailField(max_length=50, blank=True)
     google_mail = models.EmailField(max_length=128, blank=True) # 안들어올수도 있음
@@ -69,7 +70,7 @@ class AccountGuest(AbstractUser):
         through="SearchedPeopleThrough",
         symmetrical=False
     ) # 같이갈 사람 추가할 때 필요
-    job = models.ForeignKey(AccountJob, on_delete=models.CASCADE, null=True, default="")
+    # job = models.ForeignKey(AccountJob, on_delete=models.CASCADE, null=True, default="") # 직업은 잠시 보류
     # my_friends = models.ManyToManyField('self', related_name="myFriends", symmetrical=False) # symmetrical: 대칭관계(상대방쪽에서도 자동추가 여부)
 
     def __str__(self):
@@ -161,6 +162,7 @@ class Preference(models.Model):
         return group_num
 
 
+# 추후 메뉴뿐만 아니라 관심사 태그에 대한 내용도 물어볼 예정
 class FunData(models.Model):
     account_guest = models.ManyToManyField(
         AccountGuest,
@@ -168,7 +170,8 @@ class FunData(models.Model):
         blank=True
     )
     menu = models.ForeignKey(Menu, on_delete=models.CASCADE, null=True)
-    score = models.SmallIntegerField(default=0) # 싫어요: 0, 좋아요: 1, Super Like: 2
+    # 추후 태그 관련 컬럼도 추가예정 tag = models.ForeignKey(Tag, on_delete=models.CASCADE, null=True)
+    score = models.SmallIntegerField(default=0) # 싫어요: 0, 좋아요: 1, Super Like: 2 (값을 부여하는 방식 O // 더하기 X)
     created_at = models.DateTimeField(auto_now_add=True)
 
 
@@ -200,12 +203,12 @@ class MyLikeList(models.Model):
 
 
 class MyLikeListShop(models.Model):
-    my_like_list = models.ManyToManyField(
+    my_like_list = models.ForeignKey(
         MyLikeList, 
-        related_name="myLikeListShop", 
-        blank=True
+        on_delete=models.CASCADE,
+        null=True
     )
-    shop_name = models.ForeignKey(Shop, on_delete=models.CASCADE, null=True)
+    shop_name = models.ManyToManyField(Shop, related_name="myLikeListShop", blank=True)
 
     def __str__(self):
         return self.my_like_list
