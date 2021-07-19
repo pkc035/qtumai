@@ -6,22 +6,27 @@ import { useAlert } from "react-alert";
 import TermMore from "../TermMore/TermMore";
 
 function Signup(props) {
-  const [adress, setAdress] = useState("");
+  const [adress, setAdress] = useState({
+    fullAddress: "",
+    latitude: 0,
+    longitude: 0,
+  });
   const [isAdressOn, setIsAdressOn] = useState(false);
   const [gender, setGender] = useState("");
   const [inputBirth, setInputBirth] = useState("");
-  const [name, setName] = useState("")
+  const [name, setName] = useState("");
   const [selectedArr, setSelectedArr] = useState([false, false, false]);
   const [selectedAll, setSelectedAll] = useState(false);
   const [inputColor, setInputColor] = useState("");
-  const [check, setCheck] = useState([true, true, true, true, true]);
+  const [check, setCheck] = useState([true, true, true, true, true, true]);
   const [dubbleCheckButton, setDubbleCheckButton] = useState(true);
   const [agreedMarketingReceive, setAgreedMarketingReceive] = useState(false);
 
-  const alert = useAlert()
+  const alert = useAlert();
+  const { kakao } = window;
 
   const handleSelectedAll = () => {
-    setSelectedAll(!selectedAll)
+    setSelectedAll(!selectedAll);
   };
 
   const inputAllCheckBox = () => {
@@ -41,36 +46,65 @@ function Signup(props) {
     setSelectedAll(checkedItems);
     if (checkedItems) {
       let newCheck = [...check];
-      newCheck[4] = false;
+      newCheck[5] = false;
       setCheck(newCheck);
     } else {
       let newCheck = [...check];
-      newCheck[4] = true;
+      newCheck[5] = true;
       setCheck(newCheck);
     }
-
-  }, [selectedArr])
+  }, [selectedArr]);
 
   function handleDubbleCheck() {
-    let newCheck = [...check];
-    newCheck[0] = false;
-    setCheck(newCheck);
-    alert.success("중복체크 완료");
+    if (check[1] === true) {
+      alert.error("2자~16자 사이의 한글,영어,숫자로 입력해주세요");
+    } else {
+      let newCheck = [...check];
+      newCheck[0] = false;
+      setCheck(newCheck);
+      alert.success("중복체크 완료");
+    }
   }
 
   function goToNext() {
     if (check[0]) {
-      alert.error("id를 올바른 형식으로 입력해주세요.");
+      alert.error("아이디 중복체크를 해주세요.");
     } else if (check[1]) {
-      alert.error("생년월일에 맞게 입력해주세요.");
+      alert.error("id를 올바른 형식으로 입력해주세요.");
     } else if (check[2]) {
-      alert.error("성별 버튼을 클릭해주세요.");
+      alert.error("생년월일에 맞게 입력해주세요.");
     } else if (check[3]) {
-      alert.error("주소를 입력해주세요");
+      alert.error("성별 버튼을 클릭해주세요.");
     } else if (check[4]) {
+      alert.error("주소를 입력해주세요.");
+    } else if (check[5]) {
       alert.error("이용약관 동의 체크해주세요.");
-    } else props.history.push("/signup/preference");
+    } else {
+      fetch("http://192.168.0.66:8000/accounts/signup", {
+        method: "POST",
+        body: JSON.stringify({
+          phone_number: localStorage.getItem("phone_number"),
+          kakao_number: "stringsadsddsafaccz",
+          google_number: "stringsadsddsafaccz",
+          naver_id: "stringsadsddsafaccz",
+          username: name,
+          gender: gender === 0 ? "F" : "M",
+          birthday: inputBirth,
+          agreed_marketing_receive: agreedMarketingReceive ? "1" : "0",
+          living_area: adress.fullAddress,
+          latitude: adress.latitude,
+          longitude: adress.longitude,
+        }),
+      })
+        .then(res => res.json())
+        .then(res => {
+          console.log(res);
+        });
+      props.history.push("/signup/preference");
+    }
   }
+
+  console.log(localStorage.getItem("phone_number"));
 
   function goToBack() {
     if (
@@ -82,10 +116,31 @@ function Signup(props) {
 
   const handleBirthChange = e => {
     const regex = /^[0-9\b -]{0,10}$/;
-    const regexBirth = /^(19[0-9][0-9]|20\d{2})(0[0-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])$/;
+    const regexBirth =
+      /^(19[0-9][0-9]|20\d{2})(0[0-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])$/;
     if (regex.test(e.target.value)) {
       setInputBirth(e.target.value);
       if (regexBirth.test(e.target.value)) {
+        let newCheck = [...check];
+        newCheck[2] = false;
+        setCheck(newCheck);
+      } else {
+        let newCheck = [...check];
+        newCheck[2] = true;
+        setCheck(newCheck);
+      }
+    }
+  };
+
+  const handleNameChange = e => {
+    const idRegex = /^[ㄱ-ㅎ가-힣a-z0-9]{2,16}/g;
+    const regex = /^.{1,20}$/;
+
+    setName(e.target.value);
+
+    if (regex.test(e.target.value)) {
+      setDubbleCheckButton(false);
+      if (idRegex.test(e.target.value)) {
         let newCheck = [...check];
         newCheck[1] = false;
         setCheck(newCheck);
@@ -94,22 +149,17 @@ function Signup(props) {
         newCheck[1] = true;
         setCheck(newCheck);
       }
-    }
+    } else setDubbleCheckButton(true);
   };
 
   console.log(check);
 
-  const handleNameChange = e => {
-    setName(e.target.value);
-    setDubbleCheckButton(false)
-  }
-
-  const handlegender = (number) => {
+  const handlegender = number => {
     setGender(number);
     let newCheck = [...check];
-    newCheck[2] = false;
+    newCheck[3] = false;
     setCheck(newCheck);
-  }
+  };
 
   function handleToggleTerms() {
     setAgreedMarketingReceive(!agreedMarketingReceive);
@@ -129,6 +179,7 @@ function Signup(props) {
   }, [inputBirth]);
 
   const Postcode = data => {
+    let geocoder = new kakao.maps.services.Geocoder();
     let fullAddress = data.address;
     let extraAddress = "";
 
@@ -142,11 +193,22 @@ function Signup(props) {
       }
       fullAddress += extraAddress !== "" ? ` (${extraAddress})` : "";
     }
-    setAdress(fullAddress);
     setIsAdressOn(false);
     let newCheck = [...check];
-    newCheck[3] = false;
+    newCheck[4] = false;
     setCheck(newCheck);
+
+    geocoder.addressSearch(fullAddress, function (result, status) {
+      if (status === kakao.maps.services.Status.OK) {
+        let coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+
+        setAdress({
+          fullAddress: fullAddress,
+          latitude: coords.La,
+          longitude: coords.Ma,
+        });
+      }
+    });
   };
 
   const postCodeStyle = {
@@ -157,11 +219,11 @@ function Signup(props) {
     zIndex: "100",
   };
 
-  console.log(name);
-  console.log(inputBirth.split("-").join(""));
-  console.log(gender === 0 ? "여성" : "남성");
-  console.log(adress);
-  console.log(agreedMarketingReceive ? "1" : "0");
+  console.log("이름 :", name);
+  console.log("생년월일 :", inputBirth);
+  console.log("성별 :", gender === 0 ? "F" : "M");
+  console.log("주소 :", adress.fullAddress,adress.latitude,adress.longitude);
+  console.log("선택동의 :", agreedMarketingReceive ? "1" : "0");
 
   return (
     <div>
@@ -186,7 +248,9 @@ function Signup(props) {
             <AuthenticationBtn
               onClick={handleDubbleCheck}
               disabled={dubbleCheckButton}
-            >중복확인</AuthenticationBtn>
+            >
+              중복확인
+            </AuthenticationBtn>
           </SignupWrap>
           <span>생년월일/성별</span>
           <SignupWrap>
@@ -215,7 +279,7 @@ function Signup(props) {
           <SignupWrap>
             <PhoneInput
               type="text"
-              value={adress}
+              value={adress.fullAddress}
               placeholder="읍,면,동까지만 입력해주세요"
               inputColor={inputColor === 2 ? true : false}
               onClick={() => setInputColor(2)}
@@ -235,7 +299,8 @@ function Signup(props) {
           <SignInputTerms>
             <SignInputTermsAllBox>
               <p>
-                <input type="checkbox"
+                <input
+                  type="checkbox"
                   id="agreeAllCheck"
                   checked={selectedAll}
                   onChange={inputAllCheckBox}
@@ -338,7 +403,8 @@ const PhoneInput = styled.input`
   height: 55px;
   margin-bottom: 15px;
   border: none;
-  border-bottom: 1px solid ${props => (props.inputColor ? "#c1c1c1" : "#ededed")};
+  border-bottom: 1px solid
+    ${props => (props.inputColor ? "#c1c1c1" : "#ededed")};
   outline: none;
   font-size: 15px;
 `;
@@ -348,7 +414,8 @@ const GenderInput = styled.input`
   height: 55px;
   margin-bottom: 15px;
   border: none;
-  border-bottom: 1px solid ${props => (props.inputColor ? "#c1c1c1" : "#ededed")};
+  border-bottom: 1px solid
+    ${props => (props.inputColor ? "#c1c1c1" : "#ededed")};
   outline: none;
   font-size: 15px;
 `;
@@ -429,7 +496,7 @@ const SignInputTermsAllBox = styled.div`
 `;
 
 const CheckWrap = styled.p`
-  position:relative;
+  position: relative;
 `;
 
 const SignInputTermsBox = styled.div`
@@ -447,9 +514,9 @@ const SignInputTermsBox = styled.div`
 `;
 
 const ViewMore = styled.button`
-  position:absolute;
-  right:0;
-  font-size:12px;
+  position: absolute;
+  right: 0;
+  font-size: 12px;
   vertical-align: middle;
 `;
 

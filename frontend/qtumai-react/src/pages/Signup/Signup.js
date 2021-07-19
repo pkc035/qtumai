@@ -4,14 +4,37 @@ import { withRouter } from "react-router-dom";
 
 function Signup(props) {
   const [inputValue, setInputValue] = useState("");
-  const [minutes, setMinutes] = useState(3);
+  const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(0);
   const [inputColor, setInputColor] = useState("");
   const [authenticationButton, setAuthenticationButton] = useState(true);
   const [timerDisplay, setTimerDisplay] = useState(false);
+  const [inputAuthentication, setInputAuthentication] = useState("");
 
   function goToNext() {
-    props.history.push("/signup/next");
+    fetch("http://192.168.0.66:8000/accounts/check-sms/", {
+        method: "POST",
+        body: JSON.stringify({
+          phone_number: inputValue.split("-").join(""),
+          auth_number: inputAuthentication
+        }),
+      })
+        .then(res => res.json())
+        .then(res => {
+          console.log(res)
+          console.log(res.message === "회원가입을 진행해주세요.")
+          if(res.message === "인증번호 확인 실패입니다") {
+            alert("인증번호 확인 실패입니다");
+          } else if (res.message === "해당 휴대폰 번호가 존재하지 않습니다") {
+            alert("해당 휴대폰 번호가 존재하지 않습니다");
+          } else if (res.status === 200) {
+            alert("인증되었습니다");
+          } else if (res.message === "회원가입을 진행해주세요.") {
+            alert("회원가입을 진행해주세요");
+            props.history.push("/signup/next");
+            localStorage.setItem('phone_number', inputValue.split("-").join(""));
+          }
+        })
   }
 
   function goToBack() {
@@ -19,11 +42,28 @@ function Signup(props) {
   }
 
   function sendPhoneNumber() {
-    alert("문자가 발송 되었습니다");
-    setTimerDisplay(true);
-    setMinutes(3);
-    setSeconds(0);
+    fetch("http://192.168.0.66:8000/accounts/sms/", {
+        method: "POST",
+        body: JSON.stringify({
+          phone_number: inputValue.split("-").join("")
+        }),
+      })
+        .then(res => res.json())
+        .then(res => {
+          if(res.message === "success") {
+            alert("문자가 발송 되었습니다");
+            setTimerDisplay(true);
+            setMinutes(3);
+            setSeconds(0);
+          } else if (res.message === "In") {
+            alert("잘못된 전화번호입니다.");
+          } else if (res.message === "d") {
+            alert("없는 전화번호입니다 다시 한번 확인해주세요.");
+          }
+        })
   }
+
+  console.log(inputValue.split("-").join(""))
 
   const handleChange = e => {
     const regex = /^[0-9\b -]{0,13}$/;
@@ -35,6 +75,12 @@ function Signup(props) {
       } else setAuthenticationButton(true)
     }
   };
+
+  function handleAuthentication(e) {
+    setInputAuthentication(e.target.value)
+  }
+
+  console.log(typeof inputAuthentication)
 
   useEffect(() => {
     const countdown = setInterval(() => {
@@ -97,6 +143,8 @@ function Signup(props) {
               placeholder="인증번호를 입력해주세요"
               onClick={() => setInputColor(1)}
               inputColor={inputColor === 1 ? true : false}
+              onChange={handleAuthentication}
+              value={inputAuthentication}
             />
             <Timer timerDisplay={timerDisplay}>
               {minutes}:{seconds < 10 ? `0${seconds}` : seconds}
