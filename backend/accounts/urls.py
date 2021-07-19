@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 from . import views
 from rest_framework.routers import DefaultRouter
-from .views import KakaoLogInView, GoogleLoginView, NaverLogInView
+from .views import KakaoLogInView, GoogleLoginView, NaverLogInView, SmsSendView, SMSVerificationView
 
 router = DefaultRouter(trailing_slash=True)
 # router.register(r"accounts", views.UserViewSet, basename="accounts")
@@ -26,6 +26,8 @@ router = DefaultRouter(trailing_slash=True)
 urlpatterns = [
     # views.py에서 정의한(def) 함수 연결 가능 (path)
     # path('send_sms/', views.send_sms),
+    path('sms/',SmsSendView.as_view()),
+    path('check-sms/',SMSVerificationView.as_view()),
     path('naver-login/',NaverLogInView.as_view()),
     path('kakao-login/',KakaoLogInView.as_view()),
     path('google-login/',GoogleLoginView.as_view()),
