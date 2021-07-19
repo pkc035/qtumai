@@ -8,12 +8,13 @@ import json, requests, jwt
 from django.http import JsonResponse
 from django.views        import View
 from django.db           import router, transaction
+from django.db.models    import F
 from django.http         import response
 from django.shortcuts    import get_object_or_404, render
 from django.contrib.auth import get_user_model
 
-from .models import AccountGuest, Authentication
-from .serializers     import AccountGuestSerializer
+from .models import AccountGuest, Authentication, LivingArea, Preference
+from .serializers     import AccountGuestSerializer, AccountGuestUpdateSerializer, LivingAreaUpdateSerializer, PreferenceUpdateSerializer
 from shops            import models
 from project.settings import SECRET_KEY
 from rest_framework.decorators import authentication_classes, permission_classes
@@ -23,6 +24,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response   import Response
 from rest_framework import status
 from .serializers import AccountGuestSerializer
+from accounts import serializers
 
 class AccountGuestAPIView(APIView):
     def post(self, request):
@@ -199,3 +201,33 @@ def likeshop(request):
         shop.save()
         return Response({'message':'like shop deleted'})
 
+@api_view(['PATCH'])
+def update_account_guest(request):
+
+
+    # test
+    request.account = AccountGuest.objects.get(id=1)
+
+
+    try:
+        preference    = Preference.objects.get(account_guest=request.account)
+
+        if request.data.get('is_account_updated') ==  'True':
+            serializer = AccountGuestUpdateSerializer(data=request.data)
+            if serializer.is_valid(raise_exception=True):
+                serializer.update(request.account, request.data)
+
+        if request.data.get('is_preference_updated') == 'True':            
+            serializer = PreferenceUpdateSerializer(data=request.data)
+            if serializer.is_valid(raise_exception=True):
+                serializer.update(instance=preference, data=request.data)
+
+        if request.data.get('is_living_area_updated') == 'True':
+            serializer = LivingAreaUpdateSerializer(data=request.data)
+            if serializer.is_valid(raise_exception=True):
+                serializer.update_or_create(data=request.data, account=request.account)        
+
+        return Response({'message' : 'Success'})
+    
+    except Preference.DoesNotExist:
+        return Response({'message' : 'Preference Does Not Exist'}, status=400)

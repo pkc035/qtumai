@@ -1,3 +1,6 @@
+from re import A
+
+from rest_framework.serializers import Serializer
 from accounts.serializers import AccountGuestSerializer
 from random   import seed, sample
 from datetime import date
@@ -12,7 +15,7 @@ from rest_framework.response   import Response
 from rest_framework.pagination import PageNumberPagination
 
 from .models                   import Shop, Category, Review, ReportShop, ReportReview
-from accounts.models           import AccountGuest
+from accounts.models           import AccountGuest, VisitedShop
 from .serializers              import (
     ShopRecommendSerializer, ShopListSerializer,ShopDetailSerializer,
     ReviewSerializer, ReportReviewSerializer, ReportShopSerializer,
@@ -333,6 +336,50 @@ class ShopSearchViewSet(ModelViewSet):
 
         return Response(result_list)
 
+class ShopVisitedViewSet(ModelViewSet):
+    serializer_class = ShopListSerializer
+    pagination_class = ShopListPagination
+
+    def get_queryset(self):
+
+        # test
+        self.request.account = AccountGuest.objects.get(id=1)
+
+        queryset = (
+            Shop.objects
+            .filter(userVisitedStore=self.request.account)
+            .prefetch_related('shopimage_set', 'userVisitedStore')
+            .order_by('userVisitedStore__visited_time')
+        )     
+        return queryset
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # # menu_name,shop_name, category_name 검색 결과를 한 배열에 return 할 경우
 # class ShopSearchViewSet(ModelViewSet):
 #     serializer_class = ShopListSerializer
@@ -352,4 +399,3 @@ class ShopSearchViewSet(ModelViewSet):
 #         return queryset
 
 
-        

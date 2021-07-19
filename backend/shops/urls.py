@@ -2,7 +2,7 @@ from django.urls    import path
 
 from .views import (
     ShopRecommendViewSet, ShopListViewSet, ShopDetailViewSet, ShopSearchViewSet,
-    ReportReviewViewSet, AccountSearchViewSet, LocationSearchViewSet,
+    ReportReviewViewSet, AccountSearchViewSet, LocationSearchViewSet, ShopVisitedViewSet,
     review_command, review_create, report_shop, report_shop_command, report_review_command
 )
 
@@ -16,6 +16,7 @@ router.register(r"recommend", ShopRecommendViewSet, basename="recommend")
 router.register(r"search/account", AccountSearchViewSet, basename="search/account")
 router.register(r"search/location", LocationSearchViewSet, basename="search/location")
 router.register(r"search/shop", ShopSearchViewSet, basename="search/shop")
+router.register(r"visited", ShopVisitedViewSet, basename="visited")
 
 urlpatterns = [
     path('review', review_create),
