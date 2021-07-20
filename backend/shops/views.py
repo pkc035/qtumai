@@ -88,7 +88,6 @@ class ShopDetailViewSet(ModelViewSet):
 
     def get_queryset(self):
         shop = Shop.objects.filter(id=self.kwargs['id'])
-    
         return shop
 
 @transaction.atomic
