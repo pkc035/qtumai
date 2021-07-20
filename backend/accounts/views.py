@@ -1,29 +1,28 @@
-from random import randint
-import hashlib
-import hmac
-import base64
-import time
-from django.contrib.auth.models import User
-import json, requests, jwt
-from django.http import JsonResponse
-from django.views        import View
+import json, requests, jwt, hashlib, hmac, base64, time
+
+from rest_framework                  import status
+from rest_framework.views            import APIView
+from rest_framework.response         import Response
+from rest_framework.viewsets         import ModelViewSet
+from rest_framework.decorators       import api_view, action
+from rest_framework.authtoken.models import Token
+
 from django.db           import router, transaction
-from django.db.models    import F
-from django.http         import response
+from django.http         import JsonResponse
+from django.views        import View
+from django.db.models    import F, Q
 from django.shortcuts    import get_object_or_404, render
 from django.contrib.auth import get_user_model
-from .models import AccountGuest, Authentication, LivingArea, Preference
-from .serializers     import AccountGuestSerializer, AccountGuestUpdateSerializer, LivingAreaUpdateSerializer, PreferenceUpdateSerializer
-from shops            import models
+
 from project.settings import SECRET_KEY
-from rest_framework.decorators import authentication_classes, permission_classes
-from rest_framework.views      import APIView
-from rest_framework            import viewsets
-from rest_framework.decorators import api_view
-from rest_framework.response   import Response
-from rest_framework.authtoken.models import Token
-from rest_framework import status
-from .serializers import AccountGuestSerializer, CheckUsernameSerializer, PreferenceSerializer
+from random           import randint
+from shops.models     import Shop, LikeShopAccounts, Menu
+from .models          import AccountGuest, MyLikeList, Authentication, MyLikeListShop, Preference
+from .serializers     import (
+    AccountGuestSerializer, FunDataSerializer, MyLikeListSerializer, MyLikeListShopSerializer, 
+    PreferenceSerializer, CheckUsernameSerializer, LivingAreaUpdateSerializer, AccountGuestUpdateSerializer,
+    PreferenceUpdateSerializer
+    )
 
 class CheckUsernameAPIView(APIView):
     def post(self, request):
@@ -211,7 +210,7 @@ class SMSVerificationView(View):
 def dislikeshop(request):
     data = request.data
     user = get_object_or_404(get_user_model(),pk=request.user)
-    shop = get_object_or_404(models.Shop,pk=data['shop_id'])
+    shop = get_object_or_404(Shop,pk=data['shop_id'])
     
     if shop not in user.dislike_shop.all():
         user.dislike_shop.add(shop)
@@ -221,23 +220,117 @@ def dislikeshop(request):
         return Response({'message':'dislike shop deleted'})
 
 
+
+class MyLikeListViewSet(ModelViewSet):
+    serializer_class = MyLikeListSerializer
+
+    def get_queryset(self, request):
+        mylikelists = MyLikeList.objects.filter(account_guest_id=request.user)
+        return mylikelists
+    
+    def create(self, request):
+        user       = get_object_or_404(AccountGuest, pk=request.data['account_guest_id'])
+        serializer = self.get_serializer(data = request.data)
+        
+        if serializer.is_valid(raise_exception=True):
+            serializer.save(account_guest=user)
+
+            return Response({'message':'MylikeList Created'})    
+
+        return Response({'message':'MylikeList Created Fail'})
+    
+    @action(detail=True, methods=['PUT'])
+    def list_update(self, request, pk):
+        mylikelist = get_object_or_404(MyLikeList, pk=pk)
+        serializer = self.get_serializer(data=request.data, instance=mylikelist)
+        
+        if serializer.is_valid(raise_exception=True):
+            serializer.save()
+
+            return Response({'message':'MylikeList Updated'})    
+
+        return Response({'message':'MylikeList Updated Fail'})
+    
+    @action(detail=True, methods=['DELETE'])
+    def list_delete(self, request, pk):
+        mylikelist = get_object_or_404(MyLikeList, pk=pk)
+        mylikelist.delete()
+
+        return Response({'message':'MyLikeList Deleted'}) 
+
+class MyLikeListShopViewSet(ModelViewSet):
+    serializer_class = MyLikeListShopSerializer
+
+    @transaction.atomic
+    def create(self, request):
+        mylist = get_object_or_404(MyLikeList, pk=request.data['mylist_id'])
+        shop   = get_object_or_404(Shop, pk=request.data['shop_id'])
+        user   = get_object_or_404(get_user_model(),pk=1)
+        
+        serializer = self.get_serializer(data = request.data)
+        
+        if serializer.is_valid(raise_exception=True):
+            serializer.save(my_like_list=mylist, shop=shop)
+            LikeShopAccounts.objects.create(shop=shop, guest=user)
+            shop.like_count += 1
+            shop.save()
+
+            return Response({'message':'MylikeShop Created'})    
+
+        return Response({'message':'MylikeShop Created Fail'})
+    
+    @transaction.atomic
+    @action(detail=True, methods=['DELETE'])
+    def like_shop_delete(self, request, pk):
+        shop           = get_object_or_404(Shop, pk=request.data['shop_id'])
+        user           = get_object_or_404(get_user_model(),pk=1) 
+        likeshop       = get_object_or_404(LikeShopAccounts, shop=shop, guest_id=user)
+        mylikelistshop = get_object_or_404(MyLikeListShop, pk=pk)
+        mylikelistshop.delete()
+        likeshop.delete()
+        shop.like_count -= 1
+        shop.save()
+
+        return Response({'message':'MyLikeListShop Deleted'})
+
 @transaction.atomic
 @api_view(['POST'])
 def likeshop(request):
     data = request.data
     user = get_object_or_404(get_user_model(),pk=request.user)
-    shop = get_object_or_404(models.Shop,pk=data['shop_id'])
+    shop = get_object_or_404(Shop,pk=data['shop_id'])
     
     if shop not in user.like_shop.all():
         user.like_shop.add(shop)
         shop.like_count += 1
         shop.save()
+
         return Response({'message':'like shop added'})
     else:
         user.like_shop.remove(shop)
         shop.like_count -= 1
         shop.save()
+
         return Response({'message':'like shop deleted'})
+
+class FunDataViewSet(ModelViewSet):
+    serializer_class = FunDataSerializer
+
+    def create(self, request):
+        # user = get_object_or_404(get_user_model(), pk=request.user)
+        user       = get_object_or_404(get_user_model(),pk=1) 
+        menu       = get_object_or_404(Menu, pk=request.data['menu_id'])
+        serializer = self.get_serializer(data=request.data)
+
+        if serializer.is_valid(raise_exception=True):
+            serializer.save(menu=menu)
+
+            print(dir(serializer.instance.account_guest))
+            print(serializer.instance.account_guest.add(guest=user))
+            
+            return Response({'message':'Fun Created'})
+
+        return Response({'message':'Fun Create Fail'})
 
 @api_view(['PATCH'])
 def update_account_guest(request):

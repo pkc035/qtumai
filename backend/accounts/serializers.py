@@ -1,15 +1,8 @@
-from django.db.models import fields, F
-from django.db.models.fields import EmailField
-from rest_framework import validators
-from shops.models import Shop
-from rest_framework import serializers
-from .models import AccountGuest, LivingArea, Preference
-from django.contrib.auth import authenticate, get_user_model
-from . import models
+from django.db.models import F
 from django.db.models import Q
 
-from rest_framework.validators import ValidationError
-import re
+from rest_framework import serializers
+from .models      import AccountGuest, FunData, LivingArea, MyLikeList, MyLikeListShop, LivingArea, Preference
 
 class LivingAreaSreialzer(serializers.ModelSerializer):
 
@@ -101,6 +94,20 @@ class AccountGuestSerializer(serializers.ModelSerializer):
         )
         return validated_data
 
+class MyLikeListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = MyLikeList
+        fields = ['id', 'list_name']
+
+class MyLikeListShopSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = MyLikeListShop
+        fields = ['id', 'shop']
+
+class FunDataSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = FunData
+        fields = ['account_guest', 'menu', 'score']
     # def validate(self, data):
     #     non_alpha = set([s for s in "!@#$%^&*()|-=_+\[]{};':\",./?><"])
     #     error     = dict({'username' : [],'number':[]})

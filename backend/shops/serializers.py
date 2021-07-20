@@ -2,10 +2,9 @@ from django.contrib.auth import get_user_model
 from django.db.models    import F
 
 from rest_framework      import serializers
-from rest_framework.relations import PrimaryKeyRelatedField
 
-from .models             import ReportShop, ReportReview, Review, Shop, ShopImage, ThemeKeyword, Coupon
 from accounts.models     import SearchedLocation, SearchedPeopleThrough, VisitedShop
+from .models             import ReportShop, ReportReview, Review, Shop, ShopImage, ThemeKeyword, Coupon, Menu
 
 class CouponSerializer(serializers.ModelSerializer):
     class Meta:
@@ -61,6 +60,10 @@ class ShopRecommendSerializer(ShopListSerializer):
         fields = ShopListSerializer.Meta.fields + [
             'shopThemeKeyword', 'coupon_set'
         ]
+class ShopImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ShopImage
+        fields = '__all__'
 
 class ShopVisitedSerializer(ShopListSerializer):
     visitedshop_set = VisitedShopSerializer(many=True, read_only=True)
@@ -72,17 +75,35 @@ class ShopVisitedSerializer(ShopListSerializer):
         ]
 
 class ShopDetailSerializer(serializers.ModelSerializer):
+    shop_image_list = serializers.SerializerMethodField()
+    shop_status = serializers.SerializerMethodField()
+
     class Meta:
         model = Shop
         fields = '__all__'
 
+    def get_shop_image_list(self,obj):
+        shopimages = obj.shopimage_set.all()
+        images = [shop.img_url for shop in shopimages]
+        return images
+    
+    def get_shop_status(self,obj):
+        user = self.context['request'].user
+        likeshop = obj.likeshopaccounts_set.filter(guest_id=1)
+        dislikeshop = obj.dislikeShop.filter(id=1)
+        result = {
+            'like_status' : True if likeshop else False,
+            'dislike_status' : True if dislikeshop else False
+        }
+
+        return result
+    
 class ReviewSerializer(serializers.ModelSerializer):
     username = serializers.SerializerMethodField()
     class Meta:
         model = Review
         fields = '__all__'
         
-
     def get_username(self,obj):
         user = get_user_model().objects.get(id=obj.user_id)
 
@@ -97,6 +118,11 @@ class ReportReviewSerializer(serializers.ModelSerializer):
     class Meta:
         model = ReportReview
         fields = '__all__'
+
+class MenuSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Menu
+        fields = ['id', 'menu_name', 'img_path_1', 'img_path_2', 'img_path_3', 'price', 'is_representative']
 
 class AccountSearchSerializer(serializers.ModelSerializer):
     class Meta:

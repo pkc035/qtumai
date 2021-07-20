@@ -1,25 +1,22 @@
-from re import A
-
-from rest_framework.serializers import Serializer
-from accounts.serializers import AccountGuestSerializer
-from random   import seed, sample
-from datetime import date
-
 from django.db                 import transaction
 from django.db.models          import Q, When, Value, Case
 from django.shortcuts          import get_object_or_404
 
-from rest_framework.viewsets   import ModelViewSet
-from rest_framework.decorators import action, api_view
-from rest_framework.response   import Response
-from rest_framework.pagination import PageNumberPagination
+from rest_framework.viewsets    import ModelViewSet
+from rest_framework.decorators  import action, api_view
+from rest_framework.response    import Response
+from rest_framework.pagination  import PageNumberPagination
 
-from .models                   import Shop, Category, Review, ReportShop, ReportReview
-from accounts.models           import AccountGuest, VisitedShop
+from re                        import A
+from random                    import seed, sample
+from datetime                  import date
+from .models                   import Shop, Category, Review, ReportShop, ReportReview, Menu
+from accounts.models           import AccountGuest
 from .serializers              import (
     ShopRecommendSerializer, ShopListSerializer,ShopDetailSerializer,
     ReviewSerializer, ReportReviewSerializer, ReportShopSerializer,
     LocationSearchSerializer, AccountSearchSerializer, ShopVisitedSerializer,
+    MenuSerializer
 )
 
 class ShopRecommendViewSet(ModelViewSet):
@@ -90,9 +87,10 @@ class ShopRecommendViewSet(ModelViewSet):
 
 class ShopDetailViewSet(ModelViewSet):
     serializer_class = ShopDetailSerializer
+
     def get_queryset(self):
-        queryset = Shop.objects.filter(id=self.kwargs['id'])
-        return queryset
+        shop = Shop.objects.filter(id=self.kwargs['id'])
+        return shop
 
 @transaction.atomic
 @api_view(['GET','POST'])
@@ -194,6 +192,13 @@ def report_review_command(request, report_review_id):
         report.delete()
 
         return Response({'message':'Report Shop Deleted'})
+
+class MenuViewSet(ModelViewSet):
+    serializer_class = MenuSerializer
+    def get_queryset(self):
+        menu = Menu.objects.order_by('?').first()
+
+        return [menu]
 
 class AccountSearchViewSet(ModelViewSet):
     serializer_class = AccountSearchSerializer
@@ -363,5 +368,3 @@ class ShopVisitedViewSet(ModelViewSet):
 #             .distinct()
 #         )
 #         return queryset
-
-
