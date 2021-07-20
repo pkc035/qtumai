@@ -208,7 +208,7 @@ class MyLikeListShop(models.Model):
         on_delete=models.CASCADE,
         null=True
     )
-    shop_name = models.ManyToManyField(Shop, related_name="myLikeListShop", blank=True)
+    # shop_name = models.ManyToManyField(Shop, related_name="myLikeListShop", blank=True)
 
     def __str__(self):
         return self.my_like_list
