@@ -1,19 +1,18 @@
 import json, requests, jwt, hashlib, hmac, base64, time
 
-from django.http         import JsonResponse
-from django.views        import View
-from django.db           import transaction
-from django.shortcuts    import get_object_or_404
-from django.contrib.auth import get_user_model
-from django.db.models    import Q
-
-from rest_framework             import status
-
+from rest_framework                  import status
 from rest_framework.views            import APIView
 from rest_framework.response         import Response
 from rest_framework.viewsets         import ModelViewSet
 from rest_framework.decorators       import api_view, action
 from rest_framework.authtoken.models import Token
+
+from django.db           import router, transaction
+from django.http         import JsonResponse
+from django.views        import View
+from django.db.models    import F, Q
+from django.shortcuts    import get_object_or_404, render
+from django.contrib.auth import get_user_model
 
 from project.settings import SECRET_KEY
 from random           import randint
@@ -21,7 +20,8 @@ from shops.models     import Shop, LikeShopAccounts, Menu
 from .models          import AccountGuest, MyLikeList, Authentication, MyLikeListShop, Preference
 from .serializers     import (
     AccountGuestSerializer, FunDataSerializer, MyLikeListSerializer, MyLikeListShopSerializer, 
-    PreferenceSerializer, CheckUsernameSerializer
+    PreferenceSerializer, CheckUsernameSerializer, LivingAreaUpdateSerializer, AccountGuestUpdateSerializer,
+    PreferenceUpdateSerializer
     )
 
 class CheckUsernameAPIView(APIView):
@@ -205,8 +205,7 @@ class SMSVerificationView(View):
 
         except Authentication.DoesNotExist:
             return JsonResponse({'message': '해당 휴대폰 번호가 존재하지 않습니다.'}, status=400)
-
-
+          
 @api_view(['POST'])
 def dislikeshop(request):
     data = request.data
@@ -262,15 +261,6 @@ class MyLikeListViewSet(ModelViewSet):
 class MyLikeListShopViewSet(ModelViewSet):
     serializer_class = MyLikeListShopSerializer
 
-    # def retrieve(self, request, pk):
-    #     shop   = get_object_or_404(Shop, pk=pk)
-    #     user   = get_object_or_404(get_user_model(),pk=1)
-
-    #     if MyLikeListShop.objects.filter(Q(shop=shop)|Q(guest=user)):
-    #         return Response({'MyLikeShop_Status': True})
-    #     else:
-    #         return Response({'MyLikeShop_Status': False})
-    
     @transaction.atomic
     def create(self, request):
         mylist = get_object_or_404(MyLikeList, pk=request.data['mylist_id'])
@@ -341,3 +331,28 @@ class FunDataViewSet(ModelViewSet):
             return Response({'message':'Fun Created'})
 
         return Response({'message':'Fun Create Fail'})
+
+@api_view(['PATCH'])
+def update_account_guest(request):
+    try:
+        preference    = Preference.objects.get(account_guest=request.account)
+
+        if request.data.get('is_account_updated') ==  'True':
+            serializer = AccountGuestUpdateSerializer(data=request.data)
+            if serializer.is_valid(raise_exception=True):
+                serializer.update(request.account, request.data)
+
+        if request.data.get('is_preference_updated') == 'True':            
+            serializer = PreferenceUpdateSerializer(data=request.data)
+            if serializer.is_valid(raise_exception=True):
+                serializer.update(instance=preference, data=request.data)
+
+        if request.data.get('is_living_area_updated') == 'True':
+            serializer = LivingAreaUpdateSerializer(data=request.data)
+            if serializer.is_valid(raise_exception=True):
+                serializer.update_or_create(data=request.data, account=request.account)        
+
+        return Response({'message' : 'Success'})
+    
+    except Preference.DoesNotExist:
+        return Response({'message' : 'Preference Does Not Exist'}, status=400)

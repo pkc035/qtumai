@@ -2,19 +2,21 @@ from django.db                 import transaction
 from django.db.models          import Q, When, Value, Case
 from django.shortcuts          import get_object_or_404
 
-from rest_framework.viewsets   import ModelViewSet
-from rest_framework.decorators import action, api_view
-from rest_framework.response   import Response
-from rest_framework.pagination import PageNumberPagination
+from rest_framework.viewsets    import ModelViewSet
+from rest_framework.decorators  import action, api_view
+from rest_framework.response    import Response
+from rest_framework.pagination  import PageNumberPagination
 
+from re                        import A
 from random                    import seed, sample
 from datetime                  import date
-from .models                   import Shop, Category, Review, ReportShop, ReportReview, ShopImage, Menu
+from .models                   import Shop, Category, Review, ReportShop, ReportReview, Menu
 from accounts.models           import AccountGuest
 from .serializers              import (
     ShopRecommendSerializer, ShopListSerializer,ShopDetailSerializer,
     ReviewSerializer, ReportReviewSerializer, ReportShopSerializer,
-    LocationSearchSerializer, AccountSearchSerializer, MenuSerializer
+    LocationSearchSerializer, AccountSearchSerializer, ShopVisitedSerializer,
+    MenuSerializer
 )
 
 class ShopRecommendViewSet(ModelViewSet):
@@ -247,7 +249,6 @@ class LocationSearchViewSet(ModelViewSet):
                     validated_data=request.data,
                     account=request.account
                 )
-
         return Response({"message":"Success"})
 
 class ShopListPagination(PageNumberPagination):
@@ -304,7 +305,6 @@ class ShopListViewSet(ModelViewSet):
             .prefetch_related('shopimage_set')
             .order_by('-naver_score')
         )
-
         return shops
 
 #menu_name, shop_name / category_name 검색 결과를 나눠서 return할 경우
@@ -336,8 +336,20 @@ class ShopSearchViewSet(ModelViewSet):
             {'shop,category': serializer_shop_category.data},
             # {'menu': serializer_menu.data}
         ]
-
         return Response(result_list)
+
+class ShopVisitedViewSet(ModelViewSet):
+    serializer_class = ShopVisitedSerializer
+    pagination_class = ShopListPagination
+
+    def get_queryset(self):
+        queryset = (
+            Shop.objects
+            .filter(userVisitedStore=self.request.account)
+            .prefetch_related('shopimage_set', 'userVisitedStore', 'visitedshop_set')
+            .order_by('-visitedshop__visited_time')
+        )     
+        return queryset
 
 # # menu_name,shop_name, category_name 검색 결과를 한 배열에 return 할 경우
 # class ShopSearchViewSet(ModelViewSet):
@@ -356,6 +368,3 @@ class ShopSearchViewSet(ModelViewSet):
 #             .distinct()
 #         )
 #         return queryset
-
-
-        
