@@ -1,32 +1,55 @@
-from datetime            import datetime
-
 from django.contrib.auth import get_user_model
 from django.db.models    import F
 
 from rest_framework      import serializers
 
-from .models             import ReportShop, ReportReview, Review, Shop, ThemeKeyword, Coupon
-from accounts.models     import AccountGuest, SearchedLocation
+from .models             import ReportShop, ReportReview, Review, Shop, ShopImage, ThemeKeyword, Coupon
+from accounts.models     import SearchedLocation, SearchedPeopleThrough
 
 class CouponSerializer(serializers.ModelSerializer):
     class Meta:
         model = Coupon
         fields = ['coupon_content']
 
+    def to_representation(self, instance):
+        row = super().to_representation(instance)
+        return row['coupon_content']
+
 class ThemeKeywordSerializer(serializers.ModelSerializer):
     class Meta:
         model = ThemeKeyword
-        fields = ['theme_keyword']
+        fields = ['shopThemeKeyword']
+
+    def to_representation(self, instance):
+        row = super().to_representation(instance)
+        return row['shopThemKeyword']
+
+class ShopImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ShopImage
+        fields = ['img_url']
+    
+    def to_representation(self, instance):
+        row = super().to_representation(instance)
+        return row['img_url']
 
 class ShopListSerializer(serializers.ModelSerializer):
-    themekeyword_set =  ThemeKeywordSerializer(many=True, read_only=True)
-    coupon = CouponSerializer(many=True, read_only=True)
+    shopimage_set = ShopImageSerializer(many=True, read_only=True)
 
     class Meta:
         model = Shop
         fields = [
-            'id','shop_name','shop_info_url','kakao_score',
-            'latitude','longitude', 'coupon', 'themekeyword_set'
+            'id','shop_name','shop_description','latitude','longitude','naver_score', 'shopimage_set'
+        ]
+    
+class ShopRecommendSerializer(ShopListSerializer):
+    shopThemeKeyword =  ThemeKeywordSerializer(many=True, read_only=True)
+    coupon_set = CouponSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Shop
+        fields = ShopListSerializer.Meta.fields + [
+            'shopThemeKeyword', 'coupon_set'
         ]
 
 class ShopDetailSerializer(serializers.ModelSerializer):
@@ -61,31 +84,33 @@ class AccountSearchSerializer(serializers.ModelSerializer):
         model = get_user_model()
         fields =['id', 'username']
 
-    # AccountGuest - AccountGuest 중간테이블 생성 후 변경
-    # def update_or_create(self,validated_data,account):
-    #     SearchedPeopleThrough.objects.update_or_create(
-    #     from_accountguest=account,
-    #     to_accountguest_id=validated_data['id'],
-    #     # searched_time = datetime.now(),
-    #     defaults = {
-    #         'from_accountguest': account,
-    #         'to_accountguest_id' : validated_data['id']
-    #         }
-    #     )
-
-class LocationSearchSerializer(serializers.Serializer):
+    def update_or_create(self,validated_data,account):
+        SearchedPeopleThrough.objects.update_or_create(
+        from_accountguest=account,
+        to_accountguest_id=validated_data['id'],
+        defaults = {
+            'from_accountguest' : account,
+            'to_accountguest_id' : validated_data['id']
+            }
+        )
+        
+class LocationSearchSerializer(serializers.ModelSerializer):
     class Meta:
         model  = SearchedLocation
-        fields = ['content_word', 'searched_count'] 
-        # fields = ['content_word', 'latitude', 'longitude', 'searched_count', 'searched_time'] 
+        fields = ['content_word', 'latitude', 'longitude', 'searched_count', 'searched_time'] 
 
     def update_or_create(self,validated_data,account):
-        location = SearchedLocation.objects.update_or_create(
-            content_word = validated_data['content_word'],
-            # latitude = validated_data['latitude'],
-            # longitude = validated_data['longitude'],
-            searched_time = datetime.now()
+        location = (
+            SearchedLocation.objects.filter(account_guest=account)
+                .update_or_create(
+                content_word = validated_data['content_word'],
+                latitude = validated_data['latitude'],
+                longitude = validated_data['longitude'],
+                defaults = {
+                    'content_word' : validated_data['content_word'],
+                }
+            )
         )
-        # location.searched_count = F('searched_count') + 1
-        location.account_guest.add(account)
-        location.save()
+        location[0].searched_count = F('searched_count') + 1
+        location[0].account_guest.add(account)
+        location[0].save()

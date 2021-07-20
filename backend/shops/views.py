@@ -1,3 +1,4 @@
+from accounts.serializers import AccountGuestSerializer
 from random   import seed, sample
 from datetime import date
 
@@ -8,26 +9,30 @@ from django.shortcuts          import get_object_or_404
 from rest_framework.viewsets   import ModelViewSet
 from rest_framework.decorators import action, api_view
 from rest_framework.response   import Response
+from rest_framework.pagination import PageNumberPagination
 
-from .models                   import Shop, Category, Review, ReportShop
+from .models                   import Shop, Category, Review, ReportShop, ReportReview
 from accounts.models           import AccountGuest
 from .serializers              import (
-    AccountSearchSerializer, ShopListSerializer,ShopDetailSerializer,
-    ReviewSerializer, LocationSearchSerializer, ReportShopSerializer,
-    ReportReviewSerializer
+    ShopRecommendSerializer, ShopListSerializer,ShopDetailSerializer,
+    ReviewSerializer, ReportReviewSerializer, ReportShopSerializer,
+    LocationSearchSerializer, AccountSearchSerializer,
 )
 
-class ShopListViewSet(ModelViewSet):
+class ShopRecommendViewSet(ModelViewSet):
     def list(self,request):
-        # 모델링 수정 후 변경
-        # latitude  = request.account.searchedLocation.all().first().latitude
-        # longitude = request.account.searchedLocation.all().first().longtitude
+        type = self.request.query_params.get('type')
 
-        # latitude  = request.account.searchedLocation.all().order_by('-searched_time').first().latitude
-        # longitude = request.account.searchedLocation.all().order_by('-searched_time').first().longtitude
+        if type == 'search':
+            location  = (self.request.account.searchedLocation.all()
+                .order_by('-searched_time').first()
+            )
+            latitude  = location.latitude
+            longitude = location.longitude
 
-        latitude = 125
-        longitude = 241
+        elif type == 'here':
+            latitude = float(self.request.query_params.get('latitude'))
+            longitude = float(self.request.query_params.get('longitude'))
 
         range_condition = Case(
             When(
@@ -40,24 +45,21 @@ class ShopListViewSet(ModelViewSet):
                 then=Value(1)),
             default=Value(0)
         )
-        shops       = Shop.objects.annotate(range_condition=range_condition).exclude(range_condition=0)
+        shops = (
+            Shop.objects
+            .annotate(range_condition=range_condition)
+            .exclude(range_condition=0)
+            .prefetch_related('shopThemeKeyword', 'coupon_set','shopimage_set')
+        )
         result_list = []
 
-        if request.query_params.get('all') == 'True':
-            shops_all   = shops.order_by(
-                '-range_condition','-kakao_score'
-            )
-            serializer  = ShopListSerializer(shops_all,many=True)
-            result_list = serializer.data
-
         if request.query_params.get('top') == 'True':
-            shops_top  = shops.prefetch_related('themekeyword_set').order_by(
-                '-range_condition','-kakao_score'
-            )[:10]
-            serializer = ShopListSerializer(shops_top,many=True)
-            result     = {
+            shops_top = shops.order_by('-range_condition','-naver_score')[:10]
+            serializer_top = ShopRecommendSerializer(shops_top,many=True)
+            
+            result = {
                 'title' : '오늘의 추천',
-                'list' : serializer.data
+                'list' : serializer_top.data
             }
             result_list.append(result)
 
@@ -67,14 +69,17 @@ class ShopListViewSet(ModelViewSet):
             categories = sample(range(1,Category.objects.all().count()+1),3)
 
             for category_id in categories:
-                category            = Category.objects.get(id=category_id)                    
-                shops_category      = shops.filter(category=category).order_by(
-                    '-range_condition','-kakao_score'
+                category = Category.objects.get(id=category_id)                    
+                shops_category = (
+                    shops
+                    .filter(category=category)
+                    .order_by('-range_condition','-naver_score')
                 )[:10]
-                serializer_category = ShopListSerializer(shops_category, many=True)
-                result              = {
-                    'title' : '오늘의 '+category.category_name,
-                    'list': serializer_category.data
+                serializer_category = ShopRecommendSerializer(shops_category, many=True)
+                
+                result = {
+                    'title' : '오늘의 '+ category.category_name,
+                    'list'  : serializer_category.data
                 }
                 result_list.append(result)
 
@@ -187,21 +192,27 @@ def report_review_command(request, report_review_id):
 
         return Response({'message':'Report Shop Deleted'})
 
-class SearchAccountViewSet(ModelViewSet):
+class AccountSearchViewSet(ModelViewSet):
     serializer_class = AccountSearchSerializer
 
     def get_queryset(self):
         keyword  = self.request.query_params.get('keyword')
-        queryset = AccountGuest.objects.filter(
-            username__contains=keyword
-            ).order_by('username')
+        queryset = (
+            AccountGuest.objects
+            .filter(username__contains=keyword)
+            .order_by('username')
+        )
         return queryset
 
     @action(detail=False, methods=['get'])
     def recent(self,request):
-        request.account = AccountGuest.objects.get(id=1)
-        queryset  = request.account.searched_people.through.objects.all().order_by('-searched_time')[:5]
+        queryset = (
+            AccountGuest.objects
+            .filter(searchedPeople=request.account)
+            .order_by('-searcedpeople_from__searched_time')
+        )
         serializer = AccountSearchSerializer(queryset,many=True)
+
         return Response(serializer.data)
 
     def create(self,request):
@@ -215,7 +226,7 @@ class SearchAccountViewSet(ModelViewSet):
                     )
         return Response({"message":"Success"})
 
-class SearchLocationViewSet(ModelViewSet):
+class LocationSearchViewSet(ModelViewSet):
     @action(detail=False, methods=['get'])
     def recent(self,request):
         queryset  = request.account.searchedLocation.all().order_by('-searched_time')[:5]
@@ -232,3 +243,113 @@ class SearchLocationViewSet(ModelViewSet):
                 )
 
         return Response({"message":"Success"})
+
+class ShopListPagination(PageNumberPagination):
+    page_size = 6
+
+class ShopListViewSet(ModelViewSet):
+    serializer_class = ShopListSerializer
+    pagination_class = ShopListPagination
+
+    def get_queryset(self):
+        type       = self.request.query_params.get('type')
+        zoom       = int(self.request.query_params.get('zoom'))
+        dislike_in = self.request.query_params.get('dislike_in')
+        score      = self.request.query_params.get('score')
+
+        # range
+        if type == 'living':
+            location  = self.request.account.livingarea
+            latitude  = location.latitude
+            longitude = location.longitude
+
+
+        elif type == 'search':
+            location  = (self.request.account.searchedLocation.all()
+                .order_by('-searched_time').first()
+            )
+            latitude  = location.latitude
+            longitude = location.longitude
+
+        elif type == 'here':
+            latitude = float(self.request.query_params.get('latitude'))
+            longitude = float(self.request.query_params.get('longitude'))
+
+        range_condition = (
+            Q(latitude__range  = (latitude-0.01*zoom, latitude+0.01*zoom))&
+            Q(longitude__range = (longitude-0.015*zoom, longitude+0.015*zoom))
+        )
+
+        # dislike
+        dislike_condition = Q()
+
+        if dislike_in == 'False':
+            dislike_condition = ~Q(dislikeShop=self.request.account)
+
+        # score
+        score_condition = Q()
+
+        if score:
+            score_condition = Q(naver_score__gte=score)
+
+        shops = (
+            Shop.objects
+            .filter(range_condition&dislike_condition&score_condition)
+            .prefetch_related('shopimage_set')
+            .order_by('-naver_score')
+        )
+
+        return shops
+
+#menu_name, shop_name / category_name 검색 결과를 나눠서 return할 경우
+class ShopSearchViewSet(ModelViewSet):
+    def list(self, request):
+        keyword  = request.query_params.get('keyword')
+        
+        queryset_shop_category = (
+            Shop.objects
+            .filter(
+                Q(shop_name__contains=keyword)|
+                Q(category__category_name__contains=keyword)
+            )
+            .prefetch_related('shopimage_set')
+            .order_by('-naver_score')
+        )
+        serializer_shop_category = ShopListSerializer(queryset_shop_category, many=True)
+
+        queryset_menu = (
+            Shop.objects
+            .filter(menu__menu_name__contains=keyword)
+            .prefetch_related('shopimage_set')
+            .order_by('-naver_score')
+            .distinct()
+        )
+        serializer_menu = ShopListSerializer(queryset_menu, many=True)
+        
+        result_list = [
+            {'shop,category': serializer_shop_category.data},
+            # {'menu': serializer_menu.data}
+        ]
+
+        return Response(result_list)
+
+# # menu_name,shop_name, category_name 검색 결과를 한 배열에 return 할 경우
+# class ShopSearchViewSet(ModelViewSet):
+#     serializer_class = ShopListSerializer
+
+#     def get_queryset(self):
+#         keyword = self.request.query_params.get('keyword')
+#         queryset = (
+#             Shop.objects.filter(
+#                 Q(shop_name__contains=keyword)|
+#                 Q(category__category_name__contains=keyword)|
+#                 Q(menu__menu_name__contains=keyword)
+#                 )
+#             .prefetch_related('shopimage_set')
+#             .order_by('-naver_score')
+#             .distinct()
+#         )
+#         return queryset
+
+
+        
