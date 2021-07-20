@@ -5,7 +5,6 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 export default function MainStoreList({ personalContents }) {
-  console.log(personalContents);
   let settings = {
     speed: 500,
     slidesToShow: 3,
@@ -21,7 +20,6 @@ export default function MainStoreList({ personalContents }) {
             <Title>{data.title}</Title>
             <StoreListSlider {...settings}>
               {personalContents[idx].list.map(item => {
-                console.log(item)
                 return (
                   <div key={item.id}>
                     <StoreContainer src={item.shop_info_url}>
