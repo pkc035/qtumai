@@ -1,9 +1,9 @@
-import { css } from 'styled-components';
+import { css } from "styled-components";
 
 const flexSet = (
-    justify = 'center',
-    items = 'center',
-    direction = 'row'
+  justify = "center",
+  items = "center",
+  direction = "row"
 ) => css`
   display: flex;
   justify-content: ${justify};
@@ -11,6 +11,18 @@ const flexSet = (
   flex-direction: ${direction};
 `;
 
-const mixin = { flexSet };
+const imageSet = (
+  img = "",
+  size = "cover",
+  position = "center",
+  repeat = "no-repeat"
+) => css`
+  background-image: ${img};
+  background-size: ${size};
+  background-position: ${position};
+  background-repeat: ${repeat};
+`;
+
+const mixin = { flexSet, imageSet };
 
 export default mixin;

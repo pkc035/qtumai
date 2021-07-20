@@ -26,12 +26,11 @@ const Home = () => {
       }}
     >
       <Stack.Screen
-        name='MainNavigator'
+        name="MainNavigator"
         component={MainNavigator}
       ></Stack.Screen>
-      <Stack.Screen name='Who' component={Who}></Stack.Screen>
-      <Stack.Screen name='Where' component={Where}></Stack.Screen>
-      <Stack.Screen name='Map' component={Map}></Stack.Screen>
+      <Stack.Screen name="Who" component={Who}></Stack.Screen>
+      <Stack.Screen name="Where" component={Where}></Stack.Screen>
     </Stack.Navigator>
   );
 };

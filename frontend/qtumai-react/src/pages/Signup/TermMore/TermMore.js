@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
 
 function TermMore() {
-
   return (
     <React.Fragment>
       <Title>111</Title>
@@ -11,8 +10,8 @@ function TermMore() {
 }
 
 const Title = styled.div`
-  height:100vh;
-  width:100vh;
+  height: 100vh;
+  width: 100vh;
   background-color: #ff3000;
 `;
 
