@@ -36,5 +36,6 @@ urlpatterns = [
     path('signup',views.AccountGuestAPIView.as_view()),
     path('dislike-shop', views.dislikeshop),
     path('like-shop', views.likeshop),
+    path('account-update', views.update_account_guest)
     
 ] + router.urls
