@@ -15,8 +15,13 @@ Including another URLconf
 """
 from django.urls import path
 
-from .views import business_create
+from rest_framework.routers import DefaultRouter
+
+from .views import CouponManageViewSet, business_create
+
+router = DefaultRouter(trailing_slash=True)
+router.register(r"business/coupon", CouponManageViewSet, basename="business/coupon")
 
 urlpatterns = [
-    path('business', business_create)
-]
+    path('business/register', business_create)
+]+ router.urls

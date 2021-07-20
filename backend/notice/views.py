@@ -1,12 +1,17 @@
-from notice.serializers import BusinessFormSerializer
+from typing import Optional
+
+from rest_framework.serializers import Serializer
+from rest_framework.decorators import action, api_view
+from django.shortcuts          import get_object_or_404
+
+from notice.serializers import BusinessFormSerializer, CouponManageSerializer
 from .models         import BusinessForm
+from shops.models    import Coupon, Shop
 from accounts.models import AccountGuest
 
 from rest_framework.viewsets   import ModelViewSet
 from rest_framework.response   import Response
 from rest_framework.decorators import api_view
-
-from django.db           import transaction
 
 @api_view(['GET','POST','PUT','DELETE'])
 def business_create(request):
@@ -43,4 +48,42 @@ def business_create(request):
         business.delete()
 
         return Response({'message':'BusinessForm Deleted'})
-        
+
+class CouponManageViewSet(ModelViewSet):
+    serializer_class = CouponManageSerializer
+
+    def list(self, request):
+        queryset   = Coupon.objects.filter(
+            shop__accountMyShop__username=request.account.username,
+            status=True
+        )
+        serializer = CouponManageSerializer(queryset, many=True)
+
+        return Response(serializer.data)
+    
+    def create(self, request):
+        serializer = self.get_serializer(data=request.data)
+
+        if serializer.is_valid(raise_exception =True):
+            serializer.save(account=request.account)
+
+        return Response (serializer.data, status=201)
+
+    @action(detail=False, methods=['PATCH'])
+    def status(self, request):
+        new_coupon = get_object_or_404(Coupon, id=request.data['coupon_id'])
+        serializer = CouponManageSerializer(new_coupon, data=request.data)
+
+        if serializer.is_valid(raise_exception =True):
+            old_coupon = (
+                Coupon.objects
+                .filter(
+                    shop__accountMyShop__username=request.account.username,
+                    status=True
+                ).exclude(id=request.data['coupon_id'])
+            )
+            serializer.save(
+                old_coupon=old_coupon
+            )
+
+        return Response(serializer.data)
