@@ -8,7 +8,7 @@ import Button from '../components/Button';
 const Where = ({ navigation }) => {
   return (
     <Container>
-      <WebView source={{ uri: 'http://192.168.0.76:3000/Where' }}
+      <WebView source={{ uri: 'http://192.168.0.69:3000/Where' }}
         onMessage={(event) => event.nativeEvent.data === 'Success!' ? navigation.pop() : null}
       />
       <Button

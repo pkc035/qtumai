@@ -2,9 +2,7 @@
     {
         "model": "shops.shop",
         "pk": 1,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "���������ڰ�",
@@ -34,9 +32,7 @@
     {
         "model": "shops.shop",
         "pk": 2,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�Ÿ���õ��",
@@ -66,9 +62,7 @@
     {
         "model": "shops.shop",
         "pk": 3,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "���̽��Ҵ߰��� ����",
@@ -98,9 +92,7 @@
     {
         "model": "shops.shop",
         "pk": 4,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "���ø�",
@@ -130,9 +122,7 @@
     {
         "model": "shops.shop",
         "pk": 5,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "���ø����� ������",
@@ -162,9 +152,7 @@
     {
         "model": "shops.shop",
         "pk": 6,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "���Ľ��� ������",
@@ -194,9 +182,7 @@
     {
         "model": "shops.shop",
         "pk": 7,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "���̺�",
@@ -226,9 +212,7 @@
     {
         "model": "shops.shop",
         "pk": 8,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�ŵ���������",
@@ -258,9 +242,7 @@
     {
         "model": "shops.shop",
         "pk": 9,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "���������Ұ��� ���ε�������",
@@ -290,9 +272,7 @@
     {
         "model": "shops.shop",
         "pk": 10,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "����ī��",
@@ -322,9 +302,7 @@
     {
         "model": "shops.shop",
         "pk": 11,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�󵵸Ǽ�",
@@ -354,9 +332,7 @@
     {
         "model": "shops.shop",
         "pk": 12,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "ȭ�簡�� ���ε����д�����",
@@ -386,9 +362,7 @@
     {
         "model": "shops.shop",
         "pk": 13,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�������â ���ε�������",
@@ -418,9 +392,7 @@
     {
         "model": "shops.shop",
         "pk": 14,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�̵��Ĵ� �ŵ�������",
@@ -450,9 +422,7 @@
     {
         "model": "shops.shop",
         "pk": 15,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�ֿ쿵����",
@@ -482,9 +452,7 @@
     {
         "model": "shops.shop",
         "pk": 16,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�������� �Ű�",
@@ -514,9 +482,7 @@
     {
         "model": "shops.shop",
         "pk": 17,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�Ѹ��Ľ�Ÿ ���ε����п���",
@@ -546,9 +512,7 @@
     {
         "model": "shops.shop",
         "pk": 18,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�۸���",
@@ -578,9 +542,7 @@
     {
         "model": "shops.shop",
         "pk": 19,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "���������â �ŵ�����",
@@ -610,9 +572,7 @@
     {
         "model": "shops.shop",
         "pk": 20,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "����",
@@ -642,9 +602,7 @@
     {
         "model": "shops.shop",
         "pk": 21,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "���Ұ��� ���ε�������",
@@ -674,9 +632,7 @@
     {
         "model": "shops.shop",
         "pk": 22,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "������ �ŵ�����",
@@ -706,9 +662,7 @@
     {
         "model": "shops.shop",
         "pk": 23,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "���ʺ������",
@@ -738,9 +692,7 @@
     {
         "model": "shops.shop",
         "pk": 24,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "������",
@@ -770,9 +722,7 @@
     {
         "model": "shops.shop",
         "pk": 25,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�и�",
@@ -802,9 +752,7 @@
     {
         "model": "shops.shop",
         "pk": 26,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�����ѿ켭������",
@@ -834,9 +782,7 @@
     {
         "model": "shops.shop",
         "pk": 27,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "���ϸ�������",
@@ -866,9 +812,7 @@
     {
         "model": "shops.shop",
         "pk": 28,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "���ẹ��ġ �ŵ�����",
@@ -898,9 +842,7 @@
     {
         "model": "shops.shop",
         "pk": 29,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "Ȳ���ع����� ���κ���",
@@ -930,9 +872,7 @@
     {
         "model": "shops.shop",
         "pk": 30,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�ʰ����ζѸ�û����",
@@ -962,9 +902,7 @@
     {
         "model": "shops.shop",
         "pk": 31,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "��׸����� �ŵ�����ť���Ƽ��",
@@ -994,9 +932,7 @@
     {
         "model": "shops.shop",
         "pk": 32,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "������ռұݱ��� ������",
@@ -1026,9 +962,7 @@
     {
         "model": "shops.shop",
         "pk": 33,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�ٿ�����",
@@ -1058,9 +992,7 @@
     {
         "model": "shops.shop",
         "pk": 34,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "���Ұ�â ����ž��",
@@ -1090,9 +1022,7 @@
     {
         "model": "shops.shop",
         "pk": 35,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "������ �ŵ�������",
@@ -1122,9 +1052,7 @@
     {
         "model": "shops.shop",
         "pk": 36,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�˱����Ⱘ�ڿ˽���",
@@ -1154,9 +1082,7 @@
     {
         "model": "shops.shop",
         "pk": 37,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�����ξ��� �ŵ�����",
@@ -1186,9 +1112,7 @@
     {
         "model": "shops.shop",
         "pk": 38,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "������λﱳ�� �ŵ�����",
@@ -1218,9 +1142,7 @@
     {
         "model": "shops.shop",
         "pk": 39,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "����Ƚ���� ���κ���",
@@ -1250,9 +1172,7 @@
     {
         "model": "shops.shop",
         "pk": 40,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "��ٸ�Ƚ�� ������",
@@ -1282,9 +1202,7 @@
     {
         "model": "shops.shop",
         "pk": 41,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�������� ���ε�������",
@@ -1314,9 +1232,7 @@
     {
         "model": "shops.shop",
         "pk": 42,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�ڶ�",
@@ -1346,9 +1262,7 @@
     {
         "model": "shops.shop",
         "pk": 43,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "����Ʈ��",
@@ -1378,9 +1292,7 @@
     {
         "model": "shops.shop",
         "pk": 44,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "����Լ�",
@@ -1410,9 +1322,7 @@
     {
         "model": "shops.shop",
         "pk": 45,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "ǳõ�������Ｎ����",
@@ -1442,9 +1352,7 @@
     {
         "model": "shops.shop",
         "pk": 46,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "���ʿ�¡������ ���ε�������",
@@ -1474,9 +1382,7 @@
     {
         "model": "shops.shop",
         "pk": 47,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�߽� ��������",
@@ -1506,9 +1412,7 @@
     {
         "model": "shops.shop",
         "pk": 48,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "���ɰ���",
@@ -1538,9 +1442,7 @@
     {
         "model": "shops.shop",
         "pk": 49,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�迵��������ī�߸���",
@@ -1570,9 +1472,7 @@
     {
         "model": "shops.shop",
         "pk": 50,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "���ٿ�",
@@ -1602,9 +1502,7 @@
     {
         "model": "shops.shop",
         "pk": 51,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "���̳��������� ���ε�����������",
@@ -1634,9 +1532,7 @@
     {
         "model": "shops.shop",
         "pk": 52,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�̹�Ŀ�Ƿν��ͽ�",
@@ -1666,9 +1562,7 @@
     {
         "model": "shops.shop",
         "pk": 53,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�Ҵ��� ��ô��",
@@ -1698,9 +1592,7 @@
     {
         "model": "shops.shop",
         "pk": 54,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "���ϼ��뱹���� ������",
@@ -1730,9 +1622,7 @@
     {
         "model": "shops.shop",
         "pk": 55,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "��â����",
@@ -1762,9 +1652,7 @@
     {
         "model": "shops.shop",
         "pk": 56,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "��ũ�ε�",
@@ -1794,9 +1682,7 @@
     {
         "model": "shops.shop",
         "pk": 57,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "���Ұ�â ���ε����д�����",
@@ -1826,9 +1712,7 @@
     {
         "model": "shops.shop",
         "pk": 58,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "���ÿ��� �ŵ�����",
@@ -1858,9 +1742,7 @@
     {
         "model": "shops.shop",
         "pk": 59,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�����ƽĴ� ���ε����д�����",
@@ -1890,9 +1772,7 @@
     {
         "model": "shops.shop",
         "pk": 60,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�����ҸӴϸ��� ���ε����д�����",
@@ -1922,9 +1802,7 @@
     {
         "model": "shops.shop",
         "pk": 61,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "����Ƚ���������Ĵ� �ŵ�����",
@@ -1954,9 +1832,7 @@
     {
         "model": "shops.shop",
         "pk": 62,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�ҸӴ��߾���",
@@ -1986,9 +1862,7 @@
     {
         "model": "shops.shop",
         "pk": 63,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "����������",
@@ -2018,9 +1892,7 @@
     {
         "model": "shops.shop",
         "pk": 64,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�Ͽ���ġ",
@@ -2050,9 +1922,7 @@
     {
         "model": "shops.shop",
         "pk": 65,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "����� ���ε�������",
@@ -2082,9 +1952,7 @@
     {
         "model": "shops.shop",
         "pk": 66,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "���ͷκ� ��ô��",
@@ -2114,9 +1982,7 @@
     {
         "model": "shops.shop",
         "pk": 67,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "���ڽη�",
@@ -2146,9 +2012,7 @@
     {
         "model": "shops.shop",
         "pk": 68,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�տ��������� ���ε����д�����",
@@ -2178,9 +2042,7 @@
     {
         "model": "shops.shop",
         "pk": 69,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "��������",
@@ -2210,9 +2072,7 @@
     {
         "model": "shops.shop",
         "pk": 70,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "����ġ",
@@ -2242,9 +2102,7 @@
     {
         "model": "shops.shop",
         "pk": 71,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�����ҸӴϸ��� �ŵ�����",
@@ -2274,9 +2132,7 @@
     {
         "model": "shops.shop",
         "pk": 72,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "û���̻� �ŵ�����",
@@ -2306,9 +2162,7 @@
     {
         "model": "shops.shop",
         "pk": 73,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "��õ��",
@@ -2338,9 +2192,7 @@
     {
         "model": "shops.shop",
         "pk": 74,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�������",
@@ -2370,9 +2222,7 @@
     {
         "model": "shops.shop",
         "pk": 75,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "��Ÿ���� ����ȣ����",
@@ -2402,9 +2252,7 @@
     {
         "model": "shops.shop",
         "pk": 76,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "���̳��������� �ŵ�����",
@@ -2434,9 +2282,7 @@
     {
         "model": "shops.shop",
         "pk": 77,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "��ä ������",
@@ -2466,9 +2312,7 @@
     {
         "model": "shops.shop",
         "pk": 78,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�������",
@@ -2498,9 +2342,7 @@
     {
         "model": "shops.shop",
         "pk": 79,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "��������ܹ�",
@@ -2530,9 +2372,7 @@
     {
         "model": "shops.shop",
         "pk": 80,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�ż�ȸ���� �ŵ�����",
@@ -2562,9 +2402,7 @@
     {
         "model": "shops.shop",
         "pk": 81,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "ī����",
@@ -2594,9 +2432,7 @@
     {
         "model": "shops.shop",
         "pk": 82,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�Ƶ����� ��ôDT��",
@@ -2626,9 +2462,7 @@
     {
         "model": "shops.shop",
         "pk": 83,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�߾���²��̳� �ŵ�����",
@@ -2658,9 +2492,7 @@
     {
         "model": "shops.shop",
         "pk": 84,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�������� ������",
@@ -2690,9 +2522,7 @@
     {
         "model": "shops.shop",
         "pk": 85,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "������ġ ����������",
@@ -2722,9 +2552,7 @@
     {
         "model": "shops.shop",
         "pk": 86,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "������",
@@ -2754,9 +2582,7 @@
     {
         "model": "shops.shop",
         "pk": 87,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "��ȣ�߹� �ŵ�������",
@@ -2786,9 +2612,7 @@
     {
         "model": "shops.shop",
         "pk": 88,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�󸶳�����",
@@ -2818,9 +2642,7 @@
     {
         "model": "shops.shop",
         "pk": 89,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "��õ�������Į���� ����",
@@ -2850,9 +2672,7 @@
     {
         "model": "shops.shop",
         "pk": 90,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "��Ÿ���� �ŵ�����",
@@ -2882,9 +2702,7 @@
     {
         "model": "shops.shop",
         "pk": 91,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "������� �����ȭ����ť���Ƽ��",
@@ -2914,9 +2732,7 @@
     {
         "model": "shops.shop",
         "pk": 92,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "���̵�ƿ�",
@@ -2946,9 +2762,7 @@
     {
         "model": "shops.shop",
         "pk": 93,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�ٸ��̻������ �����ȭ�� ��ť���Ƽ��",
@@ -2978,9 +2792,7 @@
     {
         "model": "shops.shop",
         "pk": 94,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "��ٱ�",
@@ -3010,9 +2822,7 @@
     {
         "model": "shops.shop",
         "pk": 95,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�Ƶ����� ���ε�������",
@@ -3042,9 +2852,7 @@
     {
         "model": "shops.shop",
         "pk": 96,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�ջ����屹 ��ô��",
@@ -3074,9 +2882,7 @@
     {
         "model": "shops.shop",
         "pk": 97,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "���ó�ĭ��",
@@ -3106,9 +2912,7 @@
     {
         "model": "shops.shop",
         "pk": 98,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "ĥ���ֶ�����",
@@ -3138,9 +2942,7 @@
     {
         "model": "shops.shop",
         "pk": 99,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "���Ŀ���",
@@ -3170,9 +2972,7 @@
     {
         "model": "shops.shop",
         "pk": 100,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�ܰ�մ� ���ε�������",
@@ -3202,9 +3002,7 @@
     {
         "model": "shops.shop",
         "pk": 101,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "1s ī������",
@@ -3234,9 +3032,7 @@
     {
         "model": "shops.shop",
         "pk": 102,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�����÷��̽� ���ε����п����Ÿ���",
@@ -3266,9 +3062,7 @@
     {
         "model": "shops.shop",
         "pk": 103,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�����н�",
@@ -3298,9 +3092,7 @@
     {
         "model": "shops.shop",
         "pk": 104,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�׸��ٽ��� �ŵ�����",
@@ -3330,9 +3122,7 @@
     {
         "model": "shops.shop",
         "pk": 105,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "������� ���ε����п���",
@@ -3362,9 +3152,7 @@
     {
         "model": "shops.shop",
         "pk": 106,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "���������� �ŵ�����",
@@ -3394,9 +3182,7 @@
     {
         "model": "shops.shop",
         "pk": 107,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "���̰����� ������",
@@ -3426,9 +3212,7 @@
     {
         "model": "shops.shop",
         "pk": 108,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�������ũ ���ε����д�����",
@@ -3458,9 +3242,7 @@
     {
         "model": "shops.shop",
         "pk": 109,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "������",
@@ -3490,9 +3272,7 @@
     {
         "model": "shops.shop",
         "pk": 110,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "���¸��δ�� ������",
@@ -3522,9 +3302,7 @@
     {
         "model": "shops.shop",
         "pk": 111,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "��������ų��������屹 ��ô��",
@@ -3554,9 +3332,7 @@
     {
         "model": "shops.shop",
         "pk": 112,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "����ŷ ������",
@@ -3586,9 +3362,7 @@
     {
         "model": "shops.shop",
         "pk": 113,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "������ ����",
@@ -3618,9 +3392,7 @@
     {
         "model": "shops.shop",
         "pk": 114,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "��ȭ��������",
@@ -3650,9 +3422,7 @@
     {
         "model": "shops.shop",
         "pk": 115,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "û���̻� ���ε�������",
@@ -3682,9 +3452,7 @@
     {
         "model": "shops.shop",
         "pk": 116,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "ȫ�߻������ �ŵ���2ȣ��",
@@ -3714,9 +3482,7 @@
     {
         "model": "shops.shop",
         "pk": 117,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "��������Ĵ�",
@@ -3746,9 +3512,7 @@
     {
         "model": "shops.shop",
         "pk": 118,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�������� ���ε�������",
@@ -3778,9 +3542,7 @@
     {
         "model": "shops.shop",
         "pk": 119,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "���̷ε�",
@@ -3810,9 +3572,7 @@
     {
         "model": "shops.shop",
         "pk": 120,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "ī��ť��",
@@ -3842,9 +3602,7 @@
     {
         "model": "shops.shop",
         "pk": 121,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�������� ��ũ�븶Ʈ��",
@@ -3874,9 +3632,7 @@
     {
         "model": "shops.shop",
         "pk": 122,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "��հ�â����",
@@ -3906,9 +3662,7 @@
     {
         "model": "shops.shop",
         "pk": 123,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�趱�� ��ô����",
@@ -3938,9 +3692,7 @@
     {
         "model": "shops.shop",
         "pk": 124,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�����׳��� �ŵ�����",
@@ -3970,9 +3722,7 @@
     {
         "model": "shops.shop",
         "pk": 125,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�η��ѽĺ���",
@@ -4002,9 +3752,7 @@
     {
         "model": "shops.shop",
         "pk": 126,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�������ġ ������",
@@ -4034,9 +3782,7 @@
     {
         "model": "shops.shop",
         "pk": 127,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "����ŷ ������",
@@ -4066,9 +3812,7 @@
     {
         "model": "shops.shop",
         "pk": 128,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "���ɷ�&����",
@@ -4098,9 +3842,7 @@
     {
         "model": "shops.shop",
         "pk": 129,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�����׸ſ��� ����",
@@ -4130,9 +3872,7 @@
     {
         "model": "shops.shop",
         "pk": 130,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "����ν��� �ŵ�����",
@@ -4162,9 +3902,7 @@
     {
         "model": "shops.shop",
         "pk": 131,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "���ʺ������",
@@ -4194,9 +3932,7 @@
     {
         "model": "shops.shop",
         "pk": 132,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "������̽��Ҵ߰��� ���ε�������",
@@ -4226,9 +3962,7 @@
     {
         "model": "shops.shop",
         "pk": 133,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "��Ÿ���� ����������",
@@ -4258,9 +3992,7 @@
     {
         "model": "shops.shop",
         "pk": 134,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "������Ŀ��",
@@ -4290,9 +4022,7 @@
     {
         "model": "shops.shop",
         "pk": 135,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "���� ���ε�������",
@@ -4322,9 +4052,7 @@
     {
         "model": "shops.shop",
         "pk": 136,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "����",
@@ -4354,9 +4082,7 @@
     {
         "model": "shops.shop",
         "pk": 137,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "��Ƿ� ��ť����",
@@ -4386,9 +4112,7 @@
     {
         "model": "shops.shop",
         "pk": 138,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�̽İ��粿ġ",
@@ -4418,9 +4142,7 @@
     {
         "model": "shops.shop",
         "pk": 139,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "���Ⱑ����",
@@ -4450,9 +4172,7 @@
     {
         "model": "shops.shop",
         "pk": 140,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "����ŷ ���α�û��",
@@ -4482,9 +4202,7 @@
     {
         "model": "shops.shop",
         "pk": 141,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "���������� ���ε����д�����",
@@ -4514,9 +4232,7 @@
     {
         "model": "shops.shop",
         "pk": 142,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "KFC ���ε�����2��",
@@ -4546,9 +4262,7 @@
     {
         "model": "shops.shop",
         "pk": 143,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�̽��̳�",
@@ -4578,9 +4292,7 @@
     {
         "model": "shops.shop",
         "pk": 144,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "���ѷ��߰��� �ŵ�����",
@@ -4610,9 +4322,7 @@
     {
         "model": "shops.shop",
         "pk": 145,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�����������Ѹ��� ������",
@@ -4642,9 +4352,7 @@
     {
         "model": "shops.shop",
         "pk": 146,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "��Ÿ���� ���ε�����Ÿ����",
@@ -4674,9 +4382,7 @@
     {
         "model": "shops.shop",
         "pk": 147,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "����̳��ΰ赿������ ���ε�������",
@@ -4706,9 +4412,7 @@
     {
         "model": "shops.shop",
         "pk": 148,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�̸����°���",
@@ -4738,9 +4442,7 @@
     {
         "model": "shops.shop",
         "pk": 149,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "������ �ҸӸ�������뱹",
@@ -4770,9 +4472,7 @@
     {
         "model": "shops.shop",
         "pk": 150,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "ī�����",
@@ -4802,9 +4502,7 @@
     {
         "model": "shops.shop",
         "pk": 151,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "������� õ�տ���",
@@ -4834,9 +4532,7 @@
     {
         "model": "shops.shop",
         "pk": 152,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "��Ѱ������Ĵ�",
@@ -4866,9 +4562,7 @@
     {
         "model": "shops.shop",
         "pk": 153,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�ι�Ÿ���� ���ε�������",
@@ -4898,9 +4592,7 @@
     {
         "model": "shops.shop",
         "pk": 154,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "���Ұ�â 2ȣ��",
@@ -4930,9 +4622,7 @@
     {
         "model": "shops.shop",
         "pk": 155,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "���ټ� �������븮����",
@@ -4962,9 +4652,7 @@
     {
         "model": "shops.shop",
         "pk": 156,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "ȸ������ ����",
@@ -4994,9 +4682,7 @@
     {
         "model": "shops.shop",
         "pk": 157,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "������¹�Ѱ� �ŵ�����",
@@ -5026,9 +4712,7 @@
     {
         "model": "shops.shop",
         "pk": 158,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�޸���ī��",
@@ -5058,9 +4742,7 @@
     {
         "model": "shops.shop",
         "pk": 159,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "VIPS DELIVERY ������",
@@ -5090,9 +4772,7 @@
     {
         "model": "shops.shop",
         "pk": 160,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "���ξ�",
@@ -5122,9 +4802,7 @@
     {
         "model": "shops.shop",
         "pk": 161,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "������",
@@ -5154,9 +4832,7 @@
     {
         "model": "shops.shop",
         "pk": 162,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "��ȭ��",
@@ -5186,9 +4862,7 @@
     {
         "model": "shops.shop",
         "pk": 163,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "��ĥ�߰��� ����������",
@@ -5218,9 +4892,7 @@
     {
         "model": "shops.shop",
         "pk": 164,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�ٴ��޲ٹ� ������",
@@ -5250,9 +4922,7 @@
     {
         "model": "shops.shop",
         "pk": 165,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�������� ���ο���",
@@ -5282,9 +4952,7 @@
     {
         "model": "shops.shop",
         "pk": 166,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "Űģ��θ���",
@@ -5314,9 +4982,7 @@
     {
         "model": "shops.shop",
         "pk": 167,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "����ŷ ���ε�������",
@@ -5346,9 +5012,7 @@
     {
         "model": "shops.shop",
         "pk": 168,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "���̳״��̹������ ��ô��",
@@ -5378,9 +5042,7 @@
     {
         "model": "shops.shop",
         "pk": 169,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "55�������Ϲ���",
@@ -5410,9 +5072,7 @@
     {
         "model": "shops.shop",
         "pk": 170,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�ѿ츶�� ��Ǫ����",
@@ -5442,9 +5102,7 @@
     {
         "model": "shops.shop",
         "pk": 171,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�������",
@@ -5474,9 +5132,7 @@
     {
         "model": "shops.shop",
         "pk": 172,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�츮�������",
@@ -5506,9 +5162,7 @@
     {
         "model": "shops.shop",
         "pk": 173,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�ż���",
@@ -5538,9 +5192,7 @@
     {
         "model": "shops.shop",
         "pk": 174,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "��Ⱕ�񽡺�ȭ�α���",
@@ -5570,9 +5222,7 @@
     {
         "model": "shops.shop",
         "pk": 175,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "������ �����ť���Ƽȣ�� �ǽ�Ʈ",
@@ -5602,9 +5252,7 @@
     {
         "model": "shops.shop",
         "pk": 176,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "����� ��ô����",
@@ -5634,9 +5282,7 @@
     {
         "model": "shops.shop",
         "pk": 177,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�������߼��뱹",
@@ -5666,9 +5312,7 @@
     {
         "model": "shops.shop",
         "pk": 178,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "���� ����G������",
@@ -5698,9 +5342,7 @@
     {
         "model": "shops.shop",
         "pk": 179,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "���������ۼ� ���ε����д�������",
@@ -5730,9 +5372,7 @@
     {
         "model": "shops.shop",
         "pk": 180,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�󸶴�ȣ�� ī����",
@@ -5762,9 +5402,7 @@
     {
         "model": "shops.shop",
         "pk": 181,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "��Ÿ���� ���ε����з���",
@@ -5794,9 +5432,7 @@
     {
         "model": "shops.shop",
         "pk": 182,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "����������Ĵ�",
@@ -5826,9 +5462,7 @@
     {
         "model": "shops.shop",
         "pk": 183,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�������ù���",
@@ -5858,9 +5492,7 @@
     {
         "model": "shops.shop",
         "pk": 184,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "���ΰ���",
@@ -5890,9 +5522,7 @@
     {
         "model": "shops.shop",
         "pk": 185,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�źϼܻ��� ü�κ���",
@@ -5922,9 +5552,7 @@
     {
         "model": "shops.shop",
         "pk": 186,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "Ȳ��������ø�",
@@ -5954,9 +5582,7 @@
     {
         "model": "shops.shop",
         "pk": 187,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "���Ÿ��",
@@ -5986,9 +5612,7 @@
     {
         "model": "shops.shop",
         "pk": 188,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�����ι����",
@@ -6018,9 +5642,7 @@
     {
         "model": "shops.shop",
         "pk": 189,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "ȫ�ֽĴ�",
@@ -6050,9 +5672,7 @@
     {
         "model": "shops.shop",
         "pk": 190,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "������������屹 �ŵ�����",
@@ -6082,9 +5702,7 @@
     {
         "model": "shops.shop",
         "pk": 191,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�ѿ찡",
@@ -6114,9 +5732,7 @@
     {
         "model": "shops.shop",
         "pk": 192,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "����Į����",
@@ -6146,9 +5762,7 @@
     {
         "model": "shops.shop",
         "pk": 193,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "Ȳ���ɼ� ��������",
@@ -6178,9 +5792,7 @@
     {
         "model": "shops.shop",
         "pk": 194,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "��ũĿ�� ��ť���Ƽ��",
@@ -6210,9 +5822,7 @@
     {
         "model": "shops.shop",
         "pk": 195,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�۾��ϴ� ī�信����",
@@ -6242,9 +5852,7 @@
     {
         "model": "shops.shop",
         "pk": 196,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "��Φ�",
@@ -6274,9 +5882,7 @@
     {
         "model": "shops.shop",
         "pk": 197,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�����δ��",
@@ -6306,9 +5912,7 @@
     {
         "model": "shops.shop",
         "pk": 198,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "��������«�� ���ε�������",
@@ -6338,9 +5942,7 @@
     {
         "model": "shops.shop",
         "pk": 199,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�������� ������",
@@ -6370,9 +5972,7 @@
     {
         "model": "shops.shop",
         "pk": 200,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�׳���Ŀ�� ī��忤��",
@@ -6402,9 +6002,7 @@
     {
         "model": "shops.shop",
         "pk": 201,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "���� �ŵ�������",
@@ -6434,9 +6032,7 @@
     {
         "model": "shops.shop",
         "pk": 202,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�������",
@@ -6466,9 +6062,7 @@
     {
         "model": "shops.shop",
         "pk": 203,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "���� ����",
@@ -6498,9 +6092,7 @@
     {
         "model": "shops.shop",
         "pk": 204,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "����������",
@@ -6530,9 +6122,7 @@
     {
         "model": "shops.shop",
         "pk": 205,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�̽�Ʈ���̰���Ʈ �ŵ�����",
@@ -6562,9 +6152,7 @@
     {
         "model": "shops.shop",
         "pk": 206,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "���缾Ÿ���̹������",
@@ -6594,9 +6182,7 @@
     {
         "model": "shops.shop",
         "pk": 207,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�̾����� ���ε����д�����",
@@ -6626,9 +6212,7 @@
     {
         "model": "shops.shop",
         "pk": 208,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "����",
@@ -6658,9 +6242,7 @@
     {
         "model": "shops.shop",
         "pk": 209,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�谡�װ�â��������",
@@ -6690,9 +6272,7 @@
     {
         "model": "shops.shop",
         "pk": 210,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�������簥�� ������",
@@ -6722,9 +6302,7 @@
     {
         "model": "shops.shop",
         "pk": 211,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�����׸����ָ԰���",
@@ -6754,9 +6332,7 @@
     {
         "model": "shops.shop",
         "pk": 212,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "����ƺ񵷱",
@@ -6786,9 +6362,7 @@
     {
         "model": "shops.shop",
         "pk": 213,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "���ú����",
@@ -6818,9 +6392,7 @@
     {
         "model": "shops.shop",
         "pk": 214,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�������",
@@ -6850,9 +6422,7 @@
     {
         "model": "shops.shop",
         "pk": 215,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�ϳ��� ������",
@@ -6882,9 +6452,7 @@
     {
         "model": "shops.shop",
         "pk": 216,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "ȣ��粿ġ �ŵ�����",
@@ -6914,9 +6482,7 @@
     {
         "model": "shops.shop",
         "pk": 217,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�Ƶ����� �ŵ�����ť����",
@@ -6946,9 +6512,7 @@
     {
         "model": "shops.shop",
         "pk": 218,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�������",
@@ -6978,9 +6542,7 @@
     {
         "model": "shops.shop",
         "pk": 219,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "������",
@@ -7010,9 +6572,7 @@
     {
         "model": "shops.shop",
         "pk": 220,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "��������λ��μ�",
@@ -7042,9 +6602,7 @@
     {
         "model": "shops.shop",
         "pk": 221,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�����÷��̽� ��������",
@@ -7074,9 +6632,7 @@
     {
         "model": "shops.shop",
         "pk": 222,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "����ġŲ ���ε�������",
@@ -7106,9 +6662,7 @@
     {
         "model": "shops.shop",
         "pk": 223,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "��Ÿ���� �����ť��2F��",
@@ -7138,9 +6692,7 @@
     {
         "model": "shops.shop",
         "pk": 224,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "������",
@@ -7170,9 +6722,7 @@
     {
         "model": "shops.shop",
         "pk": 225,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�÷��粿ġ",
@@ -7202,9 +6752,7 @@
     {
         "model": "shops.shop",
         "pk": 226,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "��ǳ",
@@ -7234,9 +6782,7 @@
     {
         "model": "shops.shop",
         "pk": 227,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "���ʶ�",
@@ -7266,9 +6812,7 @@
     {
         "model": "shops.shop",
         "pk": 228,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�Ա����� ������",
@@ -7298,9 +6842,7 @@
     {
         "model": "shops.shop",
         "pk": 229,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "ǰ�ݻ�ù�",
@@ -7330,9 +6872,7 @@
     {
         "model": "shops.shop",
         "pk": 230,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�ְ��絷���� ��ô����",
@@ -7362,9 +6902,7 @@
     {
         "model": "shops.shop",
         "pk": 231,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "���н�",
@@ -7394,9 +6932,7 @@
     {
         "model": "shops.shop",
         "pk": 232,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�����÷��̽� �ŵ�����ť���Ƽ��",
@@ -7426,9 +6962,7 @@
     {
         "model": "shops.shop",
         "pk": 233,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "������ ���ε�������",
@@ -7458,9 +6992,7 @@
     {
         "model": "shops.shop",
         "pk": 234,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�������",
@@ -7490,9 +7022,7 @@
     {
         "model": "shops.shop",
         "pk": 235,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "ȣ��粿ġ ���ε�������",
@@ -7522,9 +7052,7 @@
     {
         "model": "shops.shop",
         "pk": 236,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "���������վ��������������",
@@ -7554,9 +7082,7 @@
     {
         "model": "shops.shop",
         "pk": 237,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�����÷��̽� ���α�û��Ÿ���",
@@ -7586,9 +7112,7 @@
     {
         "model": "shops.shop",
         "pk": 238,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�ٿ��� �ŵ�����",
@@ -7618,9 +7142,7 @@
     {
         "model": "shops.shop",
         "pk": 239,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "��Ƽ��",
@@ -7650,9 +7172,7 @@
     {
         "model": "shops.shop",
         "pk": 240,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�ƾ���",
@@ -7682,9 +7202,7 @@
     {
         "model": "shops.shop",
         "pk": 241,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "���ϽĴ�",
@@ -7714,9 +7232,7 @@
     {
         "model": "shops.shop",
         "pk": 242,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�޺��Ѹ�� �ŵ�����",
@@ -7746,9 +7262,7 @@
     {
         "model": "shops.shop",
         "pk": 243,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "����ĭ �ŵ�������",
@@ -7778,9 +7292,7 @@
     {
         "model": "shops.shop",
         "pk": 244,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�츮�齡�Ұ��������Ĵ�",
@@ -7810,9 +7322,7 @@
     {
         "model": "shops.shop",
         "pk": 245,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�������߾���",
@@ -7842,9 +7352,7 @@
     {
         "model": "shops.shop",
         "pk": 246,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�ƿ��齺����ũ�Ͽ콺 �������� ������",
@@ -7874,9 +7382,7 @@
     {
         "model": "shops.shop",
         "pk": 247,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "���̻���Į���� ������",
@@ -7906,9 +7412,7 @@
     {
         "model": "shops.shop",
         "pk": 248,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "ȫ�����0410 ���ε����д�������",
@@ -7938,9 +7442,7 @@
     {
         "model": "shops.shop",
         "pk": 249,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "���������",
@@ -7970,9 +7472,7 @@
     {
         "model": "shops.shop",
         "pk": 250,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "��Ÿ���� ����NC",
@@ -8002,9 +7502,7 @@
     {
         "model": "shops.shop",
         "pk": 251,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�����÷��̽� �ŵ����Ƹ����Ͽ���������",
@@ -8034,9 +7532,7 @@
     {
         "model": "shops.shop",
         "pk": 252,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�丮��Ʊ��� ����",
@@ -8066,9 +7562,7 @@
     {
         "model": "shops.shop",
         "pk": 253,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�����÷��̽� ��������",
@@ -8098,9 +7592,7 @@
     {
         "model": "shops.shop",
         "pk": 254,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "���������",
@@ -8130,9 +7622,7 @@
     {
         "model": "shops.shop",
         "pk": 255,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "������ ���ε����п���",
@@ -8162,9 +7652,7 @@
     {
         "model": "shops.shop",
         "pk": 256,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�趱 ������",
@@ -8194,9 +7682,7 @@
     {
         "model": "shops.shop",
         "pk": 257,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�Ѷ�굵����",
@@ -8226,9 +7712,7 @@
     {
         "model": "shops.shop",
         "pk": 258,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "���Ŭ�� ��ô��",
@@ -8258,9 +7742,7 @@
     {
         "model": "shops.shop",
         "pk": 259,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "���������뱹������ ����������",
@@ -8290,9 +7772,7 @@
     {
         "model": "shops.shop",
         "pk": 260,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�������簥�� ���ﰳ����",
@@ -8322,9 +7802,7 @@
     {
         "model": "shops.shop",
         "pk": 261,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "���빮���ⶱ���� ������",
@@ -8354,9 +7832,7 @@
     {
         "model": "shops.shop",
         "pk": 262,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�ְ����Ʊ���",
@@ -8386,9 +7862,7 @@
     {
         "model": "shops.shop",
         "pk": 263,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "û���粿ġ",
@@ -8418,9 +7892,7 @@
     {
         "model": "shops.shop",
         "pk": 264,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "ī�俵",
@@ -8450,9 +7922,7 @@
     {
         "model": "shops.shop",
         "pk": 265,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "��Ƽ���� ��Ʈ���ұ��� ������",
@@ -8482,9 +7952,7 @@
     {
         "model": "shops.shop",
         "pk": 266,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "õ���â �ŵ�������",
@@ -8514,9 +7982,7 @@
     {
         "model": "shops.shop",
         "pk": 267,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "ȫ��õġ��߰��� ��ô��",
@@ -8546,9 +8012,7 @@
     {
         "model": "shops.shop",
         "pk": 268,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�ܵ����ܶѲ�����",
@@ -8578,9 +8042,7 @@
     {
         "model": "shops.shop",
         "pk": 269,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "ȣ��粿ġ ������",
@@ -8610,9 +8072,7 @@
     {
         "model": "shops.shop",
         "pk": 270,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "���� ���ε�������",
@@ -8642,9 +8102,7 @@
     {
         "model": "shops.shop",
         "pk": 271,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�����ǹ̲����� �ŵ�����",
@@ -8674,9 +8132,7 @@
     {
         "model": "shops.shop",
         "pk": 272,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�ҹ��������̼���",
@@ -8706,9 +8162,7 @@
     {
         "model": "shops.shop",
         "pk": 273,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "������",
@@ -8738,9 +8192,7 @@
     {
         "model": "shops.shop",
         "pk": 274,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�Ͽ���������",
@@ -8770,9 +8222,7 @@
     {
         "model": "shops.shop",
         "pk": 275,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "��Ⱕ��",
@@ -8802,9 +8252,7 @@
     {
         "model": "shops.shop",
         "pk": 276,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�Ҹ��� ���ε����д�����",
@@ -8834,9 +8282,7 @@
     {
         "model": "shops.shop",
         "pk": 277,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "����",
@@ -8866,9 +8312,7 @@
     {
         "model": "shops.shop",
         "pk": 278,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "��������",
@@ -8898,9 +8342,7 @@
     {
         "model": "shops.shop",
         "pk": 279,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�뿬��",
@@ -8930,9 +8372,7 @@
     {
         "model": "shops.shop",
         "pk": 280,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "ȭ���� �ŵ�����",
@@ -8962,9 +8402,7 @@
     {
         "model": "shops.shop",
         "pk": 281,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�̹� �ŵ�����",
@@ -8994,9 +8432,7 @@
     {
         "model": "shops.shop",
         "pk": 282,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�Ҵ��� ���ο���",
@@ -9026,9 +8462,7 @@
     {
         "model": "shops.shop",
         "pk": 283,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�Һθ����뱹",
@@ -9058,9 +8492,7 @@
     {
         "model": "shops.shop",
         "pk": 284,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "������ ���ε����п���",
@@ -9090,9 +8522,7 @@
     {
         "model": "shops.shop",
         "pk": 285,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�Ҹ��� ���ο���",
@@ -9122,9 +8552,7 @@
     {
         "model": "shops.shop",
         "pk": 286,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�����",
@@ -9154,9 +8582,7 @@
     {
         "model": "shops.shop",
         "pk": 287,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "���ֺҳø� ������",
@@ -9186,9 +8612,7 @@
     {
         "model": "shops.shop",
         "pk": 288,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�溹�� ��ť����",
@@ -9218,9 +8642,7 @@
     {
         "model": "shops.shop",
         "pk": 289,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "��â�����κ� �ŵ�����",
@@ -9250,9 +8672,7 @@
     {
         "model": "shops.shop",
         "pk": 290,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "������ġ ���ε����д�������",
@@ -9282,9 +8702,7 @@
     {
         "model": "shops.shop",
         "pk": 291,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "��Ÿ���� �����ť��B2��",
@@ -9314,9 +8732,7 @@
     {
         "model": "shops.shop",
         "pk": 292,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "Ǫ��7542",
@@ -9346,9 +8762,7 @@
     {
         "model": "shops.shop",
         "pk": 293,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�漺�ָ�1929 ���ε����д�������",
@@ -9378,9 +8792,7 @@
     {
         "model": "shops.shop",
         "pk": 294,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "��ǰû��Ͱ����� ������",
@@ -9410,9 +8822,7 @@
     {
         "model": "shops.shop",
         "pk": 295,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�ֽ������� NC�ű�����",
@@ -9442,9 +8852,7 @@
     {
         "model": "shops.shop",
         "pk": 296,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "���������",
@@ -9474,9 +8882,7 @@
     {
         "model": "shops.shop",
         "pk": 297,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "��ǰ���粿ġ�̱� ���߱�����",
@@ -9506,9 +8912,7 @@
     {
         "model": "shops.shop",
         "pk": 298,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "���빮���ⶱ���� ���ε����д�������",
@@ -9538,9 +8942,7 @@
     {
         "model": "shops.shop",
         "pk": 299,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�����ʹ�",
@@ -9570,9 +8972,7 @@
     {
         "model": "shops.shop",
         "pk": 300,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�Ե����� �ŵ�������",
@@ -9602,9 +9002,7 @@
     {
         "model": "shops.shop",
         "pk": 301,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "������",
@@ -9634,9 +9032,7 @@
     {
         "model": "shops.shop",
         "pk": 302,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "��Ÿ���� ���ο��̽���",
@@ -9666,9 +9062,7 @@
     {
         "model": "shops.shop",
         "pk": 303,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "û��������",
@@ -9698,9 +9092,7 @@
     {
         "model": "shops.shop",
         "pk": 304,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "����Ʊ����ع���",
@@ -9730,9 +9122,7 @@
     {
         "model": "shops.shop",
         "pk": 305,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "��õ����",
@@ -9762,9 +9152,7 @@
     {
         "model": "shops.shop",
         "pk": 306,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "Ǫ���Ѵ��Ѹ���",
@@ -9794,9 +9182,7 @@
     {
         "model": "shops.shop",
         "pk": 307,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "õ������ ���ε����д�����",
@@ -9826,9 +9212,7 @@
     {
         "model": "shops.shop",
         "pk": 308,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "Ȳ��ȫ������ ���κ���",
@@ -9858,9 +9242,7 @@
     {
         "model": "shops.shop",
         "pk": 309,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�起��",
@@ -9890,9 +9272,7 @@
     {
         "model": "shops.shop",
         "pk": 310,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�Ž¹��� �������븮����",
@@ -9922,9 +9302,7 @@
     {
         "model": "shops.shop",
         "pk": 311,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�����÷��̽� ����̷�����",
@@ -9954,9 +9332,7 @@
     {
         "model": "shops.shop",
         "pk": 312,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "��â��",
@@ -9986,9 +9362,7 @@
     {
         "model": "shops.shop",
         "pk": 313,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "���İ�����ī��",
@@ -10018,9 +9392,7 @@
     {
         "model": "shops.shop",
         "pk": 314,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�����",
@@ -10050,9 +9422,7 @@
     {
         "model": "shops.shop",
         "pk": 315,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "������ ����̷�����",
@@ -10082,9 +9452,7 @@
     {
         "model": "shops.shop",
         "pk": 316,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "���� ���α�û��",
@@ -10114,9 +9482,7 @@
     {
         "model": "shops.shop",
         "pk": 317,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "��ū���� ��ô��",
@@ -10146,9 +9512,7 @@
     {
         "model": "shops.shop",
         "pk": 318,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "����Ÿ",
@@ -10178,9 +9542,7 @@
     {
         "model": "shops.shop",
         "pk": 319,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "1988������� ������",
@@ -10210,9 +9572,7 @@
     {
         "model": "shops.shop",
         "pk": 320,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "������",
@@ -10242,9 +9602,7 @@
     {
         "model": "shops.shop",
         "pk": 321,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�����Ϸ�",
@@ -10274,9 +9632,7 @@
     {
         "model": "shops.shop",
         "pk": 322,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�Ѷ�굵���� ������",
@@ -10306,9 +9662,7 @@
     {
         "model": "shops.shop",
         "pk": 323,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�Ǹ� 3ȣ��",
@@ -10338,9 +9692,7 @@
     {
         "model": "shops.shop",
         "pk": 324,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "����ȭ���� ����õ�տ���",
@@ -10370,9 +9722,7 @@
     {
         "model": "shops.shop",
         "pk": 325,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�Ż�Ұ�â �ŵ�����",
@@ -10402,9 +9752,7 @@
     {
         "model": "shops.shop",
         "pk": 326,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "���Ĵ�",
@@ -10434,9 +9782,7 @@
     {
         "model": "shops.shop",
         "pk": 327,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "ī���Ʈ",
@@ -10466,9 +9812,7 @@
     {
         "model": "shops.shop",
         "pk": 328,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "��ι�� �ŵ�����",
@@ -10498,9 +9842,7 @@
     {
         "model": "shops.shop",
         "pk": 329,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "���߹̸����Ұ���",
@@ -10530,9 +9872,7 @@
     {
         "model": "shops.shop",
         "pk": 330,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "���� ���ΰ�ô��",
@@ -10562,9 +9902,7 @@
     {
         "model": "shops.shop",
         "pk": 331,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�س��Ĵ� ���ε����д�����",
@@ -10594,9 +9932,7 @@
     {
         "model": "shops.shop",
         "pk": 332,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "���೪��Į����",
@@ -10626,9 +9962,7 @@
     {
         "model": "shops.shop",
         "pk": 333,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "������ �ŵ�����",
@@ -10658,9 +9992,7 @@
     {
         "model": "shops.shop",
         "pk": 334,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�Ƶ����� �ŵ�����ũ����",
@@ -10690,9 +10022,7 @@
     {
         "model": "shops.shop",
         "pk": 335,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�̽�ȸ��Ÿ",
@@ -10722,9 +10052,7 @@
     {
         "model": "shops.shop",
         "pk": 336,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�����̸�",
@@ -10754,9 +10082,7 @@
     {
         "model": "shops.shop",
         "pk": 337,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "���̳����� ������",
@@ -10786,9 +10112,7 @@
     {
         "model": "shops.shop",
         "pk": 338,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "���ٸ����ұ���",
@@ -10818,9 +10142,7 @@
     {
         "model": "shops.shop",
         "pk": 339,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "��︲",
@@ -10850,9 +10172,7 @@
     {
         "model": "shops.shop",
         "pk": 340,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�ѵ����� ����",
@@ -10882,9 +10202,7 @@
     {
         "model": "shops.shop",
         "pk": 341,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�̻��佺Ʈ ���ε����д�����",
@@ -10914,9 +10232,7 @@
     {
         "model": "shops.shop",
         "pk": 342,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�ż������� ��ô��",
@@ -10946,9 +10262,7 @@
     {
         "model": "shops.shop",
         "pk": 343,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "ȫ�α� ��Į����",
@@ -10978,9 +10292,7 @@
     {
         "model": "shops.shop",
         "pk": 344,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "����ȭ���� ���ε�������",
@@ -11010,9 +10322,7 @@
     {
         "model": "shops.shop",
         "pk": 345,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�����",
@@ -11042,9 +10352,7 @@
     {
         "model": "shops.shop",
         "pk": 346,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "������ ��������Į����",
@@ -11074,9 +10382,7 @@
     {
         "model": "shops.shop",
         "pk": 347,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "���̳�Ȳ�Ұ�â����",
@@ -11106,9 +10412,7 @@
     {
         "model": "shops.shop",
         "pk": 348,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "ġŲ�ŴϾ��÷��� �ŵ�������",
@@ -11138,9 +10442,7 @@
     {
         "model": "shops.shop",
         "pk": 349,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�����Į����",
@@ -11170,9 +10472,7 @@
     {
         "model": "shops.shop",
         "pk": 350,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "����",
@@ -11202,9 +10502,7 @@
     {
         "model": "shops.shop",
         "pk": 351,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�屺�ָ԰���",
@@ -11234,9 +10532,7 @@
     {
         "model": "shops.shop",
         "pk": 352,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�ζѸ�û����",
@@ -11266,9 +10562,7 @@
     {
         "model": "shops.shop",
         "pk": 353,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�θް�߰��� �ŵ�����",
@@ -11298,9 +10592,7 @@
     {
         "model": "shops.shop",
         "pk": 354,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�������������޲ٹ� �����ť�� �ŵ�����",
@@ -11330,9 +10622,7 @@
     {
         "model": "shops.shop",
         "pk": 355,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "���ذ� ���ε�������",
@@ -11362,9 +10652,7 @@
     {
         "model": "shops.shop",
         "pk": 356,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "��â�� �ŵ�������",
@@ -11394,9 +10682,7 @@
     {
         "model": "shops.shop",
         "pk": 357,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "����",
@@ -11426,9 +10712,7 @@
     {
         "model": "shops.shop",
         "pk": 358,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�ŵ������ڵ��",
@@ -11458,9 +10742,7 @@
     {
         "model": "shops.shop",
         "pk": 359,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�����÷��̽� ���ε�������",
@@ -11490,9 +10772,7 @@
     {
         "model": "shops.shop",
         "pk": 360,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "������ �ŵ�����",
@@ -11522,9 +10802,7 @@
     {
         "model": "shops.shop",
         "pk": 361,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "���߸��������� ���ﺻ��",
@@ -11554,9 +10832,7 @@
     {
         "model": "shops.shop",
         "pk": 362,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�˵��յκ�",
@@ -11586,9 +10862,7 @@
     {
         "model": "shops.shop",
         "pk": 363,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "���̽Ĵ� ���ε�������",
@@ -11618,9 +10892,7 @@
     {
         "model": "shops.shop",
         "pk": 364,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "���κ��¿���",
@@ -11650,9 +10922,7 @@
     {
         "model": "shops.shop",
         "pk": 365,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�ŵ������",
@@ -11682,9 +10952,7 @@
     {
         "model": "shops.shop",
         "pk": 366,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "��ä��ġ� �ŵ�����",
@@ -11714,9 +10982,7 @@
     {
         "model": "shops.shop",
         "pk": 367,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "������Į����",
@@ -11746,9 +11012,7 @@
     {
         "model": "shops.shop",
         "pk": 368,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "��",
@@ -11778,9 +11042,7 @@
     {
         "model": "shops.shop",
         "pk": 369,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�������� ������",
@@ -11810,9 +11072,7 @@
     {
         "model": "shops.shop",
         "pk": 370,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "���ʹ�",
@@ -11842,9 +11102,7 @@
     {
         "model": "shops.shop",
         "pk": 371,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "���̰����ܼ�����",
@@ -11874,9 +11132,7 @@
     {
         "model": "shops.shop",
         "pk": 372,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "RUE407",
@@ -11906,9 +11162,7 @@
     {
         "model": "shops.shop",
         "pk": 373,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�θ��ϳ��ٿ�ī��",
@@ -11938,9 +11192,7 @@
     {
         "model": "shops.shop",
         "pk": 374,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�轺Ų��� ���ε����д�������",
@@ -11970,9 +11222,7 @@
     {
         "model": "shops.shop",
         "pk": 375,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "���̳����� õ����",
@@ -12002,9 +11252,7 @@
     {
         "model": "shops.shop",
         "pk": 376,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "��������ʰ���",
@@ -12034,9 +11282,7 @@
     {
         "model": "shops.shop",
         "pk": 377,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�������������Ĵ�",
@@ -12066,9 +11312,7 @@
     {
         "model": "shops.shop",
         "pk": 378,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "����Ư������",
@@ -12098,9 +11342,7 @@
     {
         "model": "shops.shop",
         "pk": 379,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "���������ۼ� ������",
@@ -12130,9 +11372,7 @@
     {
         "model": "shops.shop",
         "pk": 380,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "���ο�",
@@ -12162,9 +11402,7 @@
     {
         "model": "shops.shop",
         "pk": 381,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "��ũ��Ÿ",
@@ -12194,9 +11432,7 @@
     {
         "model": "shops.shop",
         "pk": 382,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "���̰��׾Ʊ� ������",
@@ -12226,9 +11462,7 @@
     {
         "model": "shops.shop",
         "pk": 383,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�ΰ��� �귱ġī��",
@@ -12258,9 +11492,7 @@
     {
         "model": "shops.shop",
         "pk": 384,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "������� ���κ���",
@@ -12290,9 +11522,7 @@
     {
         "model": "shops.shop",
         "pk": 385,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "Ŀ�Ǻ� �������븮����",
@@ -12322,9 +11552,7 @@
     {
         "model": "shops.shop",
         "pk": 386,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "ī��126",
@@ -12354,9 +11582,7 @@
     {
         "model": "shops.shop",
         "pk": 387,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "���⸶��",
@@ -12386,9 +11612,7 @@
     {
         "model": "shops.shop",
         "pk": 388,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�������",
@@ -12418,9 +11642,7 @@
     {
         "model": "shops.shop",
         "pk": 389,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "ǳ�⽡�Ұ���",
@@ -12450,9 +11672,7 @@
     {
         "model": "shops.shop",
         "pk": 390,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "���۶�����ġŲ ���ﱸ�ε�������",
@@ -12482,9 +11702,7 @@
     {
         "model": "shops.shop",
         "pk": 391,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�θ��� �粿ġ������� ������",
@@ -12514,9 +11732,7 @@
     {
         "model": "shops.shop",
         "pk": 392,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "������Ȧ�����Ѵ� ���ε����д�������",
@@ -12546,9 +11762,7 @@
     {
         "model": "shops.shop",
         "pk": 393,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "���̽��Ҵ߰��� ����",
@@ -12578,9 +11792,7 @@
     {
         "model": "shops.shop",
         "pk": 394,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "���������",
@@ -12610,9 +11822,7 @@
     {
         "model": "shops.shop",
         "pk": 395,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "����������",
@@ -12642,9 +11852,7 @@
     {
         "model": "shops.shop",
         "pk": 396,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "����ȸ��ġ&�ʹ� ���κ���",
@@ -12674,9 +11882,7 @@
     {
         "model": "shops.shop",
         "pk": 397,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�Ե���Ƽȣ�� ���� ��ī��",
@@ -12706,9 +11912,7 @@
     {
         "model": "shops.shop",
         "pk": 398,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "���������� ������",
@@ -12738,9 +11942,7 @@
     {
         "model": "shops.shop",
         "pk": 399,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�ð���",
@@ -12770,9 +11972,7 @@
     {
         "model": "shops.shop",
         "pk": 400,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�����ҸӴϸ��� ��ô��",
@@ -12802,9 +12002,7 @@
     {
         "model": "shops.shop",
         "pk": 401,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "���ָ���",
@@ -12834,9 +12032,7 @@
     {
         "model": "shops.shop",
         "pk": 402,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�����Ľ� ������",
@@ -12866,9 +12062,7 @@
     {
         "model": "shops.shop",
         "pk": 403,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "��ô«��",
@@ -12898,9 +12092,7 @@
     {
         "model": "shops.shop",
         "pk": 404,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�°�Ұ�â",
@@ -12930,9 +12122,7 @@
     {
         "model": "shops.shop",
         "pk": 405,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "����ââ ��ô��",
@@ -12962,9 +12152,7 @@
     {
         "model": "shops.shop",
         "pk": 406,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�Ͽ츶����",
@@ -12994,9 +12182,7 @@
     {
         "model": "shops.shop",
         "pk": 407,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "����ȸ����",
@@ -13026,9 +12212,7 @@
     {
         "model": "shops.shop",
         "pk": 408,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�������� ���ε�������",
@@ -13058,9 +12242,7 @@
     {
         "model": "shops.shop",
         "pk": 409,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "������ġ ���νŵ�����",
@@ -13090,9 +12272,7 @@
     {
         "model": "shops.shop",
         "pk": 410,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "���ΰ踲�ߵ��������� ���ε����д�����",
@@ -13122,9 +12302,7 @@
     {
         "model": "shops.shop",
         "pk": 411,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�����ܿ���������",
@@ -13154,9 +12332,7 @@
     {
         "model": "shops.shop",
         "pk": 412,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�ĸ��ٰԶ� ����������",
@@ -13186,9 +12362,7 @@
     {
         "model": "shops.shop",
         "pk": 413,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�Ҵ�",
@@ -13218,9 +12392,7 @@
     {
         "model": "shops.shop",
         "pk": 414,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "60�� ���ε����д�����",
@@ -13250,9 +12422,7 @@
     {
         "model": "shops.shop",
         "pk": 415,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "ī�䵿�� �õ���",
@@ -13282,9 +12452,7 @@
     {
         "model": "shops.shop",
         "pk": 416,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "���η����ܽӹ�",
@@ -13314,9 +12482,7 @@
     {
         "model": "shops.shop",
         "pk": 417,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�������簥�� ���������",
@@ -13346,9 +12512,7 @@
     {
         "model": "shops.shop",
         "pk": 418,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "��������� ��������",
@@ -13378,9 +12542,7 @@
     {
         "model": "shops.shop",
         "pk": 419,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�ŵ鸰���� ���ε�������",
@@ -13410,9 +12572,7 @@
     {
         "model": "shops.shop",
         "pk": 420,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "����ġŲ �ŵ���1ȣ��",
@@ -13442,9 +12602,7 @@
     {
         "model": "shops.shop",
         "pk": 421,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "���嵥�� ���ΰŸ�������",
@@ -13474,9 +12632,7 @@
     {
         "model": "shops.shop",
         "pk": 422,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "���ʸ���",
@@ -13506,9 +12662,7 @@
     {
         "model": "shops.shop",
         "pk": 423,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "��ģ��� ���κ���",
@@ -13538,9 +12692,7 @@
     {
         "model": "shops.shop",
         "pk": 424,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "û�� Į����",
@@ -13570,9 +12722,7 @@
     {
         "model": "shops.shop",
         "pk": 425,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "88����",
@@ -13602,9 +12752,7 @@
     {
         "model": "shops.shop",
         "pk": 426,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "���ΰ�â��â�߰���",
@@ -13634,9 +12782,7 @@
     {
         "model": "shops.shop",
         "pk": 427,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�̰���ġ",
@@ -13666,9 +12812,7 @@
     {
         "model": "shops.shop",
         "pk": 428,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�оغ�Ʈ��",
@@ -13698,9 +12842,7 @@
     {
         "model": "shops.shop",
         "pk": 429,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "������â�� �ŵ�����",
@@ -13730,9 +12872,7 @@
     {
         "model": "shops.shop",
         "pk": 430,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "���ȽĴ� ��ô��",
@@ -13762,9 +12902,7 @@
     {
         "model": "shops.shop",
         "pk": 431,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "� ��ô��",
@@ -13794,9 +12932,7 @@
     {
         "model": "shops.shop",
         "pk": 432,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "������",
@@ -13826,9 +12962,7 @@
     {
         "model": "shops.shop",
         "pk": 433,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "������",
@@ -13858,9 +12992,7 @@
     {
         "model": "shops.shop",
         "pk": 434,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�Ѹ��� �ŵ�����",
@@ -13890,9 +13022,7 @@
     {
         "model": "shops.shop",
         "pk": 435,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "���ų׻���Į����",
@@ -13922,9 +13052,7 @@
     {
         "model": "shops.shop",
         "pk": 436,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "���񲿸���伭��õ����",
@@ -13954,9 +13082,7 @@
     {
         "model": "shops.shop",
         "pk": 437,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�����봩�������",
@@ -13986,9 +13112,7 @@
     {
         "model": "shops.shop",
         "pk": 438,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "Ǫ���ġŲ ����1ȣ��",
@@ -14018,9 +13142,7 @@
     {
         "model": "shops.shop",
         "pk": 439,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "���Ұ��� ������",
@@ -14050,9 +13172,7 @@
     {
         "model": "shops.shop",
         "pk": 440,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�����ϴ�",
@@ -14082,9 +13202,7 @@
     {
         "model": "shops.shop",
         "pk": 441,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "������Ÿ��",
@@ -14114,9 +13232,7 @@
     {
         "model": "shops.shop",
         "pk": 442,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�����ع�",
@@ -14146,9 +13262,7 @@
     {
         "model": "shops.shop",
         "pk": 443,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "������ ������",
@@ -14178,9 +13292,7 @@
     {
         "model": "shops.shop",
         "pk": 444,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "����&�����cafe ���ε����п���",
@@ -14210,9 +13322,7 @@
     {
         "model": "shops.shop",
         "pk": 445,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "����߽��� �ŵ�����",
@@ -14242,9 +13352,7 @@
     {
         "model": "shops.shop",
         "pk": 446,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "���ϳ׸ſ���� ������",
@@ -14274,9 +13382,7 @@
     {
         "model": "shops.shop",
         "pk": 447,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�ݼ���",
@@ -14306,9 +13412,7 @@
     {
         "model": "shops.shop",
         "pk": 448,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�������",
@@ -14338,9 +13442,7 @@
     {
         "model": "shops.shop",
         "pk": 449,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "���Գ׺δ��",
@@ -14370,9 +13472,7 @@
     {
         "model": "shops.shop",
         "pk": 450,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�̽�ź���ɹ� ����3ȣ��",
@@ -14402,9 +13502,7 @@
     {
         "model": "shops.shop",
         "pk": 451,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "��Ų������ ��������繰����",
@@ -14434,9 +13532,7 @@
     {
         "model": "shops.shop",
         "pk": 452,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "��â�����ι����",
@@ -14466,9 +13562,7 @@
     {
         "model": "shops.shop",
         "pk": 453,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�����������߾���",
@@ -14498,9 +13592,7 @@
     {
         "model": "shops.shop",
         "pk": 454,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "����û���� �ŵ�����",
@@ -14530,9 +13622,7 @@
     {
         "model": "shops.shop",
         "pk": 455,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�Ұ�â1���� �ŵ���������",
@@ -14562,9 +13652,7 @@
     {
         "model": "shops.shop",
         "pk": 456,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�� �������屹",
@@ -14594,9 +13682,7 @@
     {
         "model": "shops.shop",
         "pk": 457,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�̵��Ŀ�� ��ô��Ÿ���",
@@ -14626,9 +13712,7 @@
     {
         "model": "shops.shop",
         "pk": 458,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�������� ��ô��",
@@ -14658,9 +13742,7 @@
     {
         "model": "shops.shop",
         "pk": 459,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "������ ������",
@@ -14690,9 +13772,7 @@
     {
         "model": "shops.shop",
         "pk": 460,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�쵷������",
@@ -14722,9 +13802,7 @@
     {
         "model": "shops.shop",
         "pk": 461,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�ݴٿ�",
@@ -14754,9 +13832,7 @@
     {
         "model": "shops.shop",
         "pk": 462,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�������Ҵ߹ٺ�ť ����",
@@ -14786,9 +13862,7 @@
     {
         "model": "shops.shop",
         "pk": 463,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "���ڷ�",
@@ -14818,9 +13892,7 @@
     {
         "model": "shops.shop",
         "pk": 464,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "���׵�� ���ε����д�����",
@@ -14850,9 +13922,7 @@
     {
         "model": "shops.shop",
         "pk": 465,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "���̾� �ŵ�������",
@@ -14882,9 +13952,7 @@
     {
         "model": "shops.shop",
         "pk": 466,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�ٴپ����",
@@ -14914,9 +13982,7 @@
     {
         "model": "shops.shop",
         "pk": 467,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "���ӳø� ������",
@@ -14946,9 +14012,7 @@
     {
         "model": "shops.shop",
         "pk": 468,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�����δ�� ���ν���",
@@ -14978,9 +14042,7 @@
     {
         "model": "shops.shop",
         "pk": 469,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "��ȣ���",
@@ -15010,9 +14072,7 @@
     {
         "model": "shops.shop",
         "pk": 470,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "������ �ŵ�����",
@@ -15042,9 +14102,7 @@
     {
         "model": "shops.shop",
         "pk": 471,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "���׻�������",
@@ -15074,9 +14132,7 @@
     {
         "model": "shops.shop",
         "pk": 472,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "����ȸ��ġ ���ε�������",
@@ -15106,9 +14162,7 @@
     {
         "model": "shops.shop",
         "pk": 473,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "����̳׸���",
@@ -15138,9 +14192,7 @@
     {
         "model": "shops.shop",
         "pk": 474,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "Ƽ�� ������Ƽ",
@@ -15170,9 +14222,7 @@
     {
         "model": "shops.shop",
         "pk": 475,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�ѵ���",
@@ -15202,9 +14252,7 @@
     {
         "model": "shops.shop",
         "pk": 476,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "����õ�� ������",
@@ -15234,9 +14282,7 @@
     {
         "model": "shops.shop",
         "pk": 477,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "����Ž�ƾ ����G��������",
@@ -15266,9 +14312,7 @@
     {
         "model": "shops.shop",
         "pk": 478,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�̽����̰� �ŵ�����",
@@ -15298,9 +14342,7 @@
     {
         "model": "shops.shop",
         "pk": 479,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�ް�Ŀ�� ����������",
@@ -15330,9 +14372,7 @@
     {
         "model": "shops.shop",
         "pk": 480,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�ĸ��ٰԶ� �����׵���",
@@ -15362,9 +14402,7 @@
     {
         "model": "shops.shop",
         "pk": 481,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "��Ų������ ���ΰ�����",
@@ -15394,9 +14432,7 @@
     {
         "model": "shops.shop",
         "pk": 482,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "��õ��",
@@ -15426,9 +14462,7 @@
     {
         "model": "shops.shop",
         "pk": 483,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�ѿ�����ġ�� ���νİ�����",
@@ -15458,9 +14492,7 @@
     {
         "model": "shops.shop",
         "pk": 484,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�ҿ���",
@@ -15490,9 +14522,7 @@
     {
         "model": "shops.shop",
         "pk": 485,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�����â",
@@ -15522,9 +14552,7 @@
     {
         "model": "shops.shop",
         "pk": 486,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "����ġŲ ����5����",
@@ -15554,9 +14582,7 @@
     {
         "model": "shops.shop",
         "pk": 487,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "Ȳ��������",
@@ -15586,9 +14612,7 @@
     {
         "model": "shops.shop",
         "pk": 488,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "����",
@@ -15618,9 +14642,7 @@
     {
         "model": "shops.shop",
         "pk": 489,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "����Ħ�ø� ����",
@@ -15650,9 +14672,7 @@
     {
         "model": "shops.shop",
         "pk": 490,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "���̳����� ������",
@@ -15682,9 +14702,7 @@
     {
         "model": "shops.shop",
         "pk": 491,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "��Ȱ���� ������",
@@ -15714,9 +14732,7 @@
     {
         "model": "shops.shop",
         "pk": 492,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "ȫ�߻������",
@@ -15746,9 +14762,7 @@
     {
         "model": "shops.shop",
         "pk": 493,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "ȫ�����0410 ���ν�����",
@@ -15778,9 +14792,7 @@
     {
         "model": "shops.shop",
         "pk": 494,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "���ٿ쿬ź�һ����� ����Ż������",
@@ -15810,9 +14822,7 @@
     {
         "model": "shops.shop",
         "pk": 495,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "��ǰ������ ��������",
@@ -15842,9 +14852,7 @@
     {
         "model": "shops.shop",
         "pk": 496,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "��ô������� ���κ���",
@@ -15874,9 +14882,7 @@
     {
         "model": "shops.shop",
         "pk": 497,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�ް�Ŀ�� �ŵ�������",
@@ -15906,9 +14912,7 @@
     {
         "model": "shops.shop",
         "pk": 498,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�����Ĵ�",
@@ -15938,9 +14942,7 @@
     {
         "model": "shops.shop",
         "pk": 499,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "����Ұ�â",
@@ -15970,9 +14972,7 @@
     {
         "model": "shops.shop",
         "pk": 500,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "�׸��ӱ�",
@@ -16002,9 +15002,7 @@
     {
         "model": "shops.shop",
         "pk": 501,
-        "fields": {
-            "shopkeeper": null,
-            "coupon": null,
+        "fields": {   
             "category": null,
             "area": null,
             "shop_name": "��鳪��",
@@ -16028,7 +15026,9 @@
             "is_subscribe": false,
             "subscribe_time": "2021-07-11",
             "is_new_opend": false,
-            "business_reg_img": ""
+            "business_reg_img": "",
+            "open_time": "평일 오전 10시 - 오후 8시 주말 오전 11시 - 오후 8시",
+            "theme_keyword": ""
         }
     },
     {
@@ -16063,6 +15063,69 @@
             "img_path": "test@com",
             "created_at": "2021-07-15T07:21:59.891Z",
             "updated_at": "2021-07-15T07:21:59.891Z"
+        }
+    },
+    {
+        "model": "shops.themekeywordcategory",
+        "pk": 1,
+        "fields": {
+            "category": "분위기"
+        }
+    },
+    {
+        "model": "shops.themekeywordcategory",
+        "pk": 2,
+        "fields": {
+            "category": "인기토픽"
+        }
+    },
+    {
+        "model": "shops.themekeywordcategory",
+        "pk": 3,
+        "fields": {
+            "category": "찾는목적"
+        }
+    },
+    {
+        "model": "shops.themekeyword",
+        "pk": 1,
+        "fields": {
+            "category": 1,
+            "theme_keyword": null,
+            "shop": 12
+        }
+    },
+    {
+        "model": "shops.datalab",
+        "pk": 1,
+        "fields": {
+            "shop": 12,
+            "age_10s": 12.6756,
+            "age_20s": 12.6756,
+            "age_30s": 12.6756,
+            "age_40s": 12.6756,
+            "age_50s": 12.6756,
+            "age_60s": 12.6756,
+            "male": 12.3456,
+            "female": 12.3456
+        }
+    },
+    {
+        "model": "shops.opentime",
+        "pk": 1,
+        "fields": {
+            "shop": 12,
+            "open_time": "평일 오전 10시 - 오후 8시 주말 오전 11시 - 오후 8시"
+        }
+    },
+    {
+        "model": "shops.menu",
+        "pk": 1,
+        "fields": {
+            "shop": 12,
+            "menu_name": "물갈비",
+            "price": 8000,
+            "is_representative": 0
         }
     }
 ]
