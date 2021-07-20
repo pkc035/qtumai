@@ -166,8 +166,6 @@ class SMSVerificationView(View):
 
         except Authentication.DoesNotExist:
             return JsonResponse({'message': '해당 휴대폰 번호가 존재하지 않습니다.'}, status=400)
-
-
           
 @api_view(['POST'])
 def dislikeshop(request):
@@ -203,12 +201,6 @@ def likeshop(request):
 
 @api_view(['PATCH'])
 def update_account_guest(request):
-
-
-    # test
-    request.account = AccountGuest.objects.get(id=1)
-
-
     try:
         preference    = Preference.objects.get(account_guest=request.account)
 

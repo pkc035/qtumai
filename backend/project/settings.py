@@ -81,23 +81,23 @@ WSGI_APPLICATION = 'project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'django_schema',
-#         'USER': 'qtumai',
-#         # 'USER': 'root',
-#         'PASSWORD': 'Qtumai123!',
-#         # 'PASSWORD': 'qtumai2021)(*&',
-#         'HOST': '192.168.0.63',
-#         # 'HOST': 'localhost',
-#         'PORT': 3306,
-#         'OPTIONS': {
-#             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
-#         },
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'django_schema',
+        'USER': 'qtumai',
+        # 'USER': 'root',
+        'PASSWORD': 'Qtumai123!',
+        # 'PASSWORD': 'qtumai2021)(*&',
+        'HOST': '192.168.0.63',
+        # 'HOST': 'localhost',
+        'PORT': 3306,
+        'OPTIONS': {
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+        },
 
-#     }
-# }
+    }
+}
 
 AUTH_USER_MODEL = 'accounts.AccountGuest'
 APPEND_SLASH=False
@@ -156,37 +156,3 @@ CORS_ORIGIN_ALLOW_ALL = True
 
 pymysql.version_info = (1, 4, 2, "final", 0)
 pymysql.install_as_MySQLdb()
-
-
-
-
-
-# jyeon
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'test',
-        'USER': 'root',
-        'PASSWORD': 'applemango21',
-        'HOST': '172.17.0.2',
-        'PORT': 3306,
-    }
-}
-
-LOGGING = {
-    'disable_existing_loggers': False,
-    'version': 1,
-    'handlers': {
-        'console': {
-            'class': 'logging.StreamHandler',
-            'level': 'DEBUG',
-        },
-    },
-    'loggers': {
-        'django.db.backends': {
-            'handlers': ['console'],
-            'level': 'DEBUG',
-            'propagate': False,
-        },
-    },
-}

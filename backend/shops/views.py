@@ -19,7 +19,7 @@ from accounts.models           import AccountGuest, VisitedShop
 from .serializers              import (
     ShopRecommendSerializer, ShopListSerializer,ShopDetailSerializer,
     ReviewSerializer, ReportReviewSerializer, ReportShopSerializer,
-    LocationSearchSerializer, AccountSearchSerializer,
+    LocationSearchSerializer, AccountSearchSerializer, ShopVisitedSerializer,
 )
 
 class ShopRecommendViewSet(ModelViewSet):
@@ -244,7 +244,6 @@ class LocationSearchViewSet(ModelViewSet):
                     validated_data=request.data,
                     account=request.account
                 )
-
         return Response({"message":"Success"})
 
 class ShopListPagination(PageNumberPagination):
@@ -301,7 +300,6 @@ class ShopListViewSet(ModelViewSet):
             .prefetch_related('shopimage_set')
             .order_by('-naver_score')
         )
-
         return shops
 
 #menu_name, shop_name / category_name 검색 결과를 나눠서 return할 경우
@@ -333,52 +331,20 @@ class ShopSearchViewSet(ModelViewSet):
             {'shop,category': serializer_shop_category.data},
             # {'menu': serializer_menu.data}
         ]
-
         return Response(result_list)
 
 class ShopVisitedViewSet(ModelViewSet):
-    serializer_class = ShopListSerializer
+    serializer_class = ShopVisitedSerializer
     pagination_class = ShopListPagination
 
     def get_queryset(self):
-
-        # test
-        self.request.account = AccountGuest.objects.get(id=1)
-
         queryset = (
             Shop.objects
             .filter(userVisitedStore=self.request.account)
-            .prefetch_related('shopimage_set', 'userVisitedStore')
-            .order_by('userVisitedStore__visited_time')
+            .prefetch_related('shopimage_set', 'userVisitedStore', 'visitedshop_set')
+            .order_by('-visitedshop__visited_time')
         )     
         return queryset
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 # # menu_name,shop_name, category_name 검색 결과를 한 배열에 return 할 경우
 # class ShopSearchViewSet(ModelViewSet):

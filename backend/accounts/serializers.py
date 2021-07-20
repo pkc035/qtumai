@@ -71,7 +71,6 @@ class AccountGuestSerializer(serializers.ModelSerializer):
 
 #         return error
 
-
 class PreferenceUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model          = Preference
@@ -90,10 +89,6 @@ class PreferenceUpdateSerializer(serializers.ModelSerializer):
         instance.cleanliness_price   = data.get('cleanliness_price', F('cleanliness_price'))
         instance.vibe_price          = data.get('vibe_price', F('vibe_price'))        
         instance.save()
-    
-    def validate_taste_service(self, data):
-        print(111111111111111111111111111111111111111111111111111111111111111111111111111111)
-        print(data)
 
 class AccountGuestUpdateSerializer(serializers.ModelSerializer):
     class Meta:
