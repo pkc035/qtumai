@@ -60,6 +60,7 @@ class Coupon(models.Model):
     coupon_content = models.TextField(blank=True)
     begin_date = models.DateTimeField(null=True)
     expire_date = models.DateTimeField(null=True)
+    status = models.BooleanField(default=False)
 
 
 class LikeShopAccounts(models.Model):

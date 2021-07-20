@@ -1,14 +1,8 @@
-from django.db.models import fields
-from django.db.models.fields import EmailField
-from shops.models import Shop
-from rest_framework import serializers
-from .models import AccountGuest, LivingArea, Preference
-from django.contrib.auth import authenticate, get_user_model
-from . import models
+from django.db.models import F
 from django.db.models import Q
 
-from rest_framework.validators import ValidationError
-import re
+from rest_framework import serializers
+from .models      import AccountGuest, FunData, LivingArea, MyLikeList, MyLikeListShop, LivingArea, Preference
 
 class LivingAreaSreialzer(serializers.ModelSerializer):
 
@@ -100,6 +94,20 @@ class AccountGuestSerializer(serializers.ModelSerializer):
         )
         return validated_data
 
+class MyLikeListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = MyLikeList
+        fields = ['id', 'list_name']
+
+class MyLikeListShopSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = MyLikeListShop
+        fields = ['id', 'shop']
+
+class FunDataSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = FunData
+        fields = ['account_guest', 'menu', 'score']
     # def validate(self, data):
     #     non_alpha = set([s for s in "!@#$%^&*()|-=_+\[]{};':\",./?><"])
     #     error     = dict({'username' : [],'number':[]})
@@ -211,3 +219,51 @@ class PreferenceSerializer(serializers.ModelSerializer):
 
     #     return error
 
+class PreferenceUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model          = Preference
+        fields         = []
+        optianl_fields = '__all__'
+
+    def update(self, instance, data):
+        instance.taste_service       = data.get('taste_service', F('taste_service'))
+        instance.taste_cleanliness   = data.get('taste_cleanliness', F('taste_cleanliness'))
+        instance.taste_vibe          = data.get('taste_vibe', F('taste_vibe'))
+        instance.taste_price         = data.get('taste_price', F('taste_price'))
+        instance.service_cleanliness = data.get('service_cleanliness', F('service_cleanliness'))
+        instance.service_vibe        = data.get('service_vibe', F('service_vibe'))
+        instance.service_price       = data.get('service_price', F('service_price'))
+        instance.cleanliness_vibe    = data.get('cleanliness_vibe', F('cleanliness_vibe'))
+        instance.cleanliness_price   = data.get('cleanliness_price', F('cleanliness_price'))
+        instance.vibe_price          = data.get('vibe_price', F('vibe_price'))        
+        instance.save()
+
+class AccountGuestUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model           = AccountGuest
+        fields          = []
+        optional_fields = ['username', 'phone_number']
+
+    def update(self, instance, data):
+        instance.phone_number = data.get('phone_number', F('phone_number'))
+        instance.username     = data.get('usernamee', F('username'))
+        instance.save()
+    
+class LivingAreaUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model  = LivingArea
+        fields = '__all__'
+
+    def update_or_create(self, data, account):
+        area, created = LivingArea.objects.update_or_create(
+            living_area = data['living_area'],
+            defaults= {
+                'living_area' : data['living_area'],
+                'latitude' : data['latitude'],
+                'longitude' : data['longitude']
+            }
+        )
+        area.people_count = area.accountguest_set.count()
+        area.save()
+        account.living_area = area
+        account.save()

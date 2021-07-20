@@ -83,14 +83,14 @@ class AccountGuest(AbstractUser):
 
 # 방문 시간도 함께 체크하기 위해 through 사용 (ManyToMany에서 컬럼 추가하는 방법)
 class VisitedShop(models.Model):
-    account_guest = models.ForeignKey(AccountGuest, on_delete=models.CASCADE, null=True)
+    account_guest = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
     shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
     visited_time = models.DateTimeField(auto_now_add=True)
 
 
 class SearchedLocation(models.Model):
     account_guest = models.ManyToManyField(
-        AccountGuest, # 역참조 할 수 있도록 manytomany 사용
+        settings.AUTH_USER_MODEL, # 역참조 할 수 있도록 manytomany 사용
         related_name="searchedLocation", 
         blank=True
     )
@@ -102,7 +102,7 @@ class SearchedLocation(models.Model):
 
 class SearchedMenu(models.Model):
     account_guest = models.ManyToManyField(
-        AccountGuest, # 역참조 할 수 있도록 manytomany 사용
+        settings.AUTH_USER_MODEL, # 역참조 할 수 있도록 manytomany 사용
         related_name="searchedMenu", 
         blank=True
     )
@@ -113,7 +113,7 @@ class SearchedMenu(models.Model):
 
 class SearchedStore(models.Model):
     account_guest = models.ManyToManyField(
-        AccountGuest, # 역참조 할 수 있도록 manytomany 사용
+        settings.AUTH_USER_MODEL, # 역참조 할 수 있도록 manytomany 사용
         related_name="searchedStore", 
         blank=True
     )
@@ -123,12 +123,12 @@ class SearchedStore(models.Model):
 
 class SearchedPeopleThrough(models.Model):
     from_accountguest = models.ForeignKey(
-        'AccountGuest',
+        settings.AUTH_USER_MODEL,
         related_name="searcedpeople_from",
         on_delete=CASCADE
     )
     to_accountguest = models.ForeignKey(
-        'AccountGuest',
+        settings.AUTH_USER_MODEL,
         related_name="searcedpeople_to",
         on_delete=CASCADE
     )
@@ -136,7 +136,7 @@ class SearchedPeopleThrough(models.Model):
 
 class Preference(models.Model):
     account_guest = models.ForeignKey(
-        AccountGuest,
+        settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         null=True
     )
@@ -163,11 +163,7 @@ class Preference(models.Model):
 
 # 추후 메뉴뿐만 아니라 관심사 태그에 대한 내용도 물어볼 예정
 class FunData(models.Model):
-    account_guest = models.ManyToManyField(
-        AccountGuest,
-        related_name="userFunData",
-        blank=True
-    )
+    account_guest = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
     menu = models.ForeignKey(Menu, on_delete=models.CASCADE, null=True)
     # 추후 태그 관련 컬럼도 추가예정 tag = models.ForeignKey(Tag, on_delete=models.CASCADE, null=True)
     score = models.SmallIntegerField(default=0) # 싫어요: 0, 좋아요: 1, Super Like: 2 (값을 부여하는 방식 O // 더하기 X)
@@ -177,7 +173,7 @@ class FunData(models.Model):
 # 유저 체류데이터 수집 테이블
 class ClickData(models.Model):
     account_guest = models.ForeignKey(
-        AccountGuest,
+        settings.AUTH_USER_MODEL,
         related_name="userClickData",
         on_delete=models.CASCADE,
         null=True
@@ -197,9 +193,8 @@ class ClickData(models.Model):
 
 
 class MyLikeList(models.Model):
-    account_guest = models.ForeignKey(AccountGuest, on_delete=models.CASCADE, null=True)
+    account_guest = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
     list_name = models.CharField(max_length=20, blank=True)
-
 
 class MyLikeListShop(models.Model):
     my_like_list = models.ForeignKey(
@@ -207,7 +202,11 @@ class MyLikeListShop(models.Model):
         on_delete=models.CASCADE,
         null=True
     )
-    shop_name = models.ManyToManyField(Shop, related_name="myLikeListShop", blank=True)
+    shop = models.ForeignKey(
+        Shop, 
+        on_delete=models.CASCADE,
+        null=True
+    )
 
     def __str__(self):
         return self.my_like_list
