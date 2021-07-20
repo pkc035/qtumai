@@ -8,7 +8,7 @@ const Stack = createStackNavigator();
 const StackNav = () => {
   return (
     <Stack.Navigator
-      initialRouteName='Login'
+      initialRouteName="Login"
       screenOptions={{
         cardStyle: { backgroundColor: '#ffffff' },
         headerShown: false,
@@ -21,9 +21,9 @@ const StackNav = () => {
         // },
       }}
     >
-      <Stack.Screen name='Login' component={Login}></Stack.Screen>
-      <Stack.Screen name='Sign' component={Sign}></Stack.Screen>
-      <Stack.Screen name='Home' component={Home}></Stack.Screen>
+      <Stack.Screen name="Login" component={Login}></Stack.Screen>
+      <Stack.Screen name="Sign" component={Sign}></Stack.Screen>
+      <Stack.Screen name="Home" component={Home}></Stack.Screen>
     </Stack.Navigator>
   );
 };

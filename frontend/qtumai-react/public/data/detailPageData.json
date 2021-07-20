@@ -1,0 +1,35 @@
+[
+  {
+    "id": 500,
+    "shop_image_list": [
+      "https://i.imgur.com/aylXNh7.png",
+      "https://i.imgur.com/zs1GZHb.jpg"
+    ],
+    "shop_name": "카치오에페페",
+    "shop_address": "서울 구로구 새말로18길 24",
+    "shop_description": "분위기 좋은 파스타 맛집",
+    "phone_number": "",
+    "like_count": 0,
+    "shop_info_url": "",
+    "score_taste": 0.0,
+    "score_service": 0.0,
+    "score_cleanliness": 0.0,
+    "score_vibe": 0.0,
+    "score_price": 0.0,
+    "review_count": 0,
+    "kakao_score": 3.5,
+    "kakao_score_count": 4,
+    "kakao_review_count": 23,
+    "price_range": "",
+    "latitude": null,
+    "longitude": null,
+    "is_subscribe": false,
+    "subscribe_time": null,
+    "is_new_opend": false,
+    "business_reg_img": "",
+    "shopkeeper": null,
+    "coupon": null,
+    "category": null,
+    "area": null
+  }
+]

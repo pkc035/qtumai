@@ -10,14 +10,14 @@ const MainTab = createBottomTabNavigator();
 export const MainNavigator = () => {
   return (
     <MainTab.Navigator
-      initialRouteName='Main'
-    // tabBarOptions={{ showLabel: false }}
+      initialRouteName="Main"
+      // tabBarOptions={{ showLabel: false }}
     >
-      <MainTab.Screen name='Main' component={Main} />
-      <MainTab.Screen name='Map' component={Map} />
-      <MainTab.Screen name='Like' component={Like} />
-      <MainTab.Screen name='Favorite' component={Favorite} />
-      <MainTab.Screen name='Profile' component={Profile} />
+      <MainTab.Screen name="Main" component={Main} />
+      <MainTab.Screen name="Map" component={Map} />
+      <MainTab.Screen name="Like" component={Like} />
+      <MainTab.Screen name="Favorite" component={Favorite} />
+      <MainTab.Screen name="Profile" component={Profile} />
     </MainTab.Navigator>
   );
 };
@@ -25,7 +25,6 @@ export const MainNavigator = () => {
 export const Main = ({ navigation }) => {
   return (
     <MainContainer>
-
       <WebView source={{ uri: 'http://192.168.0.76:3000/' }} />
 
       <FloatingBackground>
@@ -54,14 +53,18 @@ export const Map = ({ navigation }) => {
   return (
     <Container>
       <WebView source={{ uri: 'http://192.168.0.76:3000/Map' }} />
-      <Button title='Who' onPress={() => navigation.navigate('Who')} />
-      <Button title='Where' onPress={() => navigation.navigate('Where')} />
+      <Button title="Who" onPress={() => navigation.navigate('Who')} />
+      <Button title="Where" onPress={() => navigation.navigate('Where')} />
     </Container>
   );
 };
 
 export const Like = () => {
-  return <Container></Container>;
+  return (
+    <Container>
+      <WebView source={{ uri: 'http://192.168.0.76:3000/Detail' }} />
+    </Container>
+  );
 };
 
 export const Favorite = () => {
