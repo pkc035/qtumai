@@ -12,8 +12,7 @@ from django.http         import response
 from django.shortcuts    import get_object_or_404, render
 from django.contrib.auth import get_user_model
 
-from .models import AccountGuest, Authentication
-from .serializers     import AccountGuestSerializer
+from .models import AccountGuest, Authentication, Preference
 from shops            import models
 from project.settings import SECRET_KEY
 from rest_framework.decorators import authentication_classes, permission_classes
@@ -21,8 +20,22 @@ from rest_framework.views      import APIView
 from rest_framework            import viewsets
 from rest_framework.decorators import api_view
 from rest_framework.response   import Response
+from rest_framework.authtoken.models import Token
 from rest_framework import status
-from .serializers import AccountGuestSerializer
+from .serializers import AccountGuestSerializer, CheckUsernameSerializer, PreferenceSerializer
+
+class CheckUsernameAPIView(APIView):
+    def post(self, request):
+        error = CheckUsernameSerializer.validate(AccountGuest,data=request.data)
+        if error['username'] :
+            return Response(error, status=status.HTTP_400_BAD_REQUEST)
+        serializer = CheckUsernameSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.check(
+                validated_data=request.data
+            )
+            return Response({'message':'success'},status=status.HTTP_200_OK)
+        return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
 
 class AccountGuestAPIView(APIView):
     def post(self, request):
@@ -31,10 +44,34 @@ class AccountGuestAPIView(APIView):
         if serializer.is_valid():
             serializer.create(
                 validated_data=request.data,
-                living_area=request.data['living_area']
+                area_name=request.data['area_name'],
+                latitude = request.data['latitude'],
+                longitude = request.data['longitude']
+            )
+            account_guest_id = AccountGuest.objects.get(username=request.data['username']).id
+            return Response({'account_guest_id' : account_guest_id},status=status.HTTP_201_CREATED)
+        return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+
+class CreatePreferenceAPIView(APIView):
+    def post(self, request):
+        serializer = PreferenceSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.create(
+                validated_data=request.data
             )
             return Response(serializer.data,status=status.HTTP_201_CREATED)
         return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+
+class UpdatePreferenceAPIView(APIView):
+    def post(self, request):
+        serializer = PreferenceSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.update(
+                validated_data=request.data
+            )
+            return Response(serializer.data,status=status.HTTP_201_CREATED)
+        return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+
 
 class NaverLogInView(View):
     def get(self, request):
@@ -123,7 +160,7 @@ class SmsSendView(View):
         }
         encoded_data = json.dumps(body)
         requests.post(SMS_URL, headers=headers, data=encoded_data)
-
+    #인증번호 요청 api 호출
     def post(self, request):
         try:
             data = json.loads(request.body)
@@ -152,15 +189,19 @@ class SmsSendView(View):
 class SMSVerificationView(View):
     def post(self, request):
         data = json.loads(request.body)
-
+        #로그인화면에서 인증번호 발급 후 일치시 
         try:
+            
             verification = Authentication.objects.get(phone_number=data['phone_number'])
-
-            if verification.auth_number == data['auth_number']:
-                return JsonResponse({'phone_number':data['phone_number']}, status=200)
-
-            else:
-                return JsonResponse({'message': '인증 실패입니다.'}, status=400)
+            # accountguest = AccountGuest.objects.get(phone_number=data['phone_number'])
+            if AccountGuest.objects.filter(phone_number = data['phone_number']).exists():
+                if verification.auth_number == data['auth_number']:
+                    # 로그인 성공.토큰발급
+                    return JsonResponse({"Token":token.key}, status=200)
+                else:
+                    return JsonResponse({'message': '인증번호 확인 실패입니다.'}, status=400)
+            else :  # AccountGuest에 저장이 되지 않은경우 
+                return JsonResponse({'message': '회원가입을 진행해주세요.'})
 
         except Authentication.DoesNotExist:
             return JsonResponse({'message': '해당 휴대폰 번호가 존재하지 않습니다.'}, status=400)

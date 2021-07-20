@@ -30,13 +30,12 @@ class Authentication(models.Model):
 
 
 class AccountGuest(AbstractUser):
-    phone_number = models.CharField(max_length=20, blank=True)
-    # nickname = models.CharField(max_length=20, blank=True) # 네이버 로그인 시 받아올 수 있으면 바로 입력
+    phone_number = models.CharField(max_length=20, blank=True, null=True)
+    kakao_number = models.CharField(max_length=50, blank=True, unique=True, null=True)
+    google_number = models.EmailField(max_length=50, blank=True, unique=True, null=True)
+    naver_number = models.CharField(max_length=50, blank=True, unique=True, null=True)
     profile_img_path = models.TextField(blank=True)
-    kakao_number = models.CharField(max_length=50, blank=True)
-    google_number = models.EmailField(max_length=50, blank=True)
     google_mail = models.EmailField(max_length=128, blank=True) # 안들어올수도 있음
-    naver_id = models.CharField(max_length=50, blank=True)
     gender = models.CharField(max_length=2, blank=True)
     birthday = models.DateField(auto_now=False, auto_now_add=False, null=True)
     living_area = models.ForeignKey(LivingArea, on_delete=models.CASCADE, null=True)
