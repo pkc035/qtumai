@@ -2,7 +2,7 @@ from django.contrib.auth import authenticate, get_user_model
 
 from rest_framework import serializers
 
-from .models import AccountGuest, LivingArea, MyLikeList, MyLikeListShop
+from .models import AccountGuest, FunData, LivingArea, MyLikeList, MyLikeListShop
 
 class LivingAreaSreialzer(serializers.ModelSerializer):
 
@@ -56,7 +56,12 @@ class MyLikeListSerializer(serializers.ModelSerializer):
 class MyLikeListShopSerializer(serializers.ModelSerializer):
     class Meta:
         model = MyLikeListShop
-        fields = ['id', 'shop_name']
+        fields = ['id', 'shop']
+
+class FunDataSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = FunData
+        fields = ['account_guest', 'menu', 'score']
 
     # def validate(self, data):
     #     non_alpha = set([s for s in "!@#$%^&*()|-=_+\[]{};':\",./?><"])

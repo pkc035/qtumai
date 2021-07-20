@@ -1,3 +1,4 @@
+from accounts.views import dislikeshop
 from django.contrib.auth import get_user_model
 from django.db.models    import F
 
@@ -58,6 +59,7 @@ class ShopImageSerializer(serializers.ModelSerializer):
 
 class ShopDetailSerializer(serializers.ModelSerializer):
     shop_image_list = serializers.SerializerMethodField()
+    shop_status = serializers.SerializerMethodField()
 
     class Meta:
         model = Shop
@@ -67,6 +69,17 @@ class ShopDetailSerializer(serializers.ModelSerializer):
         shopimages = obj.shopimage_set.all()
         images = [shop.img_url for shop in shopimages]
         return images
+    
+    def get_shop_status(self,obj):
+        user = self.context['request'].user
+        likeshop = obj.likeshopaccounts_set.filter(guest_id=1)
+        dislikeshop = obj.dislikeShop.filter(id=1)
+        result = {
+            'like_status' : True if likeshop else False,
+            'dislike_status' : True if dislikeshop else False
+        }
+
+        return result
     
 class ReviewSerializer(serializers.ModelSerializer):
     username = serializers.SerializerMethodField()
@@ -92,7 +105,7 @@ class ReportReviewSerializer(serializers.ModelSerializer):
 class MenuSerializer(serializers.ModelSerializer):
     class Meta:
         model = Menu
-        fields = '__all__'
+        fields = ['id', 'menu_name', 'img_path_1', 'img_path_2', 'img_path_3', 'price', 'is_representative']
 
 class AccountSearchSerializer(serializers.ModelSerializer):
     class Meta:
@@ -126,12 +139,6 @@ class LocationSearchSerializer(serializers.ModelSerializer):
                 }
             )
         )
-<<<<<<< HEAD
-        # location.searched_count = F('searched_count') + 1
-        location.account_guest.add(account)
-        location.save()
-=======
         location[0].searched_count = F('searched_count') + 1
         location[0].account_guest.add(account)
         location[0].save()
->>>>>>> upstream/master

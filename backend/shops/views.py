@@ -88,16 +88,8 @@ class ShopDetailViewSet(ModelViewSet):
 
     def get_queryset(self):
         shop = Shop.objects.filter(id=self.kwargs['id'])
-        shop_imgs = [shop_img.img_url for shop_img in shop[0].shopimage_set.all()]
-
+    
         return shop
-
-    # def retrieve(self, request):
-    #     # shops = get_object_or_404(Shop, pk=shop_id)
-    #     shops = Shop.objects.filter(id=1)
-    #     serializer = ShopDetailSerializer(shops)
-
-    #     return Response(serializer.data)
 
 @transaction.atomic
 @api_view(['GET','POST'])
@@ -200,17 +192,14 @@ def report_review_command(request, report_review_id):
 
         return Response({'message':'Report Shop Deleted'})
 
-<<<<<<< HEAD
 class MenuViewSet(ModelViewSet):
     serializer_class = MenuSerializer
     def get_queryset(self):
         menu = Menu.objects.order_by('?').first()
 
-        return menu
-class SearchAccountViewSet(ModelViewSet):
-=======
+        return [menu]
+
 class AccountSearchViewSet(ModelViewSet):
->>>>>>> upstream/master
     serializer_class = AccountSearchSerializer
 
     def get_queryset(self):
@@ -261,8 +250,6 @@ class LocationSearchViewSet(ModelViewSet):
                 )
 
         return Response({"message":"Success"})
-<<<<<<< HEAD
-=======
 
 class ShopListPagination(PageNumberPagination):
     page_size = 6
@@ -373,4 +360,3 @@ class ShopSearchViewSet(ModelViewSet):
 
 
         
->>>>>>> upstream/master
