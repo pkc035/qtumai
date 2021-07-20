@@ -154,7 +154,7 @@ export default function Detail() {
                   is_subscribe={is_subscribe}
                 />
               )}
-              {isOpenYesNoModal && <DetailYesNoModal />}
+              {isOpenYesNoModal && <DetailYesNoModal is_subscribe={is_subscribe} />}
             </BenfitsButton>
           )}
         </DetailContainer>
