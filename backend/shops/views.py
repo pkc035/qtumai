@@ -1,6 +1,7 @@
 from django.db                 import transaction
 from django.db.models          import Q, When, Value, Case
 from django.shortcuts          import get_object_or_404
+from django.contrib.auth       import get_user_model
 
 from rest_framework.viewsets    import ModelViewSet
 from rest_framework.decorators  import action, api_view
@@ -103,7 +104,7 @@ def review_create(request):
 
     else:
         shop = Shop.objects.get(id=request.data['shop_id'])
-        user = AccountGuest.objects.get(id=request.user)
+        user = AccountGuest.objects.get(id=1)
         serializer = ReviewSerializer(data=request.data)
         
         if serializer.is_valid():
@@ -149,10 +150,10 @@ def report_shop(request):
 
     else:
         shop = Shop.objects.get(id=request.data['shop_id'])
-        user = AccountGuest.objects.get(id=request.user)
+        user = get_object_or_404(get_user_model(), pk=1)
         serializer = ReportShopSerializer(data=request.data)
         
-        if not user.guestReport.filter(shop=shop, guest=user):
+        if not user.guestReportShop.filter(shop=shop, guest=user):
             if serializer.is_valid(raise_exception=True):
                 serializer.save(shop=shop, guest=user)
         

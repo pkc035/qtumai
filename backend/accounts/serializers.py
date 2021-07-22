@@ -1,3 +1,4 @@
+from shops.serializers import ShopDetailSerializer
 from django.contrib.auth import models
 from django.db.models import F, fields
 from django.db.models import Q
@@ -141,15 +142,28 @@ class AccountGuestSerializer(serializers.ModelSerializer):
         )
         return validated_data
 
-class MyLikeListSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = MyLikeList
-        fields = ['id', 'list_name']
-
 class MyLikeListShopSerializer(serializers.ModelSerializer):
     class Meta:
         model = MyLikeListShop
         fields = ['id', 'shop']
+
+class MyLikeListSerializer(serializers.ModelSerializer):
+    mylikeshop_list = serializers.SerializerMethodField()
+    
+    class Meta:
+        model = MyLikeList
+        fields = ['id', 'list_name', 'mylikeshop_list']
+
+    def get_mylikeshop_list(self,obj):
+        mylikeshops = obj.mylikelistshop_set.all()
+        shops_data  = [{
+            "id"             : mylikeshop.shop.id,
+            "shop_name"      : mylikeshop.shop.shop_name,
+            "coupon_content" : [coupon.coupon_content for coupon in mylikeshop.shop.coupon_set.all()]
+        } for mylikeshop in mylikeshops]
+
+        return shops_data
+    
 
 class FunDataSerializer(serializers.ModelSerializer):
     class Meta:

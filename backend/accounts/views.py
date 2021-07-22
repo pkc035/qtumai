@@ -251,30 +251,52 @@ class MyLikeListViewSet(ModelViewSet):
     serializer_class = MyLikeListSerializer
 
     def get_queryset(request):
-        mylikelists = MyLikeList.objects.filter(account_guest_id=request.user)
-        return mylikelists
+        # mylikelists = MyLikeList.objects.filter(account_guest_id=request.user)
+        mylikelists = MyLikeList.objects.filter(account_guest_id=1)
     
+        return mylikelists
+
+    # def list(self, request):
+    #     # mylikelists = MyLikeList.objects.filter(account_guest_id=request.user)
+    #     mylikelists = MyLikeList.objects.filter(account_guest_id=1)
+    #     serializer  = self.get_serializer(mylikelists, many=True) 
+    
+    #     return Response(serializer.data)
+
     def create(self, request):
-        user       = get_object_or_404(AccountGuest, pk=request.data['account_guest_id'])
+        # user       = get_object_or_404(AccountGuest, pk=request.user)
+        user       = get_object_or_404(AccountGuest, pk=1)
         serializer = self.get_serializer(data=request.data)        
+        
         if serializer.is_valid(raise_exception=True):
             serializer.save(account_guest=user)
+            
             return Response({'message':'MylikeList Created'})    
+        
         return Response({'message':'MylikeList Created Fail'})
     
     @action(detail=True, methods=['PUT'])
     def list_update(self, request, pk):
         mylikelist = get_object_or_404(MyLikeList, pk=pk)
         serializer = self.get_serializer(data=request.data, instance=mylikelist)        
+        
         if serializer.is_valid(raise_exception=True):
             serializer.save()
+        
             return Response({'message':'MylikeList Updated'})    
+        
         return Response({'message':'MylikeList Updated Fail'})
     
+    @transaction.atomic
     @action(detail=True, methods=['DELETE'])
     def list_delete(self, request, pk):
         mylikelist = get_object_or_404(MyLikeList, pk=pk)
+        likeshop   = LikeShopAccounts.objects.filter(
+            Q(guest_id=1)|Q(shop_id=mylikelist.mylikelistshop_set.all().first().shop_id)) 
+        mylikelist.mylikelistshop_set.all().delete()
+        likeshop.delete()
         mylikelist.delete()
+
         return Response({'message':'MyLikeList Deleted'}) 
 
 
@@ -303,13 +325,14 @@ class MyLikeListShopViewSet(ModelViewSet):
     #Mylist 여러개
     @transaction.atomic
     def create(self, request):
-        user   = get_object_or_404(get_user_model(),pk=1)
-        shop   = get_object_or_404(Shop, pk=request.data['shop_id'])
+        user    = get_object_or_404(get_user_model(),pk=1)
+        shop    = get_object_or_404(Shop, pk=request.data['shop_id'])
         mylists = request.data['mylist_id']
+        
         for mylist_id in mylists:
             request.data['mylist_id'] = mylist_id
             serializer = self.get_serializer(data=request.data)
-                    
+
             if serializer.is_valid(raise_exception=True):
                 serializer.save(my_like_list_id=mylist_id, shop=shop)
                 LikeShopAccounts.objects.create(shop=shop, guest=user)
@@ -330,6 +353,7 @@ class MyLikeListShopViewSet(ModelViewSet):
         likeshop.delete()
         shop.like_count -= 1
         shop.save()
+        
         return Response({'message':'MyLikeListShop Deleted'})
 
 @transaction.atomic
