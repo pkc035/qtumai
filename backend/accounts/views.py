@@ -346,27 +346,38 @@ class FunDataViewSet(ModelViewSet):
 
         return Response({'message':'Fun Create Fail'})
 
-@api_view(['PATCH'])
-def update_account_guest(request):
-    try:
-        preference    = Preference.objects.get(account_guest=request.account)
+class AccountGuestUpdateViewSet(ModelViewSet):
+    def list(self, request):
+        preference = get_object_or_404(Preference,account_guest=request.account)
+        
+        serializer_account    = AccountGuestUpdateSerializer(request.account, many=False)
+        serializer_preference = PreferenceUpdateSerializer(preference, many=False)
+        serializer_livingarea = LivingAreaUpdateSerializer(request.account.living_area, many=False)
 
-        if request.data.get('is_account_updated') == 'True':
-            serializer = AccountGuestUpdateSerializer(data=request.data)
+        result = {
+            'account'    : serializer_account.data,
+            'preference' : serializer_preference.data,
+            'livingarea' : serializer_livingarea.data
+        }
+
+        return Response(result)
+    
+    def partial_update(self, request):
+        preference    = get_object_or_404(Preference,account_guest=request.account)
+
+        if request.data.get('is_account_updated') ==  'True':
+            serializer = AccountGuestUpdateSerializer(request.account, data=request.data, partial=True)
             if serializer.is_valid(raise_exception=True):
-                serializer.update(request.account, request.data)
+                serializer.save()
 
         if request.data.get('is_preference_updated') == 'True':            
-            serializer = PreferenceUpdateSerializer(data=request.data)
+            serializer = PreferenceUpdateSerializer(preference, data=request.data, partial=True)
             if serializer.is_valid(raise_exception=True):
-                serializer.update(instance=preference, data=request.data)
+                serializer.save()
 
         if request.data.get('is_living_area_updated') == 'True':
-            serializer = LivingAreaUpdateSerializer(data=request.data)
+            serializer = LivingAreaUpdateSerializer(request.account.living_area, data=request.data, partial=True)
             if serializer.is_valid(raise_exception=True):
-                serializer.update_or_create(data=request.data, account=request.account)        
+                serializer.save(account=request.account)        
 
-        return Response({'message': 'Success'})
-    
-    except Preference.DoesNotExist:
-        return Response({'message': 'Preference Does Not Exist'}, status=400)
+        return Response({'message' : 'Success'})
