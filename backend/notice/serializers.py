@@ -3,9 +3,10 @@ from datetime import timedelta, date
 from django.db           import transaction
 
 from rest_framework import serializers
+from rest_framework.relations import PrimaryKeyRelatedField, StringRelatedField
 
-from .models import BusinessForm
-from shops.models import Coupon
+from .models import BusinessForm, Notice, ProposeBusinessForm, ProposeGoodShop
+from shops.models import Coupon, Shop
 
 class BusinessFormSerializer(serializers.ModelSerializer):
     class Meta:
@@ -44,3 +45,43 @@ class CouponManageSerializer(serializers.ModelSerializer):
                 old_coupon.save()
 
         return instance
+
+# class ShopProposeSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Shop
+#         fields = ['id', 'shop_name']
+
+class ProposeGoodShopSerializer(serializers.ModelSerializer):
+    shop_name_id = PrimaryKeyRelatedField(queryset=Shop.objects.all())
+    shop_name = StringRelatedField()
+
+    class Meta:
+        model = ProposeGoodShop
+        fields = '__all__'
+    
+    def create(self, validated_data):
+        propose = ProposeGoodShop.objects.create(
+            shop_name = validated_data['shop_name_id'],
+            address = validated_data['address'],
+            description = validated_data['description']
+        )
+        return propose
+
+class ProposeBusinessSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProposeBusinessForm
+        fields = '__all__'
+    
+    def create(self, validated_data):
+        form = ProposeBusinessForm.objects.create(
+            shop_name = validated_data['shop_name'],
+            phone_number = validated_data['phone_number'],
+            manager_name = validated_data['manager_name'],
+            content = validated_data['content']
+        )
+        return form
+
+class NoticeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Notice
+        fields = '__all__'

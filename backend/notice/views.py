@@ -1,17 +1,16 @@
-from typing import Optional
-
-from rest_framework.serializers import Serializer
-from rest_framework.decorators import action, api_view
 from django.shortcuts          import get_object_or_404
 
-from notice.serializers import BusinessFormSerializer, CouponManageSerializer
-from .models         import BusinessForm
-from shops.models    import Coupon, Shop
-from accounts.models import AccountGuest
-
+from rest_framework.decorators import action, api_view
+from rest_framework.exceptions import NotFound
 from rest_framework.viewsets   import ModelViewSet
 from rest_framework.response   import Response
-from rest_framework.decorators import api_view
+
+from shops.models              import Coupon
+from accounts.models           import AccountGuest
+from .models                   import BusinessForm, Notice, ProposeBusinessForm, ProposeGoodShop
+from .serializers              import (
+    BusinessFormSerializer, CouponManageSerializer, NoticeSerializer, ProposeBusinessSerializer, ProposeGoodShopSerializer
+)
 
 @api_view(['GET','POST','PUT','DELETE'])
 def business_create(request):
@@ -87,3 +86,15 @@ class CouponManageViewSet(ModelViewSet):
             )
 
         return Response(serializer.data)
+
+class ProposeGoodShopViewSet(ModelViewSet):
+    queryset = ProposeGoodShop.objects.all()
+    serializer_class = ProposeGoodShopSerializer
+
+class ProposeBusinessViewSet(ModelViewSet):
+    queryset = ProposeBusinessForm.objects.all()
+    serializer_class = ProposeBusinessSerializer
+
+class NoticeViewSet(ModelViewSet):
+    queryset = Notice.objects.all()
+    serializer_class = NoticeSerializer
