@@ -270,7 +270,6 @@ class ShopListViewSet(ModelViewSet):
             latitude  = location.latitude
             longitude = location.longitude
 
-
         elif type == 'search':
             location  = (self.request.account.searchedLocation.all()
                 .order_by('-searched_time').first()
