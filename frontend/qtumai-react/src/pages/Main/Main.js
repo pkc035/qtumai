@@ -8,6 +8,7 @@ export default function Main() {
   const [mainSlider, setMainSlider] = useState([]);
   const [personalContents, setPersonalContent] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  console.log(setIsLoading);
 
   useEffect(() => {
     fetch("data/mainPageData.json", {

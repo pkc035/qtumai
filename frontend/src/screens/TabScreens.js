@@ -24,29 +24,20 @@ export const MainNavigator = () => {
 
 export const Main = ({ navigation }) => {
   return (
-    <MainContainer>
-      <WebView source={{ uri: 'http://192.168.0.76:3000/' }} />
+    <MainContainer onClick={() => console.log('good')}>
+      {/* <WebView source={{ uri: 'http://192.168.0.76:3000/' }} /> */}
+      <WebView source={{ uri: 'http://10.58.2.159:3000/' }} />
 
-      <FloatingBackground>
-        <FloatingButton
-          position={{ bottom: 80, right: 40 }}
-          navigation={navigation}
-        />
-      </FloatingBackground>
+      <FloatingButton
+        position={{ bottom: 80, right: 40 }}
+        navigation={navigation}
+      />
     </MainContainer>
   );
 };
 
 const MainContainer = styled.View`
   flex: 1;
-`;
-
-const FloatingBackground = styled.View`
-  flex: 1;
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  z-index: 100;
 `;
 
 export const Map = ({ navigation }) => {
@@ -62,7 +53,8 @@ export const Map = ({ navigation }) => {
 export const Like = () => {
   return (
     <Container>
-      <WebView source={{ uri: 'http://192.168.0.76:3000/Detail' }} />
+      {/* <WebView source={{ uri: 'http://192.168.0.76:3000/Detail' }} /> */}
+      <WebView source={{ uri: 'http://10.58.2.159:3000/Detail' }} />
     </Container>
   );
 };

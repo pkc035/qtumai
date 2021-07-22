@@ -38,14 +38,15 @@ export default function DetailModal({ is_subscribe, shop_name }) {
 
 const BlackBackground = styled.div`
   ${({ theme }) => theme.flexSet()}
-  position: absolute;
-  top: -92vh;
+  position: fixed;
+  top: 0;
   height: 0;
   width: 100%;
-  height: 101vh;
+  height: 100vh;
   background-color: #000000a1;
-  z-index: 2;
+  z-index: 10;
 `;
+
 const ModalBox = styled.div`
   ${({ theme }) => theme.flexSet("space-between", "flex-start", "column")}
   width: 90%;

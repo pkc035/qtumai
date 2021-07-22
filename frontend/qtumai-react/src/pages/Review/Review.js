@@ -14,8 +14,9 @@ export default function Review() {
 
   const [oneLineReview, setOneLineReview] = useState("");
   const [previewImage, setPreviewImage] = useState("");
-  const [sendImage, setSendImage] = useState("");
+  // const [sendImage, setSendImage] = useState("");
 
+  console.log(oneLineReview);
   useEffect(() => {
     const scoreArr = [taste, clear, services, mood, price].filter(
       data => data !== 0
@@ -219,11 +220,6 @@ const Form = styled.form`
   ${({ theme }) => theme.flexSet("space-between", "center")};
 `;
 
-const OneLineForm = styled.form`
-  float: right;
-  margin-top: 10px;
-`;
-
 const Label = styled.label`
   ${({ theme }) => theme.flexSet("center", "center")};
   width: 130px;
@@ -257,7 +253,7 @@ const OneLineReview = styled.input.attrs({
   border: 0px;
   border-bottom: 1px solid black;
 `;
-const UploadOneLine = styled.button``;
+
 const SubmitReviewButton = styled.button`
   ${({ theme }) => theme.flexSet("center", "flex-start")};
   position: sticky;

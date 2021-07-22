@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { withRouter } from "react-router-dom";
 import DaumPostcode from "react-daum-postcode";
 import { useAlert } from "react-alert";
-import TermMore from "../TermMore/TermMore";
+// import TermMore from "../TermMore/TermMore";
 
 function Signup(props) {
   const [adress, setAdress] = useState({
@@ -23,7 +23,7 @@ function Signup(props) {
   const [agreedMarketingReceive, setAgreedMarketingReceive] = useState(false);
 
   const alert = useAlert();
-  const { kakao } = window;
+  // const { kakao } = window;
 
   const handleSelectedAll = () => {
     setSelectedAll(!selectedAll);
@@ -40,6 +40,8 @@ function Signup(props) {
     newCheck[id] = !newCheck[id];
     setSelectedArr(newCheck);
   };
+
+  console.log(setAdress);
 
   useEffect(() => {
     const checkedItems = selectedArr.every(list => list);
@@ -179,9 +181,10 @@ function Signup(props) {
   }, [inputBirth]);
 
   const Postcode = data => {
-    let geocoder = new kakao.maps.services.Geocoder();
+    // let geocoder = new kakao.maps.services.Geocoder();
     let fullAddress = data.address;
     let extraAddress = "";
+    console.log(fullAddress);
 
     if (data.addressType === "R") {
       if (data.bname !== "") {
@@ -198,17 +201,17 @@ function Signup(props) {
     newCheck[4] = false;
     setCheck(newCheck);
 
-    geocoder.addressSearch(fullAddress, function (result, status) {
-      if (status === kakao.maps.services.Status.OK) {
-        let coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+    // geocoder.addressSearch(fullAddress, function (result, status) {
+    //   if (status === kakao.maps.services.Status.OK) {
+    //     let coords = new kakao.maps.LatLng(result[0].y, result[0].x);
 
-        setAdress({
-          fullAddress: fullAddress,
-          latitude: coords.La,
-          longitude: coords.Ma,
-        });
-      }
-    });
+    //     setAdress({
+    //       fullAddress: fullAddress,
+    //       latitude: coords.La,
+    //       longitude: coords.Ma,
+    //     });
+    //   }
+    // });
   };
 
   const postCodeStyle = {
@@ -222,7 +225,7 @@ function Signup(props) {
   console.log("이름 :", name);
   console.log("생년월일 :", inputBirth);
   console.log("성별 :", gender === 0 ? "F" : "M");
-  console.log("주소 :", adress.fullAddress,adress.latitude,adress.longitude);
+  console.log("주소 :", adress.fullAddress, adress.latitude, adress.longitude);
   console.log("선택동의 :", agreedMarketingReceive ? "1" : "0");
 
   return (

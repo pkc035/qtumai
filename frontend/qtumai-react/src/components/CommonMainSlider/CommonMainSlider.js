@@ -3,7 +3,6 @@ import Slider from "react-slick";
 import styled from "styled-components";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import Detail from "../../pages/Detail/Detail";
 
 export default function CommonMainSlider({
   mainSlider,
@@ -130,8 +129,4 @@ const ImageSubTitle = styled.div`
   font-weight: bold;
   line-height: 1.2;
   color: white;
-`;
-
-const MainStoreWrap = styled.div`
-  padding: 40px 0 0 20px;
 `;

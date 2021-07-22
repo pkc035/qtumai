@@ -1,0 +1,19 @@
+{
+  "count": 1,
+  "next": null,
+  "previous": null,
+  "results": [
+    {
+      "id": 1,
+      "list_name": "비 올 때 여기"
+    },
+    {
+      "id": 2,
+      "list_name": "센치 때 여기"
+    },
+    {
+      "id": 3,
+      "list_name": "남친이랑 갈 곳"
+    }
+  ]
+}

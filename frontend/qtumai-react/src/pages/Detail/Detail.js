@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 // import { customFetch } from "../../utils/customFetch";
 import CommonMainSlider from "../../components/CommonMainSlider/CommonMainSlider";
 import CircularProgressBar from "../../components/CirclePercentageBar/CirclePercentageBar";
+import SlideModal from "../../components/SlideModal/SlideModal";
 import DetailModal from "../../components/DetailModal/DetailModal";
 import DetailYesNoModal from "../../components/DetailYesNoModal/DetailYesNoModal";
 import ProgressBar from "../../components/ProgressBar/ProgressBar";
@@ -11,9 +12,14 @@ import styled from "styled-components";
 export default function Detail() {
   const [detailData, setDetailData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+
   const [isBoss, setIsBoss] = useState(false);
+  const [isLike, setIsLike] = useState(false);
+  const [isSlideModal, setIsSlideModal] = useState(false);
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [isOpenYesNoModal, setIsOpenYesNoModal] = useState(false);
+
+  // const [islike, setIslike] = useState(false);
 
   useEffect(() => {
     fetch("data/detailPageData.json", {
@@ -26,6 +32,7 @@ export default function Detail() {
       });
   }, []);
 
+  console.log(detailData);
   const STARSCORE = {
     size: 20,
     value: 2.5,
@@ -50,13 +57,15 @@ export default function Detail() {
   //     .then(data => console.log(data));
   // }, [])
 
-  console.log(detailData);
-
   const { coupon, is_subscribe, shop_name, shop_description } = detailData;
   return (
     <div>
       {detailData.length !== 0 && (
         <DetailContainer>
+          <Hearbutton
+            src={isLike ? "/images/heartFill.svg" : "/images/heart.svg"}
+            onClick={() => setIsSlideModal(true)}
+          />
           {isLoading && (
             <CommonMainSlider isLoading={isLoading} detailSlider={detailData} />
           )}
@@ -96,6 +105,7 @@ export default function Detail() {
                   <ButtonBox
                     onClick={() => {
                       setIsBoss(true);
+                      setIsOpenYesNoModal(!isOpenYesNoModal);
                     }}
                   >
                     <CircleIcon />
@@ -105,7 +115,11 @@ export default function Detail() {
                     <CircleIcon />
                     <ButtonTitle>추천 받지 않기</ButtonTitle>
                   </ButtonBox>
-                  <ButtonBox>
+                  <ButtonBox
+                    onClick={() => {
+                      setIsSlideModal(!isSlideModal);
+                    }}
+                  >
                     <CircleIcon />
                     <ButtonTitle>가게 정보 수정</ButtonTitle>
                   </ButtonBox>
@@ -130,12 +144,6 @@ export default function Detail() {
           {coupon ? (
             <VisitButton onClick={() => setIsOpenModal(!isOpenModal)}>
               방문 체크하기
-              {isOpenModal && (
-                <DetailModal
-                  shop_name={shop_name}
-                  is_subscribe={is_subscribe}
-                />
-              )}
             </VisitButton>
           ) : (
             <BenfitsButton
@@ -148,20 +156,40 @@ export default function Detail() {
               }}
             >
               혜택 사용하기
-              {isOpenModal && (
-                <DetailModal
-                  shop_name={shop_name}
-                  is_subscribe={is_subscribe}
-                />
-              )}
-              {isOpenYesNoModal && <DetailYesNoModal is_subscribe={is_subscribe} />}
             </BenfitsButton>
+          )}
+          {isOpenModal && (
+            <DetailModal shop_name={shop_name} is_subscribe={is_subscribe} />
+          )}
+          {isOpenYesNoModal && (
+            <DetailYesNoModal
+              is_subscribe={is_subscribe}
+              isBoss={isBoss}
+              setIsOpenYesNoModal={setIsOpenYesNoModal}
+            />
+          )}
+          {isSlideModal && (
+            <SlideModal
+              isSlideModal={isSlideModal}
+              setIsSlideModal={setIsSlideModal}
+              isLike={isLike}
+            />
           )}
         </DetailContainer>
       )}
     </div>
   );
 }
+
+const Hearbutton = styled.img`
+  position: absolute;
+  top: 30px;
+  right: 16px;
+  width: 22px;
+  height: 22px;
+  filter: invert(1);
+  z-index: 1000;
+`;
 
 const DetailContainer = styled.div`
   position: relative;
@@ -183,14 +211,16 @@ const RestaurantInfoBox = styled.div`
   top: 350px;
   display: flex;
   width: 90%;
-  border: 1px solid gray;
+  border: 1px solid #00000026;
   border-radius: 5px;
+  box-shadow: 0px 1px 1px 1px #00000014;
 `;
 
 const RestaurantInfo = styled.div`
   flex: 3;
   padding: 20px 0 20px 20px;
   background-color: #fffffff9;
+  border-radius: 5px 0 0 5px;
 `;
 
 const Stars = styled(ReactStars)``;
@@ -221,6 +251,7 @@ const ShareButton = styled.div``;
 const Discount = styled.div`
   ${({ theme }) => theme.flexSet()};
   flex: 1.2;
+  border-radius: 0 5px 5px 0;
   background-color: ${({ theme }) => theme.red};
 `;
 
@@ -236,14 +267,14 @@ const AddressBoxContainer = styled.section`
 
 const Title = styled.div`
   font-size: 16px;
-  font-weight: 700;
+  font-weight: 600;
   margin: 5px 0;
 `;
 
 const AddressMap = styled.div`
   width: 100%;
   height: 160px;
-  border: 1px solid black;
+  border: 1px solid #00000026;
   border-radius: 5px;
 `;
 
@@ -259,9 +290,9 @@ const Context = styled.span`
   font-size: 14px;
 `;
 
-const MatchingPercentage = styled.span``;
+// const MatchingPercentage = styled.span``;
 
-const CrowdedPercentage = styled.span``;
+// const CrowdedPercentage = styled.span``;
 
 const ButtonsBox = styled.span`
   ${({ theme }) => theme.flexSet()};
@@ -276,7 +307,7 @@ const ButtonBox = styled.span`
 const CircleIcon = styled.span`
   width: 54px;
   height: 54px;
-  border: 1px solid black;
+  border: 1px solid #00000026;
   border-radius: 100px;
 `;
 
@@ -289,10 +320,9 @@ const ReviewContainer = styled.section``;
 
 const ReviewBox = styled.div`
   ${({ theme }) => theme.flexSet("center", "flex-start", "column")};
-
   width: 100%;
   height: 90px;
-  border: 1px solid black;
+  border: 1px solid #00000026;
   border-radius: 3px;
   padding: 16px;
 `;
