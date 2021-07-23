@@ -17,11 +17,11 @@ from django.contrib.auth import get_user_model
 from project.settings.local import SECRET_KEY
 from random           import randint
 from shops.models     import Shop, LikeShopAccounts, Menu
-from .models          import AccountGuest, MyLikeList, Authentication, MyLikeListShop, Preference
+from .models          import AccountGuest, FunData, MyLikeList, Authentication, MyLikeListShop, Preference
 from .serializers     import (
     AccountGuestSerializer, FunDataSerializer, MyLikeListSerializer, MyLikeListShopSerializer, 
-    PreferenceSerializer, CheckUsernameSerializer, LivingAreaUpdateSerializer, AccountGuestUpdateSerializer,
-    PreferenceUpdateSerializer, LivingAreaSreialzer, SimpleAccountGuestSerializer
+    CheckUsernameSerializer, LivingAreaUpdateSerializer, AccountGuestUpdateSerializer,
+    LivingAreaSreialzer, SimpleAccountGuestSerializer
     )
 
 class CheckUsernameAPIView(APIView):
@@ -52,52 +52,6 @@ class AccountGuestAPIView(APIView):
             account_guest_id = AccountGuest.objects.get(username=request.data['username']).id
             return Response({'account_guest_id' : account_guest_id},status=status.HTTP_201_CREATED)
         return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
-
-
-class CreatePreferenceAPIView(APIView):
-    # 유저 회원가입 시 입력 정보 한 번에 저장
-    def post(self, request):
-        norm_data, area_data, pref_data = request.data['normal_data'], request.data['area_data'], request.data['pref_data']
-        norm_serializer = SimpleAccountGuestSerializer(data=norm_data)
-        area_serializer = LivingAreaSreialzer(data=area_data)
-        pref_serializer = PreferenceSerializer(data=pref_data)
-        if norm_serializer.is_valid():
-            norm_serializer.create(
-                validated_data = norm_data
-            )
-        print('norm ok=======================')
-
-        if area_serializer.is_valid():
-            area_serializer.create(
-                area_name = area_data['area_name'],
-                latitude = area_data['latitude'],
-                longitude = area_data['longitude']
-            )
-        print('area ok=======================')
-
-        if pref_serializer.is_valid():
-            print('valid_: ', pref_data)
-            pref_serializer.create(
-                validated_data = pref_data
-            )
-            print('pref ok=======================')
-            print('pref_data: ', pref_serializer.data)
-            
-            
-            return Response(pref_serializer.data, status=status.HTTP_201_CREATED)
-        return Response(pref_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-class UpdatePreferenceAPIView(APIView):
-    def post(self, request):
-        serializer = PreferenceSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.update(
-                validated_data=request.data
-            )
-            return Response(serializer.data,status=status.HTTP_201_CREATED)
-        return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
-
 
 class NaverLogInView(View):
     def get(self, request):
@@ -247,57 +201,104 @@ def dislikeshop(request):
         return Response({'message': 'dislike shop added'})
     else:
         user.dislike_shop.remove(shop)
-        return Response({'message': 'dislike shop deleted'})
+        return Response({'message':'dislike shop deleted'})
 
 
 class MyLikeListViewSet(ModelViewSet):
     serializer_class = MyLikeListSerializer
 
-    def get_queryset(self, request):
-        mylikelists = MyLikeList.objects.filter(account_guest_id=request.user)
-        return mylikelists
+    def get_queryset(request):
+        # mylikelists = MyLikeList.objects.filter(account_guest_id=request.user)
+        mylikelists = MyLikeList.objects.filter(account_guest_id=1)
     
+        return mylikelists
+
+    # def list(self, request):
+    #     # mylikelists = MyLikeList.objects.filter(account_guest_id=request.user)
+    #     mylikelists = MyLikeList.objects.filter(account_guest_id=1)
+    #     serializer  = self.get_serializer(mylikelists, many=True) 
+    
+    #     return Response(serializer.data)
+
     def create(self, request):
-        user       = get_object_or_404(AccountGuest, pk=request.data['account_guest_id'])
+        # user       = get_object_or_404(AccountGuest, pk=request.user)
+        user       = get_object_or_404(AccountGuest, pk=1)
         serializer = self.get_serializer(data=request.data)        
+        
         if serializer.is_valid(raise_exception=True):
             serializer.save(account_guest=user)
+            
             return Response({'message':'MylikeList Created'})    
+        
         return Response({'message':'MylikeList Created Fail'})
     
     @action(detail=True, methods=['PUT'])
     def list_update(self, request, pk):
         mylikelist = get_object_or_404(MyLikeList, pk=pk)
         serializer = self.get_serializer(data=request.data, instance=mylikelist)        
+        
         if serializer.is_valid(raise_exception=True):
             serializer.save()
+        
             return Response({'message':'MylikeList Updated'})    
+        
         return Response({'message':'MylikeList Updated Fail'})
     
+    @transaction.atomic
     @action(detail=True, methods=['DELETE'])
     def list_delete(self, request, pk):
         mylikelist = get_object_or_404(MyLikeList, pk=pk)
+        likeshop   = LikeShopAccounts.objects.filter(
+            Q(guest_id=1)|Q(shop_id=mylikelist.mylikelistshop_set.all().first().shop_id)) 
+        mylikelist.mylikelistshop_set.all().delete()
+        likeshop.delete()
         mylikelist.delete()
+
         return Response({'message':'MyLikeList Deleted'}) 
 
 
 class MyLikeListShopViewSet(ModelViewSet):
     serializer_class = MyLikeListShopSerializer
 
+    #mylist 1개 선택
+    # @transaction.atomic
+    # def create(self, request):
+    #     mylist = get_object_or_404(MyLikeList, pk=request.data['mylist_id'])
+    #     shop   = get_object_or_404(Shop, pk=request.data['shop_id'])
+    #     user   = get_object_or_404(get_user_model(),pk=1)
+        
+    #     serializer = self.get_serializer(data = request.data)
+        
+    #     if serializer.is_valid(raise_exception=True):
+    #         serializer.save(my_like_list=mylist, shop=shop)
+    #         LikeShopAccounts.objects.create(shop=shop, guest=user)
+    #         shop.like_count += 1
+    #         shop.save()
+
+    #         return Response({'message':'MylikeShop Created'})    
+
+    #     return Response({'message':'MylikeShop Created Fail'})
+
+    #Mylist 여러개
     @transaction.atomic
     def create(self, request):
-        mylist = get_object_or_404(MyLikeList, pk=request.data['mylist_id'])
-        shop   = get_object_or_404(Shop, pk=request.data['shop_id'])
-        user   = get_object_or_404(get_user_model(),pk=1)
-        serializer = self.get_serializer(data = request.data)
-        if serializer.is_valid(raise_exception=True):
-            serializer.save(my_like_list=mylist, shop=shop)
-            LikeShopAccounts.objects.create(shop=shop, guest=user)
-            shop.like_count += 1
-            shop.save()
-            return Response({'message':'MylikeShop Created'})    
-        return Response({'message':'MylikeShop Created Fail'})
-    
+        user    = get_object_or_404(get_user_model(),pk=1)
+        shop    = get_object_or_404(Shop, pk=request.data['shop_id'])
+        mylists = request.data['mylist_id']
+        
+        for mylist_id in mylists:
+            request.data['mylist_id'] = mylist_id
+            serializer = self.get_serializer(data=request.data)
+
+            if serializer.is_valid(raise_exception=True):
+                serializer.save(my_like_list_id=mylist_id, shop=shop)
+                LikeShopAccounts.objects.create(shop=shop, guest=user)
+
+        shop.like_count += 1
+        shop.save()
+
+        return Response({'message':'MylikeShop Created'})    
+
     @transaction.atomic
     @action(detail=True, methods=['DELETE'])
     def like_shop_delete(self, request, pk):
@@ -309,6 +310,7 @@ class MyLikeListShopViewSet(ModelViewSet):
         likeshop.delete()
         shop.like_count -= 1
         shop.save()
+        
         return Response({'message':'MyLikeListShop Deleted'})
 
 @transaction.atomic
@@ -329,7 +331,6 @@ def likeshop(request):
         shop.save()
         return Response({'message':'like shop deleted'})
 
-
 class FunDataViewSet(ModelViewSet):
     serializer_class = FunDataSerializer
 
@@ -337,39 +338,92 @@ class FunDataViewSet(ModelViewSet):
         # user = get_object_or_404(get_user_model(), pk=request.user)
         user       = get_object_or_404(get_user_model(), pk=1) 
         menu       = get_object_or_404(Menu, pk=request.data['menu_id'])
-        serializer = self.get_serializer(data=request.data)
+        fundata    = FunData.objects.filter(Q(account_guest=user)|Q(menu=menu))
+        
+        if not fundata.exists():
+            serializer = self.get_serializer(data=request.data)
 
-        if serializer.is_valid(raise_exception=True):
-            serializer.save(menu=menu)
-
-            print(dir(serializer.instance.account_guest))
-            print(serializer.instance.account_guest.add(guest=user))
-            
-            return Response({'message':'Fun Created'})
-
-        return Response({'message':'Fun Create Fail'})
-
-@api_view(['PATCH'])
-def update_account_guest(request):
-    try:
-        preference    = Preference.objects.get(account_guest=request.account)
-
-        if request.data.get('is_account_updated') == 'True':
-            serializer = AccountGuestUpdateSerializer(data=request.data)
             if serializer.is_valid(raise_exception=True):
-                serializer.update(request.account, request.data)
+                serializer.save(menu=menu, account_guest=user)
+                serializer.instance.account_guest.fun_data_count += 1
+                serializer.instance.account_guest.save()
+            
+                return Response({'message':'Fun Created'})
+
+            return Response({'message':'Fun Create Fail'})
+
+        else:
+            serializer = self.get_serializer(data=request.data, instance=fundata.first())
+            
+            if serializer.is_valid(raise_exception=True):
+                serializer.save()
+
+                return Response({'message':'Fun Updated'})
+
+            return Response({'message':'Fun Update Fail'})    
+
+class CreatePreferenceAPIView(APIView):
+    def post(self, request):
+        norm_data, area_data, pref_data = request.data['normal_data'], request.data['area_data'], request.data['pref_data']
+        norm_serializer = SimpleAccountGuestSerializer(data=norm_data)
+        area_serializer = LivingAreaSreialzer(data=area_data)
+        pref_serializer = PreferenceSerializer(data=pref_data)
+        if norm_serializer.is_valid():
+            norm_serializer.create(
+                validated_data = norm_data
+            )
+        print('norm ok=======================')
+
+        if area_serializer.is_valid():
+            area_serializer.create(
+                area_name = area_data['area_name'],
+                latitude = area_data['latitude'],
+                longitude = area_data['longitude']
+            )
+        print('area ok=======================')
+
+        if pref_serializer.is_valid():
+            print('valid_: ', pref_data)
+            pref_serializer.create(
+                validated_data = pref_data
+            )
+            print('pref ok=======================')
+
+            return Response(pref_serializer.data, status=status.HTTP_201_CREATED)
+        return Response(pref_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class AccountGuestUpdateViewSet(ModelViewSet):
+    def list(self, request):
+        preference = get_object_or_404(Preference,account_guest=request.account)
+        
+        serializer_account    = AccountGuestUpdateSerializer(request.account, many=False)
+        serializer_preference = PreferenceSerializer(preference, many=False)
+        serializer_livingarea = LivingAreaUpdateSerializer(request.account.living_area, many=False)
+
+        result = {
+            'account'    : serializer_account.data,
+            'preference' : serializer_preference.data,
+            'livingarea' : serializer_livingarea.data
+        }
+
+        return Response(result)
+    
+    def partial_update(self, request):
+        preference    = get_object_or_404(Preference,account_guest=request.account)
+
+        if request.data.get('is_account_updated') ==  'True':
+            serializer = AccountGuestUpdateSerializer(request.account, data=request.data, partial=True)
+            if serializer.is_valid(raise_exception=True):
+                serializer.save()
 
         if request.data.get('is_preference_updated') == 'True':            
-            serializer = PreferenceUpdateSerializer(data=request.data)
+            serializer = PreferenceSerializer(preference, data=request.data, partial=True)
             if serializer.is_valid(raise_exception=True):
-                serializer.update(instance=preference, data=request.data)
+                serializer.save()
 
         if request.data.get('is_living_area_updated') == 'True':
-            serializer = LivingAreaUpdateSerializer(data=request.data)
+            serializer = LivingAreaUpdateSerializer(request.account.living_area, data=request.data, partial=True)
             if serializer.is_valid(raise_exception=True):
-                serializer.update_or_create(data=request.data, account=request.account)        
+                serializer.save(account=request.account)        
 
-        return Response({'message': 'Success'})
-    
-    except Preference.DoesNotExist:
-        return Response({'message': 'Preference Does Not Exist'}, status=400)
+        return Response({'message' : 'SUCCESS'})

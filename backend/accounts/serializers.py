@@ -1,12 +1,14 @@
+from shops.serializers import ShopDetailSerializer
 from django.contrib.auth import models
 from django.db.models import F, fields
 from django.db.models import Q
+from django.db.models import query
+from django.db.models.query import InstanceCheckMeta
 
 from rest_framework import serializers
 from .models      import AccountGuest, FunData, LivingArea, MyLikeList, MyLikeListShop, LivingArea, Preference
 
 class LivingAreaSreialzer(serializers.ModelSerializer):
-
     class Meta:
         model = LivingArea
         fields = ['id', 'area_name', 'people_count','latitude','longitude']
@@ -52,7 +54,6 @@ class CheckUsernameSerializer(serializers.ModelSerializer) :
     def check(self, validated_data):
         if AccountGuest.objects.filter(username=validated_data['username']).exists() == False:
             return validated_data
-
 
 class SimpleAccountGuestSerializer(serializers.ModelSerializer):
     class Meta:
@@ -140,20 +141,34 @@ class AccountGuestSerializer(serializers.ModelSerializer):
         )
         return validated_data
 
-class MyLikeListSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = MyLikeList
-        fields = ['id', 'list_name']
-
 class MyLikeListShopSerializer(serializers.ModelSerializer):
     class Meta:
         model = MyLikeListShop
         fields = ['id', 'shop']
 
+class MyLikeListSerializer(serializers.ModelSerializer):
+    mylikeshop_list = serializers.SerializerMethodField()
+    
+    class Meta:
+        model = MyLikeList
+        fields = ['id', 'list_name', 'mylikeshop_list']
+
+    def get_mylikeshop_list(self,obj):
+        mylikeshops = obj.mylikelistshop_set.all()
+        shops_data  = [{
+            "id"             : mylikeshop.shop.id,
+            "shop_name"      : mylikeshop.shop.shop_name,
+            "coupon_content" : [coupon.coupon_content for coupon in mylikeshop.shop.coupon_set.all()]
+        } for mylikeshop in mylikeshops]
+
+        return shops_data
+    
+
 class FunDataSerializer(serializers.ModelSerializer):
     class Meta:
         model = FunData
         fields = ['account_guest', 'menu', 'score']
+
     # def validate(self, data):
     #     non_alpha = set([s for s in "!@#$%^&*()|-=_+\[]{};':\",./?><"])
     #     error     = dict({'username' : [],'number':[]})
@@ -176,100 +191,8 @@ class FunDataSerializer(serializers.ModelSerializer):
 
     #     return error
 
-    
 
-class PreferenceSerializer(serializers.ModelSerializer):
-    # account_guest = serializers.PrimaryKeyRelatedField(many=True)
     # account_guest = AccountGuestSerializer()
-    group_num = serializers.SerializerMethodField(method_name='get_group_num')
-    
-    def get_group_num(self, obj):
-        print('get_group_num')
-        print(type(obj))
-        group_num = obj.get('taste_service') * 512 + obj.get('taste_cleanliness') * 256 + obj.get('taste_vibe') * 128 + obj.get('taste_price') * 64
-        + obj.get('service_cleanliness') * 32 + obj.get('service_vibe') * 16 + obj.get('service_price') * 8
-        + obj.get('cleanliness_vibe') * 4 + obj.get('cleanliness_price') * 2 + obj.get('vibe_price')
-        print('group_num: ', group_num)
-        print(type(group_num))
-        return group_num
-    
-    class Meta:
-        model = Preference
-        fields = [
-            'account_guest',
-            'taste_service',
-            'taste_cleanliness',
-            'taste_vibe',
-            'taste_price',
-            'service_cleanliness',
-            'service_vibe',
-            'service_price',
-            'cleanliness_vibe',
-            'cleanliness_price',
-            'vibe_price',
-            'group_num'
-        ]
-
-        # extra_kwargs = {'living_area':{'write_only':True}}
-    
-    def create(self, validated_data):
-        print('create')
-        # preference = Preference.objects.filter(account_guest)
-        print('valid_: ', validated_data)
-        Preference.objects.bulk_update()
-        Preference.objects.create(
-            # account_guest_id = validated_data['account_guest_id'],
-            taste_service = validated_data['taste_service'], 
-            taste_cleanliness= validated_data['taste_cleanliness'],
-            taste_vibe= validated_data['taste_vibe'],
-            taste_price= validated_data['taste_price'],
-            service_cleanliness= validated_data['service_cleanliness'],
-            service_vibe= validated_data['service_vibe'],
-            service_price= validated_data['service_price'],
-            cleanliness_vibe= validated_data['cleanliness_vibe'],
-            cleanliness_price= validated_data['cleanliness_price'],
-            vibe_price= validated_data['vibe_price'],
-            # group_num = self.group_num
-        )
-        # Preference.objects.update(
-        #     group_num = self.group_num
-        # )
-        return validated_data
-
-    def update(self, validated_data):
-
-        Preference.objects.update(
-            account_guest_id = validated_data['account_guest'],
-            taste_service = validated_data['taste_service'], 
-            taste_cleanliness= validated_data['taste_cleanliness'],
-            taste_vibe= validated_data['taste_vibe'],
-            taste_price= validated_data['taste_price'],
-            service_cleanliness= validated_data['service_cleanliness'],
-            service_vibe= validated_data['service_vibe'],
-            service_price= validated_data['service_price'],
-            cleanliness_vibe= validated_data['cleanliness_vibe'],
-            cleanliness_price= validated_data['cleanliness_price'],
-            vibe_price= validated_data['vibe_price'],
-            group_num = validated_data['group_num']
-        )
-        return validated_data
-
-        # fields = (
-        #     'account_guest',
-        #     'taste_service', 
-        #     'taste_cleanliness',
-        #     'taste_vibe',
-        #     'taste_price',
-        #     'service_cleanliness',
-        #     'service_vibe',
-        #     'service_price',
-        #     'cleanliness_vibe',
-        #     'cleanliness_price',
-        #     'vibe_price'
-        #     )
-        
-
-
 
     # def validate(self, data):
     #     non_alpha = set([s for s in "!@#$%^&*()|-=_+\[]{};':\",./?><"])
@@ -287,54 +210,90 @@ class PreferenceSerializer(serializers.ModelSerializer):
 
     #     return error
 
-class PreferenceUpdateSerializer(serializers.ModelSerializer):
+
+class PreferenceSerializer(serializers.ModelSerializer):
+    account_guest_id = serializers.PrimaryKeyRelatedField(queryset=AccountGuest.objects.all())
+
     class Meta:
-        model          = Preference
-        fields         = []
-        optianl_fields = '__all__'
+        model = Preference
+        fields = [
+            'id',
+            'account_guest_id',
+            'taste_service',
+            'taste_cleanliness',
+            'taste_vibe',
+            'taste_price',
+            'service_cleanliness',
+            'service_vibe',
+            'service_price',
+            'cleanliness_vibe',
+            'cleanliness_price',
+            'vibe_price',
+            ]
 
-    def update(self, instance, data):
-        instance.taste_service       = data.get('taste_service', F('taste_service'))
-        instance.taste_cleanliness   = data.get('taste_cleanliness', F('taste_cleanliness'))
-        instance.taste_vibe          = data.get('taste_vibe', F('taste_vibe'))
-        instance.taste_price         = data.get('taste_price', F('taste_price'))
-        instance.service_cleanliness = data.get('service_cleanliness', F('service_cleanliness'))
-        instance.service_vibe        = data.get('service_vibe', F('service_vibe'))
-        instance.service_price       = data.get('service_price', F('service_price'))
-        instance.cleanliness_vibe    = data.get('cleanliness_vibe', F('cleanliness_vibe'))
-        instance.cleanliness_price   = data.get('cleanliness_price', F('cleanliness_price'))
-        instance.vibe_price          = data.get('vibe_price', F('vibe_price'))        
-        instance.save()
-        return instance
-
-class AccountGuestUpdateSerializer(serializers.ModelSerializer):
-    class Meta:
-        model           = AccountGuest
-        fields          = []
-        optional_fields = ['username', 'phone_number']
-
-    def update(self, instance, data):
-        instance.phone_number = data.get('phone_number', F('phone_number'))
-        instance.username     = data.get('usernamee', F('username'))
-        instance.save()
-        return instance
+        # extra_kwargs = {'living_area':{'write_only':True}}
     
+    def create(self, validated_data):
+        preference = Preference.objects.create(
+            account_guest = validated_data['account_guest_id'],
+            taste_service = validated_data['taste_service'], 
+            taste_cleanliness= validated_data['taste_cleanliness'],
+            taste_vibe= validated_data['taste_vibe'],
+            taste_price= validated_data['taste_price'],
+            service_cleanliness= validated_data['service_cleanliness'],
+            service_vibe= validated_data['service_vibe'],
+            service_price= validated_data['service_price'],
+            cleanliness_vibe= validated_data['cleanliness_vibe'],
+            cleanliness_price= validated_data['cleanliness_price'],
+            vibe_price= validated_data['vibe_price'],
+            # group_num = self.group_num
+        )
+        
+        return preference
+
+    def update(self, instance, validated_data):
+        instance.taste_service       = validated_data.get('taste_service')
+        instance.taste_cleanliness   = validated_data.get('taste_cleanliness')
+        instance.taste_vibe          = validated_data.get('taste_vibe')
+        instance.taste_price         = validated_data.get('taste_price')
+        instance.service_cleanliness = validated_data.get('service_cleanliness')
+        instance.service_vibe        = validated_data.get('service_vibe')
+        instance.service_price       = validated_data.get('service_price')
+        instance.cleanliness_vibe    = validated_data.get('cleanliness_vibe')
+        instance.cleanliness_price   = validated_data.get('cleanliness_price')
+        instance.vibe_price          = validated_data.get('vibe_price')
+        instance.save()
+
+        return instance
+
 class LivingAreaUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model  = LivingArea
         fields = '__all__'
 
-    def update_or_create(self, data, account):
-        area, created = LivingArea.objects.update_or_create(
-            living_area = data['living_area'],
+    def update(self, instance, validated_data):
+        account = validated_data.pop('account')
+        instance, created = LivingArea.objects.update_or_create(
+            area_name = validated_data['area_name'],
             defaults= {
-                'living_area' : data['living_area'],
-                'latitude' : data['latitude'],
-                'longitude' : data['longitude']
+                'area_name' : validated_data['area_name'],
+                'latitude'  : validated_data['latitude'],
+                'longitude' : validated_data['longitude']
             }
         )
-        area.people_count = area.accountguest_set.count()
-        area.save()
-        account.living_area = area
+        account.living_area = instance
         account.save()
-        return account
+        instance.people_count = instance.accountguest_set.count()
+        instance.save()
+        
+        return instance
+
+class AccountGuestUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model  = AccountGuest
+        fields = ['profile_img_path']
+
+    def update(self, instance, validated_data):
+        instance.profile_img_path = validated_data.get('profile_img_path')
+
+        return instance

@@ -1,13 +1,14 @@
 from django.db                 import transaction
 from django.db.models          import Q, When, Value, Case
+from django.db.models.query    import Prefetch
 from django.shortcuts          import get_object_or_404
+from django.contrib.auth       import get_user_model
 
 from rest_framework.viewsets    import ModelViewSet
 from rest_framework.decorators  import action, api_view
 from rest_framework.response    import Response
 from rest_framework.pagination  import PageNumberPagination
 
-from re                        import A
 from random                    import seed, sample
 from datetime                  import date
 from .models                   import Shop, Category, Review, ReportShop, ReportReview, Menu
@@ -103,7 +104,7 @@ def review_create(request):
 
     else:
         shop = Shop.objects.get(id=request.data['shop_id'])
-        user = AccountGuest.objects.get(id=request.user)
+        user = AccountGuest.objects.get(id=1)
         serializer = ReviewSerializer(data=request.data)
         
         if serializer.is_valid():
@@ -149,10 +150,10 @@ def report_shop(request):
 
     else:
         shop = Shop.objects.get(id=request.data['shop_id'])
-        user = AccountGuest.objects.get(id=request.user)
+        user = get_object_or_404(get_user_model(), pk=1)
         serializer = ReportShopSerializer(data=request.data)
         
-        if not user.guestReport.filter(shop=shop, guest=user):
+        if not user.guestReportShop.filter(shop=shop, guest=user):
             if serializer.is_valid(raise_exception=True):
                 serializer.save(shop=shop, guest=user)
         
@@ -270,7 +271,6 @@ class ShopListViewSet(ModelViewSet):
             latitude  = location.latitude
             longitude = location.longitude
 
-
         elif type == 'search':
             location  = (self.request.account.searchedLocation.all()
                 .order_by('-searched_time').first()
@@ -346,9 +346,13 @@ class ShopVisitedViewSet(ModelViewSet):
         queryset = (
             Shop.objects
             .filter(userVisitedStore=self.request.account)
-            .prefetch_related('shopimage_set', 'userVisitedStore', 'visitedshop_set')
+            .prefetch_related(
+                'shopimage_set', 'visitedshop_set',
+                Prefetch('review_set', queryset=Review.objects.filter(guest=self.request.account))
+            )
             .order_by('-visitedshop__visited_time')
-        )     
+        )
+
         return queryset
 
 # # menu_name,shop_name, category_name 검색 결과를 한 배열에 return 할 경우

@@ -3,10 +3,16 @@ from django.urls import path
 from rest_framework.routers import DefaultRouter
 
 from .views import (
-    FunDataViewSet, KakaoLogInView, GoogleLoginView, NaverLogInView, MyLikeListViewSet, MyLikeListShopViewSet,
+    AccountGuestUpdateViewSet, FunDataViewSet, KakaoLogInView, GoogleLoginView, NaverLogInView, MyLikeListViewSet, MyLikeListShopViewSet,
     AccountGuestAPIView, SmsSendView, SMSVerificationView, CreatePreferenceAPIView, CheckUsernameAPIView, 
-    dislikeshop, likeshop, update_account_guest
+    dislikeshop, likeshop
     )
+
+accountguest_list = AccountGuestUpdateViewSet.as_view({
+    'get'  : 'list',
+    'patch': 'partial_update'
+})
+
 
 router = DefaultRouter(trailing_slash=True)
 # router.register(r"accounts", views.UserViewSet, basename="accounts")
@@ -27,6 +33,5 @@ urlpatterns = [
     path('username-check/',CheckUsernameAPIView.as_view()),
     path('preference',CreatePreferenceAPIView.as_view()),
     path('check-sms/',SMSVerificationView.as_view()),
-    path('account-update', update_account_guest)
-    
+    path('account', accountguest_list, name='account')    
 ] + router.urls

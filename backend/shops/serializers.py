@@ -4,7 +4,7 @@ from django.db.models    import F
 from rest_framework      import serializers
 
 from accounts.models     import SearchedLocation, SearchedPeopleThrough, VisitedShop
-from .models             import ReportShop, ReportReview, Review, Shop, ShopImage, ThemeKeyword, Coupon, Menu
+from .models             import OpenTime, ReportShop, ReportReview, Review, Shop, ShopImage, ThemeKeyword, Coupon, Menu
 
 class CouponSerializer(serializers.ModelSerializer):
     class Meta:
@@ -14,6 +14,11 @@ class CouponSerializer(serializers.ModelSerializer):
     def to_representation(self, instance):
         row = super().to_representation(instance)
         return row['coupon_content']
+
+class OpenTimeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = OpenTime
+        fields = ['open_time']
 
 class ThemeKeywordSerializer(serializers.ModelSerializer):
     class Meta:
@@ -38,9 +43,14 @@ class VisitedShopSerializer(serializers.ModelSerializer):
         model = VisitedShop
         fields = ['visited_time']
 
+class ReviewIdSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Review
+        fields = ['id']
+
     def to_representation(self, instance):
         row = super().to_representation(instance)
-        return row['visited_time']
+        return row['id']
 
 class ShopListSerializer(serializers.ModelSerializer):
     shopimage_set = ShopImageSerializer(many=True, read_only=True)
@@ -60,44 +70,25 @@ class ShopRecommendSerializer(ShopListSerializer):
         fields = ShopListSerializer.Meta.fields + [
             'shopThemeKeyword', 'coupon_set'
         ]
-class ShopImageSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = ShopImage
-        fields = '__all__'
 
 class ShopVisitedSerializer(ShopListSerializer):
     visitedshop_set = VisitedShopSerializer(many=True, read_only=True)
+    review_set = ReviewIdSerializer(many=True, read_only=True)
+    is_review = serializers.SerializerMethodField()
 
     class Meta:
         model = Shop
         fields = ShopListSerializer.Meta.fields + [
-            'visitedshop_set'
+            'visitedshop_set',
+            'review_set',
+            'is_review'
         ]
-
-class ShopDetailSerializer(serializers.ModelSerializer):
-    shop_image_list = serializers.SerializerMethodField()
-    shop_status = serializers.SerializerMethodField()
-
-    class Meta:
-        model = Shop
-        fields = '__all__'
-
-    def get_shop_image_list(self,obj):
-        shopimages = obj.shopimage_set.all()
-        images = [shop.img_url for shop in shopimages]
-        return images
     
-    def get_shop_status(self,obj):
-        user = self.context['request'].user
-        likeshop = obj.likeshopaccounts_set.filter(guest_id=1)
-        dislikeshop = obj.dislikeShop.filter(id=1)
-        result = {
-            'like_status' : True if likeshop else False,
-            'dislike_status' : True if dislikeshop else False
-        }
+    def get_is_review(self, obj):
+        if obj.review_set.exists():
+            return True
+        return False
 
-        return result
-    
 class ReviewSerializer(serializers.ModelSerializer):
     username = serializers.SerializerMethodField()
     class Meta:
@@ -105,10 +96,50 @@ class ReviewSerializer(serializers.ModelSerializer):
         fields = '__all__'
         
     def get_username(self,obj):
-        user = get_user_model().objects.get(id=obj.user_id)
-
+        # user = get_user_model().objects.get(id=obj.user_id)
+        user = get_user_model().objects.get(id=1)
+        
         return user.username
 
+class ShopDetailSerializer(serializers.ModelSerializer):
+    shop_image_list = serializers.SerializerMethodField()
+    shop_status     = serializers.SerializerMethodField()
+    shop_menu       = serializers.SerializerMethodField()
+    coupon_set      = CouponSerializer(many=True)
+    opentime_set    = OpenTimeSerializer(many=True)
+    review_set      = ReviewSerializer(many=True)
+
+    class Meta:
+        model = Shop
+        fields = '__all__'
+
+    def get_shop_image_list(self,obj):
+        shopimages = obj.shopimage_set.all()
+        images     = [shop.img_url for shop in shopimages]
+        return images
+    
+    def get_shop_status(self,obj):
+        user        = self.context['request'].user
+        likeshop    = obj.likeshopaccounts_set.filter(guest_id=1)
+        dislikeshop = obj.dislikeShop.filter(id=1)
+        reportshop  = obj.reportShop.filter(guest_id=1)
+        
+        result = {
+            'like_status' : True if likeshop else False,
+            'dislike_status' : True if dislikeshop else False,
+            'report_shop' : True if reportshop else False
+        }
+
+        return result
+    
+    def get_shop_menu(self,obj):
+        menus = [menu.menu_name for menu in obj.menu_set.all() if menu.is_representative]
+
+        if menus:
+            return menus[0]
+
+        return None
+    
 class ReportShopSerializer(serializers.ModelSerializer):
     class Meta:
         model = ReportShop
