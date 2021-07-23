@@ -232,7 +232,7 @@ class PreferenceSerializer(serializers.ModelSerializer):
             ]
 
         # extra_kwargs = {'living_area':{'write_only':True}}
-
+    
     def create(self, validated_data):
         preference = Preference.objects.create(
             account_guest = validated_data['account_guest_id'],
@@ -245,7 +245,8 @@ class PreferenceSerializer(serializers.ModelSerializer):
             service_price= validated_data['service_price'],
             cleanliness_vibe= validated_data['cleanliness_vibe'],
             cleanliness_price= validated_data['cleanliness_price'],
-            vibe_price= validated_data['vibe_price']
+            vibe_price= validated_data['vibe_price'],
+            # group_num = self.group_num
         )
         
         return preference

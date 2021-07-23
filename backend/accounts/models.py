@@ -1,4 +1,5 @@
 from datetime import datetime
+from re import M
 from django.db import models
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser
@@ -100,6 +101,7 @@ class SearchedLocation(models.Model):
     searched_count = models.PositiveIntegerField(default=0)    
     searched_time = models.DateTimeField(auto_now=True)
 
+
 class SearchedMenu(models.Model):
     account_guest = models.ManyToManyField(
         settings.AUTH_USER_MODEL, # 역참조 할 수 있도록 manytomany 사용
@@ -121,6 +123,7 @@ class SearchedStore(models.Model):
     searched_count = models.PositiveIntegerField(default=0)
     searched_time = models.DateTimeField(auto_now=True)
 
+
 class SearchedPeopleThrough(models.Model):
     from_accountguest = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -133,6 +136,7 @@ class SearchedPeopleThrough(models.Model):
         on_delete=CASCADE
     )
     searched_time = models.DateTimeField(auto_now=True)
+
 
 class Preference(models.Model):
     account_guest = models.ForeignKey(
@@ -196,6 +200,7 @@ class ClickData(models.Model):
 class MyLikeList(models.Model):
     account_guest = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
     list_name = models.CharField(max_length=20, blank=True)
+
 
 class MyLikeListShop(models.Model):
     my_like_list = models.ForeignKey(

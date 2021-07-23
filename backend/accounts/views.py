@@ -14,13 +14,13 @@ from django.db.models    import F, Q
 from django.shortcuts    import get_object_or_404, render
 from django.contrib.auth import get_user_model
 
-from project.settings import SECRET_KEY
+from project.settings.local import SECRET_KEY
 from random           import randint
 from shops.models     import Shop, LikeShopAccounts, Menu
 from .models          import AccountGuest, FunData, MyLikeList, Authentication, MyLikeListShop, Preference
 from .serializers     import (
     AccountGuestSerializer, FunDataSerializer, MyLikeListSerializer, MyLikeListShopSerializer, 
-    PreferenceSerializer, CheckUsernameSerializer, LivingAreaUpdateSerializer, AccountGuestUpdateSerializer,
+    CheckUsernameSerializer, LivingAreaUpdateSerializer, AccountGuestUpdateSerializer,
     LivingAreaSreialzer, SimpleAccountGuestSerializer
     )
 
@@ -65,7 +65,7 @@ class NaverLogInView(View):
         
         if AccountGuest.objects.filter(naver_number=naver_number).exists():
             guest       = AccountGuest.objects.get(naver_number=naver_number)
-            encoded_jwt = jwt.encode({'guest_id': guest.id},SECRET_KEY, ALGORITHM)
+            encoded_jwt = jwt.encode({'guest_id': guest.id}, SECRET_KEY, ALGORITHM)
             return JsonResponse({"token": encoded_jwt},status=200)
 
         else:
