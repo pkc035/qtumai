@@ -74,13 +74,20 @@ class ShopRecommendSerializer(ShopListSerializer):
 class ShopVisitedSerializer(ShopListSerializer):
     visitedshop_set = VisitedShopSerializer(many=True, read_only=True)
     review_set = ReviewIdSerializer(many=True, read_only=True)
+    is_review = serializers.SerializerMethodField()
 
     class Meta:
         model = Shop
         fields = ShopListSerializer.Meta.fields + [
             'visitedshop_set',
-            'review_set'
+            'review_set',
+            'is_review'
         ]
+    
+    def get_is_review(self, obj):
+        if obj.review_set.exists():
+            return True
+        return False
 
 class ReviewSerializer(serializers.ModelSerializer):
     username = serializers.SerializerMethodField()

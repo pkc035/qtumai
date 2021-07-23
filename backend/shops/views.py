@@ -340,17 +340,9 @@ class ShopSearchViewSet(ModelViewSet):
 
 class ShopVisitedViewSet(ModelViewSet):
     serializer_class = ShopVisitedSerializer
-    # pagination_class = ShopListPagination
+    pagination_class = ShopListPagination
 
     def get_queryset(self):
-
-        # test
-        self.request.account = AccountGuest.objects.get(username = "harry potter")
-
-
-        print(111111111111111111111111111111111111111111)
-        print(self.request.account)
-
         queryset = (
             Shop.objects
             .filter(userVisitedStore=self.request.account)
