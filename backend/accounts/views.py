@@ -14,7 +14,7 @@ from django.db.models    import F, Q
 from django.shortcuts    import get_object_or_404, render
 from django.contrib.auth import get_user_model
 
-from project.settings import SECRET_KEY
+from project.settings.local import SECRET_KEY
 from random           import randint
 from shops.models     import Shop, LikeShopAccounts, Menu
 from .models          import AccountGuest, MyLikeList, Authentication, MyLikeListShop, Preference
@@ -55,6 +55,7 @@ class AccountGuestAPIView(APIView):
 
 
 class CreatePreferenceAPIView(APIView):
+    # 유저 회원가입 시 입력 정보 한 번에 저장
     def post(self, request):
         norm_data, area_data, pref_data = request.data['normal_data'], request.data['area_data'], request.data['pref_data']
         norm_serializer = SimpleAccountGuestSerializer(data=norm_data)
@@ -80,7 +81,9 @@ class CreatePreferenceAPIView(APIView):
                 validated_data = pref_data
             )
             print('pref ok=======================')
-
+            print('pref_data: ', pref_serializer.data)
+            
+            
             return Response(pref_serializer.data, status=status.HTTP_201_CREATED)
         return Response(pref_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -108,7 +111,7 @@ class NaverLogInView(View):
         
         if AccountGuest.objects.filter(naver_number=naver_number).exists():
             guest       = AccountGuest.objects.get(naver_number=naver_number)
-            encoded_jwt = jwt.encode({'guest_id': guest.id},SECRET_KEY, ALGORITHM)
+            encoded_jwt = jwt.encode({'guest_id': guest.id}, SECRET_KEY, ALGORITHM)
             return JsonResponse({"token": encoded_jwt},status=200)
 
         else:

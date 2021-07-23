@@ -181,6 +181,18 @@ class FunDataSerializer(serializers.ModelSerializer):
 class PreferenceSerializer(serializers.ModelSerializer):
     # account_guest = serializers.PrimaryKeyRelatedField(many=True)
     # account_guest = AccountGuestSerializer()
+    group_num = serializers.SerializerMethodField(method_name='get_group_num')
+    
+    def get_group_num(self, obj):
+        print('get_group_num')
+        print(type(obj))
+        group_num = obj.get('taste_service') * 512 + obj.get('taste_cleanliness') * 256 + obj.get('taste_vibe') * 128 + obj.get('taste_price') * 64
+        + obj.get('service_cleanliness') * 32 + obj.get('service_vibe') * 16 + obj.get('service_price') * 8
+        + obj.get('cleanliness_vibe') * 4 + obj.get('cleanliness_price') * 2 + obj.get('vibe_price')
+        print('group_num: ', group_num)
+        print(type(group_num))
+        return group_num
+    
     class Meta:
         model = Preference
         fields = [
@@ -194,14 +206,19 @@ class PreferenceSerializer(serializers.ModelSerializer):
             'service_price',
             'cleanliness_vibe',
             'cleanliness_price',
-            'vibe_price'
-            ]
+            'vibe_price',
+            'group_num'
+        ]
 
         # extra_kwargs = {'living_area':{'write_only':True}}
-
+    
     def create(self, validated_data):
+        print('create')
+        # preference = Preference.objects.filter(account_guest)
+        print('valid_: ', validated_data)
+        Preference.objects.bulk_update()
         Preference.objects.create(
-            account_guest_id = validated_data['account_guest_id'],
+            # account_guest_id = validated_data['account_guest_id'],
             taste_service = validated_data['taste_service'], 
             taste_cleanliness= validated_data['taste_cleanliness'],
             taste_vibe= validated_data['taste_vibe'],
@@ -211,8 +228,12 @@ class PreferenceSerializer(serializers.ModelSerializer):
             service_price= validated_data['service_price'],
             cleanliness_vibe= validated_data['cleanliness_vibe'],
             cleanliness_price= validated_data['cleanliness_price'],
-            vibe_price= validated_data['vibe_price']
+            vibe_price= validated_data['vibe_price'],
+            # group_num = self.group_num
         )
+        # Preference.objects.update(
+        #     group_num = self.group_num
+        # )
         return validated_data
 
     def update(self, validated_data):
@@ -228,7 +249,8 @@ class PreferenceSerializer(serializers.ModelSerializer):
             service_price= validated_data['service_price'],
             cleanliness_vibe= validated_data['cleanliness_vibe'],
             cleanliness_price= validated_data['cleanliness_price'],
-            vibe_price= validated_data['vibe_price']
+            vibe_price= validated_data['vibe_price'],
+            group_num = validated_data['group_num']
         )
         return validated_data
 

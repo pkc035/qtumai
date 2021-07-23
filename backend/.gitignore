@@ -237,4 +237,6 @@ __pycache__/
 migrations/
 
 .json
+
+secrets.json
 # End of https://www.toptal.com/developers/gitignore/api/django,python,venv
