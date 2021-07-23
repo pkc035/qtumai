@@ -3,6 +3,7 @@ from re import M
 from django.db import models
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser
+from django.db.models import base
 from django.db.models.deletion import CASCADE
 from shops.models import Shop, Category, Menu
 
@@ -216,3 +217,9 @@ class MyLikeListShop(models.Model):
 
     def __str__(self):
         return self.my_like_list
+
+
+# 상위 % 구하기 위한 비교 테이블(하루에 한 번 갱신 예정)
+class FunDataPercentage(models.Model):
+    percentage = models.FloatField(blank=True) # 0.1% 단위로
+    greater_than = models.IntegerField(blank=True) # ~개 이상
