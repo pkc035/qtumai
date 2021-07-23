@@ -1,5 +1,6 @@
 from django.db                 import transaction
 from django.db.models          import Q, When, Value, Case
+from django.db.models.query    import Prefetch
 from django.shortcuts          import get_object_or_404
 from django.contrib.auth       import get_user_model
 
@@ -8,7 +9,6 @@ from rest_framework.decorators  import action, api_view
 from rest_framework.response    import Response
 from rest_framework.pagination  import PageNumberPagination
 
-from re                        import A
 from random                    import seed, sample
 from datetime                  import date
 from .models                   import Shop, Category, Review, ReportShop, ReportReview, Menu
@@ -340,15 +340,27 @@ class ShopSearchViewSet(ModelViewSet):
 
 class ShopVisitedViewSet(ModelViewSet):
     serializer_class = ShopVisitedSerializer
-    pagination_class = ShopListPagination
+    # pagination_class = ShopListPagination
 
     def get_queryset(self):
+
+        # test
+        self.request.account = AccountGuest.objects.get(username = "harry potter")
+
+
+        print(111111111111111111111111111111111111111111)
+        print(self.request.account)
+
         queryset = (
             Shop.objects
             .filter(userVisitedStore=self.request.account)
-            .prefetch_related('shopimage_set', 'userVisitedStore', 'visitedshop_set')
+            .prefetch_related(
+                'shopimage_set', 'visitedshop_set',
+                Prefetch('review_set', queryset=Review.objects.filter(guest=self.request.account))
+            )
             .order_by('-visitedshop__visited_time')
-        )     
+        )
+
         return queryset
 
 # # menu_name,shop_name, category_name 검색 결과를 한 배열에 return 할 경우
