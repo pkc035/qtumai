@@ -1,4 +1,6 @@
+from django.http.request import validate_host
 from django.shortcuts          import get_object_or_404
+from django.db.models          import Q
 
 from rest_framework.decorators import action, api_view
 from rest_framework.exceptions import NotFound
@@ -96,5 +98,15 @@ class ProposeBusinessViewSet(ModelViewSet):
     serializer_class = ProposeBusinessSerializer
 
 class NoticeViewSet(ModelViewSet):
-    queryset = Notice.objects.all()
     serializer_class = NoticeSerializer
+
+    def get_queryset(self):
+        is_public = self.request.query_params.get('is_pulic')
+        condition = Q()
+        
+        if is_public != None:
+            condition &= Q(public = is_public)
+
+        queryset = Notice.objects.filter(condition)
+
+        return queryset
