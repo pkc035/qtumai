@@ -3,16 +3,34 @@ import RestaurantModify from "../RestaurantModifyModal/RestaurantModifyModal";
 import AddHeartList from "../AddHeartList/AddHeartList";
 import styled from "styled-components";
 
-export default function SlideModal({ isSlideModal, setIsSlideModal, isLike }) {
+export default function SlideModal({
+  isSlideModal,
+  setIsSlideModal,
+  shopId,
+  isLike,
+  setIsLike,
+  style,
+  setStyle,
+  mylikeList,
+}) {
   return (
     <BlackBackground>
       {isSlideModal && isLike ? (
+        <AddHeartList
+          setIsSlideModal={setIsSlideModal}
+          setStyle={setStyle}
+          style={style}
+          mylikeList={mylikeList}
+          shopId={shopId}
+          setIsLike={setIsLike}
+        />
+      ) : (
         <RestaurantModify
           isSlideModal={isSlideModal}
           setIsSlideModal={setIsSlideModal}
+          setIsLike={setIsLike}
+          shopId={shopId}
         />
-      ) : (
-        <AddHeartList setIsSlideModal={setIsSlideModal} />
       )}
     </BlackBackground>
   );

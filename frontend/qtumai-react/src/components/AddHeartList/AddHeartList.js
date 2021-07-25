@@ -1,11 +1,17 @@
 import React, { useState, useEffect } from "react";
+import { POST_ADDPICLIST_API } from "../../config";
 import SlideModalControlButton from "../../components/SlideModalControlButton/SlideModalControlButton";
 import PlusPicList from "../PlusPicList/PlusPicList";
 import styled, { keyframes } from "styled-components";
 
-export default function AddHeartList({ setIsSlideModal }) {
-  const [mylikeList, setMylikeList] = useState({});
-  const [style, setStyle] = useState([]);
+export default function AddHeartList({
+  setIsSlideModal,
+  style,
+  setStyle,
+  mylikeList,
+  shopId,
+  setIsLike,
+}) {
   const [selectArr, setSelectArr] = useState([]);
   const [isPicPlusModal, setIsPicPlusModal] = useState(false);
 
@@ -26,18 +32,29 @@ export default function AddHeartList({ setIsSlideModal }) {
     }
   };
 
-  useEffect(() => {
-    fetch("data/mylikeList.json", { method: "GET" })
-      .then(res => res.json())
-      .then(data => {
-        const selectedArr = Array(data.results.length).fill(false);
-        setStyle(selectedArr);
-        setMylikeList({ ...data });
-      });
-  }, []);
-
   const handlePicPlusModal = () => {
     setIsPicPlusModal(true);
+  };
+
+  const submitList = () => {
+    fetch(`${POST_ADDPICLIST_API}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        mylist_id: selectArr,
+        shop_id: shopId,
+      }),
+    })
+      .then(res => res.json())
+      .then(data => {
+        console.log(data);
+        // if (data.message === "MylikeList Created") {
+        //   setIsSlideModal(false);
+        //   setIsLike(false);
+        // }
+      });
   };
 
   return (
@@ -70,7 +87,11 @@ export default function AddHeartList({ setIsSlideModal }) {
                 );
               })}
             </ListBox>
-            <SlideModalControlButton setIsSlideModal={setIsSlideModal} />
+            <SlideModalControlButton
+              setIsSlideModal={setIsSlideModal}
+              setIsLike={setIsLike}
+              submitList={submitList}
+            />
           </Container>
           {isPicPlusModal && (
             <PlusPicList setIsPicPlusModal={setIsPicPlusModal} />

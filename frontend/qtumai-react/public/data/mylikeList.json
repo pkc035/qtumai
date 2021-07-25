@@ -1,19 +1,55 @@
 {
-  "count": 1,
+  "count": 4,
   "next": null,
   "previous": null,
   "results": [
     {
-      "id": 1,
-      "list_name": "비 올 때 여기"
+      "id": 25,
+      "list_name": "생성1",
+      "mylikeshop_list": [
+        {
+          "id": 9,
+          "shop_id": 1,
+          "shop_name": "라면나라",
+          "coupon_content": ["test"]
+        }
+      ]
     },
     {
-      "id": 2,
-      "list_name": "센치 때 여기"
+      "id": 27,
+      "list_name": "재미없는 곳",
+      "mylikeshop_list": [
+        {
+          "id": 10,
+          "shop_id": 4,
+          "shop_name": "라면나라",
+          "coupon_content": ["test"]
+        },
+        {
+          "id": 11,
+          "shop_id": 2,
+          "shop_name": "라면나라",
+          "coupon_content": ["test"]
+        },
+        {
+          "id": 12,
+          "shop_id": 3,
+          "shop_name": "라면나라",
+          "coupon_content": ["test"]
+        }
+      ]
     },
     {
-      "id": 3,
-      "list_name": "남친이랑 갈 곳"
+      "id": 28,
+      "list_name": "주말에 가자",
+      "mylikeshop_list": [
+        {
+          "id": 13,
+          "shop_id": 1,
+          "shop_name": "라면나라",
+          "coupon_content": ["test"]
+        }
+      ]
     }
   ]
 }

@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from "react";
 // import { customFetch } from "../../utils/customFetch";
 import CommonMainSlider from "../../components/CommonMainSlider/CommonMainSlider";
-import MainStoreList from "../../components/MainStoreList/MainStoreList";
+import MainStoreList from "../../components/StoreListSlide/StoreListSlide";
 import styled from "styled-components";
 
 export default function Main() {
   const [mainSlider, setMainSlider] = useState([]);
   const [personalContents, setPersonalContent] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  console.log(setIsLoading);
 
   useEffect(() => {
     fetch("data/mainPageData.json", {

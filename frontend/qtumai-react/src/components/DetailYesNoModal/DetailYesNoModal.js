@@ -1,65 +1,72 @@
-import React from "react";
+import React, { useState } from "react";
 import { useHistory } from "react-router";
+import Review from "../Review/Review";
 import styled from "styled-components";
 
 export default function DetailYesNoModal({
   is_subscribe,
   isBoss,
+  setIsReview,
   setIsOpenYesNoModal,
+  setIsBoss,
 }) {
   const history = useHistory();
 
-  console.log(is_subscribe, isBoss);
+  console.log(isBoss);
   return (
-    <BlackBackground>
-      {!is_subscribe && !isBoss ? (
-        <YesNoModalBox>
-          <Context>
-            <div>구독 후 이용 가능한</div>
-            <div>서비스 입니다.</div>
-          </Context>
-          <ButtonBox>
-            <ReviewButton
-              onClick={() => {
-                history.push("/Review");
-              }}
-            >
-              다음에 하기
-            </ReviewButton>
-            <SubscribeButton
-              onClick={() => {
-                history.push("/Business");
-              }}
-            >
-              구독하기
-            </SubscribeButton>
-          </ButtonBox>
-        </YesNoModalBox>
-      ) : (
-        <YesNoModalBox>
-          <Context>
-            <div>비즈니스계정을 통해</div>
-            <div>다양한 혜택을 누르세요</div>
-          </Context>
-          <ButtonBox>
-            <ReviewButton
-              onClick={() => {
-                setIsOpenYesNoModal(false);
-              }}
-            >
-              취소
-            </ReviewButton>
-            <SubscribeButton
-              onClick={() => {
-                history.push("/Subscribe");
-              }}
-            >
-              확인
-            </SubscribeButton>
-          </ButtonBox>
-        </YesNoModalBox>
-      )}
-    </BlackBackground>
+    <div>
+      <BlackBackground>
+        {isBoss ? (
+          <YesNoModalBox>
+            <Context>
+              <div>비즈니스계정을 통해</div>
+              <div>다양한 혜택을 누르세요</div>
+            </Context>
+            <ButtonBox>
+              <ReviewButton
+                onClick={() => {
+                  setIsOpenYesNoModal(false);
+                  setIsBoss(false);
+                }}
+              >
+                취소
+              </ReviewButton>
+              <SubscribeButton
+                onClick={() => {
+                  history.push("/Subscribe");
+                }}
+              >
+                확인
+              </SubscribeButton>
+            </ButtonBox>
+          </YesNoModalBox>
+        ) : (
+          <YesNoModalBox>
+            <Context>
+              <div>구독 후 이용 가능한</div>
+              <div>서비스 입니다.</div>
+            </Context>
+            <ButtonBox>
+              <ReviewButton
+                onClick={() => {
+                  setIsReview(true);
+                  setIsOpenYesNoModal(false);
+                }}
+              >
+                다음에 하기
+              </ReviewButton>
+              <SubscribeButton
+                onClick={() => {
+                  history.push("/business");
+                }}
+              >
+                구독하기
+              </SubscribeButton>
+            </ButtonBox>
+          </YesNoModalBox>
+        )}
+      </BlackBackground>
+    </div>
   );
 }
 

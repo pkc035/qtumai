@@ -1,27 +1,22 @@
 import React from "react";
 import styled from "styled-components";
 
-export default function SlideModalControlButton({ setIsSlideModal }) {
-  const submitModifyList = () => {
-    // fetch("", {
-    //   method: "POST"
-    // },{
-    //   body:{}
-    // })
-    //   .then(res => res.json())
-    //   .then(data => console.log(data));
-  };
-
+export default function SlideModalControlButton({
+  setIsSlideModal,
+  submitList,
+  setIsLike,
+}) {
   return (
     <ControlButtonBox>
       <CloseButton
         onClick={() => {
           setIsSlideModal(false);
+          setIsLike(false);
         }}
       >
         닫기
       </CloseButton>
-      <AcceptButton onClick={() => submitModifyList()}>확인</AcceptButton>
+      <AcceptButton onClick={() => submitList()}>확인</AcceptButton>
     </ControlButtonBox>
   );
 }

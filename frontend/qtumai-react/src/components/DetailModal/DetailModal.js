@@ -1,10 +1,13 @@
 import React from "react";
-import { useHistory } from "react-router";
 import styled from "styled-components";
 
-export default function DetailModal({ is_subscribe, shop_name }) {
+export default function DetailModal({
+  is_subscribe,
+  shop_name,
+  setIsReview,
+  setIsOpenModal,
+}) {
   console.log(is_subscribe, shop_name);
-  const history = useHistory();
   return (
     <BlackBackground>
       <ModalBox>
@@ -28,7 +31,12 @@ export default function DetailModal({ is_subscribe, shop_name }) {
             </div>
           )}
         </Context>
-        <SubmitButton onClick={() => history.push("/Review")}>
+        <SubmitButton
+          onClick={() => {
+            setIsReview(true);
+            setIsOpenModal(false);
+          }}
+        >
           {is_subscribe ? "직원분이 눌러주세요" : "방문체크하기"}
         </SubmitButton>
       </ModalBox>

@@ -1,32 +1,40 @@
 import React from "react";
 import styled from "styled-components";
-import Address from "../../components/Address/Address";
 
-export default function Where() {
+export default function Who() {
   return (
     <Container>
       <Wrap>
         <Section>
           <CloseButton />
-          <Title>지역 편집</Title>
+          <Title>맴버 편집</Title>
         </Section>
         <Section>
           <SearchInput />
           <SearchButton />
-          <AcceptBox>
-            <HereIcon />현 위치로 주소 변경
-          </AcceptBox>
+          <AcceptBox>완료</AcceptBox>
         </Section>
       </Wrap>
       <Bar />
       <Wrap>
         <ContentsSection>
           <RecentlyTitle>
-            <span>최근 지역</span>
+            <span>최근 선택한 유저</span>
           </RecentlyTitle>
           <RecentlyBox>
             <RecentlyList>
-              <span>강남 대치동</span>
+              <span>여은파</span>
+              <DeleteButton />
+            </RecentlyList>
+          </RecentlyBox>
+        </ContentsSection>
+        <ContentsSection>
+          <RecentlyTitle>
+            <span>선택한 유저</span>
+          </RecentlyTitle>
+          <RecentlyBox>
+            <RecentlyList>
+              <span>공주파티</span>
               <DeleteButton />
             </RecentlyList>
           </RecentlyBox>
@@ -49,8 +57,8 @@ const Section = styled.section`
   position: relative;
 `;
 const ContentsSection = styled.section`
-  ${({ theme }) => theme.flexSet("center", "flex-start", "column")};
-  position: relative;
+  ${({ theme }) => theme.flexSet("flex-start", "flex-start", "column")};
+  min-height: 220px;
 `;
 const CloseButton = styled.button`
   ${({ theme }) => theme.imageSet(`url("/images/plus.svg")`)}
@@ -68,7 +76,7 @@ const Title = styled.h1`
 `;
 const SearchInput = styled.input.attrs({
   type: "text",
-  placeholder: "동까지 입력해주세요.",
+  placeholder: "같이 가고싶은 사람을 검색하세요.",
 })`
   width: 100%;
   padding-bottom: 10px;
@@ -90,27 +98,19 @@ const AcceptBox = styled.div`
   width: 100%;
   height: 100%;
   padding: 16px 0;
-  margin-top: 16px;
+  margin: 16px 0 30px;
   border: 1px solid lightgray;
   font-size: 18px;
   font-weight: 500;
 `;
 
-const HereIcon = styled.img.attrs({
-  src: "/images/pin.svg",
-})`
-  width: 20px;
-  height: 20px;
-`;
-
 const Bar = styled.div`
   width: 100%;
   height: 10px;
-  margin: 30px 0;
   background-color: lightgray;
 `;
 const RecentlyTitle = styled.div`
-  margin-bottom: 10px;
+  margin: 30px 0 10px;
   font-size: 22px;
   font-weight: bold;
 `;

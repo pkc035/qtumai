@@ -24,9 +24,12 @@ export const MainNavigator = () => {
 
 export const Main = ({ navigation }) => {
   return (
-    <MainContainer onClick={() => console.log('good')}>
-      {/* <WebView source={{ uri: 'http://192.168.0.76:3000/' }} /> */}
-      <WebView source={{ uri: 'http://10.58.2.159:3000/' }} />
+    <MainContainer>
+      <WebView
+        source={{ uri: 'http://192.168.0.76:3000/' }}
+        onPress={() => navigation.navigate('Who')}
+      />
+      {/* <WebView source={{ uri: 'http://10.58.2.159:3000/' }} /> */}
 
       <FloatingButton
         position={{ bottom: 80, right: 40 }}
@@ -53,8 +56,8 @@ export const Map = ({ navigation }) => {
 export const Like = () => {
   return (
     <Container>
-      {/* <WebView source={{ uri: 'http://192.168.0.76:3000/Detail' }} /> */}
-      <WebView source={{ uri: 'http://10.58.2.159:3000/Detail' }} />
+      <WebView source={{ uri: 'http://192.168.0.76:3000/likes' }} />
+      {/* <WebView source={{ uri: 'http://10.58.2.159:3000/Detail' }} /> */}
     </Container>
   );
 };

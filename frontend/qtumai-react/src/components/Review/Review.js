@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router";
-import StarRating from "../../components/StarRating/StarRating";
+import StarRating from "../StarRating/StarRating";
 import styled from "styled-components";
 
-export default function Review() {
+export default function Review({ setIsReview }) {
   const history = useHistory();
   const [taste, setTaste] = useState(0);
-  const [clear, setClear] = useState(0);
+  const [clean, setClean] = useState(0);
   const [services, setServices] = useState(0);
   const [mood, setMood] = useState(0);
   const [price, setPrice] = useState(0);
@@ -16,9 +16,8 @@ export default function Review() {
   const [previewImage, setPreviewImage] = useState("");
   // const [sendImage, setSendImage] = useState("");
 
-  console.log(oneLineReview);
   useEffect(() => {
-    const scoreArr = [taste, clear, services, mood, price].filter(
+    const scoreArr = [taste, clean, services, mood, price].filter(
       data => data !== 0
     );
     let averageRound;
@@ -29,7 +28,7 @@ export default function Review() {
     }
 
     setAverageScore(averageRound);
-  }, [taste, clear, services, mood, price]);
+  }, [taste, clean, services, mood, price]);
 
   const uploadPhoto = e => {
     const previewFile = [...e.target.files].map(file =>
@@ -55,7 +54,7 @@ export default function Review() {
         <Section>
           <BackButton
             onClick={() => {
-              history.push("/Detail");
+              setIsReview(false);
             }}
           />
           <Title>리뷰 작성하기</Title>
@@ -73,7 +72,7 @@ export default function Review() {
                       <StarRating
                         name={list.title}
                         setTaste={setTaste}
-                        setClear={setClear}
+                        setClean={setClean}
                         setServices={setServices}
                         setMood={setMood}
                         setPrice={setPrice}
@@ -132,8 +131,13 @@ export default function Review() {
 
 const Container = styled.div`
   ${({ theme }) => theme.flexSet("flex-start", "center", "column")};
-  min-height: 100vh;
+  position: absolute;
+  top: 0;
+  width: 100%;
   height: 100%;
+  min-height: 100vh;
+  background-color: white;
+  z-index: 100;
 `;
 const Wrap = styled.div`
   width: 90%;

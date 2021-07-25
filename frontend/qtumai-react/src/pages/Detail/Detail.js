@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 // import { customFetch } from "../../utils/customFetch";
+import { useParams } from "react-router-dom";
+import { GET_DETAIL_API, GET_PICLIST_API } from "../../config";
 import CommonMainSlider from "../../components/CommonMainSlider/CommonMainSlider";
 import CircularProgressBar from "../../components/CirclePercentageBar/CirclePercentageBar";
 import SlideModal from "../../components/SlideModal/SlideModal";
@@ -7,11 +9,19 @@ import DetailModal from "../../components/DetailModal/DetailModal";
 import DetailYesNoModal from "../../components/DetailYesNoModal/DetailYesNoModal";
 import ProgressBar from "../../components/ProgressBar/ProgressBar";
 import ReactStars from "react-rating-stars-component";
+import Review from "../../components/Review/Review";
 import styled from "styled-components";
 
 export default function Detail() {
+  const { id } = useParams();
   const [detailData, setDetailData] = useState([]);
+  const shopId = detailData.id;
   const [isLoading, setIsLoading] = useState(false);
+  const [style, setStyle] = useState([]);
+  const [mylikeList, setMylikeList] = useState([]);
+
+  const [isReview, setIsReview] = useState(false);
+  const [reviewScore, setReviewScore] = useState([]);
 
   const [isBoss, setIsBoss] = useState(false);
   const [isLike, setIsLike] = useState(false);
@@ -22,17 +32,43 @@ export default function Detail() {
   // const [islike, setIslike] = useState(false);
 
   useEffect(() => {
-    fetch("data/detailPageData.json", {
+    fetch(`/data/detailPageData.json`, {
       method: "GET",
     })
+      // fetch(`${GET_DETAIL_API}${id}/`, {
+      //   method: "GET",
+      // })
       .then(res => res.json())
       .then(data => {
-        setDetailData(...data);
+        setDetailData(...data.results);
         setIsLoading(true);
       });
   }, []);
 
-  console.log(detailData);
+  useEffect(() => {
+    fetch(`/data/mylikeList.json`, {
+      method: "GET",
+    })
+      // fetch(`${GET_PICLIST_API}`, { method: "GET" })
+      .then(res => res.json())
+      .then(data => {
+        let styleArr = [];
+        for (let i = 0; i < data.results.length; i++) {
+          if (shopId) {
+            let style = data.results[i].mylikeshop_list.filter(
+              data => data.shop_id === shopId
+            );
+            let preSelect = style.length !== 0 ? true : false;
+            styleArr.push(preSelect);
+          }
+        }
+        // const selectedArr = Array(data.results.length).fill(false);
+        setMylikeList({ ...data });
+        setStyle(styleArr);
+      });
+  }, [detailData]);
+  console.log(style);
+
   const STARSCORE = {
     size: 20,
     value: 2.5,
@@ -40,6 +76,16 @@ export default function Detail() {
     isHalf: true,
     color: "#e4e5e9",
     activeColor: "#ff3000",
+  };
+
+  const averageReview = (clean, price, service, taste, vibe) => {
+    let sumReview = [clean, price, service, taste, vibe];
+
+    let averageRound = Math.round(
+      sumReview.reduce((acc, cur) => acc + cur) / sumReview.length
+    );
+    setReviewScore(averageRound);
+    return averageRound;
   };
 
   // useEffect(() => {
@@ -56,15 +102,22 @@ export default function Detail() {
   //   }).then(res => res.json())
   //     .then(data => console.log(data));
   // }, [])
-
-  const { coupon, is_subscribe, shop_name, shop_description } = detailData;
+  const { coupon, is_subscribe, shop_name, shop_description, shop_status } =
+    detailData;
   return (
     <div>
       {detailData.length !== 0 && (
         <DetailContainer>
           <Hearbutton
-            src={isLike ? "/images/heartFill.svg" : "/images/heart.svg"}
-            onClick={() => setIsSlideModal(true)}
+            src={
+              shop_status.like_status
+                ? "/images/heartFill.svg"
+                : "/images/heart.svg"
+            }
+            onClick={() => {
+              setIsSlideModal(true);
+              setIsLike(true);
+            }}
           />
           {isLoading && (
             <CommonMainSlider isLoading={isLoading} detailSlider={detailData} />
@@ -128,16 +181,42 @@ export default function Detail() {
 
               <ReviewContainer>
                 <Title>매장 총점</Title>
-                <ReviewBox>
-                  <UserDetailBox>
-                    <UserPhoto />
-                    <div>
-                      <Star>★★★★☆</Star>
-                      <UserId>UlongChaS2</UserId>
-                    </div>
-                  </UserDetailBox>
-                  <ReviewComment>너무 맛있어요. 또 갈거</ReviewComment>
-                </ReviewBox>
+                {detailData.review_set.map(
+                  ({
+                    img_path,
+                    username,
+                    content,
+                    score_cleanliness,
+                    score_price,
+                    score_service,
+                    score_taste,
+                    score_vibe,
+                  }) => {
+                    return (
+                      <ReviewBox>
+                        <UserDetailBox>
+                          <UserPhoto src={img_path} />
+                          <div>
+                            <Stars
+                              score={() =>
+                                averageReview(
+                                  score_cleanliness,
+                                  score_price,
+                                  score_service,
+                                  score_taste,
+                                  score_vibe
+                                )
+                              }
+                              value={reviewScore}
+                            />
+                            <UserId>{username}</UserId>
+                          </div>
+                        </UserDetailBox>
+                        <ReviewComment>{content}</ReviewComment>
+                      </ReviewBox>
+                    );
+                  }
+                )}
               </ReviewContainer>
             </DetailWrap>
           </DetailFlex>
@@ -159,13 +238,20 @@ export default function Detail() {
             </BenfitsButton>
           )}
           {isOpenModal && (
-            <DetailModal shop_name={shop_name} is_subscribe={is_subscribe} />
+            <DetailModal
+              shop_name={shop_name}
+              is_subscribe={is_subscribe}
+              setIsReview={setIsReview}
+              setIsOpenModal={setIsOpenModal}
+            />
           )}
           {isOpenYesNoModal && (
             <DetailYesNoModal
               is_subscribe={is_subscribe}
               isBoss={isBoss}
               setIsOpenYesNoModal={setIsOpenYesNoModal}
+              setIsReview={setIsReview}
+              setIsBoss={setIsBoss}
             />
           )}
           {isSlideModal && (
@@ -173,8 +259,14 @@ export default function Detail() {
               isSlideModal={isSlideModal}
               setIsSlideModal={setIsSlideModal}
               isLike={isLike}
+              setIsLike={setIsLike}
+              setStyle={setStyle}
+              style={style}
+              mylikeList={mylikeList}
+              shopId={detailData.id}
             />
           )}
+          {isReview && <Review setIsReview={setIsReview} />}
         </DetailContainer>
       )}
     </div>
@@ -188,7 +280,7 @@ const Hearbutton = styled.img`
   width: 22px;
   height: 22px;
   filter: invert(1);
-  z-index: 1000;
+  z-index: 1;
 `;
 
 const DetailContainer = styled.div`

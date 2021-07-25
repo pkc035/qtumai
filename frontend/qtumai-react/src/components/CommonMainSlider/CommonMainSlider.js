@@ -1,4 +1,5 @@
 import React from "react";
+import { useHistory } from "react-router";
 import Slider from "react-slick";
 import styled from "styled-components";
 import "slick-carousel/slick/slick.css";
@@ -9,6 +10,8 @@ export default function CommonMainSlider({
   detailSlider,
   isLoading,
 }) {
+  const history = useHistory();
+
   let settings = {
     dots: true,
     infinite: true,
@@ -18,6 +21,11 @@ export default function CommonMainSlider({
     slidesToScroll: 1,
     // autoplay: true,
   };
+
+  const goToDetail = data => {
+    history.push(`/shops/detail/${data.id}`);
+  };
+
   return (
     <MainContainer>
       <MainSlider {...settings}>
@@ -25,13 +33,17 @@ export default function CommonMainSlider({
           ? mainSlider.list.map((data, idx) => {
               return (
                 <div key={idx}>
-                  <ImageContainer src={data.shop_info_url}>
-                    <ImageContext>
-                      {mainSlider.title && (
+                  <ImageContainer
+                    onClick={() => goToDetail(data)}
+                    src={data.shop_info_url}
+                  >
+                    <ImageContextBox>
+                      <ImageContext>
                         <ImageTitle>{mainSlider.title}</ImageTitle>
-                      )}
-                      <ImageSubTitle>{data.shop_name}</ImageSubTitle>
-                    </ImageContext>
+                        <ImageSubTitle>{data.shop_name}</ImageSubTitle>
+                      </ImageContext>
+                    </ImageContextBox>
+
                     <BlackGradetion />
                   </ImageContainer>
                 </div>
@@ -62,7 +74,7 @@ const BlackGradetion = styled.span`
   left: 0;
   width: 100%;
   height: 200px;
-  background-image: linear-gradient(to bottom, #0000001a 0%, #00000000 100%);
+  background-image: linear-gradient(to bottom, #000000f2 0%, #00000000 100%);
   z-index: 1;
 `;
 
@@ -100,14 +112,17 @@ const ImageContainer = styled.div`
   overflow: hidden;
 `;
 
-const ImageContext = styled.div`
+const ImageContextBox = styled.div`
   position: absolute;
-  top: 0;
+  z-index: 2;
+`;
+
+const ImageContext = styled.div`
+  position: relative;
+  width: 160px !important;
   height: 40px !important;
-  width: 190px !important;
   margin: 50px 0 0 30px;
   color: white;
-  z-index: 2;
 `;
 
 const ImageTitle = styled.div`

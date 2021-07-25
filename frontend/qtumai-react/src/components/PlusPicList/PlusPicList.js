@@ -1,13 +1,29 @@
 import React, { useState } from "react";
+import { POST_PICLIST_API } from "../../config";
 import styled from "styled-components";
 
 export default function PlusPicList({ isPicPlusModal, setIsPicPlusModal }) {
   const [picListName, setPicListName] = useState("");
-  const changePicList = e => {
-    setPicListName(e.target.value);
+
+  const submitNewPicList = () => {
+    fetch(`${POST_PICLIST_API}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        list_name: picListName,
+      }),
+    })
+      .then(res => res.json())
+      .then(data => {
+        console.log(data);
+        if (data.message === "MylikeList Created") {
+          setIsPicPlusModal(false);
+        }
+      });
   };
 
-  console.log(picListName);
   return (
     <Container>
       <Box>
@@ -20,7 +36,7 @@ export default function PlusPicList({ isPicPlusModal, setIsPicPlusModal }) {
           <CloseButton onClick={() => setIsPicPlusModal(false)}>
             취소
           </CloseButton>
-          <AcceptButton>확인</AcceptButton>
+          <AcceptButton onClick={() => submitNewPicList()}>확인</AcceptButton>
         </ButtonBox>
       </Box>
     </Container>

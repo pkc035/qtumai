@@ -1,16 +1,20 @@
 import React, { useState } from "react";
 import SlideModalControlButton from "../SlideModalControlButton/SlideModalControlButton";
+import { POST_REPORT_API } from "../../config";
 import styled, { keyframes } from "styled-components";
 
-export default function RestaurantModify({ isSlideModal, setIsSlideModal }) {
+export default function RestaurantModify({
+  isSlideModal,
+  setIsSlideModal,
+  shopId,
+  setIsLike,
+}) {
   const [etcValue, setEtcValue] = useState("");
   const [close, setClose] = useState(false);
   const [operatingTime, setOperatingTime] = useState(false);
   const [diffrentAddress, setDiffrentAddress] = useState(false);
   const [noBenefit, setNoBenefit] = useState(false);
   const [style, setStyle] = useState([false, false, false, false]);
-
-  console.log(etcValue);
 
   const hadleModifyList = (e, idx) => {
     let selectStyle = [...style];
@@ -28,8 +32,28 @@ export default function RestaurantModify({ isSlideModal, setIsSlideModal }) {
     }
   };
 
-  const changeEtcText = e => {
-    setEtcValue(e.target.value);
+  const submitList = () => {
+    fetch(`${POST_REPORT_API}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        shop_id: shopId,
+        is_closed: close,
+        time_different: operatingTime,
+        address_different: diffrentAddress,
+        no_coupon: noBenefit,
+        others: etcValue,
+      }),
+    })
+      .then(res => res.json())
+      .then(data => {
+        console.log(data);
+        if (data.message === "Report Shop Created") {
+          setIsSlideModal(false);
+        }
+      });
   };
 
   return (
@@ -54,10 +78,14 @@ export default function RestaurantModify({ isSlideModal, setIsSlideModal }) {
         })}
         <EtcList>
           <div>기타</div>
-          <EtcText onChange={e => changeEtcText(e)} />
+          <EtcText onChange={e => setEtcValue(e.target.value)} />
         </EtcList>
       </ListBox>
-      <SlideModalControlButton setIsSlideModal={setIsSlideModal} />
+      <SlideModalControlButton
+        setIsSlideModal={setIsSlideModal}
+        setIsLike={setIsLike}
+        submitList={submitList}
+      />
     </Container>
   );
 }

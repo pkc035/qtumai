@@ -1,35 +1,74 @@
-[
-  {
-    "id": 500,
-    "shop_image_list": [
-      "https://i.imgur.com/aylXNh7.png",
-      "https://i.imgur.com/zs1GZHb.jpg"
-    ],
-    "shop_name": "카치오에페페",
-    "shop_address": "서울 구로구 새말로18길 24",
-    "shop_description": "분위기 좋은 파스타 맛집",
-    "phone_number": "",
-    "like_count": 0,
-    "shop_info_url": "",
-    "score_taste": 0.0,
-    "score_service": 0.0,
-    "score_cleanliness": 0.0,
-    "score_vibe": 0.0,
-    "score_price": 0.0,
-    "review_count": 0,
-    "kakao_score": 3.5,
-    "kakao_score_count": 4,
-    "kakao_review_count": 23,
-    "price_range": "",
-    "latitude": null,
-    "longitude": null,
-    "is_subscribe": false,
-    "subscribe_time": null,
-    "is_new_opend": false,
-    "business_reg_img": "",
-    "shopkeeper": null,
-    "coupon": null,
-    "category": null,
-    "area": null
-  }
-]
+{
+  "count": 1,
+  "next": null,
+  "previous": null,
+  "results": [
+    {
+      "id": 1,
+      "shop_image_list": [],
+      "shop_status": {
+        "like_status": true,
+        "dislike_status": true,
+        "report_shop": true
+      },
+      "coupon_set": ["test"],
+      "opentime_set": [],
+      "review_set": [
+        {
+          "id": 1,
+          "username": "admin",
+          "score_taste": 5,
+          "score_service": 5,
+          "score_cleanliness": 5,
+          "score_vibe": 5,
+          "score_price": 5,
+          "content": "content",
+          "img_path": "test@com",
+          "created_at": "2021-07-22T17:08:48.479548+09:00",
+          "updated_at": "2021-07-22T17:08:48.479679+09:00",
+          "shop": 1,
+          "guest": 1
+        },
+        {
+          "id": 2,
+          "username": "Ulong",
+          "score_taste": 5,
+          "score_service": 3,
+          "score_cleanliness": 1,
+          "score_vibe": 1,
+          "score_price": 5,
+          "content": "content",
+          "img_path": "test@com",
+          "created_at": "2021-07-22T17:08:48.479548+09:00",
+          "updated_at": "2021-07-22T17:08:48.479679+09:00",
+          "shop": 1,
+          "guest": 1
+        }
+      ],
+      "shop_name": "라면나라",
+      "shop_address_road": "",
+      "shop_address_zip": "",
+      "shop_description": "맛있는 라면",
+      "phone_number": "01044444444",
+      "like_count": 24,
+      "shop_info_url": "url2",
+      "score_taste": 2.0,
+      "score_service": 3.0,
+      "score_cleanliness": 1.0,
+      "score_vibe": 4.0,
+      "score_price": 1.0,
+      "review_count": 34,
+      "naver_score": 16.0,
+      "naver_score_count": 99,
+      "price_range": "8880-11110",
+      "latitude": "125",
+      "longitude": "241",
+      "is_subscribe": false,
+      "subscribe_time": "2021-07-12",
+      "is_new_opend": false,
+      "business_reg_img": "",
+      "category": null,
+      "area": null
+    }
+  ]
+}

@@ -5,7 +5,7 @@ import styled from "styled-components";
 const StarRating = ({
   name,
   setTaste,
-  setClear,
+  setClean,
   setServices,
   setMood,
   setPrice,
@@ -18,7 +18,7 @@ const StarRating = ({
     if (name === "맛") {
       setTaste(ratingValue);
     } else if (name === "청결") {
-      setClear(ratingValue);
+      setClean(ratingValue);
     } else if (name === "서비스") {
       setServices(ratingValue);
     } else if (name === "분위기") {
