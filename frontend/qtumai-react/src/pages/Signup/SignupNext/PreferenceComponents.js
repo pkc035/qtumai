@@ -7,7 +7,7 @@ function PreferenceComponents(props) {
   function onCreate(number) {
     props.setPreferenceReset(true);
     setPreference(number);
-    number ? props.setData(props.secondTitle) : props.setData(props.firstTitle);
+    props.setData(number);
     props.setNextButton(false);
   }
 

@@ -70,19 +70,19 @@ function Login(props) {
   };
 
   const onSuccessGoogleLogin = response => {
-    fetch(`http://192.168.0.66:8000/accounts/google-login`, {
+    fetch(`http://192.168.0.66:8000/accounts/google-login/`, {
       method: "get",
       headers: {
-        Authorization: response.mc.id_token,
+        Authorization: response.tokenId,
       },
     })
       .then(res => res.json())
       .then(res => {
         console.log(res);
-        if (res.message === "USER_DOES_NOT_EXIST") {
-          localStorage.setItem("access_token", res.acess_token);
-          props.history.push("/signup/next");
-        }
+        // if (res.message === "USER_DOES_NOT_EXIST") {
+        //   localStorage.setItem("access_token", res.acess_token);
+        //   props.history.push("/signup/next");
+        // }
       });
   };
 
@@ -94,7 +94,7 @@ function Login(props) {
     window.Kakao.Auth.login({
       success: auth => {
         console.log(auth.access_token);
-        fetch("http://192.168.0.66:8000/accounts/kakao-login", {
+        fetch("http://192.168.0.66:8000/accounts/kakao-login/", {
           method: "get",
           headers: {
             Authorization: auth.access_token,
@@ -102,10 +102,11 @@ function Login(props) {
         })
           .then(res => res.json())
           .then(res => {
-            if (res.message === "USER_DOES_NOT_EXIST") {
-              localStorage.setItem("access_token", auth.access_token);
-              props.history.push("/signup/next");
-            }
+            // if (res.message === "USER_DOES_NOT_EXIST") {
+            //   localStorage.setItem("access_token", auth.access_token);
+            //   props.history.push("/signup/next");
+            // }
+            console.log(res);
           });
       },
       fail: err => {
@@ -141,6 +142,7 @@ function Login(props) {
           <GoogleLogin
             clientId="682659671170-3l3k6f2ihb3aplmo4n8u43dncpdcbc9f.apps.googleusercontent.com"
             onSuccess={onSuccessGoogleLogin}
+            // tokenId={co}
             render={renderProps => (
               <SocialLogin
                 onClick={renderProps.onClick}

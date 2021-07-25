@@ -1,23 +1,25 @@
-import React from 'react';
-import styled from 'styled-components/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { WebView } from 'react-native-webview';
-import Button from '../components/Button';
-import FloatingButton from '../components/FloatingButton';
+import React from "react";
+import styled from "styled-components/native";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { WebView } from "react-native-webview";
+import Button from "../components/Button";
+import FloatingButton from "../components/FloatingButton";
+import Profile from "./Profile";
+import { URI } from "../config";
 
 const MainTab = createBottomTabNavigator();
 
 export const MainNavigator = () => {
   return (
     <MainTab.Navigator
-      initialRouteName='Main'
-    // tabBarOptions={{ showLabel: false }}
+      initialRouteName="Main"
+      // tabBarOptions={{ showLabel: false }}
     >
-      <MainTab.Screen name='Main' component={Main} />
-      <MainTab.Screen name='Map' component={Map} />
-      <MainTab.Screen name='Like' component={Like} />
-      <MainTab.Screen name='Favorite' component={Favorite} />
-      <MainTab.Screen name='Profile' component={Profile} />
+      <MainTab.Screen name="Main" component={Main} />
+      <MainTab.Screen name="Map" component={Map} />
+      <MainTab.Screen name="Like" component={Like} />
+      <MainTab.Screen name="Favorite" component={Favorite} />
+      <MainTab.Screen name="Profile" component={Profile} />
     </MainTab.Navigator>
   );
 };
@@ -25,9 +27,7 @@ export const MainNavigator = () => {
 export const Main = ({ navigation }) => {
   return (
     <MainContainer>
-
-      <WebView source={{ uri: 'http://192.168.0.69:3000/' }} />
-
+      <WebView source={{ uri: `${URI}/` }} />
       <FloatingBackground>
         <FloatingButton
           position={{ bottom: 80, right: 40 }}
@@ -53,9 +53,9 @@ const FloatingBackground = styled.View`
 export const Map = ({ navigation }) => {
   return (
     <Container>
-      <WebView source={{ uri: 'http://192.168.0.76:3000/Map' }} />
-      <Button title='Who' onPress={() => navigation.navigate('Who')} />
-      <Button title='Where' onPress={() => navigation.navigate('Where')} />
+      <WebView source={{ uri: `${URI}/Map` }} />
+      <Button title="Who" onPress={() => navigation.navigate("Who")} />
+      <Button title="Where" onPress={() => navigation.navigate("Where")} />
     </Container>
   );
 };
@@ -71,19 +71,3 @@ export const Favorite = () => {
     </Container>
   );
 };
-
-export const Profile = () => {
-  return (
-    <Container>
-      <StyledText>Profile</StyledText>
-    </Container>
-  );
-};
-
-const Container = styled.View`
-  flex: 1;
-`;
-
-const StyledText = styled.Text`
-  font-size: 30px;
-`;

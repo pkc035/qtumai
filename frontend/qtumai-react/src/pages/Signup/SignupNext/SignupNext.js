@@ -3,7 +3,8 @@ import styled from "styled-components";
 import { withRouter } from "react-router-dom";
 import DaumPostcode from "react-daum-postcode";
 import { useAlert } from "react-alert";
-import TermMore from "../TermMore/TermMore";
+// import TermMore from "../TermMore/TermMore";
+import BottomButton from "../../../components/BottomButton";
 
 function Signup(props) {
   const [adress, setAdress] = useState({
@@ -56,14 +57,32 @@ function Signup(props) {
   }, [selectedArr]);
 
   function handleDubbleCheck() {
-    if (check[1] === true) {
-      alert.error("2자~16자 사이의 한글,영어,숫자로 입력해주세요");
-    } else {
-      let newCheck = [...check];
-      newCheck[0] = false;
-      setCheck(newCheck);
-      alert.success("중복체크 완료");
-    }
+    fetch("http://192.168.0.66:8000/accounts/username-check/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json; charset=utf8",
+      },
+      body: JSON.stringify({
+        username: name,
+      }),
+    })
+      .then(res => res.json())
+      .then(res => {
+        if (res.username.join() === "중복된 닉네임이 있습니다.") {
+          alert.error("중복된 닉네임이 있습니다.");
+        } else if (res.username.join() === "닉네임을 2 ~ 15 글자로 해주세요!") {
+          alert.error("2자~15자 사이의 한글,영어,숫자로 입력해주세요");
+        } else if (
+          res.username.join() === "username에 특수문자를 넣지 말아주세요!"
+        ) {
+          alert.error("특수문자를 넣지 말아주세요");
+        } else if (res.username.join() === "success") {
+          let newCheck = [...check];
+          newCheck[0] = false;
+          setCheck(newCheck);
+          alert.success("중복체크 완료");
+        }
+      });
   }
 
   function goToNext() {
@@ -80,26 +99,14 @@ function Signup(props) {
     } else if (check[5]) {
       alert.error("이용약관 동의 체크해주세요.");
     } else {
-      fetch("http://192.168.0.66:8000/accounts/signup", {
-        method: "POST",
-        body: JSON.stringify({
-          phone_number: localStorage.getItem("phone_number"),
-          kakao_number: "stringsadsddsafaccz",
-          google_number: "stringsadsddsafaccz",
-          naver_id: "stringsadsddsafaccz",
-          username: name,
-          gender: gender === 0 ? "F" : "M",
-          birthday: inputBirth,
-          agreed_marketing_receive: agreedMarketingReceive ? "1" : "0",
-          living_area: adress.fullAddress,
-          latitude: adress.latitude,
-          longitude: adress.longitude,
-        }),
-      })
-        .then(res => res.json())
-        .then(res => {
-          console.log(res);
-        });
+      localStorage.setItem("username", name);
+      localStorage.setItem("gender", gender === 0 ? "F" : "M");
+      localStorage.setItem("birthday", inputBirth);
+      localStorage.setItem(
+        "agreed_marketing_receive",
+        agreedMarketingReceive ? "1" : "0"
+      );
+      localStorage.setItem("area_name", "대전광역시");
       props.history.push("/signup/preference");
     }
   }
@@ -151,8 +158,6 @@ function Signup(props) {
       }
     } else setDubbleCheckButton(true);
   };
-
-  console.log(check);
 
   const handlegender = number => {
     setGender(number);
@@ -222,12 +227,12 @@ function Signup(props) {
   console.log("이름 :", name);
   console.log("생년월일 :", inputBirth);
   console.log("성별 :", gender === 0 ? "F" : "M");
-  console.log("주소 :", adress.fullAddress,adress.latitude,adress.longitude);
+  console.log("주소 :", adress.fullAddress, adress.latitude, adress.longitude);
   console.log("선택동의 :", agreedMarketingReceive ? "1" : "0");
 
   return (
     <div>
-      <Modal>
+      <Content>
         <Title>
           <BackButton onClick={goToBack}>
             <ArrowImage src="/images/Social/arrow.png" />
@@ -370,13 +375,13 @@ function Signup(props) {
             </SignInputTermsBox>
           </SignInputTerms>
         </InputBox>
-        <LoginBtn onClick={goToNext}>다음</LoginBtn>
-      </Modal>
+        <BottomButton title={"다음"} onClick={goToNext} />
+      </Content>
     </div>
   );
 }
 
-const Modal = styled.div`
+const Content = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -518,17 +523,6 @@ const ViewMore = styled.button`
   right: 0;
   font-size: 12px;
   vertical-align: middle;
-`;
-
-const LoginBtn = styled.button`
-  position: fixed;
-  bottom: 0px;
-  width: 100%;
-  height: 60px;
-  margin-top: 15px;
-  background-color: #ff3000;
-  font-size: 15px;
-  color: #fff;
 `;
 
 export default withRouter(Signup);
