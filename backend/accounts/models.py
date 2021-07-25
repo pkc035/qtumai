@@ -16,6 +16,12 @@ class LivingArea(models.Model):
     longitude = models.CharField(max_length=20, blank=True)
 
 
+# 상위 % 구하기 위한 비교 테이블(하루에 한 번 갱신 예정)
+class FunDataPercentage(models.Model):
+    percentage = models.FloatField(blank=True) # 0.1% 단위로
+    greater_than = models.IntegerField(blank=True) # ~개 이상
+
+
 # 미리 저장해두기
 class AccountJobCategory(models.Model):
     category_name = models.CharField(max_length=20, blank=True)
@@ -74,13 +80,10 @@ class AccountGuest(AbstractUser):
     # job = models.ForeignKey(AccountJob, on_delete=models.CASCADE, null=True, default="") # 직업은 잠시 보류
     # my_friends = models.ManyToManyField('self', related_name="myFriends", symmetrical=False) # symmetrical: 대칭관계(상대방쪽에서도 자동추가 여부)
 
+    fun_data_percent = models.ForeignKey(FunDataPercentage, on_delete=models.CASCADE, null=True)
+
     def __str__(self):
         return self.username
-
-    # fun_data 상위 %
-    def top_rate_fun_data(self):
-        # rank = 
-        pass
 
 
 # 방문 시간도 함께 체크하기 위해 through 사용 (ManyToMany에서 컬럼 추가하는 방법)
@@ -173,7 +176,7 @@ class FunData(models.Model):
     menu = models.ForeignKey(Menu, on_delete=models.CASCADE, null=True)
     # 추후 태그 관련 컬럼도 추가예정 tag = models.ForeignKey(Tag, on_delete=models.CASCADE, null=True)
     score = models.SmallIntegerField(default=0) # 싫어요: 0, 좋아요: 1, Super Like: 2 (값을 부여하는 방식 O // 더하기 X)
-    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
 
 # 유저 체류데이터 수집 테이블
@@ -217,9 +220,3 @@ class MyLikeListShop(models.Model):
 
     def __str__(self):
         return self.my_like_list
-
-
-# 상위 % 구하기 위한 비교 테이블(하루에 한 번 갱신 예정)
-class FunDataPercentage(models.Model):
-    percentage = models.FloatField(blank=True) # 0.1% 단위로
-    greater_than = models.IntegerField(blank=True) # ~개 이상

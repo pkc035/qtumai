@@ -21,7 +21,7 @@ from .models          import AccountGuest, FunData, MyLikeList, Authentication, 
 from .serializers     import (
     AccountGuestSerializer, FunDataSerializer, MyLikeListSerializer, MyLikeListShopSerializer, 
     CheckUsernameSerializer, LivingAreaUpdateSerializer, AccountGuestUpdateSerializer,
-    LivingAreaSreialzer, SimpleAccountGuestSerializer
+    LivingAreaSreialzer, SimpleAccountGuestSerializer, PreferenceSerializer
     )
 
 class CheckUsernameAPIView(APIView):
