@@ -79,10 +79,14 @@ function Login(props) {
       .then(res => res.json())
       .then(res => {
         console.log(res);
-        // if (res.message === "USER_DOES_NOT_EXIST") {
-        //   localStorage.setItem("access_token", res.acess_token);
-        //   props.history.push("/signup/next");
-        // }
+        if (res.google_number) {
+          localStorage.setItem("google_number", res.google_number);
+          props.history.push("/signup/next");
+        } else if (res.status === 200) {
+          localStorage.setItem("access", res.access);
+          localStorage.setItem("refresh", res.refresh);
+          props.history.push("/");
+        }
       });
   };
 
@@ -114,6 +118,45 @@ function Login(props) {
       },
     });
   };
+
+  // function loginWithKakao() {
+  //   window.location.assign(
+  //     "https://kauth.kakao.com/oauth/authorize?client_id=9cd5b2cd23fd37e163ff88ea3d317137&redirect_uri=http://localhost:3000/login&response_type=code"
+  //   );
+  //   // fetch("http://192.168.0.66:8000/accounts/kakao-login/", {
+  //   //   method: "get",
+  //   //   headers: {
+  //   //     Authorization: new URL(window.location.href).searchParams.get("code"),
+  //   //   },
+  //   // })
+  //   //   .then(res => res.json())
+  //   //   .then(res => {
+  //   //     // if (res.message === "USER_DOES_NOT_EXIST") {
+  //   //     //   localStorage.setItem("access_token", auth.access_token);
+  //   //     //   props.history.push("/signup/next");
+  //   //     // }
+  //   //     console.log(res);
+  //   //   });
+  // }
+
+  // function logout() {
+  //   fetch(`https://kapi.kakao.com/v1/user/unlink`, {
+  //     method: "get",
+  //     headers: {
+  //       Authorization:
+  //         "Bearer kflO1lqrcyuOFZZ3kffTaYv13jOF8yiagMYuiG9Us_8hAGKwxOlcOhKBj3CZDea_acIAfAopdSkAAAF64ZFcAA",
+  //     },
+  //   })
+  //     .then(res => res.json())
+  //     .then(res => {
+  //       console.log(res);
+  //       // if (res.message === "USER_DOES_NOT_EXIST") {
+  //       //   localStorage.setItem("access_token", res.acess_token);
+  //       //   props.history.push("/signup/next");
+  //       // }
+  //     });
+  // }
+  // console.log(new URL(window.location.href).searchParams.get("code"));
 
   const onFailureGoogleLogin = error => {
     console.log(error);

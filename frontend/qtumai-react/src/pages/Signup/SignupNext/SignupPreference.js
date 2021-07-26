@@ -13,49 +13,71 @@ function SignupPreference(props) {
   const [preferenceReset, setPreferenceReset] = useState(true);
   const [isLoadingOn, setIsLoadingOn] = useState(false);
 
-  function goToNext() {
+  function goToNext(number) {
     setPreference(preference => [...preference].concat(data));
     setNextButton(true);
     setPreferenceReset(false);
 
     if (count === 10) {
-      // fetch("http://192.168.0.66:8000/accounts/preference", {
-      //   method: "POST",
-      //   body: JSON.stringify({
-      //     normal_data: {
-      //       username: localStorage.getItem("username"),
-      //       gender: localStorage.getItem("gender"),
-      //       birthday: localStorage.getItem("birthday"),
-      //       agreed_marketing_receive: localStorage.getItem(
-      //         "agreed_marketing_receive"
-      //       ),
-      //       phone_number: localStorage.getItem("phone_number"),
-      //     },
-      //     area_data: {
-      //       area_name: "갱기도 시흥시 미샌동",
-      //     },
-      //     pref_data: {
-      //       taste_service: preference.slice(0, 1),
-      //       taste_cleanliness: preference.slice(1, 2),
-      //       taste_vibe: preference.slice(2, 3),
-      //       taste_price: preference.slice(3, 4),
-      //       service_cleanliness: preference.slice(4, 5),
-      //       service_vibe: preference.slice(5, 6),
-      //       service_price: preference.slice(6, 7),
-      //       cleanliness_vibe: preference.slice(7, 8),
-      //       cleanliness_price: preference.slice(8, 9),
-      //       vibe_price: preference.slice(9, 10),
-      //     },
-      //   }),
-      // })
-      //   .then(res => res.json())
-      //   .then(res => {
-      //     console.log(res);
-      //   });
+      fetch("http://192.168.0.66:8000/accounts/preference", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json; charset=utf8",
+        },
+        body: JSON.stringify({
+          normal_data: {
+            username: localStorage.getItem("username"),
+            gender: localStorage.getItem("gender"),
+            birthday: localStorage.getItem("birthday"),
+            agreed_marketing_receive: localStorage.getItem(
+              "agreed_marketing_receive"
+            ),
+            // phone_number: localStorage.getItem("phone_number"),
+            google_number: localStorage.getItem("google_number"),
+          },
+          area_data: {
+            area_name: "갱기도 시흥시 미샨동",
+          },
+          pref_data: {
+            taste_service: preference[0],
+            taste_cleanliness: preference[1],
+            taste_vibe: preference[2],
+            taste_price: preference[3],
+            service_cleanliness: preference[4],
+            service_vibe: preference[5],
+            service_price: preference[6],
+            cleanliness_vibe: preference[7],
+            cleanliness_price: preference[8],
+            vibe_price: 1,
+          },
+        }),
+      })
+        .then(res => res.json())
+        .then(res => {
+          localStorage.setItem("access", res.access);
+          localStorage.setItem("refresh", res.refresh);
+        });
+      setPreferenceReset(true);
+      setPreference(number);
+      setData(number);
+      setNextButton(false);
       setIsLoadingOn(true);
       setTimeout(() => window.ReactNativeWebView.postMessage("Success!"), 1000);
     } else setCount(count => count + 1);
   }
+
+  console.log(
+    localStorage.getItem("username"),
+    localStorage.getItem("gender"),
+    localStorage.getItem("birthday"),
+    localStorage.getItem("agreed_marketing_receive"),
+    localStorage.getItem("google_number")
+    // phone_number: localStorage.getItem("phone_number"),
+  );
+
+  // useEffect(() => {
+  //   setPreference(preference => [...preference].concat(data));
+  // }, [count]);
 
   function goToBack() {
     setPreference(preference.slice(0, preference.length - 1));
@@ -89,8 +111,6 @@ function SignupPreference(props) {
     ...combination([1, 2, 3, 4, 5], 2).splice(count - 1, 1),
   };
 
-  console.log(localStorage.getItem("phone_number"));
-
   return (
     <Modal>
       <Title>
@@ -116,14 +136,20 @@ function SignupPreference(props) {
 }
 
 const Modal = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100vw;
+  height: 100vh;
 `;
 
 const Title = styled.div`
   display: flex;
+  position: absolute;
   width: 100%;
+  z-index: 100;
+  background-color: #fff;
 `;
 
 const Subject = styled.p`

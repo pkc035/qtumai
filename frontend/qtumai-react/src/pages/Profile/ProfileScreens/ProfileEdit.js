@@ -1,13 +1,40 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import BottomButton from "../../../components/BottomButton";
 
 function ProfileEdit() {
+  const [previewImages, setPreviewImages] = useState([
+    "/images/Social/kakaotalk_logo.jpg",
+  ]);
+  const [sendImages, setSendImages] = useState([]);
+
+  const uploadPhoto = e => {
+    const fileArray = [...e.target.files].map(file =>
+      URL.createObjectURL(file)
+    );
+    setPreviewImages(fileArray);
+    setSendImages(sendImages => sendImages.concat([...e.target.files]));
+  };
+
+  console.log(sendImages, previewImages);
   return (
     <Content>
       <ProfileWrap>
-        <ProfileImage alt="profile" src="/images/Social/kakaotalk_logo.jpg" />
-        <EditProfile alt="profile" src="/images/Social/facebook_logo.jpg" />
+        <PhotoImage>
+          <Profilesrc alt="profile" src={previewImages[0]} />
+        </PhotoImage>
+        <PhotoEdit>
+          <UploadLabel for="photo">
+            <EditProfile alt="profile" src="/images/Profile/photoEdit.png" />
+          </UploadLabel>
+          <FileUproad
+            type="file"
+            id="photo"
+            accept=".jpg, .jpeg, .png"
+            onChange={uploadPhoto}
+            multiple={false}
+          />
+        </PhotoEdit>
       </ProfileWrap>
       <InputWrap>
         <Name>이름</Name>
@@ -49,18 +76,31 @@ const InputWrap = styled.div`
   width: 100%;
 `;
 
-const ProfileImage = styled.img`
-  width: 50%;
+const Profilesrc = styled.img`
+  width: 100%;
+  height: 100%;
   border-radius: 50%;
   border: 1px solid #ccc;
+  object-fit: cover;
+`;
+
+const PhotoEdit = styled.button`
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  background-color: #fff;
+  border-radius: 50%;
+  border: 1px solid #c1c1c1;
+  transform: translate(90%, 230%);
 `;
 
 const EditProfile = styled.img`
   position: absolute;
-  width: 20%;
-  border: 1px solid #ccc;
-  border-radius: 50%;
-  transform: translate(80%, 160%);
+  left: 50%;
+  top: 50%;
+  width: 100%;
+  padding: 20%;
+  transform: translate(-50%, -50%);
 `;
 
 const Name = styled.div`
@@ -103,5 +143,29 @@ const Info = styled.div`
 
 const Edit = styled.div`
   position: absolute;
+  margin-top: -5%;
   right: 0;
+`;
+
+const UploadLabel = styled.label`
+  /* margin-right: 5%;
+  color: #c1c1c1;
+  border: 1px solid #c1c1c1;
+  padding: 5px; */
+`;
+
+const FileUproad = styled.input`
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+`;
+
+const PhotoImage = styled.div`
+  position: relative;
+  border-radius: 50%;
+  width: 125px;
+  height: 125px;
+  overflow: hidden;
+  background-color: #c1c1c1;
 `;

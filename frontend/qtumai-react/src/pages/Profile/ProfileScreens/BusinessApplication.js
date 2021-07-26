@@ -1,11 +1,20 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import BottomButton from "../../../components/BottomButton";
+import DaumPostcode from "react-daum-postcode";
 
 function BusinessApplication() {
   const [count, setCount] = useState(0);
   const [previewImages, setPreviewImages] = useState([]);
   const [sendImages, setSendImages] = useState([]);
+  const [isAdressOn, setIsAdressOn] = useState(false);
+  const [adress, setAdress] = useState({
+    fullAddress: "",
+    latitude: 0,
+    longitude: 0,
+  });
+
+  const { kakao } = window;
 
   const uploadPhoto = e => {
     if (previewImages.length < 4) {
@@ -17,6 +26,44 @@ function BusinessApplication() {
         setSendImages(sendImages => sendImages.concat([...e.target.files]));
       } else alert("사진은 최대 3개까지 업로드 가능합니다");
     } else alert("사진은 최대 3개까지 업로드 가능합니다");
+  };
+
+  const Postcode = data => {
+    let geocoder = new kakao.maps.services.Geocoder();
+    let fullAddress = data.address;
+    let extraAddress = "";
+
+    if (data.addressType === "R") {
+      if (data.bname !== "") {
+        extraAddress += data.bname;
+      }
+      if (data.buildingName !== "") {
+        extraAddress +=
+          extraAddress !== "" ? `, ${data.buildingName}` : data.buildingName;
+      }
+      fullAddress += extraAddress !== "" ? ` (${extraAddress})` : "";
+    }
+    setIsAdressOn(false);
+
+    geocoder.addressSearch(fullAddress, function (result, status) {
+      if (status === kakao.maps.services.Status.OK) {
+        let coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+
+        setAdress({
+          fullAddress: fullAddress,
+          latitude: coords.La,
+          longitude: coords.Ma,
+        });
+      }
+    });
+  };
+
+  const postCodeStyle = {
+    display: "block",
+    position: "absolute",
+    top: "0px",
+    left: "0px",
+    zIndex: "100",
   };
 
   useEffect(() => {
@@ -39,11 +86,11 @@ function BusinessApplication() {
     <Content>
       <TitleWrap>
         <Title>상호명</Title>
-        <SubTitle>팟 플레이스 이수점</SubTitle>
+        <SubTitle placeholder="팟 플레이스 이수점" />
       </TitleWrap>
       <TitleWrap>
         <Title>카테고리</Title>
-        <SubTitle>팟 플레이스 이수점</SubTitle>
+        <SubTitle placeholder="팟 플레이스 이수점" />
       </TitleWrap>
       <TitleWrap>
         <Title>사업자 등록증</Title>
@@ -53,28 +100,63 @@ function BusinessApplication() {
           id="Business_Registration"
           accept=".jpg, .jpeg, .png"
         />
-        <div></div>
       </TitleWrap>
       <TitleWrap>
         <Title>매장 위치</Title>
-        <SubTitle>서울시 테헤란로 OO길-OO</SubTitle>
+        <SubTitle
+          placeholder="서울시 테헤란로 OO길-OO"
+          onClick={() => setIsAdressOn(true)}
+          value={adress.fullAddress}
+        />
+        {isAdressOn && (
+          <DaumPostcode
+            onComplete={Postcode}
+            style={postCodeStyle}
+            animation={true}
+            height={"100%"}
+          />
+        )}
       </TitleWrap>
       <TitleWrap>
         <Title>매장 전화번호</Title>
-        <SubTitle>02.1234.5678</SubTitle>
+        <SubTitle placeholder="02.1234.5678" />
       </TitleWrap>
       <TitleWrap>
         <Title>운영시간</Title>
-        <SubTitle>
-          <div>오픈: OO시</div>
-          <div>마감: OO시</div>
-        </SubTitle>
+        <OperatingTimeWrap>
+          <OperatingTime>
+            월요일 오픈 : <OperatingTimeInput type="time" /> | 마감 :{" "}
+            <OperatingTimeInput type="time" />
+          </OperatingTime>
+          <OperatingTime>
+            화요일 오픈 : <OperatingTimeInput type="time" /> | 마감 :{" "}
+            <OperatingTimeInput type="time" />
+          </OperatingTime>
+          <OperatingTime>
+            수요일 오픈 : <OperatingTimeInput type="time" /> | 마감 :{" "}
+            <OperatingTimeInput type="time" />
+          </OperatingTime>
+          <OperatingTime>
+            목요일 오픈 : <OperatingTimeInput type="time" /> | 마감 :{" "}
+            <OperatingTimeInput type="time" />
+          </OperatingTime>
+          <OperatingTime>
+            금요일 오픈 : <OperatingTimeInput type="time" /> | 마감 :{" "}
+            <OperatingTimeInput type="time" />
+          </OperatingTime>
+          <OperatingTime>
+            토요일 오픈 : <OperatingTimeInput type="time" /> | 마감 :{" "}
+            <OperatingTimeInput type="time" />
+          </OperatingTime>
+          <OperatingTime>
+            일요일 오픈 : <OperatingTimeInput type="time" /> | 마감 :{" "}
+            <OperatingTimeInput type="time" />
+          </OperatingTime>
+        </OperatingTimeWrap>
       </TitleWrap>
       <TitleWrap>
         <Title>기타사항</Title>
-        <SubTitle>
-          <div>오픈: OO시</div>
-        </SubTitle>
+        <SubTitle placeholder="매주 일요일 및 공휴일은 휴무입니다." />
       </TitleWrap>
       <TitleWrap>
         <Title>가게 음식 메인사진</Title>
@@ -121,9 +203,7 @@ function BusinessApplication() {
       </PhotoWrap>
       <TitleWrap>
         <Title>대표 메뉴</Title>
-        <SubTitle>
-          <div>팟 플레이스 이수점</div>
-        </SubTitle>
+        <SubTitle placeholder="팟 플레이스 이수점" />
       </TitleWrap>
       <LastTitle>관리자 승인 후 비즈니스 관리 페이지가 오픈됩니다.</LastTitle>
       <BottomButton title={"제출하기"} />
@@ -138,29 +218,32 @@ const Content = styled.div`
   flex-direction: column;
   align-items: center;
   width: 100vw;
-  height: 100vh;
+  /* height: 100vh; */
 `;
 
 const TitleWrap = styled.div`
   display: flex;
-  margin-top: 10%;
+  margin-top: 8%;
   width: 100%;
   justify-content: space-between;
+  flex-direction: column;
 `;
 
 const Title = styled.div`
   margin-left: 5%;
 `;
 
-const SubTitle = styled.div`
-  margin-right: 5%;
+const SubTitle = styled.input`
+  padding: 15px 10px;
+  margin: 2% 5% 0;
   color: #c1c1c1;
+  border: 1px solid #c1c1c1;
+  border-radius: 5px;
 `;
 
 const LastTitle = styled.div`
   position: relative;
-  margin-top: 10%;
-  bottom: 0;
+  margin: 10% 0 40%;
   color: #c1c1c1;
 `;
 
@@ -173,7 +256,7 @@ const FileUproad = styled.input`
 
 const PhotoWrap = styled.div`
   display: flex;
-  margin: 10% 5% 0 5%;
+  margin: 8% 5% 0 5%;
   width: 100%;
   justify-content: space-between;
 `;
@@ -207,12 +290,29 @@ const Photo = styled.img`
 `;
 
 const UploadLabel = styled.label`
-  margin-right: 5%;
+  padding: 15px 10px;
+  margin: 2% 5% 0;
   color: #c1c1c1;
   border: 1px solid #c1c1c1;
-  padding: 5px;
+  border-radius: 5px;
 `;
 
 const CloseImage = styled.img`
   width: 100%;
+`;
+
+const OperatingTimeInput = styled.input`
+  width: 100px;
+  background-color: #fff;
+  border: 1px solid #c1c1c1;
+  border-radius: 5px;
+`;
+
+const OperatingTimeWrap = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const OperatingTime = styled.div`
+  margin: 3% 5% 0;
 `;

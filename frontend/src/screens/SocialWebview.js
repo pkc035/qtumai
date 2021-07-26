@@ -16,21 +16,21 @@ export default class LoginScreen extends Component {
     console.log(JSON.parse(event.nativeEvent.data));
     let result = JSON.parse(event.nativeEvent.data);
     let success = result.message;
-    if (success) {
-      let userToken = result.Authorization;
-      try {
-        // await setItem(userToken);
-      } catch (e) {
-        console.log(e);
-      }
-    }
+    // if (success) {
+    //   let userToken = result.Authorization;
+    //   try {
+    //     // await setItem(userToken);
+    //   } catch (e) {
+    //     console.log(e);
+    //   }
+    // }
     this.props.closeSocialModal();
   };
 
   render() {
     return (
       <WebView
-        //ref={this._refWebView}
+        // ref={this._refWebView}
         originWhitelist={["*"]}
         injectedJavaScript={this.INJECTED_JAVASCRIPT}
         source={this.props.source}

@@ -68,15 +68,14 @@ function Signup(props) {
     })
       .then(res => res.json())
       .then(res => {
-        if (res.username.join() === "중복된 닉네임이 있습니다.") {
+        console.log(res.username);
+        if (res.username === "중복된 닉네임이 있습니다.") {
           alert.error("중복된 닉네임이 있습니다.");
-        } else if (res.username.join() === "닉네임을 2 ~ 15 글자로 해주세요!") {
+        } else if (res.username === "닉네임을 2 ~ 15 글자로 해주세요!") {
           alert.error("2자~15자 사이의 한글,영어,숫자로 입력해주세요");
-        } else if (
-          res.username.join() === "username에 특수문자를 넣지 말아주세요!"
-        ) {
+        } else if (res.username === "username에 특수문자를 넣지 말아주세요!") {
           alert.error("특수문자를 넣지 말아주세요");
-        } else if (res.username.join() === "success") {
+        } else if (res.username === "success") {
           let newCheck = [...check];
           newCheck[0] = false;
           setCheck(newCheck);
@@ -106,7 +105,7 @@ function Signup(props) {
         "agreed_marketing_receive",
         agreedMarketingReceive ? "1" : "0"
       );
-      localStorage.setItem("area_name", "대전광역시");
+      localStorage.setItem("area_name", "경기도 시흥시 미샌동");
       props.history.push("/signup/preference");
     }
   }

@@ -18,10 +18,6 @@ function PreferenceComponents(props) {
 
   return (
     <React.Fragment>
-      <Title>
-        <span>{props.firstTitle}</span>과<span>{props.secondTitle}</span>중 선호
-        하는것을 골라주세요
-      </Title>
       <InputBox>
         <PreferenceBtn
           preference={preference === 0 ? true : false}
@@ -29,7 +25,9 @@ function PreferenceComponents(props) {
         >
           {props.firstTitle}
         </PreferenceBtn>
-        <Versus>VS</Versus>
+        <Versus>
+          <Title>VS</Title>
+        </Versus>
         <PreferenceBtn
           preference={preference === 1 ? true : false}
           onClick={() => onCreate(1)}
@@ -41,34 +39,39 @@ function PreferenceComponents(props) {
   );
 }
 
-const Title = styled.h2`
-  margin-top: 10vh;
-  span {
-    font-size: 20px;
-    font-weight: 600;
-    color: #ff3000;
-  }
-`;
-
 const PreferenceBtn = styled.button`
-  border: 1px solid ${props => (props.preference ? "none" : "#ededed")};
+  /* border: 1px solid ${props => (props.preference ? "none" : "#ededed")}; */
   background-color: ${props => (props.preference ? "#ff3000" : "#fff")};
   color: ${props => (props.preference ? "#fff" : "#c1c1c1")};
-  border-radius: 4px;
+  /* border-radius: 4px; */
   padding: 10px 0;
-  width: 50%;
+  width: 100%;
+  height: 100%;
 `;
 
 const InputBox = styled.div`
   display: flex;
-  width: 80%;
-  height: 50vh;
+  position: absolute;
+  width: 100%;
+  height: 100%;
   align-items: center;
 `;
 
 const Versus = styled.div`
+  position: absolute;
+  left: 50%;
+  width: 60px;
+  height: 60px;
   font-size: 30px;
-  margin: 0 20px;
+  border-radius: 50%;
+  border: 1px solid #c1c1c1;
+  background-color: #fff;
+  transform: translateX(-50%);
+`;
+
+const Title = styled.h2`
+  text-align: center;
+  margin-top: 15px;
 `;
 
 export default PreferenceComponents;
