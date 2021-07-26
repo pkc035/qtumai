@@ -20,6 +20,12 @@ img {
 input[type='checkbox'] {
   cursor: pointer;
 }
+button {
+  cursor: pointer;
+}
+ul,li {
+  list-style: none;
+}
 a {
   text-decoration: none;
   cursor: pointer;

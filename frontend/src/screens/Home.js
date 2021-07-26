@@ -143,6 +143,8 @@ const Home = () => {
         component={CustomerAnalysis}
         options={{ headerTitle: "고객군 분석" }}
       />
+      <Stack.Screen name="Who" component={Who}></Stack.Screen>
+      <Stack.Screen name="Where" component={Where}></Stack.Screen>
     </Stack.Navigator>
   );
 };

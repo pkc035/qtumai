@@ -1,8 +1,11 @@
-export const BASE_URL = 'http://10.58.3.247:8000/api';
+export const BASE_URL = "http://192.168.0.65:8000";
 
-export const POST_LOGIN_API = `${BASE_URL}/login`;
-export const GET_ROOMS_API = `${BASE_URL}/rooms`;
-export const POST_ROOMS_API = `${BASE_URL}/rooms`;
+export const GET_DETAIL_API = `${BASE_URL}/shops/detail/`;
+export const POST_REPORT_API = `${BASE_URL}/shops/report`;
+export const POST_PICLIST_API = `${BASE_URL}/accounts/mylike/`;
+export const GET_PICLIST_API = `${BASE_URL}/accounts/mylike/`;
+export const POST_ADDPICLIST_API = `${BASE_URL}/accounts/mylikeshop/`;
+
 export const GET_AREA_ROOMS_API = `${BASE_URL}/rooms/maps`;
 export const POST_RANDOMROOMS_API = `${BASE_URL}/rooms/suggestion`;
 export const POST_SEARCHFILTERED_API = `${BASE_URL}/rooms/search`;

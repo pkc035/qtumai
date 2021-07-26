@@ -1,0 +1,74 @@
+{
+  "count": 1,
+  "next": null,
+  "previous": null,
+  "results": [
+    {
+      "id": 1,
+      "shop_image_list": [],
+      "shop_status": {
+        "like_status": true,
+        "dislike_status": true,
+        "report_shop": true
+      },
+      "coupon_set": ["test"],
+      "opentime_set": [],
+      "review_set": [
+        {
+          "id": 1,
+          "username": "admin",
+          "score_taste": 5,
+          "score_service": 5,
+          "score_cleanliness": 5,
+          "score_vibe": 5,
+          "score_price": 5,
+          "content": "content",
+          "img_path": "test@com",
+          "created_at": "2021-07-22T17:08:48.479548+09:00",
+          "updated_at": "2021-07-22T17:08:48.479679+09:00",
+          "shop": 1,
+          "guest": 1
+        },
+        {
+          "id": 2,
+          "username": "Ulong",
+          "score_taste": 5,
+          "score_service": 3,
+          "score_cleanliness": 1,
+          "score_vibe": 1,
+          "score_price": 5,
+          "content": "content",
+          "img_path": "test@com",
+          "created_at": "2021-07-22T17:08:48.479548+09:00",
+          "updated_at": "2021-07-22T17:08:48.479679+09:00",
+          "shop": 1,
+          "guest": 1
+        }
+      ],
+      "shop_name": "라면나라",
+      "shop_address_road": "",
+      "shop_address_zip": "",
+      "shop_description": "맛있는 라면",
+      "phone_number": "01044444444",
+      "like_count": 24,
+      "shop_info_url": "url2",
+      "score_taste": 2.0,
+      "score_service": 3.0,
+      "score_cleanliness": 1.0,
+      "score_vibe": 4.0,
+      "score_price": 1.0,
+      "review_count": 34,
+      "naver_score": 16.0,
+      "naver_score_count": 99,
+      "price_range": "8880-11110",
+      "latitude": "125",
+      "longitude": "241",
+      "is_subscribe": false,
+      "subscribe_time": "2021-07-12",
+      "is_new_opend": false,
+      "business_reg_img": "",
+      "category": null,
+      "area": null
+    }
+  ]
+}

@@ -12,20 +12,22 @@ class Category(models.Model):
 
 
 class ShopArea(models.Model):
-    area_name = models.CharField(max_length=20, blank=True)
-    latitude = models.FloatField(null=True)
-    longitude = models.FloatField(null=True)
+    area_name = models.CharField(max_length=30, blank=True)
+    latitude = models.CharField(max_length=20, blank=True)
+    longitude = models.CharField(max_length=20, blank=True)
+
 
 class Shop(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True)
     area = models.ForeignKey(ShopArea, on_delete=models.CASCADE, null=True) # 지역 구분용(그룹)
     shop_name = models.CharField(max_length=50, blank=True)
-    shop_address = models.CharField(max_length=50, blank=True)
+    shop_address_road = models.CharField(max_length=50, blank=True)
+    shop_address_zip = models.CharField(max_length=50, blank=True)
     shop_description = models.TextField(blank=True)
     phone_number = models.CharField(max_length=20, blank=True)
     # open_time = models.TextField(blank=True)
     like_count = models.PositiveIntegerField(default=0)
-    shop_info_url = models.TextField(blank=True) 
+    shop_info_url = models.TextField(blank=True) # 공유할 때
     score_taste = models.FloatField(default=0)
     score_service = models.FloatField(default=0)
     score_cleanliness = models.FloatField(default=0)
@@ -34,13 +36,13 @@ class Shop(models.Model):
     review_count = models.IntegerField(default=0) # 리뷰 개수(오늘도)
     naver_score = models.FloatField(default=0)
     naver_score_count = models.IntegerField(default=0)
-    naver_review_count = models.IntegerField(default=0)
+    # naver_review_count = models.IntegerField(default=0)
     price_range = models.CharField(max_length=15, blank=True)
-    latitude = models.FloatField(null=True) # 위도
-    longitude = models.FloatField(null=True) # 경도
+    latitude = models.CharField(max_length=30, null=True) # 위도
+    longitude = models.CharField(max_length=30, null=True) # 경도
     is_subscribe = models.BooleanField(default=False)
     subscribe_time = models.DateField(blank=True, null=True)
-    is_new_opend = models.BooleanField(default=False)
+    is_new_opend = models.BooleanField(default=False) # 보류 (m.search.naver.com "새로 오픈했어요")
     business_reg_img = models.TextField(blank=True) # 사업자등록증 이미지
 
     def __str__(self):
@@ -58,6 +60,7 @@ class Coupon(models.Model):
     coupon_content = models.TextField(blank=True)
     begin_date = models.DateTimeField(null=True)
     expire_date = models.DateTimeField(null=True)
+    status = models.BooleanField(default=False)
 
 
 class LikeShopAccounts(models.Model):
@@ -77,14 +80,13 @@ class LikeShopAccounts(models.Model):
 # 현재시간 기준으로 가게가 열었는지/닫혔는지 표시하기 위해 사용
 class OpenTime(models.Model):
     shop = models.ForeignKey(Shop, on_delete=models.CASCADE, null=True)
-    open_time = models.TextField(blank=True)
-    '''
-    what_day = models.CharField(max_length=10, blank=True) # 요일 ('평일', '주말'로도 저장 가능)
+    open_time = models.TextField(blank=True) # 크롤링 데이터 저장할 곳
+    what_day = models.CharField(max_length=10, blank=True) # 요일
     open_time = models.TimeField(null=True)
     close_time = models.TimeField(null=True)
     break_time_begin = models.TimeField(null=True)
     break_time_end = models.TimeField(null=True)
-    '''
+    additional_info = models.TextField(blank=True) # 비즈니스 신청 시 추가 입력사항
 
 
 class Menu(models.Model):
@@ -124,7 +126,6 @@ class Review(models.Model):
     img_path = models.TextField(blank=True) # 이미지 1개만 등록
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-
 
 class ThemeKeywordCategory(models.Model):
     category = models.CharField(max_length=20, blank=True) # 분위기, 인기토픽, 찾는목적
