@@ -1,4 +1,5 @@
 import React from "react";
+import CircularProgressBar from "../CirclePercentageBar/CirclePercentageBar";
 import styled from "styled-components";
 
 export default function MapList() {
@@ -19,17 +20,7 @@ export default function MapList() {
               </StarBox>
             </NameBox>
           </ContextBox>
-          <Circular>
-            <Inner></Inner>
-            <Circle>
-              <LeftBar>
-                <Progress></Progress>
-              </LeftBar>
-              <RightBar>
-                <Progress></Progress>
-              </RightBar>
-            </Circle>
-          </Circular>
+          <CircularProgressBar percentage={50} />
         </List>
       </Section>
     </Container>
@@ -47,15 +38,14 @@ const Container = styled.div`
 `;
 const Section = styled.ul`
   margin-top: 70px;
-  border-top: 1px solid lightgray;
+  border-top: 1px solid ${({ theme }) => theme.lightGray};
 `;
 
 const List = styled.li`
   ${({ theme }) => theme.flexSet("space-between", "center")}
   width: 100%;
-  border-bottom: 1px solid lightgray;
+  border-bottom: 1px solid ${({ theme }) => theme.lightGray};
   padding: 20px;
-  background-color: blueviolet;
 `;
 
 const Photo = styled.div`
@@ -81,7 +71,7 @@ const Name = styled.div`
 
 const DetailContext = styled.div`
   font-size: 12px;
-  color: lightgray;
+  color: ${({ theme }) => theme.lightGray};
   margin-top: 5px;
 `;
 
@@ -89,39 +79,14 @@ const StarBox = styled.div`
   margin-top: 10px;
 `;
 
-const Star = styled.span``;
-
-const Score = styled.span``;
-
-const Circular = styled.div`
-  position: relative;
-  width: 60px;
-  height: 60px;
-  background: red;
+const Star = styled.img.attrs({
+  src: "/images/scoreStar.svg",
+})`
+  width: 14px;
+  height: 14px;
+  margin-right: 5px;
 `;
 
-const Inner = styled.div`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 44px;
-  height: 44px;
-  margin: -22px 0 0 -22px;
-  background-color: white;
-  border-radius: 100%;
+const Score = styled.span`
+  font-weight: 500;
 `;
-
-const Circle = styled.div``;
-
-const LeftBar = styled.div`
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background-color: #ffffff;
-  border-radius: 100%;
-  clip: rect(0px, 60px, 60px, 30px);
-`;
-
-const RightBar = styled(LeftBar)``;
-
-const Progress = styled.div``;

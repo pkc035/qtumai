@@ -1,36 +1,137 @@
-import React from "react";
-import { CircularProgressbar } from "react-circular-progressbar";
-import "react-circular-progressbar/dist/styles.css";
+import React, { useState, useEffect } from "react";
+import styled from "styled-components";
 
 const CircularProgressBar = ({ percentage }) => {
-  return (
-    <div style={{ width: "30px", height: "30px" }}>
-      <CircularProgressbar
-        value={percentage}
-        text={`${percentage}`}
-        styles={{
-          root: {},
-          path: {
-            stroke: `rgba(62, 152, 199, ${percentage / 100})`,
-            strokeLinecap: "butt",
-            transition: "stroke-dashoffset 0.5s ease 0s",
-            transform: "rotate(0)",
-            transformOrigin: "center center",
-          },
+  const [numb, setNumb] = useState(0);
+  const [left, setLeft] = useState(0);
+  const [right, setRight] = useState(0);
 
-          text: {
-            fill: "#ff5000",
-            fontSize: "50px",
-            fontWeight: "bold",
-            lineHeight: 1.6,
-          },
-          background: {
-            fill: "#3e98c7",
-          },
-        }}
-      />
-    </div>
+  useEffect(() => {
+    setNumb(percentage);
+
+    if (numb <= 50) {
+      if (numb < 20) {
+        setLeft(36);
+      } else if (numb < 30) {
+        setLeft(72);
+      } else if (numb < 40) {
+        setLeft(108);
+      } else if (numb < 50) {
+        setLeft(144);
+      } else {
+        setLeft(180);
+      }
+    } else if (51 <= numb) {
+      setLeft(180);
+      if (numb < 70) {
+        setRight(36);
+      } else if (numb < 80) {
+        setRight(72);
+      } else if (numb < 90) {
+        setRight(108);
+      } else if (numb < 100) {
+        setRight(144);
+      } else {
+        setRight(180);
+      }
+    }
+  }, [numb]);
+
+  return (
+    <Circular>
+      <Inner />
+      <Numb>{numb}</Numb>
+      <Circle>
+        <LeftBar>
+          <LeftProgress left={left} right={right} />
+        </LeftBar>
+        <RightBar>
+          <RightProgress left={left} right={right} />
+        </RightBar>
+      </Circle>
+      <EndPoint />
+    </Circular>
   );
 };
 
 export default CircularProgressBar;
+
+const Circular = styled.div`
+  position: relative;
+  width: 50px;
+  height: 50px;
+`;
+
+const Inner = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 40px;
+  height: 40px;
+  margin: -20px 0 0 -20px;
+  background-color: white;
+  border-radius: 100%;
+  z-index: 10;
+`;
+
+const Numb = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: 2 px;
+  transform: translate(-50%, -50%);
+  color: ${({ theme }) => theme.red};
+  font-weight: bold;
+  font-size: 18px;
+  z-index: 10;
+`;
+
+const Circle = styled.div`
+  z-index: 1;
+  box-shadow: none;
+`;
+
+const Bar = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: ${({ theme }) => theme.redBackground};
+  border-radius: 100%;
+  clip: rect(0px, 50px, 50px, 25px);
+`;
+
+const LeftBar = styled(Bar)``;
+
+const RightBar = styled(Bar)`
+  transform: rotate(180deg);
+`;
+
+const Progress = styled.div`
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  border-radius: 100%;
+  clip: rect(0px, 25px, 50px, 0px);
+  background-color: ${({ theme }) => theme.red};
+`;
+
+const LeftProgress = styled(Progress)`
+  z-index: 1;
+  transform: ${({ left }) => `rotate(${left}deg)`};
+`;
+
+const RightProgress = styled(Progress)`
+  transform: ${({ right }) => `rotate(${right}deg)`};
+`;
+
+const EndPoint = styled.div`
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  bottom: 4%;
+  right: 13%;
+  border-radius: 100%;
+  background-color: white;
+  z-index: 10;
+  border: 1px solid ${({ theme }) => theme.red};
+`;

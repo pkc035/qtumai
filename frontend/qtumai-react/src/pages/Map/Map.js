@@ -58,11 +58,11 @@ const SearchInput = styled.input.attrs({
   font-size: 18px;
   font-weight: bold;
   border: 0px;
-  border-bottom: 2px solid black;
+  border-bottom: 2px solid ${({ theme }) => theme.black};
 `;
 
 const SearchButton = styled.button`
-  ${({ theme }) => theme.imageSet(`url("/images/search.svg")`)}
+  ${({ theme }) => theme.imageSet(`url("/images/search.svg")`)};
   position: absolute;
   bottom: 10px;
   right: 20px;
@@ -104,7 +104,7 @@ const ListFilterBox = styled.li`
 const List = styled.span`
   display: flex;
   padding: 5px 10px;
-  border: 1px solid lightgray;
+  border: 1px solid ${({ theme }) => theme.lightGray};
   border-radius: 20px;
   background-color: white;
 `;

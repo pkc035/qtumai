@@ -17,10 +17,6 @@
     "react-google-login": "^5.2.2",
     "react-icons": "^4.2.0",
     "react-rating-stars-component": "^2.2.0",
-<<<<<<< HEAD
->>>>>>> 7a18f46 (Add: back up before pull)
-=======
->>>>>>> 15ce776 (change)
     "react-router-dom": "^5.2.0",
     "react-scripts": "^1.1.5",
     "react-slick": "^0.28.1",

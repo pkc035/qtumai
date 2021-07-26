@@ -35,7 +35,7 @@ export default function FilterModal({ isFilter, setIsFilter }) {
                 <Text fontStyle={style[idx]}>{list.title}</Text>
                 <CheckIcon
                   src={
-                    style[idx] ? "/images/fillCheck.svg" : "/images/Check.svg"
+                    style[idx] ? "/images/select.svg" : "/images/noneSelect.svg"
                   }
                   alt="checkImage"
                 />
@@ -130,7 +130,7 @@ const Text = styled.div`
 
 const CheckIcon = styled.img`
   width: 22px;
-  height: 20px;
+  height: 14px;
 `;
 
 const MatchingSetting = styled(List)`
