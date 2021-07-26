@@ -1,0 +1,55 @@
+{
+  "count": 4,
+  "next": null,
+  "previous": null,
+  "results": [
+    {
+      "id": 25,
+      "list_name": "생성1",
+      "mylikeshop_list": [
+        {
+          "id": 9,
+          "shop_id": 1,
+          "shop_name": "라면나라",
+          "coupon_content": ["test"]
+        }
+      ]
+    },
+    {
+      "id": 27,
+      "list_name": "재미없는 곳",
+      "mylikeshop_list": [
+        {
+          "id": 10,
+          "shop_id": 4,
+          "shop_name": "라면나라",
+          "coupon_content": ["test"]
+        },
+        {
+          "id": 11,
+          "shop_id": 2,
+          "shop_name": "라면나라",
+          "coupon_content": ["test"]
+        },
+        {
+          "id": 12,
+          "shop_id": 3,
+          "shop_name": "라면나라",
+          "coupon_content": ["test"]
+        }
+      ]
+    },
+    {
+      "id": 28,
+      "list_name": "주말에 가자",
+      "mylikeshop_list": [
+        {
+          "id": 13,
+          "shop_id": 1,
+          "shop_name": "라면나라",
+          "coupon_content": ["test"]
+        }
+      ]
+    }
+  ]
+}
