@@ -26,6 +26,10 @@ const Map = ({ size }) => {
       // var message = '지도를 드래그 하고 있습니다. ' +
       //   '지도의 중심 좌표는 ' + map.getCenter().toString() + ' 입니다.';
       // console.log(map.getCenter().toString());
+      // 영역의 남서쪽 좌표를 얻어옵니다
+      // var swLatLng = bounds.getSouthWest();
+      // // 영역의 북동쪽 좌표를 얻어옵니다
+      // var neLatLng = bounds.getNorthEast();
     });
   }, []);
 

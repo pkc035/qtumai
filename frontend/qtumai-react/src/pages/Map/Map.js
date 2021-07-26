@@ -1,12 +1,29 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import KakaoMap from "../../components/KakaoMap/KakaoMap";
 import MapList from "../../components/MapList/MapList";
+import MapSlider from "../../components/MapSlider/MapSlider";
 import styled from "styled-components";
 import FilterModal from "../../components/FilterModal/FilterModal";
 
 export default function Map() {
+  const [mapData, setMapData] = useState([]);
   const [isFilter, setIsFilter] = useState(false);
-  const [isList, setIsList] = useState(true);
+  const [isList, setIsList] = useState(false);
+
+  const [isAddress, setIsAddress] = useState(true);
+  const [isJibun, setIsJibun] = useState(false);
+
+  useEffect(() => {
+    fetch("/data/mapRestaurantData.json", {
+      method: "GET",
+    })
+      .then(res => res.json())
+      .then(data => setMapData(data.results));
+  }, []);
+
+  const filterAddress = () => {
+    console.log("good");
+  };
 
   return (
     <Container>
@@ -17,13 +34,30 @@ export default function Map() {
       <Section>
         <MapMenu>
           <AddressLocationBox>
-            <AddressPin>주소지</AddressPin>
-            <PresentPin>현위치</PresentPin>
+            <AddressPin
+              isAddress={isAddress}
+              onClick={() => {
+                filterAddress();
+                setIsAddress(true);
+                setIsJibun(false);
+              }}
+            >
+              주소지
+            </AddressPin>
+            <PresentPin
+              isJibun={isJibun}
+              onClick={() => {
+                setIsJibun(true);
+                setIsAddress(false);
+              }}
+            >
+              현위치
+            </PresentPin>
           </AddressLocationBox>
           <ListFilterBox>
-            <List onClick={() => setIsList(true)}>
-              <MenuIcon />
-              목록
+            <List onClick={() => setIsList(!isList)}>
+              {!isList ? <MenuIcon /> : <MapIcon />}
+              {!isList ? "목록" : "지도"}
             </List>
             <Filter onClick={() => setIsFilter(true)}>
               <FilterIcon />
@@ -37,6 +71,7 @@ export default function Map() {
       {isFilter && (
         <FilterModal isFilter={isFilter} setIsFilter={setIsFilter} />
       )}
+      <MapSlider mapData={mapData} />
     </Container>
   );
 }
@@ -51,6 +86,7 @@ const SearchBox = styled.div`
 
 const SearchInput = styled.input.attrs({
   type: "text",
+
   placeholder: "지역, 가게명, 메뉴 검색하기",
 })`
   width: 100%;
@@ -88,12 +124,16 @@ const AddressPin = styled.span`
   border: 1px solid lightgray;
   border-radius: 20px 0 0 20px;
   font-weight: 500;
-  background-color: white;
+  color: ${({ isAddress, theme }) => (isAddress ? "white" : theme.black)};
+  background-color: ${({ isAddress, theme }) =>
+    isAddress ? theme.red : "white"};
 `;
 
 const PresentPin = styled(AddressPin)`
   border-radius: 0 20px 20px 0;
   border-left: 0px;
+  color: ${({ isJibun, theme }) => (isJibun ? "white" : theme.black)};
+  background-color: ${({ isJibun, theme }) => (isJibun ? theme.red : "white")};
 `;
 
 const ListFilterBox = styled.li`
@@ -106,6 +146,7 @@ const List = styled.span`
   padding: 5px 10px;
   border: 1px solid ${({ theme }) => theme.lightGray};
   border-radius: 20px;
+  color: ${({ theme }) => theme.black};
   background-color: white;
 `;
 
@@ -116,7 +157,8 @@ const MenuIcon = styled.div`
   margin-right: 5px;
   background-color: black;
 
-  &::before {
+  &::before,
+  &::after {
     content: "";
     font-size: 0;
     position: absolute;
@@ -127,16 +169,19 @@ const MenuIcon = styled.div`
     background-color: black;
   }
   &::after {
-    content: "";
-    font-size: 0;
-    position: absolute;
     top: 12px;
     left: 0;
-    width: 100%;
-    height: 2px;
-    background-color: black;
   }
 `;
+
+const MapIcon = styled.img.attrs({
+  src: "/images/map_black.svg",
+})`
+  width: 14px;
+  height: 14px;
+  margin-right: 5px;
+`;
+
 const FilterIcon = styled.img.attrs({
   src: "/images/filter.svg",
 })`

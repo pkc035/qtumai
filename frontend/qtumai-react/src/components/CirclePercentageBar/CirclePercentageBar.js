@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 
 const CircularProgressBar = ({ percentage }) => {
+  const [position, setPosition] = useState({});
   const [numb, setNumb] = useState(0);
   const [left, setLeft] = useState(0);
   const [right, setRight] = useState(0);
@@ -12,25 +13,61 @@ const CircularProgressBar = ({ percentage }) => {
     if (numb <= 50) {
       if (numb < 20) {
         setLeft(36);
+        setPosition({
+          top: "0%",
+          left: "60%",
+        });
       } else if (numb < 30) {
         setLeft(72);
+        setPosition({
+          top: "23%",
+          left: "81%",
+        });
       } else if (numb < 40) {
         setLeft(108);
+        setPosition({
+          top: "50%",
+          left: "83%",
+        });
       } else if (numb < 50) {
         setLeft(144);
+        setPosition({
+          bottom: "4%",
+          right: "13%",
+        });
       } else {
         setLeft(180);
+        setPosition({
+          bottom: "-3%",
+          right: "40%",
+        });
       }
     } else if (51 <= numb) {
       setLeft(180);
       if (numb < 70) {
         setRight(36);
+        setPosition({
+          bottom: "0%",
+          right: "60%",
+        });
       } else if (numb < 80) {
         setRight(72);
+        setPosition({
+          bottom: "23%",
+          right: "81%",
+        });
       } else if (numb < 90) {
         setRight(108);
+        setPosition({
+          bottom: "50%",
+          right: "85%",
+        });
       } else if (numb < 100) {
         setRight(144);
+        setPosition({
+          top: "4%",
+          left: "13%",
+        });
       } else {
         setRight(180);
       }
@@ -49,7 +86,7 @@ const CircularProgressBar = ({ percentage }) => {
           <RightProgress left={left} right={right} />
         </RightBar>
       </Circle>
-      <EndPoint />
+      <EndPoint style={{ ...position }} />
     </Circular>
   );
 };
