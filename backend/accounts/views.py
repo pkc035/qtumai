@@ -17,7 +17,7 @@ from django.contrib.auth import get_user_model
 from project.settings.local import SECRET_KEY
 from random           import randint
 from shops.models     import Shop, LikeShopAccounts, Menu
-from .models          import AccountGuest, FunData, MyLikeList, Authentication, MyLikeListShop, Preference
+from .models          import AccountGuest, FunData, FunDataPercentage, MyLikeList, Authentication, MyLikeListShop, Preference
 from .serializers     import (
     AccountGuestSerializer, FunDataSerializer, MyLikeListSerializer, MyLikeListShopSerializer, 
     CheckUsernameSerializer, LivingAreaUpdateSerializer, AccountGuestUpdateSerializer,

@@ -4,7 +4,7 @@ from rest_framework.routers import DefaultRouter
 
 from .views import (
     AccountGuestUpdateViewSet, FunDataViewSet, KakaoLogInView, GoogleLoginView, NaverLogInView, MyLikeListViewSet, MyLikeListShopViewSet,
-    AccountGuestAPIView, SmsSendView, SMSVerificationView, CreatePreferenceAPIView, CheckUsernameAPIView, 
+    AccountGuestAPIView, SmsSendView, SMSVerificationView, CreatePreferenceAPIView, CheckUsernameAPIView, TestView, 
     dislikeshop, likeshop
     )
 
@@ -33,5 +33,6 @@ urlpatterns = [
     path('username-check/',CheckUsernameAPIView.as_view()),
     path('preference',CreatePreferenceAPIView.as_view()),
     path('check-sms/',SMSVerificationView.as_view()),
-    path('account', accountguest_list, name='account')    
+    path('account', accountguest_list, name='account'),
+    path('test', TestView.as_view())
 ] + router.urls

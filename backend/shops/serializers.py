@@ -3,7 +3,7 @@ from django.db.models    import F
 
 from rest_framework      import serializers
 
-from accounts.models     import AccountGuest, SearchedLocation, SearchedPeopleThrough, VisitedShop
+from accounts.models     import FunDataPercentage, SearchedLocation, SearchedPeopleThrough, VisitedShop
 from .models             import OpenTime, ReportShop, ReportReview, Review, Shop, ShopImage, ThemeKeyword, Coupon, Menu
 
 class CouponSerializer(serializers.ModelSerializer):
@@ -23,11 +23,11 @@ class OpenTimeSerializer(serializers.ModelSerializer):
 class ThemeKeywordSerializer(serializers.ModelSerializer):
     class Meta:
         model = ThemeKeyword
-        fields = ['shopThemeKeyword']
+        fields = ['theme_keyword']
 
     def to_representation(self, instance):
         row = super().to_representation(instance)
-        return row['shopThemKeyword']
+        return row['theme_keyword']
 
 class ShopImageSerializer(serializers.ModelSerializer):
     class Meta:
@@ -191,3 +191,7 @@ class LocationSearchSerializer(serializers.ModelSerializer):
         location.account_guest.add(account)
         location.save()
 
+class FunDataPercentageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = FunDataPercentage
+        fields = ['percentage']
