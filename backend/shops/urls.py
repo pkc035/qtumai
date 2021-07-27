@@ -3,7 +3,7 @@ from django.urls    import path
 from .views import (
     ShopRecommendViewSet, ShopListViewSet, ShopDetailViewSet, ShopSearchViewSet, ShopVisitedViewSet,
     MenuViewSet, ReportReviewViewSet, AccountSearchViewSet, LocationSearchViewSet, review_command,
-    review_create, report_shop, report_shop_command, report_review_command
+    review_create, report_shop, report_shop_command, report_review_command, file_upload
     )
 
 from rest_framework.routers import DefaultRouter
@@ -24,6 +24,7 @@ urlpatterns = [
     path('report', report_shop),
     path('report/<int:shop_id>',report_shop_command),
     path('review/<int:review_id>', review_command),
-    path('report/review/<int:report_review_id>', report_review_command)
+    path('report/review/<int:report_review_id>', report_review_command),
+    path('test/', file_upload)
     
 ]+ router.urls

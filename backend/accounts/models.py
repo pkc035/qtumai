@@ -1,9 +1,10 @@
-from datetime import datetime
 from django.db import models
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 from django.db.models.deletion import CASCADE
-from shops.models import Shop, Category, Menu
+
+from bulk_update_or_create     import BulkUpdateOrCreateQuerySet
+from shops.models              import Shop, Category, Menu
 
 # Create your models here.
 # 같은 동네에 사는 사람들 묶어주기 위한 테이블(등록된 동네가 없으면 항목 새로 추가 + Account에 연결, 있으면 있는 항목(pk)에 Account 연결)
@@ -168,6 +169,8 @@ class FunData(models.Model):
     # 추후 태그 관련 컬럼도 추가예정 tag = models.ForeignKey(Tag, on_delete=models.CASCADE, null=True)
     score = models.SmallIntegerField(default=0) # 싫어요: 0, 좋아요: 1, Super Like: 2 (값을 부여하는 방식 O // 더하기 X)
     created_at = models.DateTimeField(auto_now_add=True)
+    
+    objects = BulkUpdateOrCreateQuerySet.as_manager()
 
 
 # 유저 체류데이터 수집 테이블

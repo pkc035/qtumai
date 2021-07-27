@@ -2,6 +2,7 @@ from django.db                 import transaction
 from django.db.models          import Q, When, Value, Case
 from django.shortcuts          import get_object_or_404
 from django.contrib.auth       import get_user_model
+from django.core.files.storage import FileSystemStorage
 
 from rest_framework.viewsets    import ModelViewSet
 from rest_framework.decorators  import action, api_view
@@ -11,6 +12,8 @@ from rest_framework.pagination  import PageNumberPagination
 from re                        import A
 from random                    import seed, sample
 from datetime                  import date
+from PIL                       import Image
+from project.settings          import MEDIA_ROOT
 from .models                   import Shop, Category, Review, ReportShop, ReportReview, Menu
 from accounts.models           import AccountGuest
 from .serializers              import (
@@ -91,6 +94,7 @@ class ShopDetailViewSet(ModelViewSet):
 
     def get_queryset(self):
         shop = Shop.objects.filter(id=self.kwargs['id'])
+        
         return shop
 
 @transaction.atomic
@@ -103,9 +107,24 @@ def review_create(request):
         return Response(serializer.data)
 
     else:
-        shop = Shop.objects.get(id=request.data['shop_id'])
+        data = request.POST.copy()
+        shop = Shop.objects.get(id=data.get('shop_id'))
         user = AccountGuest.objects.get(id=1)
-        serializer = ReviewSerializer(data=request.data)
+        file = request.FILES['image']
+        fs   = FileSystemStorage(location=MEDIA_ROOT+'/review')
+        
+        if fs.exists(file.name):
+            FileSystemStorage.delete(fs, file.name)
+        
+        fs.save(file.name, file)
+
+        image = Image.open(fs.path(file.name))
+        image.thumbnail(size=(1600,2560))
+        image.save(fs.path(file.name), optimize=True)
+
+        data['img_path'] = fs.path(file.name)
+
+        serializer = ReviewSerializer(data=data)
         
         if serializer.is_valid():
             serializer.save(shop=shop,guest=user)
@@ -368,3 +387,16 @@ class ShopVisitedViewSet(ModelViewSet):
 #             .distinct()
 #         )
 #         return queryset
+
+from django.http import HttpResponseRedirect
+
+
+def file_upload(request):
+    data = request.FILES['image']
+
+    if request.method == 'POST':
+        test = FileSystemStorage(location=MEDIA_ROOT+'/test')
+        test.save(data.name, data)
+        
+        return HttpResponseRedirect('/media/')
+        

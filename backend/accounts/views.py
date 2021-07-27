@@ -347,7 +347,7 @@ class MyLikeListShopViewSet(ModelViewSet):
     def like_shop_delete(self, request, pk):
         shop           = get_object_or_404(Shop, pk=request.data['shop_id'])
         user           = get_object_or_404(get_user_model(), pk=1) 
-        likeshop       = get_object_or_404(LikeShopAccounts, shop=shop, guest_id=user)
+        likeshop       = get_object_or_404(LikeShopAccounts, shop=shop, guest=user)
         mylikelistshop = get_object_or_404(MyLikeListShop, pk=pk)
         mylikelistshop.delete()
         likeshop.delete()
@@ -406,6 +406,37 @@ class FunDataViewSet(ModelViewSet):
 
             return Response({'message':'Fun Update Fail'})    
 
+    # def create(self, request):
+    #     # user = get_object_or_404(get_user_model(), pk=request.user)
+    #     user       = get_object_or_404(get_user_model(), pk=1) 
+    #     menu       = get_object_or_404(Menu, pk=request.data['menu_id'])
+        
+    #     # for fundata in request.data:
+
+        
+    #     FunData.objects.filter(Q(account_guest=user)|Q(menu=menu))
+
+    #     if not fundata.exists():
+    #         serializer = self.get_serializer(data=request.data)
+
+    #         if serializer.is_valid(raise_exception=True):
+    #             serializer.save(menu=menu, account_guest=user)
+    #             serializer.instance.account_guest.fun_data_count += 1
+    #             serializer.instance.account_guest.save()
+            
+    #             return Response({'message':'Fun Created'})
+
+    #         return Response({'message':'Fun Create Fail'})
+
+    #     else:
+    #         serializer = self.get_serializer(data=request.data, instance=fundata.first())
+            
+    #         if serializer.is_valid(raise_exception=True):
+    #             serializer.save()
+
+    #             return Response({'message':'Fun Updated'})
+
+    #         return Response({'message':'Fun Update Fail'})    
         
 
 class AccountGuestUpdateViewSet(ModelViewSet):
