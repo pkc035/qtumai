@@ -13,7 +13,7 @@ from rest_framework.pagination  import PageNumberPagination
 from random                    import seed, sample
 from datetime                  import date
 from PIL                       import Image
-from project.settings          import MEDIA_ROOT
+from project.settings.base     import MEDIA_ROOT
 from .models                   import Shop, Category, Review, ReportShop, ReportReview, Menu
 from accounts.models           import AccountGuest
 from .serializers              import (

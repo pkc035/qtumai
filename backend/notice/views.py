@@ -1,9 +1,9 @@
-from PIL                import Image
-from project.settings   import MEDIA_ROOT
-from notice.serializers import BusinessFormSerializer, CouponManageSerializer
-from .models            import BusinessForm
-from shops.models       import Coupon, Shop
-from accounts.models    import AccountGuest
+from PIL                   import Image
+from project.settings.base import MEDIA_ROOT
+from notice.serializers    import BusinessFormSerializer, CouponManageSerializer
+from .models               import BusinessForm
+from shops.models          import Coupon, Shop
+from accounts.models       import AccountGuest
 
 from django.db.models           import Q
 from django.shortcuts           import get_object_or_404
