@@ -1,22 +1,26 @@
-from accounts.serializers import AccountGuestSerializer
-from random   import seed, sample
-from datetime import date
-
 from django.db                 import transaction
 from django.db.models          import Q, When, Value, Case
+from django.db.models.query    import Prefetch
 from django.shortcuts          import get_object_or_404
+from django.contrib.auth       import get_user_model
+from django.core.files.storage import FileSystemStorage
 
-from rest_framework.viewsets   import ModelViewSet
-from rest_framework.decorators import action, api_view
-from rest_framework.response   import Response
-from rest_framework.pagination import PageNumberPagination
+from rest_framework.viewsets    import ModelViewSet
+from rest_framework.decorators  import action, api_view
+from rest_framework.response    import Response
+from rest_framework.pagination  import PageNumberPagination
 
-from .models                   import Shop, Category, Review, ReportShop, ReportReview
+from random                    import seed, sample
+from datetime                  import date
+from PIL                       import Image
+from project.settings          import MEDIA_ROOT
+from .models                   import Shop, Category, Review, ReportShop, ReportReview, Menu
 from accounts.models           import AccountGuest
 from .serializers              import (
     ShopRecommendSerializer, ShopListSerializer,ShopDetailSerializer,
     ReviewSerializer, ReportReviewSerializer, ReportShopSerializer,
-    LocationSearchSerializer, AccountSearchSerializer,
+    LocationSearchSerializer, AccountSearchSerializer, ShopVisitedSerializer,
+    MenuSerializer
 )
 
 class ShopRecommendViewSet(ModelViewSet):
@@ -87,9 +91,11 @@ class ShopRecommendViewSet(ModelViewSet):
 
 class ShopDetailViewSet(ModelViewSet):
     serializer_class = ShopDetailSerializer
+
     def get_queryset(self):
-        queryset = Shop.objects.filter(id=self.kwargs['id'])
-        return queryset
+        shop = Shop.objects.filter(id=self.kwargs['id'])
+        
+        return shop
 
 @transaction.atomic
 @api_view(['GET','POST'])
@@ -101,9 +107,24 @@ def review_create(request):
         return Response(serializer.data)
 
     else:
-        shop = Shop.objects.get(id=request.data['shop_id'])
-        user = AccountGuest.objects.get(id=request.user)
-        serializer = ReviewSerializer(data=request.data)
+        data = request.POST.copy()
+        shop = Shop.objects.get(id=data.get('shop_id'))
+        user = AccountGuest.objects.get(id=1)
+        file = request.FILES['image']
+        fs   = FileSystemStorage(location=MEDIA_ROOT+'/review')
+        
+        if fs.exists(file.name):
+            FileSystemStorage.delete(fs, file.name)
+        
+        fs.save(file.name, file)
+
+        image = Image.open(fs.path(file.name))
+        image.thumbnail(size=(1600,2560))
+        image.save(fs.path(file.name), optimize=True)
+
+        data['img_path'] = fs.path(file.name)
+
+        serializer = ReviewSerializer(data=data)
         
         if serializer.is_valid():
             serializer.save(shop=shop,guest=user)
@@ -148,10 +169,10 @@ def report_shop(request):
 
     else:
         shop = Shop.objects.get(id=request.data['shop_id'])
-        user = AccountGuest.objects.get(id=request.user)
+        user = get_object_or_404(get_user_model(), pk=1)
         serializer = ReportShopSerializer(data=request.data)
         
-        if not user.guestReport.filter(shop=shop, guest=user):
+        if not user.guestReportShop.filter(shop=shop, guest=user):
             if serializer.is_valid(raise_exception=True):
                 serializer.save(shop=shop, guest=user)
         
@@ -191,6 +212,13 @@ def report_review_command(request, report_review_id):
         report.delete()
 
         return Response({'message':'Report Shop Deleted'})
+
+class MenuViewSet(ModelViewSet):
+    serializer_class = MenuSerializer
+    def get_queryset(self):
+        menu = Menu.objects.order_by('?').first()
+
+        return [menu]
 
 class AccountSearchViewSet(ModelViewSet):
     serializer_class = AccountSearchSerializer
@@ -241,7 +269,6 @@ class LocationSearchViewSet(ModelViewSet):
                     validated_data=request.data,
                     account=request.account
                 )
-
         return Response({"message":"Success"})
 
 class ShopListPagination(PageNumberPagination):
@@ -262,7 +289,6 @@ class ShopListViewSet(ModelViewSet):
             location  = self.request.account.livingarea
             latitude  = location.latitude
             longitude = location.longitude
-
 
         elif type == 'search':
             location  = (self.request.account.searchedLocation.all()
@@ -298,7 +324,6 @@ class ShopListViewSet(ModelViewSet):
             .prefetch_related('shopimage_set')
             .order_by('-naver_score')
         )
-
         return shops
 
 #menu_name, shop_name / category_name 검색 결과를 나눠서 return할 경우
@@ -330,8 +355,24 @@ class ShopSearchViewSet(ModelViewSet):
             {'shop,category': serializer_shop_category.data},
             # {'menu': serializer_menu.data}
         ]
-
         return Response(result_list)
+
+class ShopVisitedViewSet(ModelViewSet):
+    serializer_class = ShopVisitedSerializer
+    pagination_class = ShopListPagination
+
+    def get_queryset(self):
+        queryset = (
+            Shop.objects
+            .filter(userVisitedStore=self.request.account)
+            .prefetch_related(
+                'shopimage_set', 'visitedshop_set',
+                Prefetch('review_set', queryset=Review.objects.filter(guest=self.request.account))
+            )
+            .order_by('-visitedshop__visited_time')
+        )
+
+        return queryset
 
 # # menu_name,shop_name, category_name 검색 결과를 한 배열에 return 할 경우
 # class ShopSearchViewSet(ModelViewSet):
@@ -351,5 +392,15 @@ class ShopSearchViewSet(ModelViewSet):
 #         )
 #         return queryset
 
+from django.http import HttpResponseRedirect
 
+
+def file_upload(request):
+    data = request.FILES['image']
+
+    if request.method == 'POST':
+        test = FileSystemStorage(location=MEDIA_ROOT+'/test')
+        test.save(data.name, data)
+        
+        return HttpResponseRedirect('/media/')
         

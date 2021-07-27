@@ -5,13 +5,18 @@ export default function SlideModalControlButton({
   setIsSlideModal,
   submitList,
   setIsLike,
+  setIsFilter,
 }) {
   return (
     <ControlButtonBox>
       <CloseButton
         onClick={() => {
-          setIsSlideModal(false);
-          setIsLike(false);
+          if (setIsSlideModal) {
+            setIsSlideModal(false);
+            setIsLike(false);
+          }
+
+          setIsFilter(false);
         }}
       >
         닫기

@@ -60,6 +60,7 @@ class Coupon(models.Model):
     coupon_content = models.TextField(blank=True)
     begin_date = models.DateTimeField(null=True)
     expire_date = models.DateTimeField(null=True)
+    status = models.BooleanField(default=False)
 
 
 class LikeShopAccounts(models.Model):
@@ -79,14 +80,13 @@ class LikeShopAccounts(models.Model):
 # 현재시간 기준으로 가게가 열었는지/닫혔는지 표시하기 위해 사용
 class OpenTime(models.Model):
     shop = models.ForeignKey(Shop, on_delete=models.CASCADE, null=True)
-    open_time = models.TextField(blank=True)
-    '''
-    what_day = models.CharField(max_length=10, blank=True) # 요일 ('평일', '주말'로도 저장 가능)
+    open_time = models.TextField(blank=True) # 크롤링 데이터 저장할 곳
+    what_day = models.CharField(max_length=10, blank=True) # 요일
     open_time = models.TimeField(null=True)
     close_time = models.TimeField(null=True)
     break_time_begin = models.TimeField(null=True)
     break_time_end = models.TimeField(null=True)
-    '''
+    additional_info = models.TextField(blank=True) # 비즈니스 신청 시 추가 입력사항
 
 
 class Menu(models.Model):

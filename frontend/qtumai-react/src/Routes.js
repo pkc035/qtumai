@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Main from "./pages/Main/Main";
 import Detail from "./pages/Detail/Detail";
 import Map from "./pages/Map/Map";
+import Heart from "./pages/Heart/Heart";
 import Likes from "./pages/Likes/Likes";
 import Who from "./pages/Who/Who";
 import Where from "./pages/Where/Where";
@@ -21,6 +22,7 @@ class Routes extends React.Component {
           <Route exact path="/" component={Main} />
           <Route exact path="/shops/detail/:id" component={Detail} />
           <Route exact path="/map" component={Map} />
+          <Route exact path="/heart" component={Heart} />
           <Route exact path="/likes" component={Likes} />
           <Route exact path="/where" component={Where} />
           <Route exact path="/who" component={Who} />

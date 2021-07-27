@@ -9,9 +9,9 @@ export default function SlideModal({
   shopId,
   isLike,
   setIsLike,
+  mylikeList,
   style,
   setStyle,
-  mylikeList,
 }) {
   return (
     <BlackBackground>
@@ -43,5 +43,9 @@ const BlackBackground = styled.div`
   width: 100%;
   height: 100%;
   background-color: #000000a1;
+<<<<<<< HEAD
   z-index: 2;
+=======
+  z-index: 100;
+>>>>>>> master
 `;

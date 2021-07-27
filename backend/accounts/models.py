@@ -1,9 +1,9 @@
-from datetime import datetime
-from django.db import models
-from django.conf import settings
+from django.db                  import models
+from django.conf                import settings
 from django.contrib.auth.models import AbstractUser
-from django.db.models.deletion import CASCADE
-from shops.models import Shop, Category, Menu
+from django.db.models.deletion  import CASCADE
+
+from shops.models              import Shop, Category, Menu
 
 # Create your models here.
 # 같은 동네에 사는 사람들 묶어주기 위한 테이블(등록된 동네가 없으면 항목 새로 추가 + Account에 연결, 있으면 있는 항목(pk)에 Account 연결)
@@ -12,6 +12,12 @@ class LivingArea(models.Model):
     people_count = models.IntegerField(default=0)
     latitude = models.CharField(max_length=20, blank=True)
     longitude = models.CharField(max_length=20, blank=True)
+
+
+# 상위 % 구하기 위한 비교 테이블(하루에 한 번 갱신 예정)
+class FunDataPercentage(models.Model):
+    percentage = models.FloatField(blank=True) # 0.1% 단위로
+    greater_than = models.IntegerField(blank=True) # ~개 이상
 
 
 # 미리 저장해두기
@@ -30,13 +36,12 @@ class Authentication(models.Model):
 
 
 class AccountGuest(AbstractUser):
-    phone_number = models.CharField(max_length=20, blank=True)
-    # nickname = models.CharField(max_length=20, blank=True) # 네이버 로그인 시 받아올 수 있으면 바로 입력
+    phone_number = models.CharField(max_length=20, blank=True, null=True)
+    kakao_number = models.CharField(max_length=50, blank=True, unique=True, null=True)
+    google_number = models.EmailField(max_length=50, blank=True, unique=True, null=True)
+    naver_number = models.CharField(max_length=50, blank=True, unique=True, null=True)
     profile_img_path = models.TextField(blank=True)
-    kakao_number = models.CharField(max_length=50, blank=True)
-    google_number = models.EmailField(max_length=50, blank=True)
     google_mail = models.EmailField(max_length=128, blank=True) # 안들어올수도 있음
-    naver_id = models.CharField(max_length=50, blank=True)
     gender = models.CharField(max_length=2, blank=True)
     birthday = models.DateField(auto_now=False, auto_now_add=False, null=True)
     living_area = models.ForeignKey(LivingArea, on_delete=models.CASCADE, null=True)
@@ -73,25 +78,22 @@ class AccountGuest(AbstractUser):
     # job = models.ForeignKey(AccountJob, on_delete=models.CASCADE, null=True, default="") # 직업은 잠시 보류
     # my_friends = models.ManyToManyField('self', related_name="myFriends", symmetrical=False) # symmetrical: 대칭관계(상대방쪽에서도 자동추가 여부)
 
+    fun_data_percent = models.ForeignKey(FunDataPercentage, on_delete=models.CASCADE, null=True)
+
     def __str__(self):
         return self.username
-
-    # fun_data 상위 %
-    def top_rate_fun_data(self):
-        # rank = 
-        pass
 
 
 # 방문 시간도 함께 체크하기 위해 through 사용 (ManyToMany에서 컬럼 추가하는 방법)
 class VisitedShop(models.Model):
-    account_guest = models.ForeignKey(AccountGuest, on_delete=models.CASCADE, null=True)
+    account_guest = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
     shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
     visited_time = models.DateTimeField(auto_now_add=True)
 
 
 class SearchedLocation(models.Model):
     account_guest = models.ManyToManyField(
-        AccountGuest, # 역참조 할 수 있도록 manytomany 사용
+        settings.AUTH_USER_MODEL, # 역참조 할 수 있도록 manytomany 사용
         related_name="searchedLocation", 
         blank=True
     )
@@ -101,9 +103,10 @@ class SearchedLocation(models.Model):
     searched_count = models.PositiveIntegerField(default=0)    
     searched_time = models.DateTimeField(auto_now=True)
 
+
 class SearchedMenu(models.Model):
     account_guest = models.ManyToManyField(
-        AccountGuest, # 역참조 할 수 있도록 manytomany 사용
+        settings.AUTH_USER_MODEL, # 역참조 할 수 있도록 manytomany 사용
         related_name="searchedMenu", 
         blank=True
     )
@@ -114,7 +117,7 @@ class SearchedMenu(models.Model):
 
 class SearchedStore(models.Model):
     account_guest = models.ManyToManyField(
-        AccountGuest, # 역참조 할 수 있도록 manytomany 사용
+        settings.AUTH_USER_MODEL, # 역참조 할 수 있도록 manytomany 사용
         related_name="searchedStore", 
         blank=True
     )
@@ -122,22 +125,24 @@ class SearchedStore(models.Model):
     searched_count = models.PositiveIntegerField(default=0)
     searched_time = models.DateTimeField(auto_now=True)
 
+
 class SearchedPeopleThrough(models.Model):
     from_accountguest = models.ForeignKey(
-        'AccountGuest',
+        settings.AUTH_USER_MODEL,
         related_name="searcedpeople_from",
         on_delete=CASCADE
     )
     to_accountguest = models.ForeignKey(
-        'AccountGuest',
+        settings.AUTH_USER_MODEL,
         related_name="searcedpeople_to",
         on_delete=CASCADE
     )
     searched_time = models.DateTimeField(auto_now=True)
 
+
 class Preference(models.Model):
     account_guest = models.ForeignKey(
-        AccountGuest,
+        settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         null=True
     )
@@ -153,32 +158,30 @@ class Preference(models.Model):
     cleanliness_vibe = models.SmallIntegerField()
     cleanliness_price = models.SmallIntegerField()
     vibe_price = models.SmallIntegerField()
-    
+    group_num = models.IntegerField()
+
     # 0 ~ 1023번 그룹으로 분류
-    def group_num(self):
-        group_num = self.taste_service * 512 + self.taste_cleanliness * 256 + self.taste_vibe * 128 + self.taste_price * 64
+    def save(self, *args, **kwarg):
+        self.group_num = self.taste_service * 512 + self.taste_cleanliness * 256 + self.taste_vibe * 128 + self.taste_price * 64
         + self.service_cleanliness * 32 + self.service_vibe * 16 + self.service_price * 8
         + self.cleanliness_vibe * 4 + self.cleanliness_price * 2 + self.vibe_price
-        return group_num
 
+        super(Preference, self).save(*args, **kwarg)
 
 # 추후 메뉴뿐만 아니라 관심사 태그에 대한 내용도 물어볼 예정
 class FunData(models.Model):
-    account_guest = models.ManyToManyField(
-        AccountGuest,
-        related_name="userFunData",
-        blank=True
-    )
+    account_guest = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
     menu = models.ForeignKey(Menu, on_delete=models.CASCADE, null=True)
     # 추후 태그 관련 컬럼도 추가예정 tag = models.ForeignKey(Tag, on_delete=models.CASCADE, null=True)
     score = models.SmallIntegerField(default=0) # 싫어요: 0, 좋아요: 1, Super Like: 2 (값을 부여하는 방식 O // 더하기 X)
     created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
 
 # 유저 체류데이터 수집 테이블
 class ClickData(models.Model):
     account_guest = models.ForeignKey(
-        AccountGuest,
+        settings.AUTH_USER_MODEL,
         related_name="userClickData",
         on_delete=models.CASCADE,
         null=True
@@ -198,7 +201,7 @@ class ClickData(models.Model):
 
 
 class MyLikeList(models.Model):
-    account_guest = models.ForeignKey(AccountGuest, on_delete=models.CASCADE, null=True)
+    account_guest = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
     list_name = models.CharField(max_length=20, blank=True)
 
 
@@ -208,7 +211,11 @@ class MyLikeListShop(models.Model):
         on_delete=models.CASCADE,
         null=True
     )
-    shop_name = models.ManyToManyField(Shop, related_name="myLikeListShop", blank=True)
+    shop = models.ForeignKey(
+        Shop, 
+        on_delete=models.CASCADE,
+        null=True
+    )
 
     def __str__(self):
         return self.my_like_list

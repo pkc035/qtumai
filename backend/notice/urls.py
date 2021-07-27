@@ -15,8 +15,16 @@ Including another URLconf
 """
 from django.urls import path
 
-from .views import business_create
+from rest_framework.routers import DefaultRouter
+
+from .views import CouponManageViewSet, NoticeViewSet, ProposeBusinessViewSet, ProposeGoodShopViewSet, business_create
+
+router = DefaultRouter(trailing_slash=True)
+router.register(r"business/coupon", CouponManageViewSet, basename="business/coupon")
+router.register(r"propose/goodshop", ProposeGoodShopViewSet, basename="propose/goodshop")
+router.register(r"propose/business", ProposeBusinessViewSet, basename="propose/business")
+router.register(r"notice", NoticeViewSet, basename="notice")
 
 urlpatterns = [
-    path('business', business_create)
-]
+    path('business/register', business_create)
+]+ router.urls
