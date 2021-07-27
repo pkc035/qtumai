@@ -4,8 +4,8 @@ from rest_framework.routers import DefaultRouter
 
 from .views import (
     AccountGuestUpdateViewSet, FunDataViewSet, KakaoLogInView, GoogleLoginView, NaverLogInView, MyLikeListViewSet, MyLikeListShopViewSet,
-    AccountGuestAPIView, SmsSendView, SMSVerificationView, CreatePreferenceAPIView, CheckUsernameAPIView, 
-    dislikeshop, likeshop
+    SmsSendView, SMSLoginVerificationView, SMSSignupVerificationView, CreatePreferenceAPIView, CheckUsernameAPIView, LogoutView,
+    dislikeshop, likeshop, LogoutView, TestAPIView
     )
 
 accountguest_list = AccountGuestUpdateViewSet.as_view({
@@ -22,15 +22,19 @@ router.register(r"fun", FunDataViewSet, basename='fun')
 urlpatterns = [
     # views.py에서 정의한(def) 함수 연결 가능 (path)
     # path('send_sms/', views.send_sms),
+    path('test',TestAPIView.as_view()),
     path('naver-login/', NaverLogInView.as_view()),
     path('kakao-login/', KakaoLogInView.as_view()),
     path('google-login/', GoogleLoginView.as_view()),
-    path('signup', AccountGuestAPIView.as_view()),
-    path('dislike-shop', dislikeshop),
-    path('like-shop', likeshop),
     path('sms/',SmsSendView.as_view()),
     path('username-check/',CheckUsernameAPIView.as_view()),
     path('preference',CreatePreferenceAPIView.as_view()),
-    path('check-sms/',SMSVerificationView.as_view()),
+    path('sms-check',SMSLoginVerificationView.as_view()),
+    path('sms-check-signup',SMSSignupVerificationView.as_view()),
+    path('dislike-shop', dislikeshop),
+    path('like-shop', likeshop),
+    path('username-check/',CheckUsernameAPIView.as_view()),
+    path('preference',CreatePreferenceAPIView.as_view()),
     path('account', accountguest_list, name='account'),
+    path('logout/', LogoutView.as_view(), name='auth_logout'),
 ] + router.urls
