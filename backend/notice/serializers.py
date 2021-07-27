@@ -6,7 +6,7 @@ from rest_framework           import serializers
 from rest_framework.relations import PrimaryKeyRelatedField, StringRelatedField
 
 from shops.models import Coupon, Shop
-from .models      import BusinessForm, Notice, ProposeBusinessForm, ProposeGoodShop
+from .models      import BusinessForm, FAQForm, Notice, ProposeBusinessForm, ProposeGoodShop
 
 class BusinessFormSerializer(serializers.ModelSerializer):
     class Meta:
@@ -85,3 +85,9 @@ class NoticeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Notice
         fields = '__all__'
+
+class FAQFormSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = FAQForm
+        fields = '__all__'
+    
