@@ -17,7 +17,7 @@ from django.contrib          import admin
 from django.urls             import path, include
 from django.conf.urls.static import static
 
-from project.settings import MEDIA_ROOT, MEDIA_URL, DEBUG
+from .settings.base import MEDIA_ROOT, MEDIA_URL, DEBUG
 
 urlpatterns = [
     path("admin/", admin.site.urls),

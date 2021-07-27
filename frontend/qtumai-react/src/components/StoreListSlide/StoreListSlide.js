@@ -15,6 +15,7 @@ export default function MainStoreList({
     slidesToShow: 3,
     slidesToScroll: 2,
   };
+<<<<<<< HEAD
 
   const STARSCORE = {
     size: 14,
@@ -36,6 +37,8 @@ export default function MainStoreList({
     filledIcon: <i className="fa fa-star" />,
   };
 
+=======
+>>>>>>> master
   console.log(personalContents);
   return (
     <div>
@@ -46,6 +49,7 @@ export default function MainStoreList({
                 <Title>{data.title}</Title>
                 <StoreListSlider {...settings}>
                   {personalContents[idx].list.map(
+<<<<<<< HEAD
                     ({
                       id,
                       shopimage_set,
@@ -53,6 +57,9 @@ export default function MainStoreList({
                       shop_name,
                       naver_score,
                     }) => {
+=======
+                    ({ id, shopimage_set, coupon_set, shop_name }) => {
+>>>>>>> master
                       return (
                         <div key={id}>
                           <StoreContainer src={shopimage_set}>
@@ -60,10 +67,18 @@ export default function MainStoreList({
                               <StoreDiscount>{coupon_set[0]}</StoreDiscount>
                             </StoreCoupon>
                             <StarsContainer>
+<<<<<<< HEAD
                               <StarBox>
                                 <Stars {...STARSCORE} value={naver_score} />
                               </StarBox>
                               <BackgroundStars {...STARBACKGROUND} />
+=======
+                              <Star>★</Star>
+                              <Star>★</Star>
+                              <Star>★</Star>
+                              <Star>☆</Star>
+                              <Star>☆</Star>
+>>>>>>> master
                             </StarsContainer>
                           </StoreContainer>
                           <StoreName>{shop_name}</StoreName>

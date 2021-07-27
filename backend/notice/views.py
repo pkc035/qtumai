@@ -1,9 +1,4 @@
-from PIL                import Image
-from project.settings   import MEDIA_ROOT
-from notice.serializers import BusinessFormSerializer, CouponManageSerializer
-from .models            import BusinessForm
-from shops.models       import Coupon, Shop
-from accounts.models    import AccountGuest
+from PIL import Image
 
 from django.db.models           import Q
 from django.shortcuts           import get_object_or_404
@@ -13,10 +8,12 @@ from rest_framework.decorators import action, api_view
 from rest_framework.viewsets   import ModelViewSet
 from rest_framework.response   import Response
 
-from shops.models              import Coupon
-from accounts.models           import AccountGuest
-from .models                   import BusinessForm, Notice, ProposeBusinessForm, ProposeGoodShop
-from .serializers              import (
+from project.settings.base import MEDIA_ROOT
+from shops.models          import Coupon
+from accounts.models       import AccountGuest
+from notice.serializers    import BusinessFormSerializer, CouponManageSerializer
+from .models               import BusinessForm, Notice, ProposeBusinessForm, ProposeGoodShop
+from .serializers          import (
     BusinessFormSerializer, CouponManageSerializer, NoticeSerializer, ProposeBusinessSerializer, ProposeGoodShopSerializer
 )
 
