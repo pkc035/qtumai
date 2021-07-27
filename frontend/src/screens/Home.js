@@ -81,7 +81,8 @@ const Home = () => {
       <Stack.Screen
         name="ProfileEdit"
         component={ProfileEdit}
-        options={{ headerTitle: "프로필 편집" }}
+        // options={{ headerTitle: "프로필 편집" }}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="ServiceCenter"
@@ -143,8 +144,6 @@ const Home = () => {
         component={CustomerAnalysis}
         options={{ headerTitle: "고객군 분석" }}
       />
-      <Stack.Screen name="Who" component={Who}></Stack.Screen>
-      <Stack.Screen name="Where" component={Where}></Stack.Screen>
     </Stack.Navigator>
   );
 };
