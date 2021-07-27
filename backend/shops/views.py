@@ -1,20 +1,24 @@
+from random   import seed, sample
+from datetime import date
+from PIL      import Image
+
 from django.db                 import transaction
 from django.db.models          import Q, When, Value, Case
 from django.db.models.query    import Prefetch
 from django.shortcuts          import get_object_or_404
 from django.contrib.auth       import get_user_model
+from django.core.files.storage import FileSystemStorage
 
-from rest_framework.viewsets    import ModelViewSet
-from rest_framework.decorators  import action, api_view
-from rest_framework.response    import Response
-from rest_framework.pagination  import PageNumberPagination
+from rest_framework.viewsets   import ModelViewSet
+from rest_framework.decorators import action, api_view
+from rest_framework.response   import Response
+from rest_framework.pagination import PageNumberPagination
 
-from random                    import seed, sample
-from datetime                  import date
+from project.settings.base     import MEDIA_ROOT
+from accounts.models           import AccountGuest, FunDataPercentage
 from .models                   import Shop, Category, Review, ReportShop, ReportReview, Menu
-from accounts.models           import AccountGuest
 from .serializers              import (
-    ShopRecommendSerializer, ShopListSerializer,ShopDetailSerializer,
+    FunDataPercentageSerializer, ShopRecommendSerializer, ShopListSerializer,ShopDetailSerializer,
     ReviewSerializer, ReportReviewSerializer, ReportShopSerializer,
     LocationSearchSerializer, AccountSearchSerializer, ShopVisitedSerializer,
     MenuSerializer
@@ -49,7 +53,7 @@ class ShopRecommendViewSet(ModelViewSet):
         shops = (
             Shop.objects
             .annotate(range_condition=range_condition)
-            .exclude(range_condition=0)
+            # .exclude(range_condition=0)
             .prefetch_related('shopThemeKeyword', 'coupon_set','shopimage_set')
         )
         result_list = []
@@ -91,6 +95,7 @@ class ShopDetailViewSet(ModelViewSet):
 
     def get_queryset(self):
         shop = Shop.objects.filter(id=self.kwargs['id'])
+        
         return shop
 
 @transaction.atomic
@@ -103,9 +108,24 @@ def review_create(request):
         return Response(serializer.data)
 
     else:
-        shop = Shop.objects.get(id=request.data['shop_id'])
+        data = request.POST.copy()
+        shop = Shop.objects.get(id=data.get('shop_id'))
         user = AccountGuest.objects.get(id=1)
-        serializer = ReviewSerializer(data=request.data)
+        file = request.FILES['image']
+        fs   = FileSystemStorage(location=MEDIA_ROOT+'/review')
+        
+        if fs.exists(file.name):
+            FileSystemStorage.delete(fs, file.name)
+        
+        fs.save(file.name, file)
+
+        image = Image.open(fs.path(file.name))
+        image.thumbnail(size=(1600,2560))
+        image.save(fs.path(file.name), optimize=True)
+
+        data['img_path'] = fs.path(file.name)
+
+        serializer = ReviewSerializer(data=data)
         
         if serializer.is_valid():
             serializer.save(shop=shop,guest=user)
@@ -194,12 +214,24 @@ def report_review_command(request, report_review_id):
 
         return Response({'message':'Report Shop Deleted'})
 
-class MenuViewSet(ModelViewSet):
-    serializer_class = MenuSerializer
-    def get_queryset(self):
-        menu = Menu.objects.order_by('?').first()
+@api_view(['GET'])
+def get_raw_fundata(request):
 
-        return [menu]
+    # test
+    request.account = AccountGuest.objects.get(username="harry potter")
+
+
+    count           = request.account.fun_data_count
+    percentage      = FunDataPercentage.objects.filter(greater_than__lte=count).order_by('id').first()
+    menu            = Menu.objects.order_by('?').first()
+    serializer_per  = FunDataPercentageSerializer(percentage, many=False)
+    serializer_menu = MenuSerializer(menu, many=False)
+
+    result = {
+        'menu' : serializer_menu.data,
+        'percentage' : serializer_per.data['percentage']
+    }
+    return Response(result)
 
 class AccountSearchViewSet(ModelViewSet):
     serializer_class = AccountSearchSerializer
@@ -301,7 +333,8 @@ class ShopListViewSet(ModelViewSet):
 
         shops = (
             Shop.objects
-            .filter(range_condition&dislike_condition&score_condition)
+            .filter()
+            # .filter(range_condition&dislike_condition&score_condition)
             .prefetch_related('shopimage_set')
             .order_by('-naver_score')
         )
@@ -372,3 +405,16 @@ class ShopVisitedViewSet(ModelViewSet):
 #             .distinct()
 #         )
 #         return queryset
+
+from django.http import HttpResponseRedirect
+
+
+def file_upload(request):
+    data = request.FILES['image']
+
+    if request.method == 'POST':
+        test = FileSystemStorage(location=MEDIA_ROOT+'/test')
+        test.save(data.name, data)
+        
+        return HttpResponseRedirect('/media/')
+        

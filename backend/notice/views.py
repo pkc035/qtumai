@@ -1,16 +1,19 @@
-from django.http.request import validate_host
-from django.shortcuts          import get_object_or_404
-from django.db.models          import Q
+from PIL import Image
+
+from django.db.models           import Q
+from django.shortcuts           import get_object_or_404
+from django.core.files.storage  import FileSystemStorage
 
 from rest_framework.decorators import action, api_view
-from rest_framework.exceptions import NotFound
 from rest_framework.viewsets   import ModelViewSet
 from rest_framework.response   import Response
 
-from shops.models              import Coupon
-from accounts.models           import AccountGuest
-from .models                   import BusinessForm, Notice, ProposeBusinessForm, ProposeGoodShop
-from .serializers              import (
+from project.settings.base import MEDIA_ROOT
+from shops.models          import Coupon
+from accounts.models       import AccountGuest
+from notice.serializers    import BusinessFormSerializer, CouponManageSerializer
+from .models               import BusinessForm, Notice, ProposeBusinessForm, ProposeGoodShop
+from .serializers          import (
     BusinessFormSerializer, CouponManageSerializer, NoticeSerializer, ProposeBusinessSerializer, ProposeGoodShopSerializer
 )
 
@@ -22,8 +25,24 @@ def business_create(request):
         return Response(serializer.data)
     
     elif request.method == 'POST':
-        user = AccountGuest.objects.get(id=request.user)
-        serializer = BusinessFormSerializer(data=request.data)
+        data       = request.POST.copy()
+        user       = AccountGuest.objects.get(id=1)
+        fs         = FileSystemStorage(location=MEDIA_ROOT+'/business')
+        file_count = 0
+
+        for file in request.FILES.values():
+            file_count += 1
+
+            if fs.exists(file.name):
+                FileSystemStorage.delete(fs, file.name)
+            
+            fs.save(file.name, file)
+            image = Image.open(fs.path(file.name))
+            image.thumbnail(size=(1600,2560))
+            image.save(fs.path(file.name), optimize=True)
+            data['img_url_'+ str(file_count)] = fs.path(file.name)
+
+        serializer = BusinessFormSerializer(data=data)
         
         if not user.guestBusiness.filter(guest=user):
             if serializer.is_valid(raise_exception=True):
