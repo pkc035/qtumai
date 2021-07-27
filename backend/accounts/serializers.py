@@ -2,13 +2,13 @@ from shops.serializers import ShopDetailSerializer
 from django.contrib.auth import models
 from django.db.models import F, fields
 from django.db.models import Q
+from django.db.models import query
 from django.db.models.query import InstanceCheckMeta
 
 from rest_framework import serializers
 from .models      import AccountGuest, FunData, LivingArea, MyLikeList, MyLikeListShop, LivingArea, Preference
 
 class LivingAreaSreialzer(serializers.ModelSerializer):
-
     class Meta:
         model = LivingArea
         fields = ['id', 'area_name', 'people_count','latitude','longitude']
@@ -54,7 +54,6 @@ class CheckUsernameSerializer(serializers.ModelSerializer) :
     def check(self, validated_data):
         if AccountGuest.objects.filter(username=validated_data['username']).exists() == False:
             return validated_data
-
 
 class SimpleAccountGuestSerializer(serializers.ModelSerializer):
     class Meta:
@@ -193,78 +192,8 @@ class FunDataSerializer(serializers.ModelSerializer):
 
     #     return error
 
-    
 
-class PreferenceSerializer(serializers.ModelSerializer):
-    # account_guest = serializers.PrimaryKeyRelatedField(many=True)
     # account_guest = AccountGuestSerializer()
-    class Meta:
-        model = Preference
-        fields = [
-            'account_guest',
-            'taste_service',
-            'taste_cleanliness',
-            'taste_vibe',
-            'taste_price',
-            'service_cleanliness',
-            'service_vibe',
-            'service_price',
-            'cleanliness_vibe',
-            'cleanliness_price',
-            'vibe_price'
-            ]
-
-        # extra_kwargs = {'living_area':{'write_only':True}}
-
-    def create(self, validated_data):
-        Preference.objects.create(
-            account_guest_id = validated_data['account_guest_id'],
-            taste_service = validated_data['taste_service'], 
-            taste_cleanliness= validated_data['taste_cleanliness'],
-            taste_vibe= validated_data['taste_vibe'],
-            taste_price= validated_data['taste_price'],
-            service_cleanliness= validated_data['service_cleanliness'],
-            service_vibe= validated_data['service_vibe'],
-            service_price= validated_data['service_price'],
-            cleanliness_vibe= validated_data['cleanliness_vibe'],
-            cleanliness_price= validated_data['cleanliness_price'],
-            vibe_price= validated_data['vibe_price']
-        )
-        return validated_data
-
-    def update(self, validated_data):
-
-        Preference.objects.update(
-            account_guest_id = validated_data['account_guest'],
-            taste_service = validated_data['taste_service'], 
-            taste_cleanliness= validated_data['taste_cleanliness'],
-            taste_vibe= validated_data['taste_vibe'],
-            taste_price= validated_data['taste_price'],
-            service_cleanliness= validated_data['service_cleanliness'],
-            service_vibe= validated_data['service_vibe'],
-            service_price= validated_data['service_price'],
-            cleanliness_vibe= validated_data['cleanliness_vibe'],
-            cleanliness_price= validated_data['cleanliness_price'],
-            vibe_price= validated_data['vibe_price']
-        )
-        return validated_data
-
-        # fields = (
-        #     'account_guest',
-        #     'taste_service', 
-        #     'taste_cleanliness',
-        #     'taste_vibe',
-        #     'taste_price',
-        #     'service_cleanliness',
-        #     'service_vibe',
-        #     'service_price',
-        #     'cleanliness_vibe',
-        #     'cleanliness_price',
-        #     'vibe_price'
-        #     )
-        
-
-
 
     # def validate(self, data):
     #     non_alpha = set([s for s in "!@#$%^&*()|-=_+\[]{};':\",./?><"])
@@ -282,39 +211,62 @@ class PreferenceSerializer(serializers.ModelSerializer):
 
     #     return error
 
-class PreferenceUpdateSerializer(serializers.ModelSerializer):
+
+class PreferenceSerializer(serializers.ModelSerializer):
+    account_guest_id = serializers.PrimaryKeyRelatedField(queryset=AccountGuest.objects.all())
+
     class Meta:
-        model  = Preference
-        fields = '__all__'
+        model = Preference
+        fields = [
+            'id',
+            'account_guest_id',
+            'taste_service',
+            'taste_cleanliness',
+            'taste_vibe',
+            'taste_price',
+            'service_cleanliness',
+            'service_vibe',
+            'service_price',
+            'cleanliness_vibe',
+            'cleanliness_price',
+            'vibe_price',
+            ]
 
-    def update(self, instance, validated_data):
-        instance.taste_service       = validated_data.get('taste_service', F('taste_service'))
-        instance.taste_cleanliness   = validated_data.get('taste_cleanliness', F('taste_cleanliness'))
-        instance.taste_vibe          = validated_data.get('taste_vibe', F('taste_vibe'))
-        instance.taste_price         = validated_data.get('taste_price', F('taste_price'))
-        instance.service_cleanliness = validated_data.get('service_cleanliness', F('service_cleanliness'))
-        instance.service_vibe        = validated_data.get('service_vibe', F('service_vibe'))
-        instance.service_price       = validated_data.get('service_price', F('service_price'))
-        instance.cleanliness_vibe    = validated_data.get('cleanliness_vibe', F('cleanliness_vibe'))
-        instance.cleanliness_price   = validated_data.get('cleanliness_price', F('cleanliness_price'))
-        instance.vibe_price          = validated_data.get('vibe_price', F('vibe_price'))        
-        instance.save()
-        return instance
-
-        return instance
-
-class AccountGuestUpdateSerializer(serializers.ModelSerializer):
-    class Meta:
-        model  = AccountGuest
-        fields = ['username', 'phone_number']
-
-    def update(self, instance, validated_data):
-        instance.phone_number = validated_data.get('phone_number', F('phone_number'))
-        instance.username     = validated_data.get('usernamee', F('username'))
-        instance.save()
-        
-        return instance
+        # extra_kwargs = {'living_area':{'write_only':True}}
     
+    def create(self, validated_data):
+        preference = Preference.objects.create(
+            account_guest = validated_data['account_guest_id'],
+            taste_service = validated_data['taste_service'], 
+            taste_cleanliness= validated_data['taste_cleanliness'],
+            taste_vibe= validated_data['taste_vibe'],
+            taste_price= validated_data['taste_price'],
+            service_cleanliness= validated_data['service_cleanliness'],
+            service_vibe= validated_data['service_vibe'],
+            service_price= validated_data['service_price'],
+            cleanliness_vibe= validated_data['cleanliness_vibe'],
+            cleanliness_price= validated_data['cleanliness_price'],
+            vibe_price= validated_data['vibe_price'],
+            # group_num = self.group_num
+        )
+        
+        return preference
+
+    def update(self, instance, validated_data):
+        instance.taste_service       = validated_data.get('taste_service')
+        instance.taste_cleanliness   = validated_data.get('taste_cleanliness')
+        instance.taste_vibe          = validated_data.get('taste_vibe')
+        instance.taste_price         = validated_data.get('taste_price')
+        instance.service_cleanliness = validated_data.get('service_cleanliness')
+        instance.service_vibe        = validated_data.get('service_vibe')
+        instance.service_price       = validated_data.get('service_price')
+        instance.cleanliness_vibe    = validated_data.get('cleanliness_vibe')
+        instance.cleanliness_price   = validated_data.get('cleanliness_price')
+        instance.vibe_price          = validated_data.get('vibe_price')
+        instance.save()
+
+        return instance
+
 class LivingAreaUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model  = LivingArea
@@ -335,4 +287,14 @@ class LivingAreaUpdateSerializer(serializers.ModelSerializer):
         instance.people_count = instance.accountguest_set.count()
         instance.save()
         
+        return instance
+
+class AccountGuestUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model  = AccountGuest
+        fields = ['profile_img_path']
+
+    def update(self, instance, validated_data):
+        instance.profile_img_path = validated_data.get('profile_img_path')
+
         return instance

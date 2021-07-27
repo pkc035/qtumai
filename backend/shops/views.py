@@ -1,5 +1,6 @@
 from django.db                 import transaction
 from django.db.models          import Q, When, Value, Case
+from django.db.models.query    import Prefetch
 from django.shortcuts          import get_object_or_404
 from django.contrib.auth       import get_user_model
 from django.core.files.storage import FileSystemStorage
@@ -9,7 +10,6 @@ from rest_framework.decorators  import action, api_view
 from rest_framework.response    import Response
 from rest_framework.pagination  import PageNumberPagination
 
-from re                        import A
 from random                    import seed, sample
 from datetime                  import date
 from PIL                       import Image
@@ -365,9 +365,13 @@ class ShopVisitedViewSet(ModelViewSet):
         queryset = (
             Shop.objects
             .filter(userVisitedStore=self.request.account)
-            .prefetch_related('shopimage_set', 'userVisitedStore', 'visitedshop_set')
+            .prefetch_related(
+                'shopimage_set', 'visitedshop_set',
+                Prefetch('review_set', queryset=Review.objects.filter(guest=self.request.account))
+            )
             .order_by('-visitedshop__visited_time')
-        )     
+        )
+
         return queryset
 
 # # menu_name,shop_name, category_name 검색 결과를 한 배열에 return 할 경우

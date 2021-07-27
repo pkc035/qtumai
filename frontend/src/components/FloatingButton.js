@@ -15,8 +15,7 @@ export default class FloatingButton extends React.Component {
   animation = new Animated.Value(0);
 
   toggleMenu = () => {
-    const toValue = this.open ? 1 : 0;
-
+    const toValue = this.open ? false : true;
     Animated.spring(this.animation, { toValue, friction: 8 }).start();
     this.open = !this.open;
   };
@@ -60,9 +59,9 @@ export default class FloatingButton extends React.Component {
         <TouchableWithoutFeedback>
           <Animated.View style={[styles.button, styles.secondary, who]}>
             <Entypo
-              name='location-pin'
+              name="location-pin"
               size={20}
-              color='#f02a4b'
+              color="#f02a4b"
               onPress={() => this.props.navigation.navigate('Who')}
             />
           </Animated.View>
@@ -71,9 +70,9 @@ export default class FloatingButton extends React.Component {
         <TouchableWithoutFeedback>
           <Animated.View style={[styles.button, styles.secondary, where]}>
             <Entypo
-              name='thumbs-up'
+              name="thumbs-up"
               size={20}
-              color='#f02a4b'
+              color="#f02a4b"
               onPress={() => this.props.navigation.navigate('Where')}
             />
           </Animated.View>
@@ -81,7 +80,7 @@ export default class FloatingButton extends React.Component {
 
         <TouchableWithoutFeedback onPress={this.toggleMenu}>
           <Animated.View style={[styles.button, styles.menu, rotation]}>
-            <FontAwesome5 name='plus' size={24} color='#fff' />
+            <FontAwesome5 name="plus" size={24} color="#fff" />
           </Animated.View>
         </TouchableWithoutFeedback>
       </FloatingButtonContainer>
@@ -91,8 +90,7 @@ export default class FloatingButton extends React.Component {
 
 const FloatingButtonContainer = styled.View`
   align-items: center;
-  /* position: absolute; */
-  /* z-index: 1000; */
+  position: absolute;
 `;
 
 const styles = StyleSheet.create({

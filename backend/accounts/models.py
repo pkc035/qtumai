@@ -1,9 +1,8 @@
-from django.db import models
-from django.conf import settings
+from django.db                  import models
+from django.conf                import settings
 from django.contrib.auth.models import AbstractUser
-from django.db.models.deletion import CASCADE
+from django.db.models.deletion  import CASCADE
 
-from bulk_update_or_create     import BulkUpdateOrCreateQuerySet
 from shops.models              import Shop, Category, Menu
 
 # Create your models here.
@@ -13,6 +12,12 @@ class LivingArea(models.Model):
     people_count = models.IntegerField(default=0)
     latitude = models.CharField(max_length=20, blank=True)
     longitude = models.CharField(max_length=20, blank=True)
+
+
+# 상위 % 구하기 위한 비교 테이블(하루에 한 번 갱신 예정)
+class FunDataPercentage(models.Model):
+    percentage = models.FloatField(blank=True) # 0.1% 단위로
+    greater_than = models.IntegerField(blank=True) # ~개 이상
 
 
 # 미리 저장해두기
@@ -73,13 +78,10 @@ class AccountGuest(AbstractUser):
     # job = models.ForeignKey(AccountJob, on_delete=models.CASCADE, null=True, default="") # 직업은 잠시 보류
     # my_friends = models.ManyToManyField('self', related_name="myFriends", symmetrical=False) # symmetrical: 대칭관계(상대방쪽에서도 자동추가 여부)
 
+    fun_data_percent = models.ForeignKey(FunDataPercentage, on_delete=models.CASCADE, null=True)
+
     def __str__(self):
         return self.username
-
-    # fun_data 상위 %
-    def top_rate_fun_data(self):
-        # rank = 
-        pass
 
 
 # 방문 시간도 함께 체크하기 위해 through 사용 (ManyToMany에서 컬럼 추가하는 방법)
@@ -100,6 +102,7 @@ class SearchedLocation(models.Model):
     longitude = models.FloatField(null=True)
     searched_count = models.PositiveIntegerField(default=0)    
     searched_time = models.DateTimeField(auto_now=True)
+
 
 class SearchedMenu(models.Model):
     account_guest = models.ManyToManyField(
@@ -122,6 +125,7 @@ class SearchedStore(models.Model):
     searched_count = models.PositiveIntegerField(default=0)
     searched_time = models.DateTimeField(auto_now=True)
 
+
 class SearchedPeopleThrough(models.Model):
     from_accountguest = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -134,6 +138,7 @@ class SearchedPeopleThrough(models.Model):
         on_delete=CASCADE
     )
     searched_time = models.DateTimeField(auto_now=True)
+
 
 class Preference(models.Model):
     account_guest = models.ForeignKey(
@@ -153,14 +158,15 @@ class Preference(models.Model):
     cleanliness_vibe = models.SmallIntegerField()
     cleanliness_price = models.SmallIntegerField()
     vibe_price = models.SmallIntegerField()
-    
+    group_num = models.IntegerField()
+
     # 0 ~ 1023번 그룹으로 분류
-    def group_num(self):
-        group_num = self.taste_service * 512 + self.taste_cleanliness * 256 + self.taste_vibe * 128 + self.taste_price * 64
+    def save(self, *args, **kwarg):
+        self.group_num = self.taste_service * 512 + self.taste_cleanliness * 256 + self.taste_vibe * 128 + self.taste_price * 64
         + self.service_cleanliness * 32 + self.service_vibe * 16 + self.service_price * 8
         + self.cleanliness_vibe * 4 + self.cleanliness_price * 2 + self.vibe_price
-        return group_num
 
+        super(Preference, self).save(*args, **kwarg)
 
 # 추후 메뉴뿐만 아니라 관심사 태그에 대한 내용도 물어볼 예정
 class FunData(models.Model):
@@ -169,8 +175,7 @@ class FunData(models.Model):
     # 추후 태그 관련 컬럼도 추가예정 tag = models.ForeignKey(Tag, on_delete=models.CASCADE, null=True)
     score = models.SmallIntegerField(default=0) # 싫어요: 0, 좋아요: 1, Super Like: 2 (값을 부여하는 방식 O // 더하기 X)
     created_at = models.DateTimeField(auto_now_add=True)
-    
-    objects = BulkUpdateOrCreateQuerySet.as_manager()
+    updated_at = models.DateTimeField(auto_now=True)
 
 
 # 유저 체류데이터 수집 테이블
@@ -198,6 +203,7 @@ class ClickData(models.Model):
 class MyLikeList(models.Model):
     account_guest = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
     list_name = models.CharField(max_length=20, blank=True)
+
 
 class MyLikeListShop(models.Model):
     my_like_list = models.ForeignKey(

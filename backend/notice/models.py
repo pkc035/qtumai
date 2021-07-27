@@ -68,3 +68,11 @@ class ProposeBusinessForm(models.Model):
     phone_number = models.CharField(max_length=20, blank=True)
     manager_name = models.CharField(max_length=10, blank=True)
     content = models.CharField(max_length=150, blank=True)
+
+
+class FAQForm(models.Model):
+    title = models.CharField(max_length=30, blank=True)
+    content = models.TextField(blank=True)
+    hits = models.PositiveIntegerField(default=0)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)

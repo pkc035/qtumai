@@ -43,9 +43,14 @@ class VisitedShopSerializer(serializers.ModelSerializer):
         model = VisitedShop
         fields = ['visited_time']
 
+class ReviewIdSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Review
+        fields = ['id']
+
     def to_representation(self, instance):
         row = super().to_representation(instance)
-        return row['visited_time']
+        return row['id']
 
 class ShopListSerializer(serializers.ModelSerializer):
     shopimage_set = ShopImageSerializer(many=True, read_only=True)
@@ -65,19 +70,24 @@ class ShopRecommendSerializer(ShopListSerializer):
         fields = ShopListSerializer.Meta.fields + [
             'shopThemeKeyword', 'coupon_set'
         ]
-class ShopImageSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = ShopImage
-        fields = '__all__'
 
 class ShopVisitedSerializer(ShopListSerializer):
     visitedshop_set = VisitedShopSerializer(many=True, read_only=True)
+    review_set = ReviewIdSerializer(many=True, read_only=True)
+    is_review = serializers.SerializerMethodField()
 
     class Meta:
         model = Shop
         fields = ShopListSerializer.Meta.fields + [
-            'visitedshop_set'
+            'visitedshop_set',
+            'review_set',
+            'is_review'
         ]
+    
+    def get_is_review(self, obj):
+        if obj.review_set.exists():
+            return True
+        return False
 
 class ReviewSerializer(serializers.ModelSerializer):
     username = serializers.SerializerMethodField()

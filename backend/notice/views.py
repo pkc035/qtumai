@@ -1,8 +1,3 @@
-from rest_framework.serializers import Serializer
-from rest_framework.decorators  import action, api_view
-from django.shortcuts           import get_object_or_404
-from django.core.files.storage  import FileSystemStorage
-
 from PIL                import Image
 from project.settings   import MEDIA_ROOT
 from notice.serializers import BusinessFormSerializer, CouponManageSerializer
@@ -10,9 +5,20 @@ from .models            import BusinessForm
 from shops.models       import Coupon, Shop
 from accounts.models    import AccountGuest
 
+from django.db.models           import Q
+from django.shortcuts           import get_object_or_404
+from django.core.files.storage  import FileSystemStorage
+
+from rest_framework.decorators import action, api_view
 from rest_framework.viewsets   import ModelViewSet
 from rest_framework.response   import Response
-from rest_framework.decorators import api_view
+
+from shops.models              import Coupon
+from accounts.models           import AccountGuest
+from .models                   import BusinessForm, Notice, ProposeBusinessForm, ProposeGoodShop
+from .serializers              import (
+    BusinessFormSerializer, CouponManageSerializer, NoticeSerializer, ProposeBusinessSerializer, ProposeGoodShopSerializer
+)
 
 @api_view(['GET','POST','PUT','DELETE'])
 def business_create(request):
@@ -104,3 +110,25 @@ class CouponManageViewSet(ModelViewSet):
             )
 
         return Response(serializer.data)
+
+class ProposeGoodShopViewSet(ModelViewSet):
+    queryset = ProposeGoodShop.objects.all()
+    serializer_class = ProposeGoodShopSerializer
+
+class ProposeBusinessViewSet(ModelViewSet):
+    queryset = ProposeBusinessForm.objects.all()
+    serializer_class = ProposeBusinessSerializer
+
+class NoticeViewSet(ModelViewSet):
+    serializer_class = NoticeSerializer
+
+    def get_queryset(self):
+        is_public = self.request.query_params.get('is_pulic')
+        condition = Q()
+        
+        if is_public != None:
+            condition &= Q(public = is_public)
+
+        queryset = Notice.objects.filter(condition)
+
+        return queryset

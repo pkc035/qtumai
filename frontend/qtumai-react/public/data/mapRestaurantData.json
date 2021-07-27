@@ -1,0 +1,61 @@
+{
+  "count": 16,
+  "next": "http://localhost:8000/shops/list/?dislike_in=True&latitude=100&longitude=1000&page=2&score=0&type=here&zoom=1",
+  "previous": null,
+  "results": [
+    {
+      "id": 1,
+      "shop_name": "김밥나라",
+      "shop_description": "test",
+      "latitude": "100.0",
+      "longitude": "1000.0",
+      "naver_score": 1.0,
+      "shopimage_set": ["1.jpg", "2.jpg", "3.jpg"]
+    },
+    {
+      "id": 2,
+      "shop_name": "도시락나라",
+      "shop_description": "test",
+      "latitude": "100.002",
+      "longitude": "1000.003",
+      "naver_score": 1.0,
+      "shopimage_set": []
+    },
+    {
+      "id": 3,
+      "shop_name": "회나라",
+      "shop_description": "test",
+      "latitude": "100.004",
+      "longitude": "1000.006",
+      "naver_score": 1.0,
+      "shopimage_set": []
+    },
+    {
+      "id": 4,
+      "shop_name": "초밥나라",
+      "shop_description": "test",
+      "latitude": "100.006",
+      "longitude": "1000.009",
+      "naver_score": 1.0,
+      "shopimage_set": []
+    },
+    {
+      "id": 5,
+      "shop_name": "파스타나라",
+      "shop_description": "test",
+      "latitude": "100.008",
+      "longitude": "1000.012",
+      "naver_score": 1.0,
+      "shopimage_set": []
+    },
+    {
+      "id": 6,
+      "shop_name": "덮밥나라",
+      "shop_description": "test",
+      "latitude": "100.01",
+      "longitude": "1000.015",
+      "naver_score": 1.0,
+      "shopimage_set": []
+    }
+  ]
+}

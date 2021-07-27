@@ -14,14 +14,14 @@ from django.db.models    import F, Q
 from django.shortcuts    import get_object_or_404, render
 from django.contrib.auth import get_user_model
 
-from project.settings import SECRET_KEY
+from project.settings.local import SECRET_KEY
 from random           import randint
 from shops.models     import Shop, LikeShopAccounts, Menu
 from .models          import AccountGuest, FunData, MyLikeList, Authentication, MyLikeListShop, Preference
 from .serializers     import (
     AccountGuestSerializer, FunDataSerializer, MyLikeListSerializer, MyLikeListShopSerializer, 
-    PreferenceSerializer, CheckUsernameSerializer, LivingAreaUpdateSerializer, AccountGuestUpdateSerializer,
-    PreferenceUpdateSerializer, LivingAreaSreialzer, SimpleAccountGuestSerializer
+    CheckUsernameSerializer, LivingAreaUpdateSerializer, AccountGuestUpdateSerializer,
+    LivingAreaSreialzer, SimpleAccountGuestSerializer, PreferenceSerializer
     )
 
 class CheckUsernameAPIView(APIView):
@@ -53,49 +53,6 @@ class AccountGuestAPIView(APIView):
             return Response({'account_guest_id' : account_guest_id},status=status.HTTP_201_CREATED)
         return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
 
-
-class CreatePreferenceAPIView(APIView):
-    def post(self, request):
-        norm_data, area_data, pref_data = request.data['normal_data'], request.data['area_data'], request.data['pref_data']
-        norm_serializer = SimpleAccountGuestSerializer(data=norm_data)
-        area_serializer = LivingAreaSreialzer(data=area_data)
-        pref_serializer = PreferenceSerializer(data=pref_data)
-        if norm_serializer.is_valid():
-            norm_serializer.create(
-                validated_data = norm_data
-            )
-        print('norm ok=======================')
-
-        if area_serializer.is_valid():
-            area_serializer.create(
-                area_name = area_data['area_name'],
-                latitude = area_data['latitude'],
-                longitude = area_data['longitude']
-            )
-        print('area ok=======================')
-
-        if pref_serializer.is_valid():
-            print('valid_: ', pref_data)
-            pref_serializer.create(
-                validated_data = pref_data
-            )
-            print('pref ok=======================')
-
-            return Response(pref_serializer.data, status=status.HTTP_201_CREATED)
-        return Response(pref_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-class UpdatePreferenceAPIView(APIView):
-    def post(self, request):
-        serializer = PreferenceSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.update(
-                validated_data=request.data
-            )
-            return Response(serializer.data,status=status.HTTP_201_CREATED)
-        return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
-
-
 class NaverLogInView(View):
     def get(self, request):
         ALGORITHM       = 'HS256'
@@ -108,7 +65,7 @@ class NaverLogInView(View):
         
         if AccountGuest.objects.filter(naver_number=naver_number).exists():
             guest       = AccountGuest.objects.get(naver_number=naver_number)
-            encoded_jwt = jwt.encode({'guest_id': guest.id},SECRET_KEY, ALGORITHM)
+            encoded_jwt = jwt.encode({'guest_id': guest.id}, SECRET_KEY, ALGORITHM)
             return JsonResponse({"token": encoded_jwt},status=200)
 
         else:
@@ -374,7 +331,6 @@ def likeshop(request):
         shop.save()
         return Response({'message':'like shop deleted'})
 
-
 class FunDataViewSet(ModelViewSet):
     serializer_class = FunDataSerializer
 
@@ -406,45 +362,42 @@ class FunDataViewSet(ModelViewSet):
 
             return Response({'message':'Fun Update Fail'})    
 
-    # def create(self, request):
-    #     # user = get_object_or_404(get_user_model(), pk=request.user)
-    #     user       = get_object_or_404(get_user_model(), pk=1) 
-    #     menu       = get_object_or_404(Menu, pk=request.data['menu_id'])
-        
-    #     # for fundata in request.data:
+class CreatePreferenceAPIView(APIView):
+    def post(self, request):
+        norm_data, area_data, pref_data = request.data['normal_data'], request.data['area_data'], request.data['pref_data']
+        norm_serializer = SimpleAccountGuestSerializer(data=norm_data)
+        area_serializer = LivingAreaSreialzer(data=area_data)
+        pref_serializer = PreferenceSerializer(data=pref_data)
+        if norm_serializer.is_valid():
+            norm_serializer.create(
+                validated_data = norm_data
+            )
+        print('norm ok=======================')
 
-        
-    #     FunData.objects.filter(Q(account_guest=user)|Q(menu=menu))
+        if area_serializer.is_valid():
+            area_serializer.create(
+                area_name = area_data['area_name'],
+                latitude = area_data['latitude'],
+                longitude = area_data['longitude']
+            )
+        print('area ok=======================')
 
-    #     if not fundata.exists():
-    #         serializer = self.get_serializer(data=request.data)
+        if pref_serializer.is_valid():
+            print('valid_: ', pref_data)
+            pref_serializer.create(
+                validated_data = pref_data
+            )
+            print('pref ok=======================')
 
-    #         if serializer.is_valid(raise_exception=True):
-    #             serializer.save(menu=menu, account_guest=user)
-    #             serializer.instance.account_guest.fun_data_count += 1
-    #             serializer.instance.account_guest.save()
-            
-    #             return Response({'message':'Fun Created'})
-
-    #         return Response({'message':'Fun Create Fail'})
-
-    #     else:
-    #         serializer = self.get_serializer(data=request.data, instance=fundata.first())
-            
-    #         if serializer.is_valid(raise_exception=True):
-    #             serializer.save()
-
-    #             return Response({'message':'Fun Updated'})
-
-    #         return Response({'message':'Fun Update Fail'})    
-        
+            return Response(pref_serializer.data, status=status.HTTP_201_CREATED)
+        return Response(pref_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class AccountGuestUpdateViewSet(ModelViewSet):
     def list(self, request):
         preference = get_object_or_404(Preference,account_guest=request.account)
         
         serializer_account    = AccountGuestUpdateSerializer(request.account, many=False)
-        serializer_preference = PreferenceUpdateSerializer(preference, many=False)
+        serializer_preference = PreferenceSerializer(preference, many=False)
         serializer_livingarea = LivingAreaUpdateSerializer(request.account.living_area, many=False)
 
         result = {
@@ -464,7 +417,7 @@ class AccountGuestUpdateViewSet(ModelViewSet):
                 serializer.save()
 
         if request.data.get('is_preference_updated') == 'True':            
-            serializer = PreferenceUpdateSerializer(preference, data=request.data, partial=True)
+            serializer = PreferenceSerializer(preference, data=request.data, partial=True)
             if serializer.is_valid(raise_exception=True):
                 serializer.save()
 
@@ -473,4 +426,4 @@ class AccountGuestUpdateViewSet(ModelViewSet):
             if serializer.is_valid(raise_exception=True):
                 serializer.save(account=request.account)        
 
-        return Response({'message' : 'Success'})
+        return Response({'message' : 'SUCCESS'})
