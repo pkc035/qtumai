@@ -76,4 +76,7 @@ const LadioButton = styled.div`
 
 const option = styled.label``;
 
-const LadioWrap = styled.select``;
+const LadioWrap = styled.select`
+  border-radius: 5px;
+  background-color: #fff;
+`;

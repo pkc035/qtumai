@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 const BottomButton = ({ disabled, title, onClick, style }) => {
   return (
-    <Button disabled={disabled} onClick={onClick} style={{ style }}>
+    <Button disabled={disabled} onClick={onClick} style={style}>
       {title}
     </Button>
   );

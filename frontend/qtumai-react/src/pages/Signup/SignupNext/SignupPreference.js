@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { withRouter } from "react-router-dom";
 import PreferenceComponents from "./PreferenceComponents";
 import Loading from "../Loading";
-import BottomButton from "../../../components/BottomButton";
 
 function SignupPreference(props) {
   const [count, setCount] = useState(1);
@@ -19,52 +18,62 @@ function SignupPreference(props) {
     setPreferenceReset(false);
 
     if (count === 10) {
-      fetch("http://192.168.0.66:8000/accounts/preference", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json; charset=utf8",
-        },
-        body: JSON.stringify({
-          normal_data: {
-            username: localStorage.getItem("username"),
-            gender: localStorage.getItem("gender"),
-            birthday: localStorage.getItem("birthday"),
-            agreed_marketing_receive: localStorage.getItem(
-              "agreed_marketing_receive"
-            ),
-            // phone_number: localStorage.getItem("phone_number"),
-            google_number: localStorage.getItem("google_number"),
+      if (props.profileEditModalOn) {
+        setIsLoadingOn(true);
+        setPreferenceReset(true);
+        setTimeout(() => props.setProfileEditModalOn(false), 1000);
+      } else {
+        fetch("http://192.168.0.66:8000/accounts/preference", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json; charset=utf8",
           },
-          area_data: {
-            area_name: "갱기도 시흥시 미샨동",
-          },
-          pref_data: {
-            taste_service: preference[0],
-            taste_cleanliness: preference[1],
-            taste_vibe: preference[2],
-            taste_price: preference[3],
-            service_cleanliness: preference[4],
-            service_vibe: preference[5],
-            service_price: preference[6],
-            cleanliness_vibe: preference[7],
-            cleanliness_price: preference[8],
-            vibe_price: 1,
-          },
-        }),
-      })
-        .then(res => res.json())
-        .then(res => {
-          localStorage.setItem("access", res.access);
-          localStorage.setItem("refresh", res.refresh);
-        });
-      setPreferenceReset(true);
-      setPreference(number);
-      setData(number);
-      setNextButton(false);
-      setIsLoadingOn(true);
-      setTimeout(() => window.ReactNativeWebView.postMessage("Success!"), 1000);
+          body: JSON.stringify({
+            normal_data: {
+              username: localStorage.getItem("username"),
+              gender: localStorage.getItem("gender"),
+              birthday: localStorage.getItem("birthday"),
+              agreed_marketing_receive: localStorage.getItem(
+                "agreed_marketing_receive"
+              ),
+              // phone_number: localStorage.getItem("phone_number"),
+              google_number: localStorage.getItem("google_number"),
+            },
+            area_data: {
+              area_name: "갱기도 시흥시 미샨동",
+            },
+            pref_data: {
+              taste_service: preference[0],
+              taste_cleanliness: preference[1],
+              taste_vibe: preference[2],
+              taste_price: preference[3],
+              service_cleanliness: preference[4],
+              service_vibe: preference[5],
+              service_price: preference[6],
+              cleanliness_vibe: preference[7],
+              cleanliness_price: preference[8],
+              vibe_price: preference[9],
+            },
+          }),
+        })
+          .then(res => res.json())
+          .then(res => {
+            localStorage.setItem("access", res.access);
+            localStorage.setItem("refresh", res.refresh);
+          });
+        setPreferenceReset(true);
+        setNextButton(false);
+        setIsLoadingOn(true);
+        setTimeout(
+          () => window.ReactNativeWebView.postMessage("Success!"),
+          1000
+        );
+      }
     } else setCount(count => count + 1);
   }
+
+  console.log(data);
+  console.log(preference);
 
   console.log(
     localStorage.getItem("username"),
@@ -75,14 +84,18 @@ function SignupPreference(props) {
     // phone_number: localStorage.getItem("phone_number"),
   );
 
-  // useEffect(() => {
-  //   setPreference(preference => [...preference].concat(data));
-  // }, [count]);
+  useEffect(() => {
+    if (props.profileEditModalOn) {
+      props.setPreference(preference);
+    }
+  }, [preference]);
 
   function goToBack() {
     setPreference(preference.slice(0, preference.length - 1));
     if (count === 1) {
-      props.history.push("/signup/next");
+      if (props.profileEditModalOn) {
+        props.setProfileEditModalOn(false);
+      } else props.history.push("/signup/next");
     } else setCount(count => count - 1);
   }
 
@@ -129,14 +142,18 @@ function SignupPreference(props) {
         preferenceReset={preferenceReset}
         setPreferenceReset={setPreferenceReset}
       />
-      <BottomButton disabled={nextButton} title={"다음"} onClick={goToNext} />
+      <BottomButton disabled={nextButton} onClick={goToNext}>
+        다음
+      </BottomButton>
       {isLoadingOn && <Loading />}
     </Modal>
   );
 }
 
 const Modal = styled.div`
-  position: relative;
+  position: absolute;
+  top: 0;
+  left: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -168,6 +185,26 @@ const BackButton = styled.button`
 const ArrowImage = styled.img`
   width: 30px;
   transform: rotate(180deg);
+`;
+
+const BottomButton = styled.button`
+  position: fixed;
+  bottom: 0px;
+  width: 100%;
+  height: 60px;
+  margin-top: 15px;
+  background-color: #fff;
+  border-top: 1px solid #c1c1c1;
+  font-size: 15px;
+  color: #ff3000;
+  font-weight: 700;
+  z-index: 100;
+
+  &:disabled {
+    background-color: #fff;
+    cursor: default;
+    color: #c1c1c1;
+  }
 `;
 
 export default withRouter(SignupPreference);

@@ -9,8 +9,8 @@ function Profile() {
       </TitleWrap>
       <ProfileWrap>
         <ProfileImage alt="profile" src="/images/Social/kakaotalk_logo.jpg" />
-        <Name>안녕안녕</Name>
       </ProfileWrap>
+      <Name>안녕안녕</Name>
     </Content>
   );
 }
@@ -37,14 +37,25 @@ const Title = styled.div`
 `;
 
 const ProfileWrap = styled.div`
-  display: flex;
+  position: relative;
+  border-radius: 50%;
+  width: 125px;
+  height: 125px;
+  overflow: hidden;
+  background-color: #c1c1c1;
+  /* display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: center; */
 `;
 
 const ProfileImage = styled.img`
-  width: 50%;
+  width: 100%;
+  height: 100%;
   border-radius: 50%;
+  border: 1px solid #ccc;
+  object-fit: cover;
+  /* width: 50%;
+  border-radius: 50%; */
 `;
 
 const Name = styled.div`

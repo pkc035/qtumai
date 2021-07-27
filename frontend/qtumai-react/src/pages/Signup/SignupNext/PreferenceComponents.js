@@ -25,9 +25,9 @@ function PreferenceComponents(props) {
         >
           {props.firstTitle}
         </PreferenceBtn>
-        <Versus>
-          <Title>VS</Title>
-        </Versus>
+        <Versus src="/images/bar_center.svg" />
+        <VersusBar src="/images/bar.svg" />
+        <Title>VS</Title>
         <PreferenceBtn
           preference={preference === 1 ? true : false}
           onClick={() => onCreate(1)}
@@ -47,6 +47,8 @@ const PreferenceBtn = styled.button`
   padding: 10px 0;
   width: 100%;
   height: 100%;
+  font-size: 20px;
+  font-weight: 700;
 `;
 
 const InputBox = styled.div`
@@ -57,21 +59,32 @@ const InputBox = styled.div`
   align-items: center;
 `;
 
-const Versus = styled.div`
+const Versus = styled.img`
   position: absolute;
   left: 50%;
   width: 60px;
   height: 60px;
   font-size: 30px;
-  border-radius: 50%;
-  border: 1px solid #c1c1c1;
-  background-color: #fff;
+  z-index: 1;
+  transform: translateX(-50%);
+`;
+
+const VersusBar = styled.img`
+  position: absolute;
+  height: 100%;
+  left: 50%;
+  font-size: 30px;
   transform: translateX(-50%);
 `;
 
 const Title = styled.h2`
-  text-align: center;
-  margin-top: 15px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  font-size: 18px;
+  font-weight: 700;
+  transform: translate(-50%, -50%);
+  z-index: 2;
 `;
 
 export default PreferenceComponents;

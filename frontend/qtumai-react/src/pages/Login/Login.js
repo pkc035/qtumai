@@ -164,7 +164,7 @@ function Login(props) {
 
   return (
     <Modal>
-      <Logo src="/images/Social/facebook_logo.jpg" />
+      <Logo src="/images/logo.svg" />
       <Social>
         <LoginButtons>
           <div
@@ -172,14 +172,14 @@ function Login(props) {
             style={{ position: "absolute", top: "-10000px" }}
           />
           <SocialLogin onClick={handleNaverLogin}>
-            <img
+            <SocialImage
               alt="네이버로고"
               src="https://static.nid.naver.com/oauth/button_g.PNG?version=js-2.0.0"
             />
             <span>Naver로 로그인</span>
           </SocialLogin>
           <SocialLogin onClick={loginWithKakao}>
-            <img alt="카카오로고" src="/images/Social/kakaotalk_logo.jpg" />
+            <SocialImage alt="카카오로고" src="/images/kakao.svg" />
             <span>Kakao로 로그인</span>
           </SocialLogin>
           <GoogleLogin
@@ -191,7 +191,7 @@ function Login(props) {
                 onClick={renderProps.onClick}
                 disabled={renderProps.disabled}
               >
-                <img alt="구글로고" src="/images/Social/google_logo.jpeg" />
+                <SocialImage alt="구글로고" src="/images/google.svg" />
                 <span>Google로 로그인</span>
               </SocialLogin>
             )}
@@ -201,7 +201,7 @@ function Login(props) {
             isSignedIn={true}
           />
           <SocialLogin onClick={goToLogin}>
-            <img alt="카카오로고" src="/images/Social/phone.png" />
+            <PhoneLogin alt="전화번호" src="/images/phone.svg" />
             <span>전화번호로 로그인</span>
           </SocialLogin>
           <SignupBtn onClick={goToSignup}>회원가입</SignupBtn>
@@ -267,14 +267,19 @@ const SocialLogin = styled.button`
   font-size: 15px;
   color: #fff;
 
-  img {
-    width: 30px;
-    margin-right: 70px;
-  }
-
   span {
     font-size: 14px;
   }
 `;
 
+const PhoneLogin = styled.img`
+  width: 20px;
+  margin-right: 70px;
+  margin-left: 5px;
+`;
+
+const SocialImage = styled.img`
+  width: 30px;
+  margin-right: 70px;
+`;
 export default withRouter(Login);

@@ -60,7 +60,7 @@ function BusinessApplication() {
 
   const postCodeStyle = {
     display: "block",
-    position: "absolute",
+    position: "fixed",
     top: "0px",
     left: "0px",
     zIndex: "100",

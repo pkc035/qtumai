@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import BottomButton from "../../../components/BottomButton";
+import SignupPreference from "../../Signup/SignupNext/SignupPreference";
 
 function ProfileEdit() {
   const [previewImages, setPreviewImages] = useState([
     "/images/Social/kakaotalk_logo.jpg",
   ]);
   const [sendImages, setSendImages] = useState([]);
+  const [profileEditModalOn, setProfileEditModalOn] = useState(false);
+  const [preference, setPreference] = useState([]);
 
   const uploadPhoto = e => {
     const fileArray = [...e.target.files].map(file =>
@@ -16,9 +19,52 @@ function ProfileEdit() {
     setSendImages(sendImages => sendImages.concat([...e.target.files]));
   };
 
+  console.log(preference);
+
+  function handleModal() {
+    setProfileEditModalOn(!profileEditModalOn);
+  }
+
+  function goToBack() {
+    window.ReactNativeWebView.postMessage("Success!");
+  }
+
+  function editProfile() {
+    fetch("http://192.168.0.68:8000/accounts/account", {
+      method: "POST",
+      body: JSON.stringify({
+        taste_service: preference[0],
+        taste_cleanliness: preference[1],
+        taste_vibe: preference[2],
+        taste_price: preference[3],
+        service_cleanliness: preference[4],
+        service_vibe: preference[5],
+        service_price: preference[6],
+        cleanliness_vibe: preference[7],
+        cleanliness_price: preference[8],
+        vibe_price: preference[9],
+        area_name: "홍은동",
+        latitude: 30,
+        longitude: 30,
+      }),
+    })
+      .then(res => res.json())
+      .then(res => {
+        console.log(res);
+        // localStorage.setItem("access", res.access);
+        // localStorage.setItem("refresh", res.refresh);
+      });
+  }
+
   console.log(sendImages, previewImages);
   return (
     <Content>
+      <Title>
+        <BackButton onClick={goToBack}>
+          <ArrowImage src="/images/Social/arrow.png" />
+        </BackButton>
+        <Subject>프로필 편집 </Subject>
+      </Title>
       <ProfileWrap>
         <PhotoImage>
           <Profilesrc alt="profile" src={previewImages[0]} />
@@ -43,11 +89,23 @@ function ProfileEdit() {
           <Birth>생년월일</Birth>
         </Info>
         <PhoneNumber>휴대폰번호</PhoneNumber>
-        <Adress>
-          사는곳<Edit>수정</Edit>
-        </Adress>
+        <AdressWrap>
+          <Adress placeholder="사는곳" />
+          <Edit>수정</Edit>
+        </AdressWrap>
+        <PreferenceWrap>
+          <Preference>관심사</Preference>
+          <Edit onClick={handleModal}>수정</Edit>
+          {profileEditModalOn && (
+            <SignupPreference
+              setProfileEditModalOn={setProfileEditModalOn}
+              profileEditModalOn={profileEditModalOn}
+              setPreference={setPreference}
+            />
+          )}
+        </PreferenceWrap>
       </InputWrap>
-      <BottomButton title={"편집완료"} />
+      <BottomButton onClick={editProfile} title={"편집완료"} />
     </Content>
   );
 }
@@ -62,12 +120,38 @@ const Content = styled.div`
   height: 100vh;
 `;
 
+const Title = styled.div`
+  display: flex;
+  position: absolute;
+  width: 100%;
+  z-index: 100;
+  background-color: #fff;
+`;
+
+const Subject = styled.p`
+  margin: 25px auto;
+  font-weight: 700;
+  font-size: 25px;
+  color: #424242;
+`;
+
+const BackButton = styled.button`
+  position: absolute;
+  margin-top: 10px;
+  padding: 10px;
+`;
+
+const ArrowImage = styled.img`
+  width: 30px;
+  transform: rotate(180deg);
+`;
+
 const ProfileWrap = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 5%;
+  margin-top: 100px;
 `;
 
 const InputWrap = styled.div`
@@ -129,10 +213,12 @@ const PhoneNumber = styled.div`
   border-bottom: 1px solid #ccc;
 `;
 
-const Adress = styled.div`
-  position: relative;
-  margin: 5% 5% 0% 5%;
+const Adress = styled.input`
+  /* position: relative; */
+  /* margin: 5% 5% 0% 5%; */
+  width: 100%;
   padding-bottom: 3%;
+  border: none;
   border-bottom: 1px solid #ccc;
 `;
 
@@ -141,10 +227,12 @@ const Info = styled.div`
   justify-content: space-between;
 `;
 
-const Edit = styled.div`
+const Edit = styled.button`
   position: absolute;
-  margin-top: -5%;
   right: 0;
+  margin-right: 5%;
+  color: #ff3000;
+  font-weight: 700;
 `;
 
 const UploadLabel = styled.label`
@@ -168,4 +256,18 @@ const PhotoImage = styled.div`
   height: 125px;
   overflow: hidden;
   background-color: #c1c1c1;
+`;
+
+const AdressWrap = styled.div`
+  margin: 5% 5% 0% 5%;
+`;
+
+const PreferenceWrap = styled.div`
+  margin: 5% 5% 0% 5%;
+`;
+
+const Preference = styled.h2`
+  display: inline-block;
+  width: 100%;
+  border: none;
 `;
