@@ -22,33 +22,38 @@ export default function CommonMainSlider({
     // autoplay: true,
   };
 
-  const goToDetail = data => {
-    history.push(`/shops/detail/${data.id}`);
+  const goToDetail = id => {
+    history.push(`/shops/detail/${id}`);
   };
 
   return (
     <MainContainer>
       <MainSlider {...settings}>
         {!isLoading
-          ? mainSlider.list.map((data, idx) => {
-              return (
-                <div key={idx}>
-                  <ImageContainer
-                    onClick={() => goToDetail(data)}
-                    src={data.shop_info_url}
-                  >
-                    <ImageContextBox>
-                      <ImageContext>
-                        <ImageTitle>{mainSlider.title}</ImageTitle>
-                        <ImageSubTitle>{data.shop_name}</ImageSubTitle>
-                      </ImageContext>
-                    </ImageContextBox>
+          ? mainSlider.list.map(
+              ({ id, shopimage_set, shop_description, coupon_set }) => {
+                return (
+                  <div key={id}>
+                    <ImageContainer
+                      onClick={() => goToDetail(id)}
+                      src={shopimage_set}
+                    >
+                      <ImageContextBox>
+                        <ImageContext>
+                          <div>
+                            <ImageTitle>{mainSlider.title}</ImageTitle>
+                            <ImageSubTitle>{shop_description}</ImageSubTitle>
+                          </div>
+                          <Coupon>{coupon_set[0]}</Coupon>
+                        </ImageContext>
+                      </ImageContextBox>
 
-                    <BlackGradetion />
-                  </ImageContainer>
-                </div>
-              );
-            })
+                      <BlackGradetion />
+                    </ImageContainer>
+                  </div>
+                );
+              }
+            )
           : detailSlider.shop_image_list.map((data, idx) => {
               return (
                 <div key={idx}>
@@ -62,49 +67,40 @@ export default function CommonMainSlider({
     </MainContainer>
   );
 }
-
-const MainContainer = styled.div`
-  position: relative;
-  overflow-x: hidden;
-`;
-
 const BlackGradetion = styled.span`
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 200px;
-  background-image: linear-gradient(to bottom, #000000f2 0%, #00000000 100%);
+  background-image: linear-gradient(to bottom, #0000001a 0%, #00000000 100%);
   z-index: 1;
 `;
 
 const MainSlider = styled(Slider)`
   height: 400px;
-
-  .slick-list {
-    width: 100%;
-    height: 100%;
-  }
-
-  .slick-slide {
-    div {
-      width: 100%;
-      height: 100%;
-    }
-  }
-
-  .slick-track {
-    height: 100%;
-  }
-
   .slick-dots {
-    bottom: 10px;
+    bottom: 5px;
+  }
+
+  .slick-dots li {
+    margin: 0px;
+  }
+
+  .slick-dots li button:before {
+    color: #c2c2c2;
+    opacity: 0.5;
+  }
+
+  .slick-dots li.slick-active button:before {
+    color: #e63d11;
+    opacity: 1;
   }
 `;
 
 const ImageContainer = styled.div`
   width: 100%;
-  height: 100%;
+  height: 400px;
   background-image: ${({ src }) => `url(${src})`};
   background-size: cover;
   background-position: center;
@@ -112,36 +108,47 @@ const ImageContainer = styled.div`
   overflow: hidden;
 `;
 
-const ImageContextBox = styled.div`
+const ImageContextBox = styled.div``;
+const MainContainer = styled.div``;
+
+const ImageContext = styled.div`
+  ${({ theme }) => theme.flexSet("space-between", "flex-start")}
   position: absolute;
+  height: 100%;
+  width: 100vw;
+  padding: 50px 30px 0 30px;
+  color: white;
   z-index: 2;
 `;
 
-const ImageContext = styled.div`
-  position: relative;
-  width: 160px !important;
-  height: 40px !important;
-  margin: 50px 0 0 30px;
-  color: white;
-`;
-
 const ImageTitle = styled.div`
+  position: relative;
   font-size: 26px;
 
   &::after {
     content: "";
     position: absolute;
-    bottom: 6px;
+    bottom: -7px;
     left: 0px;
-    width: 26px;
-    height: 2px;
+    width: 24px;
+    height: 3px;
     background-color: white;
   }
 `;
 
 const ImageSubTitle = styled.div`
+  width: 200px;
+  margin-top: 14px;
   font-size: 32px;
   font-weight: bold;
-  line-height: 1.2;
   color: white;
+`;
+
+const Coupon = styled.div`
+  ${({ theme }) => theme.flexSet()};
+  ${({ theme }) => theme.imageSet(`url(/images/coupon_background.svg)`)};
+  width: 50px;
+  height: 28px;
+  padding-top: 2px;
+  font-weight: bold;
 `;

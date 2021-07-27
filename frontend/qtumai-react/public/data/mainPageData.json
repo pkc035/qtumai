@@ -4,83 +4,317 @@
     "list": [
       {
         "id": 1,
-        "shop_name": "파스타나라",
-        "shop_info_url": "https://i.imgur.com/aylXNh7.png",
-        "kakao_score": 31,
-        "latitude": 125.004,
-        "longitude": 241.004
-      },
-      {
-        "id": 21,
-        "shop_name": "회나라",
-        "shop_info_url": "https://i.imgur.com/zs1GZHb.jpg",
-        "kakao_score": 30,
-        "latitude": 125.008,
-        "longitude": 241.008
-      },
-      {
-        "id": 20,
         "shop_name": "김밥나라",
-        "shop_info_url": "https://i.imgur.com/Nxqdwbs.jpg",
-        "kakao_score": 23,
-        "latitude": 125.006,
-        "longitude": 241.006
+        "shop_description": "김밥이 맛있는 김밥천국",
+        "latitude": "100.0",
+        "longitude": "1000.0",
+        "naver_score": 1.0,
+        "shopimage_set": [
+          "https://i.imgur.com/zs1GZHb.jpg",
+          "https://i.imgur.com/ERmRCKF.jpg",
+          "https://i.imgur.com/Nxqdwbs.jpg",
+          "https://i.imgur.com/SwiHvRG.png"
+        ],
+        "shopThemeKeyword": [
+          "분위기 좋은",
+          "주말에 가기 좋은",
+          "데이트 하기 좋은"
+        ],
+        "coupon_set": ["0%", "300%", "300%"]
       },
       {
-        "id": 22,
-        "shop_name": "곱창나라",
-        "shop_info_url": "https://i.imgur.com/ERmRCKF.jpg",
-        "kakao_score": 22,
-        "latitude": 125.01,
-        "longitude": 241.01
+        "id": 2,
+        "shop_name": "도시락나라",
+        "shop_description": "test",
+        "latitude": "100.002",
+        "longitude": "1000.003",
+        "naver_score": 1.0,
+        "shopimage_set": [
+          "https://i.imgur.com/ERmRCKF.jpg",
+          "https://i.imgur.com/zs1GZHb.jpg",
+          "https://i.imgur.com/Nxqdwbs.jpg",
+          "https://i.imgur.com/SwiHvRG.png"
+        ],
+        "shopThemeKeyword": [],
+        "coupon_set": ["10%"]
       },
       {
-        "id": 18,
-        "shop_name": "라면나라",
-        "shop_info_url": "https://i.imgur.com/SwiHvRG.png",
-        "kakao_score": 9,
-        "latitude": 125.002,
-        "longitude": 241.002
+        "id": 3,
+        "shop_name": "회나라",
+        "shop_description": "test",
+        "latitude": "100.004",
+        "longitude": "1000.006",
+        "naver_score": 1.0,
+        "shopimage_set": [
+          "https://i.imgur.com/zs1GZHb.jpg",
+          "https://i.imgur.com/ERmRCKF.jpg",
+          "https://i.imgur.com/Nxqdwbs.jpg",
+          "https://i.imgur.com/SwiHvRG.png"
+        ],
+        "shopThemeKeyword": [],
+        "coupon_set": ["20%"]
       },
       {
-        "id": 23,
-        "shop_name": "삼겹살나라",
-        "shop_info_url": "https://i.imgur.com/aylXNh7.png",
-        "kakao_score": 54,
-        "latitude": 125.012,
-        "longitude": 241.012
-      },
-      {
-        "id": 26,
-        "shop_name": "김치찌개나라",
-        "shop_info_url": "https://i.imgur.com/Nxqdwbs.jpg",
-        "kakao_score": 34,
-        "latitude": 125.018,
-        "longitude": 241.018
-      },
-      {
-        "id": 25,
-        "shop_name": "냉면나라",
-        "shop_info_url": "https://i.imgur.com/ERmRCKF.jpg",
-        "kakao_score": 4,
-        "latitude": 125.016,
-        "longitude": 241.016
-      },
-      {
-        "id": 24,
+        "id": 4,
         "shop_name": "초밥나라",
-        "shop_info_url": "https://i.imgur.com/aylXNh7.png",
-        "kakao_score": 3,
-        "latitude": 125.014,
-        "longitude": 241.014
+        "shop_description": "test",
+        "latitude": "100.006",
+        "longitude": "1000.009",
+        "naver_score": 1.0,
+        "shopimage_set": [
+          "https://i.imgur.com/zs1GZHb.jpg",
+          "https://i.imgur.com/ERmRCKF.jpg",
+          "https://i.imgur.com/Nxqdwbs.jpg",
+          "https://i.imgur.com/SwiHvRG.png"
+        ],
+        "shopThemeKeyword": [],
+        "coupon_set": ["30%"]
       },
       {
-        "id": 27,
-        "shop_name": "육회나라",
-        "shop_info_url": "https://i.imgur.com/Nxqdwbs.jpg",
-        "kakao_score": 1,
-        "latitude": 125.02,
-        "longitude": 241.02
+        "id": 5,
+        "shop_name": "파스타나라",
+        "shop_description": "test",
+        "latitude": "100.008",
+        "longitude": "1000.012",
+        "naver_score": 1.0,
+        "shopimage_set": [
+          "https://i.imgur.com/zs1GZHb.jpg",
+          "https://i.imgur.com/ERmRCKF.jpg",
+          "https://i.imgur.com/Nxqdwbs.jpg",
+          "https://i.imgur.com/SwiHvRG.png"
+        ],
+        "shopThemeKeyword": [],
+        "coupon_set": ["40%"]
+      },
+      {
+        "id": 6,
+        "shop_name": "덮밥나라",
+        "shop_description": "test",
+        "latitude": "100.01",
+        "longitude": "1000.015",
+        "naver_score": 1.0,
+        "shopimage_set": [
+          "https://i.imgur.com/zs1GZHb.jpg",
+          "https://i.imgur.com/ERmRCKF.jpg",
+          "https://i.imgur.com/Nxqdwbs.jpg",
+          "https://i.imgur.com/SwiHvRG.png"
+        ],
+        "shopThemeKeyword": [],
+        "coupon_set": ["50%"]
+      },
+      {
+        "id": 7,
+        "shop_name": "삼겹살나라",
+        "shop_description": "test",
+        "latitude": "100.012",
+        "longitude": "1000.018",
+        "naver_score": 1.0,
+        "shopimage_set": [
+          "https://i.imgur.com/zs1GZHb.jpg",
+          "https://i.imgur.com/ERmRCKF.jpg",
+          "https://i.imgur.com/Nxqdwbs.jpg",
+          "https://i.imgur.com/SwiHvRG.png"
+        ],
+        "shopThemeKeyword": [],
+        "coupon_set": ["60%"]
+      },
+      {
+        "id": 8,
+        "shop_name": "제육볶음나라",
+        "shop_description": "test",
+        "latitude": "100.014",
+        "longitude": "1000.021",
+        "naver_score": 1.0,
+        "shopimage_set": [
+          "https://i.imgur.com/zs1GZHb.jpg",
+          "https://i.imgur.com/ERmRCKF.jpg",
+          "https://i.imgur.com/Nxqdwbs.jpg",
+          "https://i.imgur.com/SwiHvRG.png"
+        ],
+        "shopThemeKeyword": [],
+        "coupon_set": ["70%"]
+      },
+      {
+        "id": 9,
+        "shop_name": "된장찌개나라",
+        "shop_description": "test",
+        "latitude": "100.016",
+        "longitude": "1000.024",
+        "naver_score": 1.0,
+        "shopimage_set": [
+          "https://i.imgur.com/zs1GZHb.jpg",
+          "https://i.imgur.com/ERmRCKF.jpg",
+          "https://i.imgur.com/Nxqdwbs.jpg",
+          "https://i.imgur.com/SwiHvRG.png"
+        ],
+        "shopThemeKeyword": [],
+        "coupon_set": ["80%"]
+      },
+      {
+        "id": 10,
+        "shop_name": "김치찌개나라",
+        "shop_description": "test",
+        "latitude": "100.018",
+        "longitude": "1000.027",
+        "naver_score": 1.0,
+        "shopimage_set": [
+          "https://i.imgur.com/zs1GZHb.jpg",
+          "https://i.imgur.com/ERmRCKF.jpg",
+          "https://i.imgur.com/Nxqdwbs.jpg",
+          "https://i.imgur.com/SwiHvRG.png"
+        ],
+        "shopThemeKeyword": [],
+        "coupon_set": ["90%"]
+      }
+    ]
+  },
+  {
+    "title": "오늘의 분식",
+    "list": [
+      {
+        "id": 1,
+        "shop_name": "김밥나라",
+        "shop_description": "김밥이 맛있는 김밥천국",
+        "latitude": "100.0",
+        "longitude": "1000.0",
+        "naver_score": 1.0,
+        "shopimage_set": [
+          "https://i.imgur.com/zs1GZHb.jpg",
+          "https://i.imgur.com/ERmRCKF.jpg",
+          "https://i.imgur.com/Nxqdwbs.jpg",
+          "https://i.imgur.com/SwiHvRG.png"
+        ],
+        "shopThemeKeyword": [
+          "분위기 좋은",
+          "주말에 가기 좋은",
+          "데이트 하기 좋은"
+        ],
+        "coupon_set": ["0%", "300%", "300%"]
+      },
+      {
+        "id": 1,
+        "shop_name": "김밥나라",
+        "shop_description": "test",
+        "latitude": "100.0",
+        "longitude": "1000.0",
+        "naver_score": 1.0,
+        "shopimage_set": [
+          "https://i.imgur.com/ERmRCKF.jpg",
+          "https://i.imgur.com/zs1GZHb.jpg",
+          "https://i.imgur.com/Nxqdwbs.jpg",
+          "https://i.imgur.com/SwiHvRG.png"
+        ],
+        "shopThemeKeyword": [
+          "분위기 좋은",
+          "주말에 가기 좋은",
+          "데이트 하기 좋은"
+        ],
+        "coupon_set": ["0%", "300%", "300%"]
+      },
+      {
+        "id": 1,
+        "shop_name": "김밥나라",
+        "shop_description": "test",
+        "latitude": "100.0",
+        "longitude": "1000.0",
+        "naver_score": 1.0,
+        "shopimage_set": [
+          "https://i.imgur.com/zs1GZHb.jpg",
+          "https://i.imgur.com/ERmRCKF.jpg",
+          "https://i.imgur.com/Nxqdwbs.jpg",
+          "https://i.imgur.com/SwiHvRG.png"
+        ],
+        "shopThemeKeyword": [
+          "분위기 좋은",
+          "주말에 가기 좋은",
+          "데이트 하기 좋은"
+        ],
+        "coupon_set": ["0%", "300%", "300%"]
+      }
+    ]
+  },
+  {
+    "title": "오늘의 중식",
+    "list": [
+      {
+        "id": 15,
+        "shop_name": "짜장면나라",
+        "shop_description": "test",
+        "latitude": "100.028",
+        "longitude": "1000.042",
+        "naver_score": 1.0,
+        "shopimage_set": [
+          "https://i.imgur.com/zs1GZHb.jpg",
+          "https://i.imgur.com/ERmRCKF.jpg",
+          "https://i.imgur.com/Nxqdwbs.jpg",
+          "https://i.imgur.com/SwiHvRG.png"
+        ],
+        "shopThemeKeyword": [],
+        "coupon_set": ["140%"]
+      },
+      {
+        "id": 16,
+        "shop_name": "마라탕나라",
+        "shop_description": "test",
+        "latitude": "100.03",
+        "longitude": "1000.045",
+        "naver_score": 1.0,
+        "shopimage_set": [
+          "https://i.imgur.com/zs1GZHb.jpg",
+          "https://i.imgur.com/ERmRCKF.jpg",
+          "https://i.imgur.com/Nxqdwbs.jpg",
+          "https://i.imgur.com/SwiHvRG.png"
+        ],
+        "shopThemeKeyword": [],
+        "coupon_set": ["150%"]
+      },
+      {
+        "id": 16,
+        "shop_name": "마라탕나라",
+        "shop_description": "test",
+        "latitude": "100.03",
+        "longitude": "1000.045",
+        "naver_score": 1.0,
+        "shopimage_set": [
+          "https://i.imgur.com/zs1GZHb.jpg",
+          "https://i.imgur.com/ERmRCKF.jpg",
+          "https://i.imgur.com/Nxqdwbs.jpg",
+          "https://i.imgur.com/SwiHvRG.png"
+        ],
+        "shopThemeKeyword": [],
+        "coupon_set": ["150%"]
+      },
+      {
+        "id": 16,
+        "shop_name": "마라탕나라",
+        "shop_description": "test",
+        "latitude": "100.03",
+        "longitude": "1000.045",
+        "naver_score": 1.0,
+        "shopimage_set": [
+          "https://i.imgur.com/zs1GZHb.jpg",
+          "https://i.imgur.com/ERmRCKF.jpg",
+          "https://i.imgur.com/Nxqdwbs.jpg",
+          "https://i.imgur.com/SwiHvRG.png"
+        ],
+        "shopThemeKeyword": [],
+        "coupon_set": ["150%"]
+      },
+      {
+        "id": 16,
+        "shop_name": "마라탕나라",
+        "shop_description": "test",
+        "latitude": "100.03",
+        "longitude": "1000.045",
+        "naver_score": 1.0,
+        "shopimage_set": [
+          "https://i.imgur.com/zs1GZHb.jpg",
+          "https://i.imgur.com/ERmRCKF.jpg",
+          "https://i.imgur.com/Nxqdwbs.jpg",
+          "https://i.imgur.com/SwiHvRG.png"
+        ],
+        "shopThemeKeyword": [],
+        "coupon_set": ["150%"]
       }
     ]
   },
@@ -88,182 +322,116 @@
     "title": "오늘의 일식",
     "list": [
       {
-        "id": 21,
+        "id": 3,
         "shop_name": "회나라",
-        "shop_info_url": "https://i.imgur.com/Nxqdwbs.jpg",
-        "kakao_score": 30,
-        "latitude": 125.008,
-        "longitude": 241.008
+        "shop_description": "test",
+        "latitude": "100.004",
+        "longitude": "1000.006",
+        "naver_score": 1.0,
+        "shopimage_set": [
+          "https://i.imgur.com/zs1GZHb.jpg",
+          "https://i.imgur.com/ERmRCKF.jpg",
+          "https://i.imgur.com/Nxqdwbs.jpg",
+          "https://i.imgur.com/SwiHvRG.png"
+        ],
+        "shopThemeKeyword": [],
+        "coupon_set": ["20%"]
       },
       {
-        "id": 24,
+        "id": 4,
         "shop_name": "초밥나라",
-        "shop_info_url": "https://i.imgur.com/ERmRCKF.jpg",
-        "kakao_score": 3,
-        "latitude": 125.014,
-        "longitude": 241.014
+        "shop_description": "test",
+        "latitude": "100.006",
+        "longitude": "1000.009",
+        "naver_score": 1.0,
+        "shopimage_set": [
+          "https://i.imgur.com/zs1GZHb.jpg",
+          "https://i.imgur.com/ERmRCKF.jpg",
+          "https://i.imgur.com/Nxqdwbs.jpg",
+          "https://i.imgur.com/SwiHvRG.png"
+        ],
+        "shopThemeKeyword": [],
+        "coupon_set": ["30%"]
       },
       {
-        "id": 24,
+        "id": 4,
         "shop_name": "초밥나라",
-        "shop_info_url": "https://i.imgur.com/ERmRCKF.jpg",
-        "kakao_score": 3,
-        "latitude": 125.014,
-        "longitude": 241.014
+        "shop_description": "test",
+        "latitude": "100.006",
+        "longitude": "1000.009",
+        "naver_score": 1.0,
+        "shopimage_set": [
+          "https://i.imgur.com/zs1GZHb.jpg",
+          "https://i.imgur.com/ERmRCKF.jpg",
+          "https://i.imgur.com/Nxqdwbs.jpg",
+          "https://i.imgur.com/SwiHvRG.png"
+        ],
+        "shopThemeKeyword": [],
+        "coupon_set": ["30%"]
       },
       {
-        "id": 24,
+        "id": 4,
         "shop_name": "초밥나라",
-        "shop_info_url": "https://i.imgur.com/ERmRCKF.jpg",
-        "kakao_score": 3,
-        "latitude": 125.014,
-        "longitude": 241.014
+        "shop_description": "test",
+        "latitude": "100.006",
+        "longitude": "1000.009",
+        "naver_score": 1.0,
+        "shopimage_set": [
+          "https://i.imgur.com/zs1GZHb.jpg",
+          "https://i.imgur.com/ERmRCKF.jpg",
+          "https://i.imgur.com/Nxqdwbs.jpg",
+          "https://i.imgur.com/SwiHvRG.png"
+        ],
+        "shopThemeKeyword": [],
+        "coupon_set": ["30%"]
       },
       {
-        "id": 24,
+        "id": 4,
         "shop_name": "초밥나라",
-        "shop_info_url": "https://i.imgur.com/ERmRCKF.jpg",
-        "kakao_score": 3,
-        "latitude": 125.014,
-        "longitude": 241.014
+        "shop_description": "test",
+        "latitude": "100.006",
+        "longitude": "1000.009",
+        "naver_score": 1.0,
+        "shopimage_set": [
+          "https://i.imgur.com/zs1GZHb.jpg",
+          "https://i.imgur.com/ERmRCKF.jpg",
+          "https://i.imgur.com/Nxqdwbs.jpg",
+          "https://i.imgur.com/SwiHvRG.png"
+        ],
+        "shopThemeKeyword": [],
+        "coupon_set": ["30%"]
       },
       {
-        "id": 24,
+        "id": 4,
         "shop_name": "초밥나라",
-        "shop_info_url": "https://i.imgur.com/ERmRCKF.jpg",
-        "kakao_score": 3,
-        "latitude": 125.014,
-        "longitude": 241.014
+        "shop_description": "test",
+        "latitude": "100.006",
+        "longitude": "1000.009",
+        "naver_score": 1.0,
+        "shopimage_set": [
+          "https://i.imgur.com/zs1GZHb.jpg",
+          "https://i.imgur.com/ERmRCKF.jpg",
+          "https://i.imgur.com/Nxqdwbs.jpg",
+          "https://i.imgur.com/SwiHvRG.png"
+        ],
+        "shopThemeKeyword": [],
+        "coupon_set": ["30%"]
       },
       {
-        "id": 24,
-        "shop_name": "초밥나라",
-        "shop_info_url": "https://i.imgur.com/ERmRCKF.jpg",
-        "kakao_score": 3,
-        "latitude": 125.014,
-        "longitude": 241.014
-      }
-    ]
-  },
-  {
-    "title": "오늘의 한식",
-    "list": [
-      {
-        "id": 22,
-        "shop_name": "곱창나라",
-        "shop_info_url": "url2",
-        "kakao_score": 22,
-        "latitude": 125.01,
-        "longitude": 241.01
-      },
-      {
-        "id": 26,
-        "shop_name": "김치찌개나라",
-        "shop_info_url": "url2",
-        "kakao_score": 34,
-        "latitude": 125.018,
-        "longitude": 241.018
-      },
-      {
-        "id": 25,
-        "shop_name": "냉면나라",
-        "shop_info_url": "url2",
-        "kakao_score": 4,
-        "latitude": 125.016,
-        "longitude": 241.016
-      },
-      {
-        "id": 27,
-        "shop_name": "육회나라",
-        "shop_info_url": "url2",
-        "kakao_score": 1,
-        "latitude": 125.02,
-        "longitude": 241.02
-      },
-      {
-        "id": 26,
-        "shop_name": "김치찌개나라",
-        "shop_info_url": "url2",
-        "kakao_score": 34,
-        "latitude": 125.018,
-        "longitude": 241.018
-      },
-      {
-        "id": 25,
-        "shop_name": "냉면나라",
-        "shop_info_url": "url2",
-        "kakao_score": 4,
-        "latitude": 125.016,
-        "longitude": 241.016
-      },
-      {
-        "id": 27,
-        "shop_name": "육회나라",
-        "shop_info_url": "url2",
-        "kakao_score": 1,
-        "latitude": 125.02,
-        "longitude": 241.02
-      },
-      {
-        "id": 26,
-        "shop_name": "김치찌개나라",
-        "shop_info_url": "url2",
-        "kakao_score": 34,
-        "latitude": 125.018,
-        "longitude": 241.018
-      },
-      {
-        "id": 25,
-        "shop_name": "냉면나라",
-        "shop_info_url": "url2",
-        "kakao_score": 4,
-        "latitude": 125.016,
-        "longitude": 241.016
-      },
-      {
-        "id": 27,
-        "shop_name": "육회나라",
-        "shop_info_url": "url2",
-        "kakao_score": 1,
-        "latitude": 125.02,
-        "longitude": 241.02
-      }
-    ]
-  },
-  {
-    "title": "오늘의 양식",
-    "list": [
-      {
-        "id": 19,
-        "shop_name": "파스타나라",
-        "shop_info_url": "https://i.imgur.com/zs1GZHb.jpg",
-        "kakao_score": 31,
-        "latitude": 125.004,
-        "longitude": 241.004
-      },
-      {
-        "id": 19,
-        "shop_name": "파스타나라",
-        "shop_info_url": "https://i.imgur.com/zs1GZHb.jpg",
-        "kakao_score": 31,
-        "latitude": 125.004,
-        "longitude": 241.004
-      },
-      {
-        "id": 19,
-        "shop_name": "파스타나라",
-        "shop_info_url": "https://i.imgur.com/zs1GZHb.jpg",
-        "kakao_score": 31,
-        "latitude": 125.004,
-        "longitude": 241.004
-      },
-      {
-        "id": 19,
-        "shop_name": "파스타나라",
-        "shop_info_url": "https://i.imgur.com/zs1GZHb.jpg",
-        "kakao_score": 31,
-        "latitude": 125.004,
-        "longitude": 241.004
+        "id": 6,
+        "shop_name": "덮밥나라",
+        "shop_description": "test",
+        "latitude": "100.01",
+        "longitude": "1000.015",
+        "naver_score": 1.0,
+        "shopimage_set": [
+          "https://i.imgur.com/zs1GZHb.jpg",
+          "https://i.imgur.com/ERmRCKF.jpg",
+          "https://i.imgur.com/Nxqdwbs.jpg",
+          "https://i.imgur.com/SwiHvRG.png"
+        ],
+        "shopThemeKeyword": [],
+        "coupon_set": ["50%"]
       }
     ]
   }

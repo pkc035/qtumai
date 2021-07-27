@@ -10,7 +10,7 @@ export default function Main() {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    fetch("data/mainPageData.json", {
+    fetch("/data/mainPageData.json", {
       method: "GET",
     })
       .then(res => res.json())
