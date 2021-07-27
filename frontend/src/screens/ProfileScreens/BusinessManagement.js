@@ -23,6 +23,10 @@ const BusinessManagement = ({ navigation }) => {
         title="고객군 분석"
         onPress={() => navigation.navigate("CustomerAnalysis")}
       />
+      <Button
+        title="비즈니스 수정"
+        onPress={() => navigation.navigate("BusinessEdit")}
+      />
       <WebView source={{ uri: `${URI}/profile/businessmanagement` }} />
     </Container>
   );

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import BottomButton from "../../../components/BottomButton";
+import BottomButton from "../../../../components/BottomButton";
 import DaumPostcode from "react-daum-postcode";
 
-function BusinessApplication() {
+function BusinessEdit() {
   const [count, setCount] = useState(0);
   const [previewImages, setPreviewImages] = useState([]);
   const [sendImages, setSendImages] = useState([]);
@@ -92,7 +92,7 @@ function BusinessApplication() {
         <BackButton onClick={goToBack}>
           <ArrowImage src="/images/Social/arrow.png" />
         </BackButton>
-        <Subject>비지니스 신청</Subject>
+        <Subject>비지니스 수정</Subject>
       </BackTitleTitle>
       <Name>
         <Title>상호명</Title>
@@ -221,7 +221,7 @@ function BusinessApplication() {
   );
 }
 
-export default BusinessApplication;
+export default BusinessEdit;
 
 const Content = styled.div`
   display: flex;

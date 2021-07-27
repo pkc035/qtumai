@@ -32,11 +32,11 @@ const Profile = ({ navigation }) => {
         onPress={() => navigation.navigate("Subscription")}
       />
       <Button
-        title="비지니스 신청하기"
+        title="비즈니스 신청하기"
         onPress={() => navigation.navigate("BusinessApplication")}
       />
       <Button
-        title="비지니스 관리"
+        title="비즈니스 관리"
         onPress={() => navigation.navigate("BusinessManagement")}
       />
       <Button title="더보기" onPress={() => navigation.navigate("ViewMore")} />

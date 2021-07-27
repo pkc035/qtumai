@@ -1,8 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import BottomButton from "../../../components/BottomButton";
 
 function StoreHistory() {
+  useEffect(() => {
+    fetch("/data/profileShopVisit.json", {
+      method: "get",
+      headers: {
+        "Content-Type": "application/json; charset=utf8",
+      },
+    })
+      .then(res => res.json())
+      .then(data => {
+        console.log(data);
+      });
+  }, []);
+
   return (
     <Content>
       <TitleWrap>

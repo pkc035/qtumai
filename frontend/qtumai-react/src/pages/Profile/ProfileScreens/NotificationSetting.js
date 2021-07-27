@@ -2,13 +2,15 @@ import React, { useState } from "react";
 import styled from "styled-components";
 
 function NotificationSetting() {
-  const [toggle, setToggle] = useState("");
+  const [toggle, setToggle] = useState([false, false, false, false]);
 
   function handletoggle(index) {
-    if (toggle === index) {
-      setToggle(null);
-    } else setToggle(index);
+    let newToggle = [...toggle];
+    newToggle[index] = !toggle[index];
+    setToggle(newToggle);
   }
+
+  console.log(toggle);
 
   return (
     <Content>
@@ -18,10 +20,10 @@ function NotificationSetting() {
           <ItemToggle>
             <ToggleIcon
               onClick={() => handletoggle(0)}
-              background={toggle === 0 ? "#ff3000" : "#ededed"}
+              background={toggle[0] ? "#ff3000" : "#ededed"}
             >
               <ToggleIconHandle
-                transform={toggle === 0 ? "translateX(22px)" : 0}
+                transform={toggle[0] ? "translateX(22px)" : 0}
               />
             </ToggleIcon>
           </ItemToggle>
@@ -31,10 +33,10 @@ function NotificationSetting() {
           <ItemToggle>
             <ToggleIcon
               onClick={() => handletoggle(1)}
-              background={toggle === 1 ? "#ff3000" : "#ededed"}
+              background={toggle[1] ? "#ff3000" : "#ededed"}
             >
               <ToggleIconHandle
-                transform={toggle === 1 ? "translateX(22px)" : 0}
+                transform={toggle[1] ? "translateX(22px)" : 0}
               />
             </ToggleIcon>
           </ItemToggle>
@@ -44,10 +46,10 @@ function NotificationSetting() {
           <ItemToggle>
             <ToggleIcon
               onClick={() => handletoggle(2)}
-              background={toggle === 2 ? "#ff3000" : "#ededed"}
+              background={toggle[2] ? "#ff3000" : "#ededed"}
             >
               <ToggleIconHandle
-                transform={toggle === 2 ? "translateX(22px)" : 0}
+                transform={toggle[2] ? "translateX(22px)" : 0}
               />
             </ToggleIcon>
           </ItemToggle>
@@ -57,10 +59,10 @@ function NotificationSetting() {
           <ItemToggle>
             <ToggleIcon
               onClick={() => handletoggle(3)}
-              background={toggle === 3 ? "#ff3000" : "#ededed"}
+              background={toggle[3] ? "#ff3000" : "#ededed"}
             >
               <ToggleIconHandle
-                transform={toggle === 3 ? "translateX(22px)" : 0}
+                transform={toggle[3] ? "translateX(22px)" : 0}
               />
             </ToggleIcon>
           </ItemToggle>

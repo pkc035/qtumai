@@ -25,6 +25,7 @@ import ViewMore from "./pages/Profile/ProfileScreens/ViewMore";
 import BadgeManagement from "./pages/Profile/ProfileScreens/BusinessManagement/BadgeManagement";
 import BenefitManagement from "./pages/Profile/ProfileScreens/BusinessManagement/BenefitManagement";
 import CustomerAnalysis from "./pages/Profile/ProfileScreens/BusinessManagement/CustomerAnalysis";
+import BusinessEdit from "./pages/Profile/ProfileScreens/BusinessManagement/BusinessEdit";
 import BadgeDescription from "./pages/Profile/ProfileScreens/ViewMore/BadgeDescription";
 import BusinessPartnership from "./pages/Profile/ProfileScreens/ViewMore/BusinessPartnership";
 import Roadpick from "./pages/Profile/ProfileScreens/ViewMore/Roadpick";
@@ -91,6 +92,11 @@ class Routes extends React.Component {
             exact
             path="/profile/businessmanagement/customeranalysis"
             component={CustomerAnalysis}
+          />
+          <Route
+            exact
+            path="/profile/businessmanagement/businessedit"
+            component={BusinessEdit}
           />
           <Route
             exact

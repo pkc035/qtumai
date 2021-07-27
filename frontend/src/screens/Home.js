@@ -18,6 +18,7 @@ import Terms from "./ProfileScreens/ViewMore/Terms";
 import BadgeManagement from "./ProfileScreens/BusinessManagement/BadgeManagement";
 import BenefitManagement from "./ProfileScreens/BusinessManagement/BenefitManagement";
 import CustomerAnalysis from "./ProfileScreens/BusinessManagement/CustomerAnalysis";
+import BusinessEdit from "./ProfileScreens/BusinessManagement/BusinessEdit";
 import { MainNavigator } from "./TabScreens";
 import { createStackNavigator } from "@react-navigation/stack";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -66,12 +67,12 @@ const Home = () => {
       <Stack.Screen
         name="BusinessApplication"
         component={BusinessApplication}
-        options={{ headerTitle: "비지니스 신청하기" }}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="BusinessManagement"
         component={BusinessManagement}
-        options={{ headerTitle: "비지니스 관리" }}
+        options={{ headerTitle: "비즈니스 관리" }}
       />
       <Stack.Screen
         name="NotificationSetting"
@@ -82,6 +83,11 @@ const Home = () => {
         name="ProfileEdit"
         component={ProfileEdit}
         // options={{ headerTitle: "프로필 편집" }}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="BusinessEdit"
+        component={BusinessEdit}
         options={{ headerShown: false }}
       />
       <Stack.Screen

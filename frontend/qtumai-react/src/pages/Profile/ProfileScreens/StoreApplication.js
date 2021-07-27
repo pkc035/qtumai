@@ -1,8 +1,33 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import BottomButton from "../../../components/BottomButton";
 
 function StoreApplication() {
+  const [shopName, setShopName] = useState("");
+  const [address, setAddress] = useState("");
+  const [description, setDescription] = useState("");
+
+  function applyStore() {
+    fetch("http://192.168.0.68:8000/notice/propose/goodshop/", {
+      method: "POST",
+      body: JSON.stringify({
+        shop_name_id: shopName,
+        address: address,
+        description: description,
+      }),
+    })
+      .then(res => res.json())
+      .then(res => {
+        console.log(res);
+        // localStorage.setItem("access", res.access);
+        // localStorage.setItem("refresh", res.refresh);
+      });
+  }
+
+  console.log(shopName);
+  console.log(address);
+  console.log(description);
+
   return (
     <Content>
       <TitleWrap>
@@ -11,15 +36,29 @@ function StoreApplication() {
       <InputWrap>
         <Name>
           상호명
-          <Input type="text" placeholder="팟 플레이스 이수점" />
+          <Input
+            type="text"
+            placeholder="팟 플레이스 이수점"
+            onChange={e => setShopName(e.target.value)}
+          />
         </Name>
         <Adress>
           주소
-          <Input type="text" placeholder="팟 플레이스 이수점" />
+          <Input
+            type="text"
+            placeholder="역삼역 근처"
+            onChange={e => setAddress(e.target.value)}
+            name="address"
+          />
         </Adress>
-        <ContentInput type="text" placeholder="150자 내외로 입력해주세요" />
+        <ContentInput
+          maxlength="150"
+          placeholder="150자 내외로 입력해주세요"
+          onChange={e => setDescription(e.target.value)}
+          name="description"
+        ></ContentInput>
       </InputWrap>
-      <BottomButton title={"신청하기"} />
+      <BottomButton onClick={applyStore} title={"신청하기"} />
     </Content>
   );
 }

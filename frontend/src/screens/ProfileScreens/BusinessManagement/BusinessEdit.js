@@ -1,13 +1,13 @@
 import React from "react";
 import styled from "styled-components/native";
 import { WebView } from "react-native-webview";
-import { URI } from "../../config";
+import { URI } from "../../../config";
 
-const BusinessApplication = ({ navigation }) => {
+const BusinessEdit = ({ navigation }) => {
   return (
     <Container>
       <WebView
-        source={{ uri: `${URI}/profile/businessapplication` }}
+        source={{ uri: `${URI}/profile/businessmanagement/businessedit` }}
         onMessage={(event) =>
           event.nativeEvent.data === "Success!"
             ? navigation.navigate("Profile")
@@ -18,7 +18,7 @@ const BusinessApplication = ({ navigation }) => {
   );
 };
 
-export default BusinessApplication;
+export default BusinessEdit;
 
 const Container = styled.View`
   flex: 1;

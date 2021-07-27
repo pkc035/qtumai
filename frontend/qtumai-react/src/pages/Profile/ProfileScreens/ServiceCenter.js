@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 
 function ServiceCenter() {
   const [toggleAnswer, setToggleAnswer] = useState(1);
+  const [data, setData] = useState([]);
 
   function handleToggleAnswer(index) {
     if (toggleAnswer === index) {
@@ -10,74 +11,37 @@ function ServiceCenter() {
     } else setToggleAnswer(index);
   }
 
+  useEffect(() => {
+    fetch("/data/profile/profileServiceCenter.json")
+      .then(res => res.json())
+      .then(data => {
+        setData(data);
+      });
+  }, []);
+
+  console.log(data.results);
+  console.log(data);
   return (
     <Content>
       <QuestionWrap>
-        <Question onClick={() => handleToggleAnswer(0)}>
-          <Bold>Q.</Bold> 졸려요
-          <ArrowButton>
-            <Arrow
-              alt="arrow"
-              src="/images/Profile/arrow.png"
-              rotate={toggleAnswer === 0 ? "rotate(180deg)" : ""}
-            />
-          </ArrowButton>
-          <Answers height={toggleAnswer === 0 ? "100px" : "0"}>
-            안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요
-          </Answers>
-        </Question>
-        <Question onClick={() => handleToggleAnswer(1)}>
-          <Bold>Q.</Bold> 살려줘요
-          <ArrowButton onClick={() => handleToggleAnswer(1)}>
-            <Arrow
-              alt="arrow"
-              src="/images/Profile/arrow.png"
-              rotate={toggleAnswer === 1 ? "rotate(180deg)" : ""}
-            />
-          </ArrowButton>
-          <Answers height={toggleAnswer === 1 ? "100px" : "0"}>
-            안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요
-          </Answers>
-        </Question>
-        <Question onClick={() => handleToggleAnswer(2)}>
-          <Bold>Q.</Bold> 하기싫어요
-          <ArrowButton onClick={() => handleToggleAnswer(2)}>
-            <Arrow
-              alt="arrow"
-              src="/images/Profile/arrow.png"
-              rotate={toggleAnswer === 2 ? "rotate(180deg)" : ""}
-            />
-          </ArrowButton>
-          <Answers height={toggleAnswer === 2 ? "100px" : "0"}>
-            안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요
-          </Answers>
-        </Question>
-        <Question onClick={() => handleToggleAnswer(3)}>
-          <Bold>Q.</Bold> 할인 어떻게 받나요?
-          <ArrowButton onClick={() => handleToggleAnswer(3)}>
-            <Arrow
-              alt="arrow"
-              src="/images/Profile/arrow.png"
-              rotate={toggleAnswer === 3 ? "rotate(180deg)" : ""}
-            />
-          </ArrowButton>
-          <Answers height={toggleAnswer === 3 ? "100px" : "0"}>
-            안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요
-          </Answers>
-        </Question>
-        <Question onClick={() => handleToggleAnswer(4)}>
-          <Bold>Q.</Bold> 돈 어떻게 많이 벌어요?
-          <ArrowButton onClick={() => handleToggleAnswer(4)}>
-            <Arrow
-              alt="arrow"
-              src="/images/Profile/arrow.png"
-              rotate={toggleAnswer === 4 ? "rotate(180deg)" : ""}
-            />
-          </ArrowButton>
-          <Answers height={toggleAnswer === 4 ? "100px" : "0"}>
-            안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요
-          </Answers>
-        </Question>
+        {data.results &&
+          data.results.map((item, index) => {
+            return (
+              <Question key={index} onClick={() => handleToggleAnswer(index)}>
+                <Bold>Q.</Bold> {item.title}
+                <ArrowButton>
+                  <Arrow
+                    alt="arrow"
+                    src="/images/Profile/arrow.png"
+                    rotate={toggleAnswer === index ? "rotate(180deg)" : ""}
+                  />
+                </ArrowButton>
+                <Answers height={toggleAnswer === index ? "100px" : "0"}>
+                  {item.content}
+                </Answers>
+              </Question>
+            );
+          })}
         <ChannelTitle>카카오톡 채널'로드픽'</ChannelTitle>
         <Straight />
         <Channel>

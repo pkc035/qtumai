@@ -1,8 +1,31 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import BottomButton from "../../../../components/BottomButton";
 
 function BusinessPartnership() {
+  const [shopName, setShopName] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [name, setName] = useState("");
+  const [content, setContent] = useState("");
+
+  function contactStore() {
+    fetch("http://192.168.0.68:8000/propose/business/", {
+      method: "POST",
+      body: JSON.stringify({
+        shop_name: shopName,
+        phone_number: phoneNumber,
+        manager_name: name,
+        content: content,
+      }),
+    })
+      .then(res => res.json())
+      .then(res => {
+        console.log(res);
+        // localStorage.setItem("access", res.access);
+        // localStorage.setItem("refresh", res.refresh);
+      });
+  }
+
   return (
     <Content>
       <TitleWrap>
@@ -11,19 +34,35 @@ function BusinessPartnership() {
       <InputWrap>
         <Name>
           상호명
-          <Input type="text" placeholder="팟 플레이스 이수점" />
+          <Input
+            type="text"
+            placeholder="팟 플레이스 이수점"
+            onChange={e => setShopName(e.target.value)}
+          />
         </Name>
         <PhoneNumber>
           연락처
-          <Input type="text" placeholder="010.0000.0000" />
+          <Input
+            type="text"
+            placeholder="010.0000.0000"
+            onChange={e => setPhoneNumber(e.target.value)}
+          />
         </PhoneNumber>
         <PhoneNumber>
           담당자
-          <Input type="text" placeholder="홍길동" />
+          <Input
+            type="text"
+            placeholder="홍길동"
+            onChange={e => setName(e.target.value)}
+          />
         </PhoneNumber>
-        <ContentInput type="text" placeholder="150자 내외로 입력해주세요" />
+        <ContentInput
+          type="text"
+          placeholder="150자 내외로 입력해주세요"
+          onChange={e => setContent(e.target.value)}
+        />
       </InputWrap>
-      <BottomButton title={"문의하기"} />
+      <BottomButton onClick={contactStore} title={"문의하기"} />
     </Content>
   );
 }

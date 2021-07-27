@@ -25,7 +25,10 @@ function BenefitManagement() {
     <Content>
       <TitleWrap>
         <Title>할인 기간</Title>
-        <LadioButton>00/00/00 ~ 00/00/00</LadioButton>
+        <BenefitDateWrap>
+          <BenefitDate placeholder="00-00-00" />~
+          <BenefitDate placeholder="00-00-00" />
+        </BenefitDateWrap>
       </TitleWrap>
       <TitleWrap>
         <Title>할인율 설정</Title>
@@ -70,6 +73,21 @@ const Title = styled.div`
 const LadioButton = styled.div`
   display: flex;
   flex-direction: column;
+  margin-right: 5%;
+  color: #c1c1c1;
+`;
+
+const BenefitDate = styled.input`
+  border: 1px solid #c1c1c1;
+  width: 80px;
+
+  &::placeholder {
+    color: #c1c1c1;
+    text-align: center;
+  }
+`;
+
+const BenefitDateWrap = styled.div`
   margin-right: 5%;
   color: #c1c1c1;
 `;
