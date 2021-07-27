@@ -28,7 +28,7 @@
         "shop_description": "test",
         "latitude": "100.002",
         "longitude": "1000.003",
-        "naver_score": 1.0,
+        "naver_score": 4.3,
         "shopimage_set": [
           "https://i.imgur.com/ERmRCKF.jpg",
           "https://i.imgur.com/zs1GZHb.jpg",
@@ -197,7 +197,7 @@
         "shop_description": "test",
         "latitude": "100.0",
         "longitude": "1000.0",
-        "naver_score": 1.0,
+        "naver_score": 4.6,
         "shopimage_set": [
           "https://i.imgur.com/ERmRCKF.jpg",
           "https://i.imgur.com/zs1GZHb.jpg",

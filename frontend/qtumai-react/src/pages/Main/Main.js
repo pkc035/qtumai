@@ -10,6 +10,12 @@ export default function Main() {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
+    // fetch(
+    //   "http://192.168.0.68:8000/shops/recommend/?top=True&category=True&type=here&latitude=100&longitude=1000",
+    //   {
+    //     method: "GET",
+    //   }
+    // )
     fetch("/data/mainPageData.json", {
       method: "GET",
     })
@@ -26,21 +32,6 @@ export default function Main() {
         setPersonalContent(newPersonalContents);
       });
   }, []);
-
-  // useEffect(() => {
-  //   const getMainData = () => {
-  //     customFetch('', {
-  //       method: 'GET',
-  //     }, res => {
-  //       console.log(res);
-  //     })
-  //   }
-
-  //   fetch("../../public/data/mainPageData.json", {
-  //     method: "GET",
-  //   }).then(res => res.json())
-  //     .then(data => console.log(data));
-  // }, [])
 
   return (
     <MainContainer>
