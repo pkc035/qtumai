@@ -13,7 +13,6 @@ accountguest_list = AccountGuestUpdateViewSet.as_view({
     'patch': 'partial_update'
 })
 
-
 router = DefaultRouter(trailing_slash=True)
 # router.register(r"accounts", views.UserViewSet, basename="accounts")
 router.register(r"mylike", MyLikeListViewSet, basename="mylike")
@@ -33,5 +32,5 @@ urlpatterns = [
     path('username-check/',CheckUsernameAPIView.as_view()),
     path('preference',CreatePreferenceAPIView.as_view()),
     path('check-sms/',SMSVerificationView.as_view()),
-    path('account', accountguest_list, name='account')    
+    path('account', accountguest_list, name='account'),
 ] + router.urls
