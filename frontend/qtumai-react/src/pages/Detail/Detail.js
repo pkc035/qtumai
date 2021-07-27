@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-// import { customFetch } from "../../utils/customFetch";
 import { useParams } from "react-router-dom";
 import { GET_DETAIL_API, GET_PICLIST_API } from "../../config";
 import CommonMainSlider from "../../components/CommonMainSlider/CommonMainSlider";
@@ -70,12 +69,16 @@ export default function Detail() {
   console.log(style);
 
   const STARSCORE = {
-    size: 20,
-    value: 2.5,
-    edit: false,
+    // size: 20,
+    // value: 2.5,
+    // edit: false,
+    // isHalf: true,
+    // color: "#e4e5e9",
+    // activeColor: "#ff3000",
+    size: 60,
     isHalf: true,
-    color: "#e4e5e9",
-    activeColor: "#ff3000",
+    char: "⭐",
+    value: 3.5,
   };
 
   const averageReview = (clean, price, service, taste, vibe) => {
@@ -88,20 +91,6 @@ export default function Detail() {
     return averageRound;
   };
 
-  // useEffect(() => {
-  //   const getMainData = () => {
-  //     customFetch('', {
-  //       method: 'GET',
-  //     }, res => {
-  //       console.log(res);
-  //     })
-  //   }
-
-  //   fetch("../../public/data/mainPageData.json", {
-  //     method: "GET",
-  //   }).then(res => res.json())
-  //     .then(data => console.log(data));
-  // }, [])
   const { coupon, is_subscribe, shop_name, shop_description, shop_status } =
     detailData;
   return (

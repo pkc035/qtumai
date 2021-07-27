@@ -14,7 +14,7 @@ export default function MainStoreList({
     slidesToShow: 3,
     slidesToScroll: 2,
   };
-
+  console.log(personalContents);
   return (
     <div>
       {personalContents
@@ -23,25 +23,27 @@ export default function MainStoreList({
               <MainStoreListContainer key={idx}>
                 <Title>{data.title}</Title>
                 <StoreListSlider {...settings}>
-                  {personalContents[idx].list.map(item => {
-                    return (
-                      <div key={item.id}>
-                        <StoreContainer src={item.shop_info_url}>
-                          <StoreCoupon>
-                            <StoreDiscount>35%</StoreDiscount>
-                          </StoreCoupon>
-                          <StarsContainer>
-                            <Star>★</Star>
-                            <Star>★</Star>
-                            <Star>★</Star>
-                            <Star>☆</Star>
-                            <Star>☆</Star>
-                          </StarsContainer>
-                        </StoreContainer>
-                        <StoreName>{item.shop_name}</StoreName>
-                      </div>
-                    );
-                  })}
+                  {personalContents[idx].list.map(
+                    ({ id, shopimage_set, coupon_set, shop_name }) => {
+                      return (
+                        <div key={id}>
+                          <StoreContainer src={shopimage_set}>
+                            <StoreCoupon>
+                              <StoreDiscount>{coupon_set[0]}</StoreDiscount>
+                            </StoreCoupon>
+                            <StarsContainer>
+                              <Star>★</Star>
+                              <Star>★</Star>
+                              <Star>★</Star>
+                              <Star>☆</Star>
+                              <Star>☆</Star>
+                            </StarsContainer>
+                          </StoreContainer>
+                          <StoreName>{shop_name}</StoreName>
+                        </div>
+                      );
+                    }
+                  )}
                 </StoreListSlider>
               </MainStoreListContainer>
             );
@@ -105,9 +107,9 @@ const MyPicListContainer = styled.div`
 
 const Title = styled.div`
   margin-bottom: 10px;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: bold;
-  color: gray;
+  color: ${({ theme }) => theme.blacks};
 `;
 
 const StoreListSlider = styled(Slider)`
@@ -156,17 +158,19 @@ const DeletIcon = styled.img.attrs({
 `;
 
 const StoreCoupon = styled.div`
+  ${({ theme }) => theme.imageSet(`url(/images/coupon_background.svg)`)};
   ${({ theme }) => theme.flexSet()};
   position: absolute;
   top: 4px;
   right: 4px;
-  width: 22px;
-  height: 14px;
-  background: white;
+  width: 30px;
+  height: 16px;
 `;
 
 const StoreDiscount = styled.div`
   font-size: 10px;
+  font-weight: 700;
+  color: white;
 `;
 
 const StarsContainer = styled.div`
@@ -181,6 +185,6 @@ const Star = styled.span``;
 
 const StoreName = styled.div`
   margin-top: 5px;
-  font-weight: bold;
-  color: lightgray;
+  font-size: 14px;
+  color: ${({ theme }) => theme.black};
 `;
