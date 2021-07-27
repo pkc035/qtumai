@@ -28,8 +28,6 @@ export default function Detail() {
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [isOpenYesNoModal, setIsOpenYesNoModal] = useState(false);
 
-  // const [islike, setIslike] = useState(false);
-
   useEffect(() => {
     fetch(`/data/detailPageData.json`, {
       method: "GET",
