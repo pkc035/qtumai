@@ -2,6 +2,7 @@ import math
 from apscheduler.schedulers.background import BackgroundScheduler
 
 from django.db       import transaction
+
 from accounts.models import AccountGuest, FunDataPercentage
 
 def post_fundatapercentage():

@@ -1,3 +1,7 @@
+from random   import seed, sample
+from datetime import date
+from PIL      import Image
+
 from django.db                 import transaction
 from django.db.models          import Q, When, Value, Case
 from django.db.models.query    import Prefetch
@@ -5,17 +9,14 @@ from django.shortcuts          import get_object_or_404
 from django.contrib.auth       import get_user_model
 from django.core.files.storage import FileSystemStorage
 
-from rest_framework.viewsets    import ModelViewSet
-from rest_framework.decorators  import action, api_view
-from rest_framework.response    import Response
-from rest_framework.pagination  import PageNumberPagination
+from rest_framework.viewsets   import ModelViewSet
+from rest_framework.decorators import action, api_view
+from rest_framework.response   import Response
+from rest_framework.pagination import PageNumberPagination
 
-from random                    import seed, sample
-from datetime                  import date
-from PIL                       import Image
 from project.settings.base     import MEDIA_ROOT
-from .models                   import Shop, Category, Review, ReportShop, ReportReview, Menu
 from accounts.models           import AccountGuest, FunDataPercentage
+from .models                   import Shop, Category, Review, ReportShop, ReportReview, Menu
 from .serializers              import (
     FunDataPercentageSerializer, ShopRecommendSerializer, ShopListSerializer,ShopDetailSerializer,
     ReviewSerializer, ReportReviewSerializer, ReportShopSerializer,

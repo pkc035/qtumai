@@ -1,12 +1,12 @@
 from django.urls    import path
 
+from rest_framework.routers import DefaultRouter
+
 from .views import (
     ShopRecommendViewSet, ShopListViewSet, ShopDetailViewSet, ShopSearchViewSet, ShopVisitedViewSet,
     ReportReviewViewSet, AccountSearchViewSet, LocationSearchViewSet, get_raw_fundata, review_command,
     review_create, report_shop, report_shop_command, report_review_command
     )
-
-from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter(trailing_slash=True)
 router.register(r"detail/(?P<id>.+)", ShopDetailViewSet,basename="detail")

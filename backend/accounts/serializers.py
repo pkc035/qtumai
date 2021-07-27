@@ -1,12 +1,9 @@
-from shops.serializers import ShopDetailSerializer
 from django.contrib.auth import models
-from django.db.models import F, fields
-from django.db.models import Q
-from django.db.models import query
-from django.db.models.query import InstanceCheckMeta
+from django.db.models    import Q
 
 from rest_framework import serializers
-from .models      import AccountGuest, FunData, LivingArea, MyLikeList, MyLikeListShop, LivingArea, Preference
+
+from .models           import AccountGuest, FunData, LivingArea, MyLikeList, MyLikeListShop, LivingArea, Preference
 
 class LivingAreaSreialzer(serializers.ModelSerializer):
     class Meta:

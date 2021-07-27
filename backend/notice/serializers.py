@@ -1,12 +1,12 @@
-from datetime import timedelta, date
+from datetime import timedelta
 
-from django.db           import transaction
+from django.db import transaction
 
-from rest_framework import serializers
+from rest_framework           import serializers
 from rest_framework.relations import PrimaryKeyRelatedField, StringRelatedField
 
-from .models import BusinessForm, Notice, ProposeBusinessForm, ProposeGoodShop
 from shops.models import Coupon, Shop
+from .models      import BusinessForm, Notice, ProposeBusinessForm, ProposeGoodShop
 
 class BusinessFormSerializer(serializers.ModelSerializer):
     class Meta:

@@ -1,10 +1,13 @@
 from django.contrib.auth import get_user_model
 from django.db.models    import F
 
-from rest_framework      import serializers
+from rest_framework import serializers
 
-from accounts.models     import FunDataPercentage, SearchedLocation, SearchedPeopleThrough, VisitedShop
-from .models             import OpenTime, ReportShop, ReportReview, Review, Shop, ShopImage, ThemeKeyword, Coupon, Menu
+from .models         import (
+    OpenTime, ReportShop, ReportReview, Review, Shop, ShopImage, ThemeKeyword, Coupon, Menu
+)
+from accounts.models import FunDataPercentage, SearchedLocation, SearchedPeopleThrough, VisitedShop
+
 
 class CouponSerializer(serializers.ModelSerializer):
     class Meta:

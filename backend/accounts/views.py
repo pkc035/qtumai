@@ -1,4 +1,12 @@
 import json, requests, jwt, hashlib, hmac, base64, time
+from random           import randint
+
+from django.db           import transaction
+from django.http         import JsonResponse
+from django.views        import View
+from django.db.models    import Q
+from django.shortcuts    import get_object_or_404
+from django.contrib.auth import get_user_model
 
 from rest_framework                  import status
 from rest_framework.views            import APIView
@@ -7,18 +15,10 @@ from rest_framework.viewsets         import ModelViewSet
 from rest_framework.decorators       import api_view, action
 from rest_framework.authtoken.models import Token
 
-from django.db           import router, transaction
-from django.http         import JsonResponse
-from django.views        import View
-from django.db.models    import F, Q
-from django.shortcuts    import get_object_or_404, render
-from django.contrib.auth import get_user_model
-
 from project.settings.local import SECRET_KEY
-from random           import randint
-from shops.models     import Shop, LikeShopAccounts, Menu
-from .models          import AccountGuest, FunData, FunDataPercentage, MyLikeList, Authentication, MyLikeListShop, Preference
-from .serializers     import (
+from shops.models           import Shop, LikeShopAccounts, Menu
+from .models                import AccountGuest, FunData, MyLikeList, Authentication, MyLikeListShop, Preference
+from .serializers           import (
     AccountGuestSerializer, FunDataSerializer, MyLikeListSerializer, MyLikeListShopSerializer, 
     CheckUsernameSerializer, LivingAreaUpdateSerializer, AccountGuestUpdateSerializer,
     LivingAreaSreialzer, SimpleAccountGuestSerializer, PreferenceSerializer

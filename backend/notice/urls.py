@@ -17,7 +17,9 @@ from django.urls import path
 
 from rest_framework.routers import DefaultRouter
 
-from .views import CouponManageViewSet, NoticeViewSet, ProposeBusinessViewSet, ProposeGoodShopViewSet, business_create
+from .views import (
+CouponManageViewSet, NoticeViewSet, ProposeBusinessViewSet, ProposeGoodShopViewSet, business_create
+)
 
 router = DefaultRouter(trailing_slash=True)
 router.register(r"business/coupon", CouponManageViewSet, basename="business/coupon")
