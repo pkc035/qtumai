@@ -304,7 +304,7 @@ class MyLikeListShopViewSet(ModelViewSet):
     def like_shop_delete(self, request, pk):
         shop           = get_object_or_404(Shop, pk=request.data['shop_id'])
         user           = get_object_or_404(get_user_model(), pk=1) 
-        likeshop       = get_object_or_404(LikeShopAccounts, shop=shop, guest_id=user)
+        likeshop       = get_object_or_404(LikeShopAccounts, shop=shop, guest=user)
         mylikelistshop = get_object_or_404(MyLikeListShop, pk=pk)
         mylikelistshop.delete()
         likeshop.delete()

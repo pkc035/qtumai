@@ -144,7 +144,7 @@ class AccountGuestSerializer(serializers.ModelSerializer):
 class MyLikeListShopSerializer(serializers.ModelSerializer):
     class Meta:
         model = MyLikeListShop
-        fields = ['id', 'shop']
+        fields = ['id','shop']
 
 class MyLikeListSerializer(serializers.ModelSerializer):
     mylikeshop_list = serializers.SerializerMethodField()
@@ -156,7 +156,8 @@ class MyLikeListSerializer(serializers.ModelSerializer):
     def get_mylikeshop_list(self,obj):
         mylikeshops = obj.mylikelistshop_set.all()
         shops_data  = [{
-            "id"             : mylikeshop.shop.id,
+            "id"             : mylikeshop.id,
+            "shop_id"        : mylikeshop.shop.id,
             "shop_name"      : mylikeshop.shop.shop_name,
             "coupon_content" : [coupon.coupon_content for coupon in mylikeshop.shop.coupon_set.all()]
         } for mylikeshop in mylikeshops]
@@ -168,7 +169,7 @@ class FunDataSerializer(serializers.ModelSerializer):
     class Meta:
         model = FunData
         fields = ['account_guest', 'menu', 'score']
-
+        
     # def validate(self, data):
     #     non_alpha = set([s for s in "!@#$%^&*()|-=_+\[]{};':\",./?><"])
     #     error     = dict({'username' : [],'number':[]})

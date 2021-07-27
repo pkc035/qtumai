@@ -3,7 +3,7 @@ from django.db.models    import F
 
 from rest_framework      import serializers
 
-from accounts.models     import SearchedLocation, SearchedPeopleThrough, VisitedShop
+from accounts.models     import AccountGuest, SearchedLocation, SearchedPeopleThrough, VisitedShop
 from .models             import OpenTime, ReportShop, ReportReview, Review, Shop, ShopImage, ThemeKeyword, Coupon, Menu
 
 class CouponSerializer(serializers.ModelSerializer):
@@ -133,7 +133,7 @@ class ShopDetailSerializer(serializers.ModelSerializer):
         return result
     
     def get_shop_menu(self,obj):
-        menus = [menu.menu_name for menu in obj.menu_set.all() if menu.is_representative]
+        menus = [menu.menu_name for menu in obj.menu_set.filter(is_representative=True)]
 
         if menus:
             return menus[0]
@@ -190,3 +190,4 @@ class LocationSearchSerializer(serializers.ModelSerializer):
         location.searched_count = F('searched_count') + 1
         location.account_guest.add(account)
         location.save()
+
