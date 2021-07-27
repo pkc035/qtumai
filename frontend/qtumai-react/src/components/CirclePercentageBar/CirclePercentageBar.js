@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 
-const CircularProgressBar = ({ percentage }) => {
+const CircularProgressBar = ({ percentage, size }) => {
   const [position, setPosition] = useState({});
   const [numb, setNumb] = useState(0);
   const [left, setLeft] = useState(0);
@@ -74,19 +74,29 @@ const CircularProgressBar = ({ percentage }) => {
     }
   }, [numb]);
 
+  const {
+    circular_w_h,
+    inner_w_h,
+    endPoint_w_h,
+    inner_margin,
+    bar_clip,
+    prigress_clip,
+    numb_size,
+  } = size;
+
   return (
-    <Circular>
-      <Inner />
-      <Numb>{numb}</Numb>
+    <Circular size={circular_w_h}>
+      <Inner size={inner_w_h} margin={inner_margin} />
+      <Numb font={numb_size}>{numb}</Numb>
       <Circle>
-        <LeftBar>
-          <LeftProgress left={left} right={right} />
+        <LeftBar clip={bar_clip}>
+          <LeftProgress clip={prigress_clip} left={left} right={right} />
         </LeftBar>
-        <RightBar>
-          <RightProgress left={left} right={right} />
+        <RightBar clip={bar_clip}>
+          <RightProgress clip={prigress_clip} left={left} right={right} />
         </RightBar>
       </Circle>
-      <EndPoint style={{ ...position }} />
+      <EndPoint size={endPoint_w_h} style={{ ...position }} />
     </Circular>
   );
 };
@@ -95,17 +105,17 @@ export default CircularProgressBar;
 
 const Circular = styled.div`
   position: relative;
-  width: 50px;
-  height: 50px;
+  width: ${({ size }) => size};
+  height: ${({ size }) => size};
 `;
 
 const Inner = styled.div`
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 40px;
-  height: 40px;
-  margin: -20px 0 0 -20px;
+  width: ${({ size }) => size};
+  height: ${({ size }) => size};
+  margin: ${({ margin }) => margin};
   background-color: white;
   border-radius: 100%;
   z-index: 10;
@@ -115,11 +125,11 @@ const Numb = styled.div`
   position: absolute;
   top: 50%;
   left: 50%;
-  margin-top: 2 px;
+  margin-top: 2px;
   transform: translate(-50%, -50%);
   color: ${({ theme }) => theme.red};
   font-weight: bold;
-  font-size: 18px;
+  font-size: ${({ font }) => font};
   z-index: 10;
 `;
 
@@ -128,43 +138,38 @@ const Circle = styled.div`
   box-shadow: none;
 `;
 
-const Bar = styled.div`
+const LeftBar = styled.div`
   position: absolute;
   width: 100%;
   height: 100%;
   background-color: ${({ theme }) => theme.redBackground};
   border-radius: 100%;
-  clip: rect(0px, 50px, 50px, 25px);
+  clip: ${({ clip }) => clip};
 `;
 
-const LeftBar = styled(Bar)``;
-
-const RightBar = styled(Bar)`
+const RightBar = styled(LeftBar)`
   transform: rotate(180deg);
 `;
 
-const Progress = styled.div`
+const LeftProgress = styled.div`
   position: absolute;
   height: 100%;
   width: 100%;
   border-radius: 100%;
-  clip: rect(0px, 25px, 50px, 0px);
+  clip: ${({ clip }) => clip};
   background-color: ${({ theme }) => theme.red};
-`;
-
-const LeftProgress = styled(Progress)`
   z-index: 1;
   transform: ${({ left }) => `rotate(${left}deg)`};
 `;
 
-const RightProgress = styled(Progress)`
+const RightProgress = styled(LeftProgress)`
   transform: ${({ right }) => `rotate(${right}deg)`};
 `;
 
 const EndPoint = styled.div`
   position: absolute;
-  width: 10px;
-  height: 10px;
+  width: ${({ size }) => size};
+  height: ${({ size }) => size};
   bottom: 4%;
   right: 13%;
   border-radius: 100%;

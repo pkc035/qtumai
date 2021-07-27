@@ -14,9 +14,9 @@ export default function SlideModalControlButton({
           if (setIsSlideModal) {
             setIsSlideModal(false);
             setIsLike(false);
+          } else {
+            setIsFilter(false);
           }
-
-          setIsFilter(false);
         }}
       >
         닫기

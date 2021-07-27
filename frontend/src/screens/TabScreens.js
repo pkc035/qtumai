@@ -24,38 +24,9 @@ export const MainNavigator = () => {
 
 export const Main = ({ navigation }) => {
   return (
-<<<<<<< HEAD
-<<<<<<< HEAD
     <MainContainer>
-<<<<<<< HEAD
-      <WebView
-        source={{ uri: 'http://192.168.0.76:3000/' }}
-        onPress={() => navigation.navigate('Who')}
-      />
-      {/* <WebView source={{ uri: 'http://10.58.2.159:3000/' }} /> */}
-
-=======
-<<<<<<< HEAD
-
-      <WebView source={{ uri: 'http://192.168.0.69:3000/' }} />
-=======
       <WebView source={{ uri: 'http://192.168.0.76:3000/' }} />
->>>>>>> 7a18f46 (Add: back up before pull)
-=======
-    <MainContainer onClick={() => console.log('good')}>
-      {/* <WebView source={{ uri: 'http://192.168.0.76:3000/' }} /> */}
-      <WebView source={{ uri: 'http://10.58.2.159:3000/' }} />
->>>>>>> 4f95984 (210722 | add picList in Detailpage)
-=======
-    <MainContainer>
-      <WebView
-        source={{ uri: 'http://192.168.0.76:3000/' }}
-        onPress={() => navigation.navigate('Who')}
-      />
       {/* <WebView source={{ uri: 'http://10.58.2.159:3000/' }} /> */}
->>>>>>> bc92698 (210725 | floating page layout, style)
-
->>>>>>> master
       <FloatingButton
         position={{ bottom: 80, right: 40 }}
         navigation={navigation}

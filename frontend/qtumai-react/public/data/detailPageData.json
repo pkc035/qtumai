@@ -5,13 +5,18 @@
   "results": [
     {
       "id": 1,
-      "shop_image_list": [],
+      "shop_image_list": [
+        "https://i.imgur.com/zs1GZHb.jpg",
+        "https://i.imgur.com/ERmRCKF.jpg",
+        "https://i.imgur.com/Nxqdwbs.jpg",
+        "https://i.imgur.com/SwiHvRG.png"
+      ],
       "shop_status": {
         "like_status": true,
         "dislike_status": true,
         "report_shop": true
       },
-      "coupon_set": ["test"],
+      "coupon_set": ["15%"],
       "opentime_set": [],
       "review_set": [
         {
@@ -22,8 +27,8 @@
           "score_cleanliness": 5,
           "score_vibe": 5,
           "score_price": 5,
-          "content": "content",
-          "img_path": "test@com",
+          "content": "너무 맛있어요. 또 갈거에요.",
+          "img_path": "https://i.imgur.com/zs1GZHb.jpg",
           "created_at": "2021-07-22T17:08:48.479548+09:00",
           "updated_at": "2021-07-22T17:08:48.479679+09:00",
           "shop": 1,
@@ -37,8 +42,8 @@
           "score_cleanliness": 1,
           "score_vibe": 1,
           "score_price": 5,
-          "content": "content",
-          "img_path": "test@com",
+          "content": "숨겨진 맛집입니다!! 할인쿠폰도 있고 너무 좋아요!",
+          "img_path": "",
           "created_at": "2021-07-22T17:08:48.479548+09:00",
           "updated_at": "2021-07-22T17:08:48.479679+09:00",
           "shop": 1,
@@ -46,7 +51,7 @@
         }
       ],
       "shop_name": "라면나라",
-      "shop_address_road": "",
+      "shop_address_road": "서울특별시 중구 신당동 다산로35길 5",
       "shop_address_zip": "",
       "shop_description": "맛있는 라면",
       "phone_number": "01044444444",
@@ -58,11 +63,11 @@
       "score_vibe": 4.0,
       "score_price": 1.0,
       "review_count": 34,
-      "naver_score": 16.0,
+      "naver_score": 4.5,
       "naver_score_count": 99,
       "price_range": "8880-11110",
-      "latitude": "125",
-      "longitude": "241",
+      "latitude": "37.365264512305174",
+      "longitude": "127.10676860117488",
       "is_subscribe": false,
       "subscribe_time": "2021-07-12",
       "is_new_opend": false,

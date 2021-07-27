@@ -1,37 +1,30 @@
 import React, { useEffect } from "react";
 
-const Map = ({ size }) => {
+const Map = ({ size, lat, lng }) => {
   const { kakao } = window;
 
   useEffect(() => {
     var container = document.getElementById("map");
     var options = {
-      center: new kakao.maps.LatLng(37.365264512305174, 127.10676860117488),
-      level: 3,
+      center: new kakao.maps.LatLng(lat, lng),
+      draggable: false,
+      level: 4,
     };
 
-    // var geocoder = new kakao.maps.services.Geocoder();
+    var imageSrc = `/images/pin_detail.svg`,
+      imageSize = new kakao.maps.Size(20, 30);
 
     var map = new kakao.maps.Map(container, options);
-    var markerPosition = new kakao.maps.LatLng(
-      37.365264512305174,
-      127.10676860117488
-    );
+    var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize),
+      markerPosition = new kakao.maps.LatLng(lat, lng);
+
     var marker = new kakao.maps.Marker({
       position: markerPosition,
+      image: markerImage,
     });
 
     marker.setMap(map);
-    kakao.maps.event.addListener(map, "drag", function () {
-      // var message = '지도를 드래그 하고 있습니다. ' +
-      //   '지도의 중심 좌표는 ' + map.getCenter().toString() + ' 입니다.';
-      // console.log(map.getCenter().toString());
-      // 영역의 남서쪽 좌표를 얻어옵니다
-      // var swLatLng = bounds.getSouthWest();
-      // // 영역의 북동쪽 좌표를 얻어옵니다
-      // var neLatLng = bounds.getNorthEast();
-    });
-  }, []);
+  }, [lat, lng]);
 
   return (
     <div>
