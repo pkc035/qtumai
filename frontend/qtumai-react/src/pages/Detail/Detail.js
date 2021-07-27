@@ -66,7 +66,6 @@ export default function Detail() {
   }, [detailData]);
 
   const STARSCORE = {
-<<<<<<< HEAD
     size: 18,
     value: detailData.naver_score,
     edit: false,
@@ -85,18 +84,6 @@ export default function Detail() {
     activeColor: "#e4e5e9",
     emptyIcon: <i className="fa fa-star" />,
     filledIcon: <i className="fa fa-star" />,
-=======
-    // size: 20,
-    // value: 2.5,
-    // edit: false,
-    // isHalf: true,
-    // color: "#e4e5e9",
-    // activeColor: "#ff3000",
-    size: 60,
-    isHalf: true,
-    char: "⭐",
-    value: 3.5,
->>>>>>> master
   };
 
   const averageReview = (clean, price, service, taste, vibe) => {
