@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Slider from "react-slick";
+import ReactStars from "react-rating-stars-component";
 import styled from "styled-components";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -15,6 +16,27 @@ export default function MainStoreList({
     slidesToScroll: 2,
   };
 
+  const STARSCORE = {
+    size: 14,
+    edit: false,
+    isHalf: true,
+    color: "#ffffff00",
+    activeColor: "#ff3000",
+    emptyIcon: <i className="fa fa-star" />,
+    halfIcon: <i class="fas fa-star-half" />,
+    filledIcon: <i className="fa fa-star" />,
+  };
+
+  const STARBACKGROUND = {
+    size: 14,
+    value: 5,
+    edit: false,
+    activeColor: "#ffffffa0",
+    emptyIcon: <i className="fa fa-star" />,
+    filledIcon: <i className="fa fa-star" />,
+  };
+
+  console.log(personalContents);
   return (
     <div>
       {personalContents
@@ -23,25 +45,32 @@ export default function MainStoreList({
               <MainStoreListContainer key={idx}>
                 <Title>{data.title}</Title>
                 <StoreListSlider {...settings}>
-                  {personalContents[idx].list.map(item => {
-                    return (
-                      <div key={item.id}>
-                        <StoreContainer src={item.shop_info_url}>
-                          <StoreCoupon>
-                            <StoreDiscount>35%</StoreDiscount>
-                          </StoreCoupon>
-                          <StarsContainer>
-                            <Star>★</Star>
-                            <Star>★</Star>
-                            <Star>★</Star>
-                            <Star>☆</Star>
-                            <Star>☆</Star>
-                          </StarsContainer>
-                        </StoreContainer>
-                        <StoreName>{item.shop_name}</StoreName>
-                      </div>
-                    );
-                  })}
+                  {personalContents[idx].list.map(
+                    ({
+                      id,
+                      shopimage_set,
+                      coupon_set,
+                      shop_name,
+                      naver_score,
+                    }) => {
+                      return (
+                        <div key={id}>
+                          <StoreContainer src={shopimage_set}>
+                            <StoreCoupon>
+                              <StoreDiscount>{coupon_set[0]}</StoreDiscount>
+                            </StoreCoupon>
+                            <StarsContainer>
+                              <StarBox>
+                                <Stars {...STARSCORE} value={naver_score} />
+                              </StarBox>
+                              <BackgroundStars {...STARBACKGROUND} />
+                            </StarsContainer>
+                          </StoreContainer>
+                          <StoreName>{shop_name}</StoreName>
+                        </div>
+                      );
+                    }
+                  )}
                 </StoreListSlider>
               </MainStoreListContainer>
             );
@@ -60,11 +89,10 @@ export default function MainStoreList({
                             <StoreDiscount>35%</StoreDiscount>
                           </StoreCoupon>
                           <StarsContainer>
-                            <Star>★</Star>
-                            <Star>★</Star>
-                            <Star>★</Star>
-                            <Star>☆</Star>
-                            <Star>☆</Star>
+                            <StarBox>
+                              <Stars {...STARSCORE} />
+                            </StarBox>
+                            <BackgroundStars {...STARBACKGROUND} />
                           </StarsContainer>
                           {isModifyAll && (
                             <DeletStoreButton>
@@ -105,9 +133,9 @@ const MyPicListContainer = styled.div`
 
 const Title = styled.div`
   margin-bottom: 10px;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: bold;
-  color: gray;
+  color: ${({ theme }) => theme.blacks};
 `;
 
 const StoreListSlider = styled(Slider)`
@@ -156,17 +184,30 @@ const DeletIcon = styled.img.attrs({
 `;
 
 const StoreCoupon = styled.div`
+  ${({ theme }) => theme.imageSet(`url(/images/coupon_background.svg)`)};
   ${({ theme }) => theme.flexSet()};
   position: absolute;
   top: 4px;
   right: 4px;
-  width: 22px;
-  height: 14px;
-  background: white;
+  width: 30px;
+  height: 16px;
 `;
+
+const StarBox = styled.div`
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  z-index: 2;
+`;
+
+const Stars = styled(ReactStars)``;
+
+const BackgroundStars = styled(ReactStars)``;
 
 const StoreDiscount = styled.div`
   font-size: 10px;
+  font-weight: 700;
+  color: white;
 `;
 
 const StarsContainer = styled.div`
@@ -174,13 +215,11 @@ const StarsContainer = styled.div`
   bottom: 4px;
   left: 4px;
   font-size: 18px;
-  color: lightgray;
+  z-index: 100;
 `;
-
-const Star = styled.span``;
 
 const StoreName = styled.div`
   margin-top: 5px;
-  font-weight: bold;
-  color: lightgray;
+  font-size: 14px;
+  color: ${({ theme }) => theme.black};
 `;
