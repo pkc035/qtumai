@@ -54,6 +54,10 @@ function Signup(props) {
           setTimerDisplay(true);
           setMinutes(3);
           setSeconds(0);
+        } else if (res.message === "In") {
+          alert("잘못된 전화번호입니다.");
+        } else if (res.message === "d") {
+          alert("없는 전화번호입니다 다시 한번 확인해주세요.");
         }
       });
   }

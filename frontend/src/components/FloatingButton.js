@@ -7,9 +7,8 @@ import {
   TouchableWithoutFeedback,
   TouchableOpacity,
 } from 'react-native';
-import { createGlobalStyle } from 'styled-components';
 import styled from 'styled-components/native';
-import { AntDesign, Entypo, FontAwesome5 } from '@expo/vector-icons';
+import { Ionicons, Entypo, FontAwesome5 } from '@expo/vector-icons';
 
 export default class FloatingButton extends React.Component {
   animation = new Animated.Value(0);
@@ -58,10 +57,10 @@ export default class FloatingButton extends React.Component {
       <FloatingButtonContainer style={this.props.position}>
         <TouchableWithoutFeedback>
           <Animated.View style={[styles.button, styles.secondary, who]}>
-            <Entypo
-              name="location-pin"
-              size={20}
-              color="#f02a4b"
+            <Ionicons
+              name="person"
+              size={24}
+              color="#e63D11"
               onPress={() => this.props.navigation.navigate('Who')}
             />
           </Animated.View>
@@ -70,9 +69,9 @@ export default class FloatingButton extends React.Component {
         <TouchableWithoutFeedback>
           <Animated.View style={[styles.button, styles.secondary, where]}>
             <Entypo
-              name="thumbs-up"
-              size={20}
-              color="#f02a4b"
+              name="location-pin"
+              size={26}
+              color="#e63D11"
               onPress={() => this.props.navigation.navigate('Where')}
             />
           </Animated.View>
@@ -96,19 +95,20 @@ const FloatingButtonContainer = styled.View`
 const styles = StyleSheet.create({
   button: {
     position: 'absolute',
-    width: 60,
-    height: 60,
+    width: 50,
+    height: 50,
     borderRadius: 60 / 2,
     alignItems: 'center',
     justifyContent: 'center',
-    shadowRadius: 10,
-    shadowColor: '#f02a4b',
-    shadowOpacity: 0.3,
-    shadowOffset: { height: 10 },
+    shadowRadius: 20,
+    shadowColor: '#000',
+    shadowOpacity: 1,
+    shadowOffset: { height: 50 },
+    elevation: 5,
     zIndex: 1000,
   },
   menu: {
-    backgroundColor: '#ff3300',
+    backgroundColor: '#e63D11',
   },
   secondary: {
     width: 48,

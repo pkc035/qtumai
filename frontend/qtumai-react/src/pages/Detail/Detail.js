@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import { GET_DETAIL_API, GET_PICLIST_API } from "../../config";
 
 import KakaoMap from "../../components/KakaoMap/KakaoMapSingle";
@@ -14,6 +14,7 @@ import Review from "../../components/Review/Review";
 import styled from "styled-components";
 
 export default function Detail() {
+  const history = useHistory();
   const { id } = useParams();
   const [detailData, setDetailData] = useState([]);
   const shopId = detailData.id;
@@ -111,7 +112,11 @@ export default function Detail() {
       {detailData.length !== 0 && (
         <DetailContainer>
           <IconBox>
-            <BackButton />
+            <BackButton
+              onClick={() => {
+                history.push("/");
+              }}
+            />
             <div>
               <ShareButton />
               <Hearbutton
@@ -164,11 +169,11 @@ export default function Detail() {
                   <BoldText>{detailData.shop_address_road}</BoldText>
                 </AddressBox>
                 <AddressMap>
-                  <KakaoMap
+                  {/* <KakaoMap
                     size={DETAIL_MAPSIZE}
                     lat={latitude && latitude}
                     lng={longitude && longitude}
-                  />
+                  /> */}
                 </AddressMap>
               </AddressContainer>
 

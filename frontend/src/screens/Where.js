@@ -7,17 +7,16 @@ const Where = ({ navigation }) => {
   return (
     <Container>
       <WebView
-        source={{ uri: 'http://192.168.0.69:3000/Where' }}
+        source={{ uri: 'http://192.168.0.76:3000/where' }}
         onMessage={(event) =>
-          event.nativeEvent.data === 'Success!' ? navigation.pop() : null
+          event.nativeEvent.data === 'goToMain' ? navigation.pop() : null
         }
-      />
-      <Button
-        title="wherePop"
-        onPress={() => navigation.pop()}
-        style={{ position: 'absoulte', top: 0, right: 0 }}
       />
     </Container>
   );
 };
 export default Where;
+
+const Container = styled.View`
+  flex: 1;
+`;

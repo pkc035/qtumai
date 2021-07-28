@@ -2,11 +2,18 @@ import React from "react";
 import styled from "styled-components";
 
 export default function Who() {
+  const goToMain = () => {
+    window.ReactNativeWebView.postMessage("goToMain");
+  };
   return (
     <Container>
       <Wrap>
         <Section>
-          <CloseButton />
+          <CloseButton
+            onClick={() => {
+              goToMain();
+            }}
+          />
           <Title>맴버 편집</Title>
         </Section>
         <Section>
