@@ -55,8 +55,8 @@ class CheckUsernameAPIView(APIView):
 class GetLocationViewSet(ReadOnlyModelViewSet):
     permission_classes = (AllowAny, )
     def list(self, request):
-        area_name = request.data["area_name"]
-        area = LivingArea.objects.filter(area_name__contains=area_name)
+        keyword = request.query_params.get('keyword')
+        area = LivingArea.objects.filter(area_name__contains=keyword)
         serializer = SearchLocationSerializer(area, many=True)
         return Response(serializer.data)
 
@@ -71,7 +71,7 @@ class NaverLogInView(TokenObtainPairView):
         profile_json = profile_request.json()
         print(profile_json)
         naver_number = profile_json['response']['id']
-        print(naver_number,"================================")
+
         if AccountGuest.objects.filter(naver_number=naver_number).exists():
 
             user = AccountGuest.objects.get(naver_number=naver_number)
@@ -79,7 +79,6 @@ class NaverLogInView(TokenObtainPairView):
             return Response(self.get_serializer().validate(data),status=status.HTTP_200_OK)
             
         else:
-            print("==========================================1")
             NaverGuest.objects.update_or_create(
                 naver_number = naver_number,
                 defaults     = {

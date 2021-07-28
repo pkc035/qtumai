@@ -41,13 +41,13 @@ class GoogleGuest(models.Model):
     google_number = models.CharField(max_length=50, blank=True, null=True, default=None)
 
 class NaverGuest(models.Model):
-    Naver_number = models.CharField(max_length=50, blank=True, null=True, default=None)
+    naver_number = models.CharField(max_length=50, blank=True, null=True, default=None)
 
 class AccountGuest(AbstractUser):
     phone_number = models.CharField(max_length=20, blank=True, unique=True, null=True)
     kakao_number = models.CharField(max_length=50, blank=True, unique=True, null=True)
     google_number = models.CharField(max_length=50, blank=True, unique=True, null=True)
-    naver_id = models.CharField(max_length=50, blank=True, unique=True, null=True)
+    naver_number = models.CharField(max_length=50, blank=True, unique=True, null=True)
     profile_img_path = models.TextField(blank=True)
     google_mail = models.EmailField(max_length=128, blank=True) # 안들어올수도 있음
     gender = models.CharField(max_length=2, blank=True)
