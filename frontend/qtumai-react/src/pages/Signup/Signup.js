@@ -41,7 +41,7 @@ function Signup(props) {
   }
 
   function sendPhoneNumber() {
-    fetch("http://192.168.0.66:8000/accounts/sms/", {
+    fetch("http://192.168.0.28:8000/accounts/sms/", {
       method: "POST",
       body: JSON.stringify({
         phone_number: inputValue.split("-").join(""),
@@ -54,6 +54,10 @@ function Signup(props) {
           setTimerDisplay(true);
           setMinutes(3);
           setSeconds(0);
+        } else if (res.message === "In") {
+          alert("잘못된 전화번호입니다.");
+        } else if (res.message === "d") {
+          alert("없는 전화번호입니다 다시 한번 확인해주세요.");
         }
       });
   }

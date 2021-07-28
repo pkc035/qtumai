@@ -8,7 +8,7 @@ const Stack = createStackNavigator();
 const StackNav = () => {
   return (
     <Stack.Navigator
-      initialRouteName="Login"
+      initialRouteName="Home"
       screenOptions={{
         cardStyle: { backgroundColor: '#ffffff' },
         headerShown: false,

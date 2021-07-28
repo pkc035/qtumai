@@ -3,11 +3,15 @@ import styled from "styled-components";
 import Address from "../../components/Address/Address";
 
 export default function Where() {
+  function goToMain() {
+    window.ReactNativeWebView.postMessage("goToMain");
+  }
+
   return (
     <Container>
       <Wrap>
         <Section>
-          <CloseButton />
+          <CloseButton onClick={goToMain} />
           <Title>지역 편집</Title>
         </Section>
         <Section>

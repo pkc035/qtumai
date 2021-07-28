@@ -23,41 +23,46 @@ export const MainNavigator = () => {
 };
 export const Main = ({ navigation }) => {
   return (
-    <MainContainer>
+    <Container>
       <WebView source={{ uri: 'http://192.168.0.76:3000/' }} />
-      <WebView source={{ uri: 'http://192.168.0.76:3000/' }} />
-      {/* <WebView source={{ uri: 'http://10.58.2.159:3000/' }} /> */}
       <FloatingButton
         position={{ bottom: 80, right: 40 }}
         navigation={navigation}
       />
-    </MainContainer>
+    </Container>
   );
 };
-const MainContainer = styled.View`
-  flex: 1;
-`;
+
 export const Map = ({ navigation }) => {
   return (
     <Container>
       <WebView source={{ uri: `${URI}/Map` }} />
-      <Button title="Who" onPress={() => navigation.navigate('Who')} />
-      <Button title="Where" onPress={() => navigation.navigate('Where')} />
+      <FloatingButton
+        position={{ bottom: 80, right: 40 }}
+        navigation={navigation}
+      />
     </Container>
   );
 };
+
 export const Like = () => {
   return (
     <Container>
       <WebView source={{ uri: 'http://192.168.0.76:3000/likes' }} />
-      {/* <WebView source={{ uri: 'http://10.58.2.159:3000/Detail' }} /> */}
     </Container>
   );
 };
+
 export const Favorite = () => {
   return (
     <Container>
-      <StyledText>Favorite</StyledText>
+      <WebView source={{ uri: 'http://192.168.0.76:3000/heart' }} />
     </Container>
   );
 };
+
+const Container = styled.View`
+  flex: 1;
+`;
+
+const StyledText = styled.Text``;
