@@ -13,18 +13,30 @@ from rest_framework.views            import APIView
 from rest_framework.response         import Response
 from rest_framework.viewsets         import ModelViewSet
 from rest_framework.decorators       import api_view, action
-from rest_framework.authtoken.models import Token
+from rest_framework_simplejwt        import authentication
+from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework_simplejwt.token_blacklist.models import BlacklistedToken, OutstandingToken
+from rest_framework_simplejwt.views  import TokenObtainPairView
+from rest_framework.permissions      import AllowAny, IsAuthenticated
+
 
 from project.settings.local import SECRET_KEY
 from shops.models           import Shop, LikeShopAccounts, Menu
-from .models                import AccountGuest, FunData, MyLikeList, Authentication, MyLikeListShop, Preference
+from .models                import AccountGuest, FunData, MyLikeList, Authentication, MyLikeListShop, Preference, LivingArea, KakaoGuest, GoogleGuest, NaverGuest
 from .serializers           import (
-    AccountGuestSerializer, FunDataSerializer, MyLikeListSerializer, MyLikeListShopSerializer, 
+    FunDataSerializer, MyLikeListSerializer, MyLikeListShopSerializer, 
     CheckUsernameSerializer, LivingAreaUpdateSerializer, AccountGuestUpdateSerializer,
     LivingAreaSreialzer, SimpleAccountGuestSerializer, PreferenceSerializer
     )
+class TestAPIView(APIView) :
+    permission_classes = (AllowAny, )
+    def post(self, request): 
+            KakaoGuest.objects.create(kakao_number="1212"),
+            GoogleGuest.objects.create(google_number="3434")
+            return JsonResponse({'message': 'Proceed_with_the_signup'}, status=200)
 
 class CheckUsernameAPIView(APIView):
+    permission_classes = (AllowAny, )
     def post(self, request):
         error = CheckUsernameSerializer.validate(AccountGuest, data=request.data)
         if error['username'] :
@@ -34,28 +46,13 @@ class CheckUsernameAPIView(APIView):
             serializer.check(
                 validated_data=request.data
             )
-            return Response({'message':'success'}, status=status.HTTP_200_OK)
+            return Response({'username':'success'}, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+class NaverLogInView(TokenObtainPairView):
+    permission_classes = (AllowAny, )
 
-class AccountGuestAPIView(APIView):
-    def post(self, request):
-        serializer = AccountGuestSerializer(data=request.data)
-
-        if serializer.is_valid():
-            serializer.create(
-                validated_data = request.data,
-                area_name = request.data['area_name'],
-                latitude = request.data['latitude'],
-                longitude = request.data['longitude']
-            )
-            account_guest_id = AccountGuest.objects.get(username=request.data['username']).id
-            return Response({'account_guest_id' : account_guest_id},status=status.HTTP_201_CREATED)
-        return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
-
-class NaverLogInView(View):
     def get(self, request):
-        ALGORITHM       = 'HS256'
         access_token    = request.headers.get('Authorization')
         profile_request = requests.get(
             "https://openapi.naver.com/v1/nid/me", headers = {"Authorization":f"Bearer {access_token}"},
@@ -63,48 +60,77 @@ class NaverLogInView(View):
         profile_json = profile_request.json()
         naver_number = profile_json["response"]["id"]
         
-        if AccountGuest.objects.filter(naver_number=naver_number).exists():
-            guest       = AccountGuest.objects.get(naver_number=naver_number)
-            encoded_jwt = jwt.encode({'guest_id': guest.id}, SECRET_KEY, ALGORITHM)
-            return JsonResponse({"token": encoded_jwt},status=200)
+        if AccountGuest.objects.filter(naver_id=naver_number).exists():
+
+            user = AccountGuest.objects.get(naver_number=naver_number)
+            data = {'username' : user.username}
+            return Response(self.get_serializer().validate(data),status=status.HTTP_200_OK)
 
         else:
-            return JsonResponse({"message":"USER_DOES_NOT_EXIST"}, status=400)
+            NaverGuest.objects.update_or_create(
+                naver_number = naver_number,
+                defaults     = {
+                    'naver_number': naver_number,
+                }
+            )
+            saved_guest = NaverGuest.objects.get(naver_number=naver_number)
+            return JsonResponse({"naver_number": saved_guest.id}, status=400)
 
 
-class KakaoLogInView(View):
+class KakaoLogInView(TokenObtainPairView):
+    permission_classes = (AllowAny, )
+
     def get(self, request):
-        ALGORITHM       = 'HS256'
+
         access_token    = request.headers.get('Authorization')
         profile_request = requests.get(
-            "https://kapi.kakao.com/v2/user/me", headers = {"Authorization":f"Bearer {access_token}"},
+            "https://kapi.kakao.com/v2/user/me",headers = {"Authorization":f"Bearer {access_token}"},
         )
+        print(profile_request)
         profile_json = profile_request.json()
         kakao_number = profile_json["id"]
+
         if AccountGuest.objects.filter(kakao_number=kakao_number).exists():
-            guest       = AccountGuest.objects.get(kakao_number=kakao_number)
-            encoded_jwt = jwt.encode({'guest_id': guest.id}, SECRET_KEY, ALGORITHM)
-            return JsonResponse({"token": encoded_jwt}, status=200)
-
+            user = AccountGuest.objects.get(kakao_number=kakao_number)
+            data = {'username' : user.username}
+            return Response(self.get_serializer().validate(data),status=status.HTTP_200_OK)
         else:
-            return JsonResponse({"message":"USER_DOES_NOT_EXIST"}, status=400)
+            KakaoGuest.objects.update_or_create(
+                kakao_number = kakao_number,
+                defaults     = {
+                    'kakao_number': kakao_number,
+                }
+            )
+            saved_guest = KakaoGuest.objects.get(kakao_number=kakao_number)
+            return JsonResponse({"kakao_number": saved_guest.id}, status=400)
 
 
-class GoogleLoginView(View):
+class GoogleLoginView(TokenObtainPairView):
+    permission_classes = (AllowAny, )
+
     def get(self,request):
-        ALGORITHM     = 'HS256'
+
         access_token  = request.headers.get("Authorization")
         url           = 'https://oauth2.googleapis.com/tokeninfo?id_token='
         response      = requests.get(url+access_token)
-        user          = response.json()
-        google_number = user['sub']
+        google_user   = response.json()
+        google_number = google_user['sub']
+
         if AccountGuest.objects.filter(google_number=google_number).exists(): 
-            guest       = AccountGuest.objects.get(google_number=google_number) 
-            encoded_jwt = jwt.encode({'guest_id': guest.id}, SECRET_KEY, ALGORITHM)
-            return JsonResponse({'acess_token' :encoded_jwt }, status=200)     
+            user = AccountGuest.objects.get(google_number=google_number)
+            data = {'username' : user.username}
+            return Response(self.get_serializer().validate(data),status=status.HTTP_200_OK)
 
         else: 
-            return JsonResponse({"message":"USER_DOES_NOT_EXIST"}, status=400)
+            GoogleGuest.objects.update_or_create(
+                google_number = google_number,
+                defaults     = {
+                    'google_number': google_number,
+                }
+            )
+            saved_guest = GoogleGuest.objects.get(google_number=google_number)
+            return JsonResponse({"google_number": saved_guest.id}, status=400)
+
 
 
 class SmsSendView(View):
@@ -168,27 +194,56 @@ class SmsSendView(View):
         except KeyError:
             return JsonResponse({'message': 'Invalide key'}, status=400)
         except json.JSONDecodeError as e :
-            return JsonResponse({'MESSAGE': f'Json_ERROR:{e}'}, status=400)
+            return JsonResponse({'message': f'Json_ERROR:{e}'}, status=400)
 
 
-class SMSVerificationView(View):
+class SMSSignupVerificationView(TokenObtainPairView):#sign_up
     def post(self, request):
         data = json.loads(request.body)
-        #로그인화면에서 인증번호 발급 후 일치시 
         try:
-            verification = Authentication.objects.get(phone_number=data['phone_number'])
-            # accountguest = AccountGuest.objects.get(phone_number=data['phone_number'])
-            if AccountGuest.objects.filter(phone_number=data['phone_number']).exists():
+            verification    = Authentication.objects.get(phone_number=data['phone_number'])
+            verification_id = verification.id
+
+            if Authentication.objects.filter(phone_number = data['phone_number']).exists():
                 if verification.auth_number == data['auth_number']:
-                    # 로그인 성공.토큰발급
-                    return JsonResponse({"Token": token.key}, status=200)
+                    return JsonResponse({"phone_number":verification_id}, status=200)
                 else:
-                    return JsonResponse({'message': '인증번호 확인 실패입니다.'}, status=400)
-            else:  # AccountGuest에 저장이 되지 않은경우 
-                return JsonResponse({'message': '회원가입을 진행해주세요.'})
+                    return JsonResponse({'message': 'check_auth_number'}, status=400)
 
         except Authentication.DoesNotExist:
-            return JsonResponse({'message': '해당 휴대폰 번호가 존재하지 않습니다.'}, status=400)
+            return JsonResponse({'message': 'proceed_with_the_certification'}, status=400)
+
+class SMSLoginVerificationView(TokenObtainPairView):#login
+    def post(self, request):
+        data = json.loads(request.body)
+        try:
+            verification    = Authentication.objects.get(phone_number=data['phone_number'])
+            if AccountGuest.objects.filter(phone_number = data['phone_number']).exists():
+                if verification.auth_number == data['auth_number']:
+                    username = AccountGuest.objects.get(phone_number=data['phone_number'])
+                    data = {'username' : username.username}
+                    return Response(self.get_serializer().validate(data),status=status.HTTP_200_OK)
+                else:
+                    return JsonResponse({'message': 'wrong_auth_number'}, status=400)
+            else :
+                return JsonResponse({'message': 'Proceed_with_the_signup'}, status=400)
+
+        except Authentication.DoesNotExist:
+            return JsonResponse({'message': 'phone_number_does_not_exist.'}, status=400)
+
+class LogoutView(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def post(self, request):
+        try:
+            refresh_token = request.data["refresh"]
+            token = RefreshToken(refresh_token)
+            token.blacklist()
+
+            return Response(status=status.HTTP_205_RESET_CONTENT)
+        except Exception as e:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+
 
 @api_view(['POST'])
 def dislikeshop(request):
@@ -362,35 +417,48 @@ class FunDataViewSet(ModelViewSet):
 
             return Response({'message':'Fun Update Fail'})    
 
-class CreatePreferenceAPIView(APIView):
+class CreatePreferenceAPIView(TokenObtainPairView):
+    permission_classes = (AllowAny, )
     def post(self, request):
+        
         norm_data, area_data, pref_data = request.data['normal_data'], request.data['area_data'], request.data['pref_data']
-        norm_serializer = SimpleAccountGuestSerializer(data=norm_data)
+        
         area_serializer = LivingAreaSreialzer(data=area_data)
+        norm_serializer = SimpleAccountGuestSerializer(data=norm_data)
         pref_serializer = PreferenceSerializer(data=pref_data)
-        if norm_serializer.is_valid():
-            norm_serializer.create(
-                validated_data = norm_data
-            )
-        print('norm ok=======================')
+        try:
+            if area_serializer.is_valid():
+                area_serializer.update(
+                    area_name = area_data['area_name'],
+                )
+                print('area ok================s=======')
 
-        if area_serializer.is_valid():
-            area_serializer.create(
-                area_name = area_data['area_name'],
-                latitude = area_data['latitude'],
-                longitude = area_data['longitude']
-            )
-        print('area ok=======================')
+            if norm_serializer.is_valid():
+                living_area_id = LivingArea.objects.get(area_name=area_data['area_name']).id
+                norm_serializer.create(
+                    validated_data = norm_data,
+                    living_area_id = living_area_id
+                )
+                print('norm ok=======================')
 
-        if pref_serializer.is_valid():
-            print('valid_: ', pref_data)
-            pref_serializer.create(
-                validated_data = pref_data
-            )
-            print('pref ok=======================')
+            if pref_serializer.is_valid():
+                print('valid_: ', pref_data)
+                account_guest_id = AccountGuest.objects.get(username=request.data['normal_data']['username']).id
+                pref_serializer.create(
+                    validated_data   = pref_data,
+                    account_guest_id = account_guest_id
+                )
+                print('pref ok=======================')
 
-            return Response(pref_serializer.data, status=status.HTTP_201_CREATED)
-        return Response(pref_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+                user = AccountGuest.objects.get(username=request.data['normal_data']['username'])
+                data = {'username' : user.username}
+                
+                return Response(self.get_serializer().validate(data),status=status.HTTP_201_CREATED)
+            return Response(pref_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        except Authentication.DoesNotExist:
+            return Response({'message':'query_does_not_exist'},status=status.HTTP_400_BAD_REQUEST)
+
 
 class AccountGuestUpdateViewSet(ModelViewSet):
     def list(self, request):
@@ -427,3 +495,16 @@ class AccountGuestUpdateViewSet(ModelViewSet):
                 serializer.save(account=request.account)        
 
         return Response({'message' : 'SUCCESS'})
+
+class LogoutView(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def post(self, request):
+        try:
+            refresh_token = request.data["refresh"]
+            token = RefreshToken(refresh_token)
+            token.blacklist()
+
+            return Response(status=status.HTTP_205_RESET_CONTENT)
+        except Exception as e:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
