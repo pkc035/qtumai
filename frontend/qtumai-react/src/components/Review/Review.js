@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router";
 import StarRating from "../StarRating/StarRating";
 import styled from "styled-components";
 
 export default function Review({ setIsReview }) {
-  const history = useHistory();
   const [taste, setTaste] = useState(0);
   const [clean, setClean] = useState(0);
   const [services, setServices] = useState(0);
@@ -131,7 +129,7 @@ export default function Review({ setIsReview }) {
 
 const Container = styled.div`
   ${({ theme }) => theme.flexSet("flex-start", "center", "column")};
-  position: absolute;
+  position: fixed;
   top: 0;
   width: 100%;
   height: 100%;
@@ -139,40 +137,42 @@ const Container = styled.div`
   background-color: white;
   z-index: 100;
 `;
+
 const Wrap = styled.div`
   width: 90%;
 `;
+
 const Section = styled.section`
   width: 100%;
   margin: 10px 0;
 `;
 
 const BackButton = styled.img.attrs({
-  src: "/images/right-arrow (4).png",
+  src: "/images/back.svg",
 })`
   position: absolute;
   top: 20px;
   left: 10px;
-  width: 26px;
-  height: 26px;
-  transform: rotate(180deg);
-  cursor: pointer;
+  width: 20px;
+  height: 21px;
 `;
+
 const Title = styled.div`
   margin: 20px 0;
   font-size: 16px;
   font-weight: bold;
   text-align: center;
 `;
+
 const Bar = styled.div`
   width: 100%;
   height: 1px;
   margin-bottom: 20px;
   background-color: lightgray;
 `;
+
 const PhotoSection = styled.section`
   ${({ theme }) => theme.flexSet("center", "center", "column")};
-  /* margin: 20px 0; */
 `;
 
 const PhotoBox = styled.div`
@@ -191,19 +191,23 @@ const RestaurantName = styled.span`
   font-weight: bold;
   padding: 10px 0px;
 `;
+
 const ScoreWrap = styled.div`
   ${({ theme }) => theme.flexSet("center", "center", "column")};
   margin: 10px 0;
 `;
+
 const ScoreBox = styled.div`
   ${({ theme }) => theme.flexSet("space-around", "center")};
   width: 90%;
   padding: 1px 0;
 `;
+
 const ScoreTitle = styled.div`
   flex: 2;
   text-align: center;
 `;
+
 const StarBox = styled.div`
   flex: 3;
   text-align: center;
@@ -212,14 +216,17 @@ const StarBox = styled.div`
 const AverageScoreBox = styled.div`
   margin: 8px 0 10px;
 `;
+
 const AverageScore = styled.span`
   margin: 0 7px;
   font-weight: bold;
   color: ${({ theme }) => theme.red};
 `;
+
 const SubTitle = styled.div`
   font-weight: 500;
 `;
+
 const Form = styled.form`
   ${({ theme }) => theme.flexSet("space-between", "center")};
 `;
@@ -249,6 +256,7 @@ const UploadInput = styled.input.attrs({ type: "file", id: "uploadPhoto" })`
 const RemoveInput = styled.input.attrs({ type: "file", id: "removePhoto" })`
   display: none;
 `;
+
 const OneLineReview = styled.input.attrs({
   placeholder: "평가를 작성해 주세요. (선택)",
 })`

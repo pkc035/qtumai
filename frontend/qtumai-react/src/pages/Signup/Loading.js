@@ -7,15 +7,9 @@ function Loading() {
       <LoadingCircle>
         <CirCle cx="50%" cy="50%" r="25"></CirCle>
       </LoadingCircle>
-      <TitleWrap>
-      분석중입니다.
-      </TitleWrap>
-      <TitleWrap>
-      10분정도 소요 됩니다!
-      </TitleWrap>
-      <TitleWrap>
-        알림으로 알려드릴게요.
-      </TitleWrap>
+      <TitleWrap>분석중입니다.</TitleWrap>
+      <TitleWrap>10분정도 소요 됩니다!</TitleWrap>
+      <TitleWrap>알림으로 알려드릴게요.</TitleWrap>
     </LoadingWrap>
   );
 }
@@ -36,7 +30,7 @@ const LoadingWrap = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-direction:column;
+  flex-direction: column;
   position: fixed;
   top: 0;
   right: 0;
@@ -52,7 +46,7 @@ const LoadingCircle = styled.svg`
   width: 54px;
   height: 54px;
   animation: ${loadingSpin} 1s infinite;
-  margin-bottom:20px;
+  margin-bottom: 20px;
 `;
 
 const CirCle = styled.circle`
@@ -65,8 +59,8 @@ const CirCle = styled.circle`
 `;
 
 const TitleWrap = styled.div`
-  position:relative;
-  margin-top:15px;
-  color:#fff;
-  font-size:18px;
+  position: relative;
+  margin-top: 15px;
+  color: #fff;
+  font-size: 18px;
 `;

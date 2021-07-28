@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { withRouter } from "react-router-dom";
 import PreferenceComponents from "./PreferenceComponents";
@@ -10,32 +10,101 @@ function SignupPreference(props) {
   const [preference, setPreference] = useState([]);
   const [nextButton, setNextButton] = useState(true);
   const [preferenceReset, setPreferenceReset] = useState(true);
-  const [isLoadingOn,setIsLoadingOn] = useState(false);
+  const [isLoadingOn, setIsLoadingOn] = useState(false);
 
-  function goToNext() {
+  function goToNext(number) {
     setPreference(preference => [...preference].concat(data));
     setNextButton(true);
     setPreferenceReset(false);
 
     if (count === 10) {
-      setIsLoadingOn(true);
-      setTimeout(() => window.ReactNativeWebView.postMessage('Success!'),10000);
+      if (props.profileEditModalOn) {
+        setIsLoadingOn(true);
+        setPreferenceReset(true);
+        setTimeout(() => props.setProfileEditModalOn(false), 1000);
+      } else {
+        fetch("http://192.168.0.66:8000/accounts/preference", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json; charset=utf8",
+          },
+          body: JSON.stringify({
+            normal_data: {
+              username: localStorage.getItem("username"),
+              gender: localStorage.getItem("gender"),
+              birthday: localStorage.getItem("birthday"),
+              agreed_marketing_receive: localStorage.getItem(
+                "agreed_marketing_receive"
+              ),
+              // phone_number: localStorage.getItem("phone_number"),
+              google_number: localStorage.getItem("google_number"),
+            },
+            area_data: {
+              area_name: "갱기도 시흥시 미샨동",
+            },
+            pref_data: {
+              taste_service: preference[0],
+              taste_cleanliness: preference[1],
+              taste_vibe: preference[2],
+              taste_price: preference[3],
+              service_cleanliness: preference[4],
+              service_vibe: preference[5],
+              service_price: preference[6],
+              cleanliness_vibe: preference[7],
+              cleanliness_price: preference[8],
+              vibe_price: preference[9],
+            },
+          }),
+        })
+          .then(res => res.json())
+          .then(res => {
+            localStorage.setItem("access", res.access);
+            localStorage.setItem("refresh", res.refresh);
+          });
+        setPreferenceReset(true);
+        setNextButton(false);
+        setIsLoadingOn(true);
+        setTimeout(
+          () => window.ReactNativeWebView.postMessage("Success!"),
+          1000
+        );
+      }
     } else setCount(count => count + 1);
   }
+
+  console.log(data);
+  console.log(preference);
+
+  console.log(
+    localStorage.getItem("username"),
+    localStorage.getItem("gender"),
+    localStorage.getItem("birthday"),
+    localStorage.getItem("agreed_marketing_receive"),
+    localStorage.getItem("google_number")
+    // phone_number: localStorage.getItem("phone_number"),
+  );
+
+  useEffect(() => {
+    if (props.profileEditModalOn) {
+      props.setPreference(preference);
+    }
+  }, [preference]);
 
   function goToBack() {
     setPreference(preference.slice(0, preference.length - 1));
     if (count === 1) {
-      props.history.push("/signup/next");
+      if (props.profileEditModalOn) {
+        props.setProfileEditModalOn(false);
+      } else props.history.push("/signup/next");
     } else setCount(count => count - 1);
   }
 
   const PREFERNCE_ITEM = [
     { id: 1, title: "맛", url: "/images/Preference/1.jpg" },
-    { id: 2, title: "서비스", url: "/images/Preference/2.jpg" },
-    { id: 3, title: "분위기", url: "/images/Preference/3.jpg" },
-    { id: 4, title: "청결", url: "/images/Preference/4.jpg" },
-    { id: 5, title: "가성비", url: "/images/Preference/5.jpg" },
+    { id: 2, title: "서비스", url: "/images/Preference/5.jpg" },
+    { id: 3, title: "청결", url: "/images/Preference/2.jpg" },
+    { id: 4, title: "분위기", url: "/images/Preference/3.jpg" },
+    { id: 5, title: "가성비", url: "/images/Preference/4.jpg" },
   ];
 
   function combination(arr, num) {
@@ -51,12 +120,9 @@ function SignupPreference(props) {
     return result;
   }
 
-
   let preferenceNumber = {
     ...combination([1, 2, 3, 4, 5], 2).splice(count - 1, 1),
   };
-
-  console.log(preference);
 
   return (
     <Modal>
@@ -76,23 +142,31 @@ function SignupPreference(props) {
         preferenceReset={preferenceReset}
         setPreferenceReset={setPreferenceReset}
       />
-      <LoginBtn disabled={nextButton} onClick={goToNext}>
+      <BottomButton disabled={nextButton} onClick={goToNext}>
         다음
-      </LoginBtn>
+      </BottomButton>
       {isLoadingOn && <Loading />}
     </Modal>
   );
 }
 
 const Modal = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100vw;
+  height: 100vh;
 `;
 
 const Title = styled.div`
   display: flex;
+  position: absolute;
   width: 100%;
+  z-index: 100;
+  background-color: #fff;
 `;
 
 const Subject = styled.p`
@@ -108,25 +182,29 @@ const BackButton = styled.button`
   padding: 10px;
 `;
 
-const LoginBtn = styled.button`
+const ArrowImage = styled.img`
+  width: 30px;
+  transform: rotate(180deg);
+`;
+
+const BottomButton = styled.button`
   position: fixed;
   bottom: 0px;
   width: 100%;
   height: 60px;
   margin-top: 15px;
-  background-color: #ff3000;
+  background-color: #fff;
+  border-top: 1px solid #c1c1c1;
   font-size: 15px;
-  color: #fff;
+  color: #ff3000;
+  font-weight: 700;
+  z-index: 100;
 
   &:disabled {
-    background-color: #c1c1c1;
+    background-color: #fff;
     cursor: default;
+    color: #c1c1c1;
   }
-`;
-
-const ArrowImage = styled.img`
-  width: 30px;
-  transform: rotate(180deg);
 `;
 
 export default withRouter(SignupPreference);

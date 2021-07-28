@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import { GET_DETAIL_API, GET_PICLIST_API } from "../../config";
+
+import KakaoMap from "../../components/KakaoMap/KakaoMapSingle";
 import CommonMainSlider from "../../components/CommonMainSlider/CommonMainSlider";
 import CircularProgressBar from "../../components/CirclePercentageBar/CirclePercentageBar";
 import SlideModal from "../../components/SlideModal/SlideModal";
@@ -12,6 +14,7 @@ import Review from "../../components/Review/Review";
 import styled from "styled-components";
 
 export default function Detail() {
+  const history = useHistory();
   const { id } = useParams();
   const [detailData, setDetailData] = useState([]);
   const shopId = detailData.id;
@@ -59,7 +62,6 @@ export default function Detail() {
             styleArr.push(preSelect);
           }
         }
-        // const selectedArr = Array(data.results.length).fill(false);
         setMylikeList({ ...data });
         setStyle(styleArr);
       });
@@ -73,7 +75,7 @@ export default function Detail() {
     color: "#e4e5e9",
     activeColor: "#ff3000",
     emptyIcon: <i className="fa fa-star" />,
-    halfIcon: <i class="fas fa-star-half" />,
+    halfIcon: <i className="fas fa-star-half" />,
     filledIcon: <i className="fa fa-star" />,
   };
 
@@ -96,23 +98,41 @@ export default function Detail() {
     return averageRound;
   };
 
-  const { coupon, is_subscribe, shop_name, shop_description, shop_status } =
-    detailData;
+  const {
+    coupon,
+    is_subscribe,
+    shop_name,
+    shop_description,
+    shop_status,
+    latitude,
+    longitude,
+  } = detailData;
   return (
     <div>
       {detailData.length !== 0 && (
         <DetailContainer>
-          <Hearbutton
-            src={
-              shop_status.like_status
-                ? "/images/heartFill.svg"
-                : "/images/heart.svg"
-            }
-            onClick={() => {
-              setIsSlideModal(true);
-              setIsLike(true);
-            }}
-          />
+          <IconBox>
+            <BackButton
+              onClick={() => {
+                history.push("/");
+              }}
+            />
+            <div>
+              <ShareButton />
+              <Hearbutton
+                src={
+                  shop_status.like_status
+                    ? "/images/picLike_fill.svg"
+                    : "/images/picLike.svg"
+                }
+                onClick={() => {
+                  setIsSlideModal(true);
+                  setIsLike(true);
+                }}
+              />
+            </div>
+          </IconBox>
+
           {isLoading && (
             <CommonMainSlider isLoading={isLoading} detailSlider={detailData} />
           )}
@@ -127,8 +147,7 @@ export default function Detail() {
                   <BackgroundStars {...STARBACKGROUND} />
                   <Name>{shop_name}</Name>
                   <Phrases>{shop_description}</Phrases>
-                  <OperatingTime>09:00 - 12:00</OperatingTime>
-                  <ShareButton />
+                  <Phrases>대표메뉴: 파스타</Phrases>
                 </RestaurantInfo>
                 <Discount>
                   <DiscountPercentage>
@@ -137,15 +156,34 @@ export default function Detail() {
                 </Discount>
               </RestaurantInfoBox>
 
-              <AddressBoxContainer>
-                <Title>주소</Title>
-                <AddressMap></AddressMap>
-              </AddressBoxContainer>
+              <OpeningContainer>
+                <BoldText>영업시간</BoldText>
+                <Bar />
+                <BoldText>09:00 - 12:00</BoldText>
+              </OpeningContainer>
+
+              <AddressContainer>
+                <AddressBox>
+                  <BoldText>주소</BoldText>
+                  <Bar />
+                  <BoldText>{detailData.shop_address_road}</BoldText>
+                </AddressBox>
+                <AddressMap>
+                  {/* <KakaoMap
+                    size={DETAIL_MAPSIZE}
+                    lat={latitude && latitude}
+                    lng={longitude && longitude}
+                  /> */}
+                </AddressMap>
+              </AddressContainer>
 
               <FunctionContainer>
                 <FunctionBox>
                   <Context>나와의 매칭</Context>
-                  <CircularProgressBar percentage={88} />
+                  <CircularProgressBar
+                    percentage={30}
+                    size={{ ...DETAIL_CIRCLEBAR }}
+                  />
                 </FunctionBox>
                 <FunctionBox>
                   <Context>현재 이상권의 붐빔 정도</Context>
@@ -158,11 +196,11 @@ export default function Detail() {
                       setIsOpenYesNoModal(!isOpenYesNoModal);
                     }}
                   >
-                    <CircleIcon />
+                    <CircleIcon photoUrl="/images/boss.svg" />
                     <ButtonTitle>사장님이신가요?</ButtonTitle>
                   </ButtonBox>
                   <ButtonBox>
-                    <CircleIcon />
+                    <CircleIcon photoUrl="/images/hate.svg" />
                     <ButtonTitle>추천 받지 않기</ButtonTitle>
                   </ButtonBox>
                   <ButtonBox
@@ -170,16 +208,17 @@ export default function Detail() {
                       setIsSlideModal(!isSlideModal);
                     }}
                   >
-                    <CircleIcon />
+                    <CircleIcon photoUrl="/images/modify.svg" />
                     <ButtonTitle>가게 정보 수정</ButtonTitle>
                   </ButtonBox>
                 </ButtonsBox>
               </FunctionContainer>
 
               <ReviewContainer>
-                <Title>매장 총점</Title>
+                <BoldText>매장 총점</BoldText>
                 {detailData.review_set.map(
                   ({
+                    id,
                     img_path,
                     username,
                     content,
@@ -190,20 +229,20 @@ export default function Detail() {
                     score_vibe,
                   }) => {
                     return (
-                      <ReviewBox>
+                      <ReviewBox key={id}>
                         <UserDetailBox>
-                          <UserPhoto src={img_path} />
+                          <UserPhoto userPhoto={img_path} />
                           <div>
                             <Stars
-                              score={() =>
+                              score={() => {
                                 averageReview(
                                   score_cleanliness,
                                   score_price,
                                   score_service,
                                   score_taste,
                                   score_vibe
-                                )
-                              }
+                                );
+                              }}
                               value={reviewScore}
                             />
                             <UserId>{username}</UserId>
@@ -270,14 +309,33 @@ export default function Detail() {
   );
 }
 
-const Hearbutton = styled.img`
+const IconBox = styled.div`
+  ${({ theme }) => theme.flexSet("space-between", "center")};
   position: absolute;
-  top: 30px;
-  right: 16px;
-  width: 22px;
-  height: 22px;
-  filter: invert(1);
+  width: 100%;
+  top: 50px;
+  padding: 0 20px;
   z-index: 1;
+`;
+
+const BackButton = styled.img.attrs({
+  src: "/images/back.svg",
+})`
+  width: 20px;
+  height: 21px;
+`;
+
+const ShareButton = styled.img.attrs({
+  src: "/images/share.svg",
+})`
+  width: 20px;
+  height: 23px;
+  margin-right: 10px;
+`;
+
+const Hearbutton = styled.img`
+  width: 24px;
+  height: 22px;
 `;
 
 const DetailContainer = styled.div`
@@ -297,7 +355,7 @@ const LikeButton = styled.div``;
 
 const RestaurantInfoBox = styled.div`
   position: absolute;
-  top: 350px;
+  top: 300px;
   display: flex;
   width: 90%;
   border: 1px solid #00000026;
@@ -307,14 +365,14 @@ const RestaurantInfoBox = styled.div`
 
 const RestaurantInfo = styled.div`
   flex: 3;
-  padding: 20px 0 20px 20px;
+  padding: 10px 0 10px 20px;
   background-color: #fffffff9;
   border-radius: 5px 0 0 5px;
 `;
 
 const StarBox = styled.div`
   position: absolute;
-  top: 20px;
+  top: 10px;
   left: 20px;
   z-index: 2;
 `;
@@ -335,19 +393,12 @@ const Phrases = styled.div`
   margin: 2px 0;
 `;
 
-const OperatingTime = styled.div`
-  margin-top: 10px;
-  font-size: 12px;
-  font-weight: bold;
-`;
-
-const ShareButton = styled.div``;
-
 const Discount = styled.div`
   ${({ theme }) => theme.flexSet()};
-  flex: 1.2;
+  ${({ theme }) => theme.imageSet(`url(/images/detailCoupon_background.svg)`)};
+  background-color: #fffffff9;
+  flex: 1.5;
   border-radius: 0 5px 5px 0;
-  background-color: ${({ theme }) => theme.red};
 `;
 
 const DiscountPercentage = styled.div`
@@ -356,14 +407,28 @@ const DiscountPercentage = styled.div`
   font-weight: bold;
 `;
 
-const AddressBoxContainer = styled.section`
-  margin-top: 100px;
+const OpeningContainer = styled.section`
+  ${({ theme }) => theme.flexSet("flex-start", "center")};
+  margin: 50px 0 20px;
 `;
 
-const Title = styled.div`
+const AddressContainer = styled.section``;
+
+const AddressBox = styled.div`
+  ${({ theme }) => theme.flexSet("flex-start", "center")};
+`;
+
+const BoldText = styled.div`
   font-size: 16px;
   font-weight: 600;
-  margin: 5px 0;
+  margin: 8px 2px 10px 0;
+`;
+
+const Bar = styled.div`
+  width: 2px;
+  height: 18px;
+  margin: 0 8px 5px;
+  background-color: ${({ theme }) => theme.black};
 `;
 
 const AddressMap = styled.div`
@@ -382,7 +447,8 @@ const FunctionBox = styled.div`
 `;
 
 const Context = styled.span`
-  font-size: 14px;
+  font-size: 16px;
+  font-weight: 500;
 `;
 
 // const MatchingPercentage = styled.span``;
@@ -400,6 +466,7 @@ const ButtonBox = styled.span`
 `;
 
 const CircleIcon = styled.span`
+  ${({ theme, photoUrl }) => theme.imageSet(`url(${photoUrl})`, "55%")};
   width: 54px;
   height: 54px;
   border: 1px solid #00000026;
@@ -417,9 +484,10 @@ const ReviewBox = styled.div`
   ${({ theme }) => theme.flexSet("center", "flex-start", "column")};
   width: 100%;
   height: 90px;
+  padding: 16px;
+  margin-bottom: 10px;
   border: 1px solid #00000026;
   border-radius: 3px;
-  padding: 16px;
 `;
 
 const UserDetailBox = styled.div`
@@ -427,14 +495,15 @@ const UserDetailBox = styled.div`
 `;
 
 const UserPhoto = styled.div`
+  ${({ theme, userPhoto }) =>
+    userPhoto
+      ? theme.imageSet(`url(${userPhoto})`)
+      : theme.imageSet(`url(/images/basicProfile.svg)`)}
   width: 36px;
   height: 36px;
   margin-right: 5px;
   border-radius: 100%;
-  background-color: black;
 `;
-
-const Star = styled.div``;
 
 const UserId = styled.div`
   font-size: 10px;
@@ -451,13 +520,28 @@ const BenfitsButton = styled.button`
   position: sticky;
   bottom: 0;
   right: 0;
-  color: white;
   width: 100%;
   height: 60px;
   padding-top: 20px;
   font-weight: 500;
-  cursor: pointer;
+  color: white;
+  z-index: 10;
   background-color: ${({ theme }) => theme.red};
 `;
 
 const VisitButton = styled(BenfitsButton)``;
+
+const DETAIL_MAPSIZE = {
+  width: "100%",
+  height: "160px",
+};
+
+const DETAIL_CIRCLEBAR = {
+  circular_w_h: "30px",
+  inner_w_h: "24px",
+  endPoint_w_h: "6px",
+  inner_margin: "-12px 0px 0px -12px",
+  bar_clip: "rect(0px, 30px, 30px, 15px)",
+  prigress_clip: "rect(0px, 15px, 30px, 0px)",
+  numb_size: "12px",
+};

@@ -1,0 +1,55 @@
+{
+  "count": 9,
+  "next": "http://localhost:8000/shops/visited/?page=2",
+  "previous": null,
+  "results": [
+    {
+      "id": 9,
+      "shop_name": "제육볶음나라",
+      "shop_description": "test",
+      "latitude": "100.014",
+      "longitude": "1000.021",
+      "naver_score": 1.0,
+      "shopimage_set": ["1.jpg", "2.jpg"],
+      "visitedshop_set": [
+        {
+          "visited_time": "2021-07-27T16:06:10.535914"
+        }
+      ],
+      "review_set": [],
+      "is_review": false
+    },
+    {
+      "id": 8,
+      "shop_name": "삼겹살나라",
+      "shop_description": "test",
+      "latitude": "100.012",
+      "longitude": "1000.018",
+      "naver_score": 1.0,
+      "shopimage_set": [],
+      "visitedshop_set": [
+        {
+          "visited_time": "2021-07-27T16:06:10.512258"
+        }
+      ],
+      "review_set": [],
+      "is_review": false
+    },
+    {
+      "id": 7,
+      "shop_name": "덮밥나라",
+      "shop_description": "test",
+      "latitude": "100.01",
+      "longitude": "1000.015",
+      "naver_score": 1.0,
+      "shopimage_set": [],
+      "visitedshop_set": [
+        {
+          "visited_time": "2021-07-27T16:06:10.494660"
+        }
+      ],
+      "review_set": [],
+      "is_review": false
+    }
+  ]
+}

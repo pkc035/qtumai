@@ -14,7 +14,7 @@ export default function DetailModal({
         <Context>
           <RestaurantName>{shop_name}</RestaurantName>
           {is_subscribe && (
-            <div>
+            <DiscountBox>
               <Discount>전체 금액의 % 할인</Discount>
               <DiscountDetail>- 1일 1회 사용 가능합니다.</DiscountDetail>
               <DiscountDetail>- 매일 오전 6시 리셋됩니다.</DiscountDetail>
@@ -28,7 +28,7 @@ export default function DetailModal({
                 - 혜택이 상이하니 계산 시 꼭 확인해 주세요
               </DiscountDetail>
               <DiscountDetail>- 사용 즉시 매장에 알림이 갑니다.</DiscountDetail>
-            </div>
+            </DiscountBox>
           )}
         </Context>
         <SubmitButton
@@ -58,36 +58,44 @@ const BlackBackground = styled.div`
 const ModalBox = styled.div`
   ${({ theme }) => theme.flexSet("space-between", "flex-start", "column")}
   width: 90%;
-  /* height: 100%; */
   border-radius: 5px;
   background-color: #ffffff;
   z-index: 1000;
 `;
+
 const RestaurantName = styled.div`
   margin: 20px 14px;
   font-size: 24px;
   font-weight: bold;
   color: black;
 `;
+
 const Context = styled.div`
   ${({ theme }) => theme.flexSet("flex-start", "flex-start", "column")}
   font-size: 14px;
   color: black;
+`;
+
+const DiscountBox = styled.div`
   margin-bottom: 20px;
 `;
+
 const DiscountDetail = styled.div`
   text-align: left;
-  padding: 2px 0px 2px 20px;
+  padding: 5px 0 5px 20px;
 `;
+
 const Discount = styled(DiscountDetail)`
   font-size: 20px;
   font-weight: 700;
 `;
+
 const SubmitButton = styled.button`
   width: 100%;
   padding: 20px 0 16px;
   border-radius: 0px 0px 5px 5px;
   font-size: 18px;
   color: white;
-  background-color: ${({ theme }) => theme.red};
+  background-color: white;
+  ${({ theme }) => theme.imageSet(`url(/images/detailModal_background.svg)`)};
 `;
