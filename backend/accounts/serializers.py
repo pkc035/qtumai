@@ -9,6 +9,12 @@ from .models           import (
     LivingArea, Preference,FunData, MyLikeList, MyLikeListShop
     )
 
+
+class SearchLocationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = LivingArea
+        fields = ['id', 'area_name']
+
 class LivingAreaSreialzer(serializers.ModelSerializer):
 
     class Meta:
@@ -65,7 +71,7 @@ class SimpleAccountGuestSerializer(serializers.ModelSerializer):
             'phone_number', 
             'kakao_number', 
             'google_number', 
-            'naver_id', 
+            'naver_number', 
             'username', 
             'gender', 
             'birthday', 
@@ -77,7 +83,7 @@ class SimpleAccountGuestSerializer(serializers.ModelSerializer):
         phone_number  = validated_data['phone_number']
         kakao_number  = validated_data['kakao_number']
         google_number = validated_data['google_number']
-        naver_id  = validated_data['naver_number']
+        naver_number  = validated_data['naver_number']
 
         if validated_data['phone_number'] != "" : 
             AccountGuest.objects.create(
@@ -85,7 +91,7 @@ class SimpleAccountGuestSerializer(serializers.ModelSerializer):
                 phone_number             = Authentication.objects.get(id=phone_number[0]).phone_number,
                 kakao_number             = validated_data.get(None),
                 google_number            = validated_data.get(None),
-                naver_id             = validated_data.get(None),
+                naver_number             = validated_data.get(None),
                 username                 = validated_data['username'],
                 gender                   = validated_data['gender'],
                 birthday                 = validated_data['birthday'],
@@ -97,7 +103,7 @@ class SimpleAccountGuestSerializer(serializers.ModelSerializer):
                 phone_number             = validated_data.get(None),
                 kakao_number             = KakaoGuest.objects.get(id=kakao_number[0]).kakao_number,
                 google_number            = validated_data.get(None),
-                naver_id             = validated_data.get(None),
+                naver_number             = validated_data.get(None),
                 username                 = validated_data['username'],
                 gender                   = validated_data['gender'],
                 birthday                 = validated_data['birthday'],
@@ -109,7 +115,7 @@ class SimpleAccountGuestSerializer(serializers.ModelSerializer):
                 phone_number             = validated_data.get(None),
                 kakao_number             = validated_data.get(None),
                 google_number            = GoogleGuest.objects.get(id=google_number[0]).google_number,
-                naver_id             = validated_data.get(None),
+                naver_number             = validated_data.get(None),
                 username                 = validated_data['username'],
                 gender                   = validated_data['gender'],
                 birthday                 = validated_data['birthday'],
@@ -121,7 +127,7 @@ class SimpleAccountGuestSerializer(serializers.ModelSerializer):
                 phone_number             = validated_data.get(None),
                 kakao_number             = validated_data.get(None),
                 google_number            = validated_data.get(None),
-                naver_id                 = NaverGuest.objects.get(id=naver_id[0]).naver_number,
+                naver_number             = NaverGuest.objects.get(id=naver_number[0]).naver_number,
                 username                 = validated_data['username'],
                 gender                   = validated_data['gender'],
                 birthday                 = validated_data['birthday'],

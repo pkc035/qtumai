@@ -5,7 +5,7 @@ from rest_framework.routers import DefaultRouter
 from .views import (
     AccountGuestUpdateViewSet, FunDataViewSet, KakaoLogInView, GoogleLoginView, NaverLogInView, MyLikeListViewSet, MyLikeListShopViewSet,
     SmsSendView, SMSLoginVerificationView, SMSSignupVerificationView, CreatePreferenceAPIView, CheckUsernameAPIView, LogoutView,
-    dislikeshop, likeshop, LogoutView, TestAPIView
+    dislikeshop, likeshop, LogoutView, GetLocationViewSet
     )
 
 accountguest_list = AccountGuestUpdateViewSet.as_view({
@@ -18,11 +18,11 @@ router = DefaultRouter(trailing_slash=True)
 router.register(r"mylike", MyLikeListViewSet, basename="mylike")
 router.register(r"mylikeshop", MyLikeListShopViewSet, basename="mylikeshop")
 router.register(r"fun", FunDataViewSet, basename='fun')
+router.register(r"getlocation", GetLocationViewSet, basename='getlocation')
 
 urlpatterns = [
     # views.py에서 정의한(def) 함수 연결 가능 (path)
     # path('send_sms/', views.send_sms),
-    path('test',TestAPIView.as_view()),
     path('naver-login/', NaverLogInView.as_view()),
     path('kakao-login/', KakaoLogInView.as_view()),
     path('google-login/', GoogleLoginView.as_view()),

@@ -9,11 +9,13 @@ from django.shortcuts          import get_object_or_404
 from django.contrib.auth       import get_user_model
 from django.core.files.storage import FileSystemStorage
 
-from rest_framework.viewsets   import ModelViewSet
-from rest_framework.decorators import action, api_view
-from rest_framework.response   import Response
-from rest_framework.pagination import PageNumberPagination
+from rest_framework.viewsets    import ModelViewSet
+from rest_framework.decorators  import action, api_view
+from rest_framework.response    import Response
+from rest_framework.pagination  import PageNumberPagination
+from rest_framework.permissions import AllowAny, IsAuthenticated
 
+from accounts.utils    import login_decorator
 from project.settings.base     import MEDIA_ROOT
 from accounts.models           import AccountGuest, FunDataPercentage
 from .models                   import Shop, Category, Review, ReportShop, ReportReview, Menu

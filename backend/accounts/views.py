@@ -11,7 +11,7 @@ from django.contrib.auth import get_user_model
 from rest_framework                  import status
 from rest_framework.views            import APIView
 from rest_framework.response         import Response
-from rest_framework.viewsets         import ModelViewSet
+from rest_framework.viewsets         import ModelViewSet, ReadOnlyModelViewSet
 from rest_framework.decorators       import api_view, action
 from rest_framework_simplejwt        import authentication
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -19,21 +19,24 @@ from rest_framework_simplejwt.token_blacklist.models import BlacklistedToken, Ou
 from rest_framework_simplejwt.views  import TokenObtainPairView
 from rest_framework.permissions      import AllowAny, IsAuthenticated
 
-
-from project.settings.local import SECRET_KEY
+from accounts.utils    import login_decorator
+from project.settings.base  import SECRET_KEY
 from shops.models           import Shop, LikeShopAccounts, Menu
 from .models                import AccountGuest, FunData, MyLikeList, Authentication, MyLikeListShop, Preference, LivingArea, KakaoGuest, GoogleGuest, NaverGuest
 from .serializers           import (
     FunDataSerializer, MyLikeListSerializer, MyLikeListShopSerializer, 
     CheckUsernameSerializer, LivingAreaUpdateSerializer, AccountGuestUpdateSerializer,
-    LivingAreaSreialzer, SimpleAccountGuestSerializer, PreferenceSerializer
+    LivingAreaSreialzer, SimpleAccountGuestSerializer, PreferenceSerializer, SearchLocationSerializer
     )
-class TestAPIView(APIView) :
-    permission_classes = (AllowAny, )
-    def post(self, request): 
-            KakaoGuest.objects.create(kakao_number="1212"),
-            GoogleGuest.objects.create(google_number="3434")
-            return JsonResponse({'message': 'Proceed_with_the_signup'}, status=200)
+
+
+# class TestAPIView(APIView) :
+#     permission_classes = (AllowAny, )
+
+#     @login_decorator
+#     def post(self, request): 
+#             a = request.user.id
+#             return JsonResponse({'message': a}, status=200)
 
 class CheckUsernameAPIView(APIView):
     permission_classes = (AllowAny, )
@@ -49,6 +52,14 @@ class CheckUsernameAPIView(APIView):
             return Response({'username':'success'}, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+class GetLocationViewSet(ReadOnlyModelViewSet):
+    permission_classes = (AllowAny, )
+    def list(self, request):
+        area_name = request.data["area_name"]
+        area = LivingArea.objects.filter(area_name__contains=area_name)
+        serializer = SearchLocationSerializer(area, many=True)
+        return Response(serializer.data)
+
 class NaverLogInView(TokenObtainPairView):
     permission_classes = (AllowAny, )
 
@@ -58,15 +69,17 @@ class NaverLogInView(TokenObtainPairView):
             "https://openapi.naver.com/v1/nid/me", headers = {"Authorization":f"Bearer {access_token}"},
         )
         profile_json = profile_request.json()
-        naver_number = profile_json["response"]["id"]
-        
-        if AccountGuest.objects.filter(naver_id=naver_number).exists():
+        print(profile_json)
+        naver_number = profile_json['response']['id']
+        print(naver_number,"================================")
+        if AccountGuest.objects.filter(naver_number=naver_number).exists():
 
             user = AccountGuest.objects.get(naver_number=naver_number)
             data = {'username' : user.username}
             return Response(self.get_serializer().validate(data),status=status.HTTP_200_OK)
-
+            
         else:
+            print("==========================================1")
             NaverGuest.objects.update_or_create(
                 naver_number = naver_number,
                 defaults     = {
@@ -234,6 +247,7 @@ class SMSLoginVerificationView(TokenObtainPairView):#login
 class LogoutView(APIView):
     permission_classes = (IsAuthenticated,)
 
+    @login_decorator
     def post(self, request):
         try:
             refresh_token = request.data["refresh"]
