@@ -5,7 +5,12 @@
   "results": [
     {
       "id": 1,
-      "shop_image_list": [],
+      "shop_image_list": [
+        "https://i.imgur.com/zs1GZHb.jpg",
+        "https://i.imgur.com/ERmRCKF.jpg",
+        "https://i.imgur.com/Nxqdwbs.jpg",
+        "https://i.imgur.com/SwiHvRG.png"
+      ],
       "shop_status": {
         "like_status": true,
         "dislike_status": true,
@@ -58,7 +63,7 @@
       "score_vibe": 4.0,
       "score_price": 1.0,
       "review_count": 34,
-      "naver_score": 16.0,
+      "naver_score": 4.5,
       "naver_score_count": 99,
       "price_range": "8880-11110",
       "latitude": "125",

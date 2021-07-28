@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Slider from "react-slick";
+import ReactStars from "react-rating-stars-component";
 import styled from "styled-components";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -14,6 +15,27 @@ export default function MainStoreList({
     slidesToShow: 3,
     slidesToScroll: 2,
   };
+
+  const STARSCORE = {
+    size: 14,
+    edit: false,
+    isHalf: true,
+    color: "#ffffff00",
+    activeColor: "#ff3000",
+    emptyIcon: <i className="fa fa-star" />,
+    halfIcon: <i class="fas fa-star-half" />,
+    filledIcon: <i className="fa fa-star" />,
+  };
+
+  const STARBACKGROUND = {
+    size: 14,
+    value: 5,
+    edit: false,
+    activeColor: "#ffffffa0",
+    emptyIcon: <i className="fa fa-star" />,
+    filledIcon: <i className="fa fa-star" />,
+  };
+
   console.log(personalContents);
   return (
     <div>
@@ -24,7 +46,13 @@ export default function MainStoreList({
                 <Title>{data.title}</Title>
                 <StoreListSlider {...settings}>
                   {personalContents[idx].list.map(
-                    ({ id, shopimage_set, coupon_set, shop_name }) => {
+                    ({
+                      id,
+                      shopimage_set,
+                      coupon_set,
+                      shop_name,
+                      naver_score,
+                    }) => {
                       return (
                         <div key={id}>
                           <StoreContainer src={shopimage_set}>
@@ -32,11 +60,10 @@ export default function MainStoreList({
                               <StoreDiscount>{coupon_set[0]}</StoreDiscount>
                             </StoreCoupon>
                             <StarsContainer>
-                              <Star>★</Star>
-                              <Star>★</Star>
-                              <Star>★</Star>
-                              <Star>☆</Star>
-                              <Star>☆</Star>
+                              <StarBox>
+                                <Stars {...STARSCORE} value={naver_score} />
+                              </StarBox>
+                              <BackgroundStars {...STARBACKGROUND} />
                             </StarsContainer>
                           </StoreContainer>
                           <StoreName>{shop_name}</StoreName>
@@ -62,11 +89,10 @@ export default function MainStoreList({
                             <StoreDiscount>35%</StoreDiscount>
                           </StoreCoupon>
                           <StarsContainer>
-                            <Star>★</Star>
-                            <Star>★</Star>
-                            <Star>★</Star>
-                            <Star>☆</Star>
-                            <Star>☆</Star>
+                            <StarBox>
+                              <Stars {...STARSCORE} />
+                            </StarBox>
+                            <BackgroundStars {...STARBACKGROUND} />
                           </StarsContainer>
                           {isModifyAll && (
                             <DeletStoreButton>
@@ -167,6 +193,17 @@ const StoreCoupon = styled.div`
   height: 16px;
 `;
 
+const StarBox = styled.div`
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  z-index: 2;
+`;
+
+const Stars = styled(ReactStars)``;
+
+const BackgroundStars = styled(ReactStars)``;
+
 const StoreDiscount = styled.div`
   font-size: 10px;
   font-weight: 700;
@@ -178,10 +215,8 @@ const StarsContainer = styled.div`
   bottom: 4px;
   left: 4px;
   font-size: 18px;
-  color: lightgray;
+  z-index: 100;
 `;
-
-const Star = styled.span``;
 
 const StoreName = styled.div`
   margin-top: 5px;

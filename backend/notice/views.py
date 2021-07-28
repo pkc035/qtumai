@@ -12,9 +12,9 @@ from project.settings.base import MEDIA_ROOT
 from shops.models          import Coupon
 from accounts.models       import AccountGuest
 from notice.serializers    import BusinessFormSerializer, CouponManageSerializer
-from .models               import BusinessForm, Notice, ProposeBusinessForm, ProposeGoodShop
+from .models               import BusinessForm, FAQForm, Notice, ProposeBusinessForm, ProposeGoodShop
 from .serializers          import (
-    BusinessFormSerializer, CouponManageSerializer, NoticeSerializer, ProposeBusinessSerializer, ProposeGoodShopSerializer
+    BusinessFormSerializer, CouponManageSerializer, NoticeSerializer, ProposeBusinessSerializer, ProposeGoodShopSerializer, FAQFormSerializer
 )
 
 @api_view(['GET','POST','PUT','DELETE'])
@@ -129,3 +129,7 @@ class NoticeViewSet(ModelViewSet):
         queryset = Notice.objects.filter(condition)
 
         return queryset
+
+class FAQFormViewSet(ModelViewSet):
+    queryset = FAQForm.objects.all()
+    serializer_class = FAQFormSerializer

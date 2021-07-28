@@ -28,8 +28,6 @@ export default function Detail() {
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [isOpenYesNoModal, setIsOpenYesNoModal] = useState(false);
 
-  // const [islike, setIslike] = useState(false);
-
   useEffect(() => {
     fetch(`/data/detailPageData.json`, {
       method: "GET",
@@ -66,19 +64,26 @@ export default function Detail() {
         setStyle(styleArr);
       });
   }, [detailData]);
-  console.log(style);
 
   const STARSCORE = {
-    // size: 20,
-    // value: 2.5,
-    // edit: false,
-    // isHalf: true,
-    // color: "#e4e5e9",
-    // activeColor: "#ff3000",
-    size: 60,
+    size: 18,
+    value: detailData.naver_score,
+    edit: false,
     isHalf: true,
-    char: "⭐",
-    value: 3.5,
+    color: "#e4e5e9",
+    activeColor: "#ff3000",
+    emptyIcon: <i className="fa fa-star" />,
+    halfIcon: <i class="fas fa-star-half" />,
+    filledIcon: <i className="fa fa-star" />,
+  };
+
+  const STARBACKGROUND = {
+    size: 18,
+    value: 5,
+    edit: false,
+    activeColor: "#e4e5e9",
+    emptyIcon: <i className="fa fa-star" />,
+    filledIcon: <i className="fa fa-star" />,
   };
 
   const averageReview = (clean, price, service, taste, vibe) => {
@@ -116,7 +121,10 @@ export default function Detail() {
               <LikeButton />
               <RestaurantInfoBox>
                 <RestaurantInfo>
-                  <Stars {...STARSCORE} />
+                  <StarBox>
+                    <Stars {...STARSCORE} />
+                  </StarBox>
+                  <BackgroundStars {...STARBACKGROUND} />
                   <Name>{shop_name}</Name>
                   <Phrases>{shop_description}</Phrases>
                   <OperatingTime>09:00 - 12:00</OperatingTime>
@@ -304,11 +312,17 @@ const RestaurantInfo = styled.div`
   border-radius: 5px 0 0 5px;
 `;
 
+const StarBox = styled.div`
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 2;
+`;
+
 const Stars = styled(ReactStars)``;
 
-// const StarRating = styled(StarRating)`
-//     margin-bottom: 10px;
-// `;
+const BackgroundStars = styled(ReactStars)``;
+
 const Name = styled.div`
   margin-top: 10px;
   font-size: 26px;
