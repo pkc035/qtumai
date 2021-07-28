@@ -86,7 +86,7 @@ class AccountGuest(AbstractUser):
     # job = models.ForeignKey(AccountJob, on_delete=models.CASCADE, null=True, default="") # 직업은 잠시 보류
     # my_friends = models.ManyToManyField('self', related_name="myFriends", symmetrical=False) # symmetrical: 대칭관계(상대방쪽에서도 자동추가 여부)
 
-    # fun_data_percent = models.ForeignKey(FunDataPercentage, on_delete=models.CASCADE, null=True)
+    fun_data_percent = models.ForeignKey(FunDataPercentage, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         return self.username
@@ -166,15 +166,15 @@ class Preference(models.Model):
     cleanliness_vibe = models.SmallIntegerField()
     cleanliness_price = models.SmallIntegerField()
     vibe_price = models.SmallIntegerField()
-    # group_num = models.IntegerField()
+    group_num = models.IntegerField()
 
     # # 0 ~ 1023번 그룹으로 분류
-    # def save(self, *args, **kwarg):
-    #     self.group_num = self.taste_service * 512 + self.taste_cleanliness * 256 + self.taste_vibe * 128 + self.taste_price * 64
-    #     + self.service_cleanliness * 32 + self.service_vibe * 16 + self.service_price * 8
-    #     + self.cleanliness_vibe * 4 + self.cleanliness_price * 2 + self.vibe_price
+    def save(self, *args, **kwarg):
+        self.group_num = self.taste_service * 512 + self.taste_cleanliness * 256 + self.taste_vibe * 128 + self.taste_price * 64
+        + self.service_cleanliness * 32 + self.service_vibe * 16 + self.service_price * 8
+        + self.cleanliness_vibe * 4 + self.cleanliness_price * 2 + self.vibe_price
 
-    #     super(Preference, self).save(*args, **kwarg)
+        super(Preference, self).save(*args, **kwarg)
 
 # 추후 메뉴뿐만 아니라 관심사 태그에 대한 내용도 물어볼 예정
 class FunData(models.Model):
