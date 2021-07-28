@@ -12,10 +12,10 @@ const ProgressBar = ({ done }) => {
 export default ProgressBar;
 
 const ProgressBarCotainer = styled.div`
-  width: 120px;
+  width: 150px;
   height: 16px;
   border-radius: 30px;
-  border: 2px solid #ff5000;
+  border: 2px solid ${({ theme }) => theme.red};
 `;
 
 const ProgressBarDone = styled.div`
@@ -23,7 +23,7 @@ const ProgressBarDone = styled.div`
   height: 100%;
   padding-right: 5px;
   border-radius: 30px 0px 0px 30px;
-  background-color: #ff5000;
+  background-color: ${({ theme }) => theme.red};
   text-align: right;
   font-size: 10px;
   font-weight: 500;

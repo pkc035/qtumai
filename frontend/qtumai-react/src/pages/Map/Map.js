@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import KakaoMap from "../../components/KakaoMap/KakaoMap";
+// import KakaoMap from "../../components/KakaoMap/KakaoMap";
 import MapList from "../../components/MapList/MapList";
 import MapSlider from "../../components/MapSlider/MapSlider";
 import styled from "styled-components";
@@ -66,7 +66,7 @@ export default function Map() {
           </ListFilterBox>
         </MapMenu>
       </Section>
-      <KakaoMap size={SIZE} />
+      {/* <KakaoMap size={SIZE} /> */}
       {isList && <MapList />}
       {isFilter && (
         <FilterModal isFilter={isFilter} setIsFilter={setIsFilter} />

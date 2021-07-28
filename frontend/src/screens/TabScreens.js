@@ -1,14 +1,12 @@
-import React from "react";
-import styled from "styled-components/native";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { WebView } from "react-native-webview";
-import Button from "../components/Button";
-import FloatingButton from "../components/FloatingButton";
-import Profile from "./Profile";
-import { URI } from "../config";
-
+import React from 'react';
+import styled from 'styled-components/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { WebView } from 'react-native-webview';
+import Button from '../components/Button';
+import FloatingButton from '../components/FloatingButton';
+import Profile from './Profile';
+import { URI } from '../config';
 const MainTab = createBottomTabNavigator();
-
 export const MainNavigator = () => {
   return (
     <MainTab.Navigator
@@ -26,7 +24,7 @@ export const MainNavigator = () => {
 export const Main = ({ navigation }) => {
   return (
     <MainContainer>
-      <WebView source={{ uri: "http://192.168.0.76:3000/" }} />
+      <WebView source={{ uri: 'http://192.168.0.76:3000/' }} />
       <WebView source={{ uri: 'http://192.168.0.76:3000/' }} />
       {/* <WebView source={{ uri: 'http://10.58.2.159:3000/' }} /> */}
       <FloatingButton
@@ -36,30 +34,26 @@ export const Main = ({ navigation }) => {
     </MainContainer>
   );
 };
-
 const MainContainer = styled.View`
   flex: 1;
 `;
-
 export const Map = ({ navigation }) => {
   return (
     <Container>
       <WebView source={{ uri: `${URI}/Map` }} />
-      <Button title="Who" onPress={() => navigation.navigate("Who")} />
-      <Button title="Where" onPress={() => navigation.navigate("Where")} />
+      <Button title="Who" onPress={() => navigation.navigate('Who')} />
+      <Button title="Where" onPress={() => navigation.navigate('Where')} />
     </Container>
   );
 };
-
 export const Like = () => {
   return (
     <Container>
-      <WebView source={{ uri: "http://192.168.0.76:3000/likes" }} />
+      <WebView source={{ uri: 'http://192.168.0.76:3000/likes' }} />
       {/* <WebView source={{ uri: 'http://10.58.2.159:3000/Detail' }} /> */}
     </Container>
   );
 };
-
 export const Favorite = () => {
   return (
     <Container>

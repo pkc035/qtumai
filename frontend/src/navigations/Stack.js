@@ -1,7 +1,7 @@
-import React from "react";
-import { createStackNavigator } from "@react-navigation/stack";
-import { Login, Home } from "../screens";
-import { MaterialIcons } from "@expo/vector-icons";
+import React from 'react';
+import { createStackNavigator } from '@react-navigation/stack';
+import { Login, Home } from '../screens';
+import { MaterialIcons } from '@expo/vector-icons';
 
 const Stack = createStackNavigator();
 
@@ -10,11 +10,11 @@ const StackNav = () => {
     <Stack.Navigator
       initialRouteName="Login"
       screenOptions={{
-        cardStyle: { backgroundColor: "#ffffff" },
+        cardStyle: { backgroundColor: '#ffffff' },
         headerShown: false,
         headerTitleStyle: {
           fontSize: 24,
-          color: "black",
+          color: 'black',
         },
         headerTitle: ({ style }) => {
           return <MaterialIcons name="react" style={style} />;
