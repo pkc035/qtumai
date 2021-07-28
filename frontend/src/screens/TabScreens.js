@@ -26,11 +26,8 @@ export const MainNavigator = () => {
 export const Main = ({ navigation }) => {
   return (
     <MainContainer>
-<<<<<<< HEAD
       <WebView source={{ uri: "http://192.168.0.76:3000/" }} />
-=======
       <WebView source={{ uri: 'http://192.168.0.76:3000/' }} />
->>>>>>> master
       {/* <WebView source={{ uri: 'http://10.58.2.159:3000/' }} /> */}
       <FloatingButton
         position={{ bottom: 80, right: 40 }}
