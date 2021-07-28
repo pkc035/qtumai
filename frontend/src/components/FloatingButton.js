@@ -7,7 +7,6 @@ import {
   TouchableWithoutFeedback,
   TouchableOpacity,
 } from 'react-native';
-import { createGlobalStyle } from 'styled-components';
 import styled from 'styled-components/native';
 import { Ionicons, Entypo, FontAwesome5 } from '@expo/vector-icons';
 
