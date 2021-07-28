@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { GET_DETAIL_API, GET_PICLIST_API } from "../../config";
 
-import KakaoMap from "../../components/KakaoMap/KakaoMap";
+import KakaoMap from "../../components/KakaoMap/KakaoMapSingle";
 import CommonMainSlider from "../../components/CommonMainSlider/CommonMainSlider";
 import CircularProgressBar from "../../components/CirclePercentageBar/CirclePercentageBar";
 import SlideModal from "../../components/SlideModal/SlideModal";
