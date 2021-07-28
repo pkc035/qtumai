@@ -70,18 +70,22 @@ function Login(props) {
   };
 
   const onSuccessGoogleLogin = response => {
-    fetch(`http://192.168.0.66:8000/accounts/google-login`, {
+    fetch(`http://192.168.0.66:8000/accounts/google-login/`, {
       method: "get",
       headers: {
-        Authorization: response.mc.id_token,
+        Authorization: response.tokenId,
       },
     })
       .then(res => res.json())
       .then(res => {
         console.log(res);
-        if (res.message === "USER_DOES_NOT_EXIST") {
-          localStorage.setItem("access_token", res.acess_token);
+        if (res.google_number) {
+          localStorage.setItem("google_number", res.google_number);
           props.history.push("/signup/next");
+        } else if (res.status === 200) {
+          localStorage.setItem("access", res.access);
+          localStorage.setItem("refresh", res.refresh);
+          props.history.push("/");
         }
       });
   };
@@ -94,7 +98,7 @@ function Login(props) {
     window.Kakao.Auth.login({
       success: auth => {
         console.log(auth.access_token);
-        fetch("http://192.168.0.66:8000/accounts/kakao-login", {
+        fetch("http://192.168.0.66:8000/accounts/kakao-login/", {
           method: "get",
           headers: {
             Authorization: auth.access_token,
@@ -102,10 +106,11 @@ function Login(props) {
         })
           .then(res => res.json())
           .then(res => {
-            if (res.message === "USER_DOES_NOT_EXIST") {
-              localStorage.setItem("access_token", auth.access_token);
-              props.history.push("/signup/next");
-            }
+            // if (res.message === "USER_DOES_NOT_EXIST") {
+            //   localStorage.setItem("access_token", auth.access_token);
+            //   props.history.push("/signup/next");
+            // }
+            console.log(res);
           });
       },
       fail: err => {
@@ -114,13 +119,52 @@ function Login(props) {
     });
   };
 
+  // function loginWithKakao() {
+  //   window.location.assign(
+  //     "https://kauth.kakao.com/oauth/authorize?client_id=9cd5b2cd23fd37e163ff88ea3d317137&redirect_uri=http://localhost:3000/login&response_type=code"
+  //   );
+  //   // fetch("http://192.168.0.66:8000/accounts/kakao-login/", {
+  //   //   method: "get",
+  //   //   headers: {
+  //   //     Authorization: new URL(window.location.href).searchParams.get("code"),
+  //   //   },
+  //   // })
+  //   //   .then(res => res.json())
+  //   //   .then(res => {
+  //   //     // if (res.message === "USER_DOES_NOT_EXIST") {
+  //   //     //   localStorage.setItem("access_token", auth.access_token);
+  //   //     //   props.history.push("/signup/next");
+  //   //     // }
+  //   //     console.log(res);
+  //   //   });
+  // }
+
+  // function logout() {
+  //   fetch(`https://kapi.kakao.com/v1/user/unlink`, {
+  //     method: "get",
+  //     headers: {
+  //       Authorization:
+  //         "Bearer kflO1lqrcyuOFZZ3kffTaYv13jOF8yiagMYuiG9Us_8hAGKwxOlcOhKBj3CZDea_acIAfAopdSkAAAF64ZFcAA",
+  //     },
+  //   })
+  //     .then(res => res.json())
+  //     .then(res => {
+  //       console.log(res);
+  //       // if (res.message === "USER_DOES_NOT_EXIST") {
+  //       //   localStorage.setItem("access_token", res.acess_token);
+  //       //   props.history.push("/signup/next");
+  //       // }
+  //     });
+  // }
+  // console.log(new URL(window.location.href).searchParams.get("code"));
+
   const onFailureGoogleLogin = error => {
     console.log(error);
   };
 
   return (
     <Modal>
-      <Logo src="/images/Social/facebook_logo.jpg" />
+      <Logo src="/images/logo.svg" />
       <Social>
         <LoginButtons>
           <div
@@ -128,25 +172,26 @@ function Login(props) {
             style={{ position: "absolute", top: "-10000px" }}
           />
           <SocialLogin onClick={handleNaverLogin}>
-            <img
+            <SocialImage
               alt="네이버로고"
               src="https://static.nid.naver.com/oauth/button_g.PNG?version=js-2.0.0"
             />
             <span>Naver로 로그인</span>
           </SocialLogin>
           <SocialLogin onClick={loginWithKakao}>
-            <img alt="카카오로고" src="/images/Social/kakaotalk_logo.jpg" />
+            <SocialImage alt="카카오로고" src="/images/kakao.svg" />
             <span>Kakao로 로그인</span>
           </SocialLogin>
           <GoogleLogin
             clientId="682659671170-3l3k6f2ihb3aplmo4n8u43dncpdcbc9f.apps.googleusercontent.com"
             onSuccess={onSuccessGoogleLogin}
+            // tokenId={co}
             render={renderProps => (
               <SocialLogin
                 onClick={renderProps.onClick}
                 disabled={renderProps.disabled}
               >
-                <img alt="구글로고" src="/images/Social/google_logo.jpeg" />
+                <SocialImage alt="구글로고" src="/images/google.svg" />
                 <span>Google로 로그인</span>
               </SocialLogin>
             )}
@@ -156,7 +201,7 @@ function Login(props) {
             isSignedIn={true}
           />
           <SocialLogin onClick={goToLogin}>
-            <img alt="카카오로고" src="/images/Social/phone.png" />
+            <PhoneLogin alt="전화번호" src="/images/phone.svg" />
             <span>전화번호로 로그인</span>
           </SocialLogin>
           <SignupBtn onClick={goToSignup}>회원가입</SignupBtn>
@@ -222,14 +267,19 @@ const SocialLogin = styled.button`
   font-size: 15px;
   color: #fff;
 
-  img {
-    width: 30px;
-    margin-right: 70px;
-  }
-
   span {
     font-size: 14px;
   }
 `;
 
+const PhoneLogin = styled.img`
+  width: 20px;
+  margin-right: 70px;
+  margin-left: 5px;
+`;
+
+const SocialImage = styled.img`
+  width: 30px;
+  margin-right: 70px;
+`;
 export default withRouter(Login);

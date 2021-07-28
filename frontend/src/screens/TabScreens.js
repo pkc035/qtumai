@@ -4,9 +4,9 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { WebView } from 'react-native-webview';
 import Button from '../components/Button';
 import FloatingButton from '../components/FloatingButton';
-
+import Profile from './Profile';
+import { URI } from '../config';
 const MainTab = createBottomTabNavigator();
-
 export const MainNavigator = () => {
   return (
     <MainTab.Navigator
@@ -21,10 +21,10 @@ export const MainNavigator = () => {
     </MainTab.Navigator>
   );
 };
-
 export const Main = ({ navigation }) => {
   return (
     <MainContainer>
+      <WebView source={{ uri: 'http://192.168.0.76:3000/' }} />
       <WebView source={{ uri: 'http://192.168.0.76:3000/' }} />
       {/* <WebView source={{ uri: 'http://10.58.2.159:3000/' }} /> */}
       <FloatingButton
@@ -34,21 +34,18 @@ export const Main = ({ navigation }) => {
     </MainContainer>
   );
 };
-
 const MainContainer = styled.View`
   flex: 1;
 `;
-
 export const Map = ({ navigation }) => {
   return (
     <Container>
-      <WebView source={{ uri: 'http://192.168.0.76:3000/Map' }} />
+      <WebView source={{ uri: `${URI}/Map` }} />
       <Button title="Who" onPress={() => navigation.navigate('Who')} />
       <Button title="Where" onPress={() => navigation.navigate('Where')} />
     </Container>
   );
 };
-
 export const Like = () => {
   return (
     <Container>
@@ -57,7 +54,6 @@ export const Like = () => {
     </Container>
   );
 };
-
 export const Favorite = () => {
   return (
     <Container>
@@ -65,19 +61,3 @@ export const Favorite = () => {
     </Container>
   );
 };
-
-export const Profile = () => {
-  return (
-    <Container>
-      <StyledText>Profile</StyledText>
-    </Container>
-  );
-};
-
-const Container = styled.View`
-  flex: 1;
-`;
-
-const StyledText = styled.Text`
-  font-size: 30px;
-`;

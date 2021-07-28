@@ -1,16 +1,16 @@
-import React from 'react';
-import { TouchableOpacity } from 'react-native';
-import styled from 'styled-components/native';
+import React from "react";
+import { TouchableOpacity } from "react-native";
+import styled from "styled-components/native";
 
 const Container = styled.View`
-  background-color: #778bdd;
-  padding: 10px;
-  margin: 10px;
+  background-color: #fff;
+  width: 100%;
+  padding: 15px 15px 15px 30px;
 `;
 
 const Title = styled.Text`
-  font-size: 24px;
-  color: #ffffff;
+  font-size: 20px;
+  color: #101010;
 `;
 
 const Button = ({ title, onPress, style }) => {

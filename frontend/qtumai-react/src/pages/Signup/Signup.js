@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { withRouter } from "react-router-dom";
+import BottomButton from "../../components/BottomButton";
 
 function Signup(props) {
   const [inputValue, setInputValue] = useState("");
@@ -12,29 +13,27 @@ function Signup(props) {
   const [inputAuthentication, setInputAuthentication] = useState("");
 
   function goToNext() {
-    fetch("http://192.168.0.66:8000/accounts/check-sms/", {
-        method: "POST",
-        body: JSON.stringify({
-          phone_number: inputValue.split("-").join(""),
-          auth_number: inputAuthentication
-        }),
-      })
-        .then(res => res.json())
-        .then(res => {
-          console.log(res)
-          console.log(res.message === "회원가입을 진행해주세요.")
-          if(res.message === "인증번호 확인 실패입니다") {
-            alert("인증번호 확인 실패입니다");
-          } else if (res.message === "해당 휴대폰 번호가 존재하지 않습니다") {
-            alert("해당 휴대폰 번호가 존재하지 않습니다");
-          } else if (res.status === 200) {
-            alert("인증되었습니다");
-          } else if (res.message === "회원가입을 진행해주세요.") {
-            alert("회원가입을 진행해주세요");
-            props.history.push("/signup/next");
-            localStorage.setItem('phone_number', inputValue.split("-").join(""));
-          }
-        })
+    fetch("http://192.168.0.66:8000/accounts/sms-check-signup", {
+      method: "POST",
+      body: JSON.stringify({
+        phone_number: inputValue.split("-").join(""),
+        auth_number: inputAuthentication,
+      }),
+    })
+      .then(res => res.json())
+      .then(res => {
+        console.log(res);
+        console.log(res.message === "회원가입을 진행해주세요.");
+        if (res.message === "check_auth_number") {
+          alert("인증번호를 다시 확인해주세요");
+        } else if (res.message === "proceed_with_the_certification") {
+          alert("인증을 다시 진행해주세요");
+        } else {
+          alert("인증되었습니다");
+          props.history.push("/signup/next");
+          localStorage.setItem("phone_number", res.phone_number);
+        }
+      });
   }
 
   function goToBack() {
@@ -43,27 +42,23 @@ function Signup(props) {
 
   function sendPhoneNumber() {
     fetch("http://192.168.0.66:8000/accounts/sms/", {
-        method: "POST",
-        body: JSON.stringify({
-          phone_number: inputValue.split("-").join("")
-        }),
-      })
-        .then(res => res.json())
-        .then(res => {
-          if(res.message === "success") {
-            alert("문자가 발송 되었습니다");
-            setTimerDisplay(true);
-            setMinutes(3);
-            setSeconds(0);
-          } else if (res.message === "In") {
-            alert("잘못된 전화번호입니다.");
-          } else if (res.message === "d") {
-            alert("없는 전화번호입니다 다시 한번 확인해주세요.");
-          }
-        })
+      method: "POST",
+      body: JSON.stringify({
+        phone_number: inputValue.split("-").join(""),
+      }),
+    })
+      .then(res => res.json())
+      .then(res => {
+        if (res.message === "success") {
+          alert("문자가 발송 되었습니다");
+          setTimerDisplay(true);
+          setMinutes(3);
+          setSeconds(0);
+        }
+      });
   }
 
-  console.log(inputValue.split("-").join(""))
+  console.log(inputValue.split("-").join(""));
 
   const handleChange = e => {
     const regex = /^[0-9\b -]{0,13}$/;
@@ -72,15 +67,15 @@ function Signup(props) {
       setInputValue(e.target.value);
       if (phoneNumberRegex.test(e.target.value.split("-").join(""))) {
         setAuthenticationButton(false);
-      } else setAuthenticationButton(true)
+      } else setAuthenticationButton(true);
     }
   };
 
   function handleAuthentication(e) {
-    setInputAuthentication(e.target.value)
+    setInputAuthentication(e.target.value);
   }
 
-  console.log(typeof inputAuthentication)
+  console.log(typeof inputAuthentication);
 
   useEffect(() => {
     const countdown = setInterval(() => {
@@ -100,15 +95,29 @@ function Signup(props) {
   }, [minutes, seconds]);
 
   useEffect(() => {
-    if (inputValue.length === 10) {
-      setInputValue(inputValue.replace(/(\d{3})(\d{3})(\d{4})/, "$1-$2-$3"));
-    }
-    if (inputValue.length === 13) {
-      setInputValue(
-        inputValue
-          .replace(/-/g, "")
-          .replace(/(\d{3})(\d{4})(\d{4})/, "$1-$2-$3")
-      );
+    let str = inputValue.replace(/[^0-9]/g, "");
+    let tmp = "";
+    if (str.length < 4) {
+      return setInputValue(str);
+    } else if (str.length < 7) {
+      tmp += str.substr(0, 3);
+      tmp += "-";
+      tmp += str.substr(3);
+      return setInputValue(tmp);
+    } else if (str.length < 11) {
+      tmp += str.substr(0, 3);
+      tmp += "-";
+      tmp += str.substr(3, 3);
+      tmp += "-";
+      tmp += str.substr(6);
+      return setInputValue(tmp);
+    } else {
+      tmp += str.substr(0, 3);
+      tmp += "-";
+      tmp += str.substr(3, 4);
+      tmp += "-";
+      tmp += str.substr(7);
+      return setInputValue(tmp);
     }
   }, [inputValue]);
 
@@ -132,7 +141,10 @@ function Signup(props) {
               onChange={handleChange}
               value={inputValue}
             />
-            <AuthenticationButton disabled={authenticationButton} onClick={sendPhoneNumber}>
+            <AuthenticationButton
+              disabled={authenticationButton}
+              onClick={sendPhoneNumber}
+            >
               인증번호 받기
             </AuthenticationButton>
           </SignupWrap>
@@ -151,7 +163,7 @@ function Signup(props) {
             </Timer>
           </SignupWrap>
         </InputBox>
-        <LoginButton onClick={goToNext}>다음</LoginButton>
+        <BottomButton title={"다음"} onClick={goToNext} />
       </Modal>
     </div>
   );
@@ -191,7 +203,8 @@ const PhoneInput = styled.input`
   height: 55px;
   margin-bottom: 15px;
   border: none;
-  border-bottom: 1px solid ${props => (props.inputColor ? "#c1c1c1" : "#ededed")};
+  border-bottom: 1px solid
+    ${props => (props.inputColor ? "#c1c1c1" : "#ededed")};
   outline: none;
   font-size: 15px;
 `;
@@ -237,25 +250,10 @@ const AuthenticationInput = styled.input`
   height: 55px;
   margin-bottom: 15px;
   border: none;
-  border-bottom: 1px solid ${props => (props.inputColor ? "#c1c1c1" : "#ededed")};
+  border-bottom: 1px solid
+    ${props => (props.inputColor ? "#c1c1c1" : "#ededed")};
   outline: none;
   font-size: 15px;
-`;
-
-const LoginButton = styled.button`
-  position: fixed;
-  bottom: 0px;
-  width: 100%;
-  height: 60px;
-  margin-top: 15px;
-  background-color: #ff3000;
-  font-size: 15px;
-  color: #fff;
-
-  &:disabled {
-    background-color: #c1c1c1;
-    cursor: default;
-  }
 `;
 
 export default withRouter(Signup);

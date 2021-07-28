@@ -1,9 +1,8 @@
 import React from 'react';
-import { Alert } from 'react-native';
 import { WebView } from 'react-native-webview';
-import { createGlobalStyle } from 'styled-components';
 import styled from 'styled-components/native';
 import Button from '../components/Button';
+
 const Where = ({ navigation }) => {
   return (
     <Container>

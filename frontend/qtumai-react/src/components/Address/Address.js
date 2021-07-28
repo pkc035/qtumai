@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import DaumPostcode from "react-daum-postcode";
 
 function Address() {
-  // const { kakao } = window;
+  const { kakao } = window;
   const [wantTOGo, setWantTOGo] = useState({
     address: "",
     latitude: 0,
@@ -10,10 +10,8 @@ function Address() {
   });
   const [address, setAddress] = useState("");
 
-  console.log(setWantTOGo, address);
-
   const Postcode = data => {
-    // let geocoder = new kakao.maps.services.Geocoder();
+    let geocoder = new kakao.maps.services.Geocoder();
     let fullAddress = data.address;
     let extraAddress = "";
     if (data.addressType === "R") {
@@ -28,19 +26,18 @@ function Address() {
     }
     setAddress(fullAddress);
 
-    // geocoder.addressSearch(fullAddress, function (result, status) {
-    //   if (status === kakao.maps.services.Status.OK) {
-    //     let coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+    geocoder.addressSearch(fullAddress, function (result, status) {
+      if (status === kakao.maps.services.Status.OK) {
+        let coords = new kakao.maps.LatLng(result[0].y, result[0].x);
 
-    //     setWantTOGo({
-    //       address: address,
-    //       latitude: coords.La,
-    //       longitude: coords.Ma,
-    //     });
-    //   }
-    // });
-
-    window.ReactNativeWebView.postMessage("Success!");
+        setWantTOGo({
+          address: address,
+          latitude: coords.La,
+          longitude: coords.Ma,
+        });
+      }
+    });
+    // window.ReactNativeWebView.postMessage('Success!');
 
     console.log(wantTOGo);
   };

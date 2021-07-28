@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { withRouter } from "react-router-dom";
+import BottomButton from "../../components/BottomButton";
 
 function PhoneLogin(props) {
   const [inputValue, setInputValue] = useState("");
@@ -12,7 +13,7 @@ function PhoneLogin(props) {
 
   function goToNext() {
     alert("로그인 되었습니다.");
-    props.history.push("/main");
+    props.history.push("/");
   }
 
   function goToBack() {
@@ -33,7 +34,7 @@ function PhoneLogin(props) {
       setInputValue(e.target.value);
       if (phoneNumberRegex.test(e.target.value.split("-").join(""))) {
         setAuthenticationButton(false);
-      } else setAuthenticationButton(true)
+      } else setAuthenticationButton(true);
     }
   };
 
@@ -87,7 +88,10 @@ function PhoneLogin(props) {
               onChange={handleChange}
               value={inputValue}
             />
-            <AuthenticationButton disabled={authenticationButton} onClick={sendPhoneNumber}>
+            <AuthenticationButton
+              disabled={authenticationButton}
+              onClick={sendPhoneNumber}
+            >
               인증번호 받기
             </AuthenticationButton>
           </SignupWrap>
@@ -104,12 +108,11 @@ function PhoneLogin(props) {
             </Timer>
           </SignupWrap>
         </InputBox>
-        <LoginButton onClick={goToNext}>다음</LoginButton>
+        <BottomButton title={"다음"} onClick={goToNext} />
       </Modal>
     </div>
   );
 }
-
 
 const Modal = styled.div`
   display: flex;
@@ -145,7 +148,8 @@ const PhoneInput = styled.input`
   height: 55px;
   margin-bottom: 15px;
   border: none;
-  border-bottom: 1px solid ${props => (props.inputColor ? "#c1c1c1" : "#ededed")};
+  border-bottom: 1px solid
+    ${props => (props.inputColor ? "#c1c1c1" : "#ededed")};
   outline: none;
   font-size: 15px;
 `;
@@ -191,25 +195,10 @@ const AuthenticationInput = styled.input`
   height: 55px;
   margin-bottom: 15px;
   border: none;
-  border-bottom: 1px solid ${props => (props.inputColor ? "#c1c1c1" : "#ededed")};
+  border-bottom: 1px solid
+    ${props => (props.inputColor ? "#c1c1c1" : "#ededed")};
   outline: none;
   font-size: 15px;
-`;
-
-const LoginButton = styled.button`
-  position: fixed;
-  bottom: 0px;
-  width: 100%;
-  height: 60px;
-  margin-top: 15px;
-  background-color: #ff3000;
-  font-size: 15px;
-  color: #fff;
-
-  &:disabled {
-    background-color: #c1c1c1;
-    cursor: default;
-  }
 `;
 
 export default withRouter(PhoneLogin);
