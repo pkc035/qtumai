@@ -30,16 +30,6 @@ from .serializers           import (
     LivingAreaSreialzer, SimpleAccountGuestSerializer, PreferenceSerializer, SearchLocationSerializer
     )
 
-
-class TestAPIView(APIView) :
-    permission_classes = (AllowAny, )
-
-    def post(self, request): 
-        KakaoGuest.objects.create(kakao_number="1212"),
-        GoogleGuest.objects.create(google_number="3434")
-        return JsonResponse({'message': 'Proceed_with_the_signup'}, status=200)
-
-
 class CheckUsernameAPIView(APIView):
     permission_classes = (AllowAny, )
     def post(self, request):
