@@ -28,22 +28,3 @@ class TestAuthentication(BaseBackend):
             return User.objects.get(pk=user_id)
         except User.DoesNotExist:
             return None
-
-def login_decorator(func):
-    def wrapper(self, request, *args, **kwargs):
-        try:
-            
-            token        = request.headers.get('Authorization', None)
-            payload      = jwt.decode(token, SECRET_KEY, algorithms="HS256")
-            user         = AccountGuest.objects.get(id=payload['user_id'])
-            request.user = user
-
-            return func(self, request, *args, **kwargs)
-        
-        except jwt.exceptions.DecodeError:
-            return JsonResponse({'message':'INVALID_TOKEN'}, status=401)
-        
-        except AccountGuest.DoesNotExist:
-            return JsonResponse({'message':'INVALID_USER'}, status=401)
-
-    return wrapper

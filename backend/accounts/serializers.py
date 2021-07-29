@@ -182,6 +182,7 @@ class PreferenceSerializer(serializers.ModelSerializer):
             ]
     
     def create(self, validated_data, account_guest_id):
+ 
         Preference.objects.create(
             account_guest_id    = account_guest_id,
             taste_service       = validated_data['taste_service'],
