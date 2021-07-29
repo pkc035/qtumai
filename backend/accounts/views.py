@@ -129,7 +129,7 @@ class GoogleLoginView(TokenObtainPairView):
 
 
 class SmsSendView(View):
-
+    permission_classes = (AllowAny, )
     def send_sms(self, phone_number, auth_number):
         SMS_URL    = f'https://sens.apigw.ntruss.com/sms/v2/services/{SERVICE_ID}/messages'
         timestamp  = str(int(time.time()*1000))
@@ -194,7 +194,7 @@ class SmsSendView(View):
 
 
 class SMSSignupVerificationView(TokenObtainPairView):#sign_up
-    
+    permission_classes = (AllowAny, )
     def post(self, request):
         data = json.loads(request.body)
         try:
@@ -212,7 +212,7 @@ class SMSSignupVerificationView(TokenObtainPairView):#sign_up
 
 
 class SMSLoginVerificationView(TokenObtainPairView):#login
-
+    permission_classes = (AllowAny, )
     def post(self, request):
         data = json.loads(request.body)
         try:
@@ -231,7 +231,6 @@ class SMSLoginVerificationView(TokenObtainPairView):#login
             return JsonResponse({'message': 'phone_number_does_not_exist.'}, status=400)
 
 class LogoutView(APIView):
-    permission_classes = (IsAuthenticated,)
 
     def post(self, request):
         try:

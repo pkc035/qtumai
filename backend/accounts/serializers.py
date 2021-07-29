@@ -25,7 +25,7 @@ class LivingAreaSreialzer(serializers.ModelSerializer):
             'people_count'
             ]
     
-    def update(self, area_name):
+    def update(self, area_name): 
         if LivingArea.objects.filter(area_name=area_name).exists():
             print('area1: ')
             area = LivingArea.objects.get(area_name=area_name)
@@ -78,7 +78,7 @@ class SimpleAccountGuestSerializer(serializers.ModelSerializer):
             'agreed_marketing_receive'
             )
     
-    def create(self, validated_data, living_area_id):
+    def create(self, validated_data, living_area_id): # 각각 독립적인 테이블에 저장 된 number의 객체의 pk 를 프론트에게 받아서 number를 찾아 ㄴ유저테이블에 저장함
 
         phone_number  = validated_data['phone_number']
         kakao_number  = validated_data['kakao_number']
@@ -245,11 +245,11 @@ class AccountGuestUpdateSerializer(serializers.ModelSerializer):
 
         return instance
 
-class TestTokenObtainPairSerializer(TokenObtainPairSerializer):
+class TestTokenObtainPairSerializer(TokenObtainPairSerializer): #TokenObtainPairSerializer에 상속 받은 토큰관련 serializer. 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['password'].required = False
-
+    #simple jwt는 기본적으로 username 과 password를 무조건 사용하기 때문에 현재 시리얼라이저에서 password 사용하지 않음 설정
     def validate(self, attrs):
             attrs.update({'password': ''})
             return super(TestTokenObtainPairSerializer, self).validate(attrs)

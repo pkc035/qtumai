@@ -4,14 +4,13 @@ from django.http            import JsonResponse
 from project.settings.local import SECRET_KEY
 
 from accounts.models import AccountGuest
-from accounts.models import AccountGuest
 
 from django.contrib.auth.backends import BaseBackend
 from django.contrib.auth          import get_user_model
 
-# Custom Authentication을 만들어 사용
+# 토큰관련 Custom Authentication을 만들어 사용 
 
-class TestAuthentication(BaseBackend):
+class TestAuthentication(BaseBackend): #user 오브젝트를 request 에 담아줌 
 
     def authenticate(self, request, username=None, password=None):
         User = get_user_model()
