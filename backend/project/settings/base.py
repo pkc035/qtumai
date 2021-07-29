@@ -30,6 +30,9 @@ def get_secret(setting, secrets=secrets):
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = get_secret("SECRET_KEY")
+SMS_SECRET_KEY = get_secret("SMS_SECRET_KEY")
+SMS_ACCESS_KEY = get_secret("SMS_ACCESS_KEY")
+SERVICE_ID = get_secret("SERVICE_ID")
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 # BASE_DIR = Path(__file__).resolve().parent.parent.parent

@@ -7,6 +7,7 @@ from django.views        import View
 from django.db.models    import Q
 from django.shortcuts    import get_object_or_404
 from django.contrib.auth import get_user_model
+from requests import api
 
 from rest_framework                  import status
 from rest_framework.views            import APIView
@@ -19,8 +20,8 @@ from rest_framework_simplejwt.token_blacklist.models import BlacklistedToken, Ou
 from rest_framework_simplejwt.views  import TokenObtainPairView
 from rest_framework.permissions      import AllowAny, IsAuthenticated
 
-from accounts.utils    import login_decorator
-from project.settings.base  import SECRET_KEY
+
+from project.settings.local import SMS_SECRET_KEY, SMS_ACCESS_KEY, SERVICE_ID
 from shops.models           import Shop, LikeShopAccounts, Menu
 from .models                import AccountGuest, FunData, MyLikeList, Authentication, MyLikeListShop, Preference, LivingArea, KakaoGuest, GoogleGuest, NaverGuest
 from .serializers           import (
@@ -30,13 +31,14 @@ from .serializers           import (
     )
 
 
-# class TestAPIView(APIView) :
-#     permission_classes = (AllowAny, )
+class TestAPIView(APIView) :
+    permission_classes = (AllowAny, )
 
-#     @login_decorator
-#     def post(self, request): 
-#             a = request.user.id
-#             return JsonResponse({'message': a}, status=200)
+    def post(self, request): 
+        KakaoGuest.objects.create(kakao_number="1212"),
+        GoogleGuest.objects.create(google_number="3434")
+        return JsonResponse({'message': 'Proceed_with_the_signup'}, status=200)
+
 
 class CheckUsernameAPIView(APIView):
     permission_classes = (AllowAny, )
@@ -44,6 +46,7 @@ class CheckUsernameAPIView(APIView):
         error = CheckUsernameSerializer.validate(AccountGuest, data=request.data)
         if error['username'] :
             return Response(error, status=status.HTTP_400_BAD_REQUEST)
+
         serializer = CheckUsernameSerializer(data=request.data)
         if serializer.is_valid():
             serializer.check(
@@ -52,13 +55,6 @@ class CheckUsernameAPIView(APIView):
             return Response({'username':'success'}, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-class GetLocationViewSet(ReadOnlyModelViewSet):
-    permission_classes = (AllowAny, )
-    def list(self, request):
-        keyword = request.query_params.get('keyword')
-        area = LivingArea.objects.filter(area_name__contains=keyword)
-        serializer = SearchLocationSerializer(area, many=True)
-        return Response(serializer.data)
 
 class NaverLogInView(TokenObtainPairView):
     permission_classes = (AllowAny, )
@@ -66,18 +62,17 @@ class NaverLogInView(TokenObtainPairView):
     def get(self, request):
         access_token    = request.headers.get('Authorization')
         profile_request = requests.get(
-            "https://openapi.naver.com/v1/nid/me", headers = {"Authorization":f"Bearer {access_token}"},
+            "https://openapi.naver.com/v1/nid/me", 
+            headers = {"Authorization":f"Bearer {access_token}"}
         )
         profile_json = profile_request.json()
-        print(profile_json)
-        naver_number = profile_json['response']['id']
-
-        if AccountGuest.objects.filter(naver_number=naver_number).exists():
-
+        naver_number = profile_json["response"]["id"]
+        
+        if AccountGuest.objects.filter(naver_id=naver_number).exists():
             user = AccountGuest.objects.get(naver_number=naver_number)
             data = {'username' : user.username}
             return Response(self.get_serializer().validate(data),status=status.HTTP_200_OK)
-            
+
         else:
             NaverGuest.objects.update_or_create(
                 naver_number = naver_number,
@@ -93,12 +88,11 @@ class KakaoLogInView(TokenObtainPairView):
     permission_classes = (AllowAny, )
 
     def get(self, request):
-
         access_token    = request.headers.get('Authorization')
         profile_request = requests.get(
-            "https://kapi.kakao.com/v2/user/me",headers = {"Authorization":f"Bearer {access_token}"},
+            "https://kapi.kakao.com/v2/user/me",
+            headers = {"Authorization":f"Bearer {access_token}"}
         )
-        print(profile_request)
         profile_json = profile_request.json()
         kakao_number = profile_json["id"]
 
@@ -106,6 +100,7 @@ class KakaoLogInView(TokenObtainPairView):
             user = AccountGuest.objects.get(kakao_number=kakao_number)
             data = {'username' : user.username}
             return Response(self.get_serializer().validate(data),status=status.HTTP_200_OK)
+
         else:
             KakaoGuest.objects.update_or_create(
                 kakao_number = kakao_number,
@@ -121,7 +116,6 @@ class GoogleLoginView(TokenObtainPairView):
     permission_classes = (AllowAny, )
 
     def get(self,request):
-
         access_token  = request.headers.get("Authorization")
         url           = 'https://oauth2.googleapis.com/tokeninfo?id_token='
         response      = requests.get(url+access_token)
@@ -144,15 +138,15 @@ class GoogleLoginView(TokenObtainPairView):
             return JsonResponse({"google_number": saved_guest.id}, status=400)
 
 
-
 class SmsSendView(View):
+
     def send_sms(self, phone_number, auth_number):
-        SMS_URL    = 'https://sens.apigw.ntruss.com/sms/v2/services/ncp:sms:kr:269894851113:load_pick/messages'
+        SMS_URL    = f'https://sens.apigw.ntruss.com/sms/v2/services/{SERVICE_ID}/messages'
         timestamp  = str(int(time.time()*1000))
-        secret_key = bytes('GxiBDMOuo9d2uxLJFQET9nv6ri6xXy2SjKeEhUwe', 'utf-8')
-        access_key = 'RzM9uKUwbJvqFqCAYvah'
+        secret_key = bytes(SMS_SECRET_KEY, 'utf-8')
+        access_key = SMS_ACCESS_KEY
         method = 'POST'
-        uri    = '/sms/v2/services/ncp:sms:kr:269894851113:load_pick/messages'
+        uri    = f'/sms/v2/services/{SERVICE_ID}/messages'
         message    = method + ' ' + uri + '\n' + timestamp + '\n' + access_key
         message    = bytes(message, 'utf-8')
         signingKey = base64.b64encode(
@@ -162,7 +156,7 @@ class SmsSendView(View):
         headers    = {
             'Content-Type'             : 'application/json; charset=utf-8',
             'x-ncp-apigw-timestamp'    : timestamp,
-            'x-ncp-iam-access-key'     : 'RzM9uKUwbJvqFqCAYvah',
+            'x-ncp-iam-access-key'     : access_key,
             'x-ncp-apigw-signature-v2' : signingKey,
         }
 
@@ -171,7 +165,7 @@ class SmsSendView(View):
             'type'        : 'SMS',
             'contentType' : 'COMM',
             'countryCode' : '82',
-            'from'        : f'01095953168',
+            'from'        : f'01093500384',
             'content'     : f'인증번호 [{auth_number}]를 입력해주세요.',
             'messages'    : [
                 {
@@ -188,7 +182,6 @@ class SmsSendView(View):
             data = json.loads(request.body)
             phone_number = data['phone_number']
             auth_number = str(randint(10000, 100000))
-
             Authentication.objects.update_or_create(
                 phone_number = phone_number,
                 defaults     = {
@@ -205,11 +198,13 @@ class SmsSendView(View):
 
         except KeyError:
             return JsonResponse({'message': 'Invalide key'}, status=400)
+            
         except json.JSONDecodeError as e :
             return JsonResponse({'message': f'Json_ERROR:{e}'}, status=400)
 
 
 class SMSSignupVerificationView(TokenObtainPairView):#sign_up
+    
     def post(self, request):
         data = json.loads(request.body)
         try:
@@ -225,7 +220,9 @@ class SMSSignupVerificationView(TokenObtainPairView):#sign_up
         except Authentication.DoesNotExist:
             return JsonResponse({'message': 'proceed_with_the_certification'}, status=400)
 
+
 class SMSLoginVerificationView(TokenObtainPairView):#login
+
     def post(self, request):
         data = json.loads(request.body)
         try:
@@ -246,14 +243,13 @@ class SMSLoginVerificationView(TokenObtainPairView):#login
 class LogoutView(APIView):
     permission_classes = (IsAuthenticated,)
 
-    @login_decorator
     def post(self, request):
         try:
             refresh_token = request.data["refresh"]
             token = RefreshToken(refresh_token)
             token.blacklist()
-
             return Response(status=status.HTTP_205_RESET_CONTENT)
+
         except Exception as e:
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
@@ -267,6 +263,7 @@ def dislikeshop(request):
     if shop not in user.dislike_shop.all():
         user.dislike_shop.add(shop)
         return Response({'message': 'dislike shop added'})
+
     else:
         user.dislike_shop.remove(shop)
         return Response({'message':'dislike shop deleted'})
@@ -278,7 +275,6 @@ class MyLikeListViewSet(ModelViewSet):
     def get_queryset(request):
         # mylikelists = MyLikeList.objects.filter(account_guest_id=request.user)
         mylikelists = MyLikeList.objects.filter(account_guest_id=1)
-    
         return mylikelists
 
     # def list(self, request):
@@ -295,7 +291,6 @@ class MyLikeListViewSet(ModelViewSet):
         
         if serializer.is_valid(raise_exception=True):
             serializer.save(account_guest=user)
-            
             return Response({'message':'MylikeList Created'})    
         
         return Response({'message':'MylikeList Created Fail'})
@@ -307,7 +302,6 @@ class MyLikeListViewSet(ModelViewSet):
         
         if serializer.is_valid(raise_exception=True):
             serializer.save()
-        
             return Response({'message':'MylikeList Updated'})    
         
         return Response({'message':'MylikeList Updated Fail'})
@@ -317,7 +311,8 @@ class MyLikeListViewSet(ModelViewSet):
     def list_delete(self, request, pk):
         mylikelist = get_object_or_404(MyLikeList, pk=pk)
         likeshop   = LikeShopAccounts.objects.filter(
-            Q(guest_id=1)|Q(shop_id=mylikelist.mylikelistshop_set.all().first().shop_id)) 
+            Q(guest_id=1)|Q(shop_id=mylikelist.mylikelistshop_set.all().first().shop_id)
+        ) 
         mylikelist.mylikelistshop_set.all().delete()
         likeshop.delete()
         mylikelist.delete()
@@ -364,7 +359,6 @@ class MyLikeListShopViewSet(ModelViewSet):
 
         shop.like_count += 1
         shop.save()
-
         return Response({'message':'MylikeShop Created'})    
 
     @transaction.atomic
@@ -378,7 +372,6 @@ class MyLikeListShopViewSet(ModelViewSet):
         likeshop.delete()
         shop.like_count -= 1
         shop.save()
-        
         return Response({'message':'MyLikeListShop Deleted'})
 
 @transaction.atomic
@@ -393,6 +386,7 @@ def likeshop(request):
         shop.like_count += 1
         shop.save()
         return Response({'message':'like shop added'})
+
     else:
         user.like_shop.remove(shop)
         shop.like_count -= 1
@@ -410,32 +404,25 @@ class FunDataViewSet(ModelViewSet):
         
         if not fundata.exists():
             serializer = self.get_serializer(data=request.data)
-
             if serializer.is_valid(raise_exception=True):
                 serializer.save(menu=menu, account_guest=user)
                 serializer.instance.account_guest.fun_data_count += 1
                 serializer.instance.account_guest.save()
-            
                 return Response({'message':'Fun Created'})
-
             return Response({'message':'Fun Create Fail'})
 
         else:
             serializer = self.get_serializer(data=request.data, instance=fundata.first())
-            
             if serializer.is_valid(raise_exception=True):
                 serializer.save()
-
                 return Response({'message':'Fun Updated'})
-
             return Response({'message':'Fun Update Fail'})    
 
 class CreatePreferenceAPIView(TokenObtainPairView):
     permission_classes = (AllowAny, )
+
     def post(self, request):
-        
         norm_data, area_data, pref_data = request.data['normal_data'], request.data['area_data'], request.data['pref_data']
-        
         area_serializer = LivingAreaSreialzer(data=area_data)
         norm_serializer = SimpleAccountGuestSerializer(data=norm_data)
         pref_serializer = PreferenceSerializer(data=pref_data)
@@ -465,7 +452,6 @@ class CreatePreferenceAPIView(TokenObtainPairView):
 
                 user = AccountGuest.objects.get(username=request.data['normal_data']['username'])
                 data = {'username' : user.username}
-                
                 return Response(self.get_serializer().validate(data),status=status.HTTP_201_CREATED)
             return Response(pref_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -476,7 +462,6 @@ class CreatePreferenceAPIView(TokenObtainPairView):
 class AccountGuestUpdateViewSet(ModelViewSet):
     def list(self, request):
         preference = get_object_or_404(Preference,account_guest=request.account)
-        
         serializer_account    = AccountGuestUpdateSerializer(request.account, many=False)
         serializer_preference = PreferenceSerializer(preference, many=False)
         serializer_livingarea = LivingAreaUpdateSerializer(request.account.living_area, many=False)
@@ -486,7 +471,6 @@ class AccountGuestUpdateViewSet(ModelViewSet):
             'preference' : serializer_preference.data,
             'livingarea' : serializer_livingarea.data
         }
-
         return Response(result)
     
     def partial_update(self, request):
@@ -517,7 +501,17 @@ class LogoutView(APIView):
             refresh_token = request.data["refresh"]
             token = RefreshToken(refresh_token)
             token.blacklist()
-
             return Response(status=status.HTTP_205_RESET_CONTENT)
+
         except Exception as e:
             return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+class GetLocationViewSet(ReadOnlyModelViewSet):
+    permission_classes = (AllowAny, )
+
+    def list(self, request):
+        keyword = request.query_params.get('keyword')
+        area = LivingArea.objects.filter(area_name__contains=keyword)
+        serializer = SearchLocationSerializer(area, many=True)
+        return Response(serializer.data)
